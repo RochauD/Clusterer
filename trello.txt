@@ -2,3 +2,4 @@ List of people who got access to the repo and their Trello emails:
 
 Denis Rochau - no preexisting account - send invite email to rochau.second@gmail.com
 Kiril Kafadarov - kkafadarov@gmail.com
+Dinesh Acharya - d.acharya@jacobs-university.de
