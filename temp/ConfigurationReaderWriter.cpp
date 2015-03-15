@@ -45,9 +45,9 @@ void ConfigurationReaderWriter::writeConfiguration(const std::unordered_map<std:
 {
 	std::ofstream file(this->fullPathName);	
 	std::string seperator = " = ";
-	for (auto iter = outConfiguration.begin(); iter != outConfiguration.end(); ++iter)
+	for (auto& e : outConfiguration)
 	{
-		if (!(file << iter->first << seperator << iter->second << '\n'))
+		if (!(file << e.first << seperator << e.second << '\n'))
 		{
 			throw std::runtime_error("Error! Writing output file.");
 		}
