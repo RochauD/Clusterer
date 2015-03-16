@@ -1,9 +1,10 @@
 #include "ConfigurationReaderWriter.hpp"
 
-ConfigurationReaderWriter::ConfigurationReaderWriter(const std::string& fullPathName, char commentCharacter)
+ConfigurationReaderWriter::ConfigurationReaderWriter(const std::string& fullPathName, char commentCharacter, std::string separatorString)
 {
 	this->fullPathName = fullPathName;
 	this->commentCharacter = commentCharacter;
+	this->separatorString = separatorString;
 }
 
 ConfigurationReaderWriter::~ConfigurationReaderWriter()
@@ -44,10 +45,9 @@ std::unordered_map<std::string, std::string> ConfigurationReaderWriter::readConf
 void ConfigurationReaderWriter::writeConfiguration(const std::unordered_map<std::string, std::string>& outConfiguration)
 {
 	std::ofstream file(this->fullPathName);	
-	std::string seperator = " = ";
 	for (auto& e : outConfiguration)
 	{
-		if (!(file << e.first << seperator << e.second << '\n'))
+		if (!(file << e.first << this->separatorString << e.second << '\n'))
 		{
 			throw std::runtime_error("Error! Writing output file.");
 		}
