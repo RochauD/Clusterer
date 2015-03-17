@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.6)
  
 Project(BlueClusterer)
 
-SET(CMAKE_CXX_FLAGS "-std=c++0x")
+SET(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
+
 set(Boost_USE_MULTITHREADED ON)
 FIND_PACKAGE(Boost 1.38 COMPONENTS required)
 
