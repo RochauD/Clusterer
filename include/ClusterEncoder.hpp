@@ -11,6 +11,7 @@
 
 // Own headers
 #include "AbstractGraph.hpp"
+#include "Vertex.hpp"
 
 namespace backend {
 namespace genetic {
@@ -20,15 +21,14 @@ namespace genetic {
  * @class ClusterEncoder
  * @interface for objects that allow a cluster to be encoded
  */
-template <class Vertex, typename VertexId, typename ClusterId>
 class ClusterEncoder {
  public:
-     typedef std::vector<int> Encoding;
+     typedef std::vector<VertexId> Encoding;
      /**
      * @brief create a default clustering scheme from graph g
      * @param g the graph to cluster
      */ 
-     ClusterEncoder(const common::types::AbstractGraph<Vertex> &g);
+     ClusterEncoder(const common::types::AbstractGraph &g);
 
      /**
      *brief virtual desctructor for ClusterEncoder class

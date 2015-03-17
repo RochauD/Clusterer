@@ -8,8 +8,7 @@
 namespace common {
 namespace types {
 
-template<class Vertex>
-AbstractGraph<Vertex>::AbstractGraph()
+AbstractGraph::AbstractGraph()
 {
 
 }

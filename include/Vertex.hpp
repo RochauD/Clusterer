@@ -1,4 +1,3 @@
-
 #ifndef _VERTEX_CLASS_H
 #define _VERTEX_CLASS_H
 
@@ -10,6 +9,9 @@ typedef struct info{
    int value;
    std::string social_net;
 } info;
+
+typedef uint64_t VertexId;
+typedef uint64_t ClusterId;
 
 class Vertex{
    private:

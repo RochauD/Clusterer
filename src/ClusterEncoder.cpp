@@ -4,12 +4,12 @@
   */
 
 #include "../include/ClusterEncoder.hpp"
+#include "../include/Vertex.hpp"
 
 namespace backend {
 namespace genetic {
 
-template <class Vertex, typename VertexId, typename ClusterId>
-ClusterEncoder<Vertex, VertexId, ClusterId>::ClusterEncoder(const common::types::AbstractGraph<Vertex>& g)
+ClusterEncoder::ClusterEncoder(const common::types::AbstractGraph& g)
 {
 
 }

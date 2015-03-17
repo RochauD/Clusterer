@@ -36,7 +36,7 @@ class AbstractGraph {
       * @brief get the vertices in the graph
       * @return a vector containing the vertices in the graph
       */
-     virtual std::vector<int> getVertices() = 0; 
+     virtual std::vector<VertexId> getVertices() = 0; 
     /** 
      * @brief add a vertex to this graph
      * @param vert the vertex to be added
