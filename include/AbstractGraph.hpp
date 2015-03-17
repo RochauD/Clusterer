@@ -2,9 +2,6 @@
   * @brief  Graph interface
   *
   * @file AbstractGraph.hpp
-  * @author Radu Hambasan <r.hambasan@jacobs-university.de>
-  * @date   27 Feb 2015
-  *
   */
 
 #ifndef _COMMON_TYPES_ABSTRACTGRAPH_HPP
@@ -43,6 +40,9 @@ class AbstractGraph<Vertex> {
     virtual void addEdge(const Vertex::Id& vertId1,
             const Vertex::Id& vertId2) = 0;
 
+    /**
+     * @brief standard destructor
+     */
     virtual ~AbstractGraph();
 };
 

@@ -1,8 +1,6 @@
 /**
   * @file FitnessAnalyzer.hpp
   * @brief fitness function interface
-  * @author Radu Hambasan <r.hambasan@jacobs-university.de>
-  * @date 27 Feb 2015
   */
 #ifndef _BACKEND_GENETIC_FITNESSANALYZER_HPP
 #define _BACKEND_GENETIC_FITNESSANALYZER_HPP

@@ -26,8 +26,8 @@ class ClusterEncoder {
      ClusterEncoder(const AbstractGraph &g);
 
      /**
-     *brief virtual desctructor for ClusterEncoder class
-     */
+      * @brief standard destructor
+      */
      virtual ~ClusterEncoder();
      /**
      * @brief move a vertex to a specific cluster
