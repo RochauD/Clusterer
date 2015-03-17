@@ -18,16 +18,17 @@ namespace genetic {
  * @brief interface for objects which can assess the value of a particular
  * clustering scheme
  */
+template <class Vertex, typename VertexId, typename ClusterId>
 class FitnessAnalyzer {
  public:
-     typedef Score double;
+     typedef double Score;
      /**
       * @brief report a score for a clustering solution
       * @param clusteringSolution a clustering solution
       * @return a score corresponding to the clustering solution
       */
-     virtual Score
-         analyze(const ClusterEncoder::Encoding& clusteringSolution) = 0;
+     virtual Score analyze
+        (const typename ClusterEncoder<Vertex, VertexId, ClusterId>::Encoding& clusteringSolution) = 0;
 
      /**
       * @brief standard destructor

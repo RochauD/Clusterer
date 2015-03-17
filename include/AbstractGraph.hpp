@@ -7,6 +7,9 @@
 #ifndef _COMMON_TYPES_ABSTRACTGRAPH_HPP
 #define _COMMON_TYPES_ABSTRACTGRAPH_HPP
 
+// Standard libraries
+#include <vector>
+
 namespace common {
 namespace types {
 
@@ -15,7 +18,7 @@ namespace types {
  * @brief Wrapper for Boost Graph Lib
  */
 template<class Vertex>
-class AbstractGraph<Vertex> {
+class AbstractGraph {
  public:
      /*
       * @brief initialize an empty graph
@@ -37,13 +40,8 @@ class AbstractGraph<Vertex> {
      * @param vert1 an id representing the source vertex of the edge
      * @param vert2 an id representing the destination vertex of the edge
      */
-    virtual void addEdge(const Vertex::Id& vertId1,
-            const Vertex::Id& vertId2) = 0;
-
-    /**
-     * @brief standard destructor
-     */
-    virtual ~AbstractGraph();
+    virtual void addEdge(const typename Vertex::Id& vertId1,
+            const typename Vertex::Id& vertId2) = 0;
 };
 
 }  // namespace types

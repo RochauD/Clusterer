@@ -5,8 +5,12 @@
 #ifndef _BACKEND_GENETIC_CLUSTERENCODER_HPP
 #define _BACKEND_GENETIC_CLUSTERENCODER_HPP
 
+// Standard libraries
 #include <stdint.h>
 #include <vector>
+
+// Own headers
+#include "AbstractGraph.hpp"
 
 namespace backend {
 namespace genetic {
@@ -16,14 +20,15 @@ namespace genetic {
  * @class ClusterEncoder
  * @interface for objects that allow a cluster to be encoded
  */
+template <class Vertex, typename VertexId, typename ClusterId>
 class ClusterEncoder {
  public:
-     typedef Encoding std::vector<int>;
+     typedef std::vector<int> Encoding;
      /**
      * @brief create a default clustering scheme from graph g
      * @param g the graph to cluster
      */ 
-     ClusterEncoder(const AbstractGraph &g);
+     ClusterEncoder(const common::types::AbstractGraph<Vertex> &g);
 
      /**
       * @brief standard destructor

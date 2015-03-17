@@ -14,5 +14,6 @@ AbstractGraph<Vertex>::AbstractGraph()
 
 }
 
+
 }  // namespace types
 }  // namespace common
