@@ -8,8 +8,8 @@
 namespace backend {
 namespace genetic {
 
-
-ClusterEncoder::ClusterEncoder(const AbstractGraph& g)
+template <class Vertex, typename VertexId, typename ClusterId>
+ClusterEncoder<Vertex, VertexId, ClusterId>::ClusterEncoder(const common::types::AbstractGraph<Vertex>& g)
 {
 
 }
