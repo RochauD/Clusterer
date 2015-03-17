@@ -1,6 +1,6 @@
 /**
-  * @file SocialClusteringService.hpp
-  * @brief Facade for backend items
+  * @file SocialClusteringService.cpp
+  * @brief implementation of Facade for backend items
   */
 
 #include <cstdint>
@@ -20,42 +20,23 @@
 
 namespace backend {
 
-/**
- * @class PersonDb
- * @brief interface for databases which allow person insertion
- */
-class SocialClusteringService {
- public:
-     /**
-      * @brief insert person in database
-      * @param person to be inserted in the database
-      * @return 0 on success and -1 on failure.
-      */
-     static SocialClusteringService& getService() {
-         static SocialClusteringService service;
-         return service;
-     }
 
-     /**
-      * @brief process clustering input data
-      * @param filePath the path to the input file
-      * @return status EXIT_SUCESS or EXIT_FAILURE
-      */
-     int processSocialData(const std::string filePath);
+int SocialClusteringService::processSocialData(const std::string filePath)
+{
+  return 0;
+}
 
- private:
-     SocialClusteringService();
-     SocialClusteringService(const SocialClusteringService&);
 
-     IntegerVectorEncoder _clusterEncoder;
-     CrossoverEngine _crossoverEngine;
-     MutationEngine _mutationEngine;
-     FitnessAnalyzer _fitnessAnalyzer;
-     GeneticStrategy _geneticStrategy;
-     GraphReader _graphReader;
+SocialClusteringService::SocialClusteringService()
+{
 
-     PersonDb _personDb;
-};
+}
+
+SocialClusteringService(const SocialClusteringService&)
+{
+
+}
+
 
 }  // namespace backend
 
