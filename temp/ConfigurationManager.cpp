@@ -17,99 +17,99 @@ ConfigurationManager::~ConfigurationManager()
 }
 
 
-ClusteringParams ConfigurationManager::GetClusteringParams()
+ClusteringParams ConfigurationManager::getClusteringParams()
 {
 	return this->clusteringParams;
 }
 
-uint64_t ConfigurationManager::GetMinIterationsCount()
+uint64_t ConfigurationManager::getMinIterationsCount()
 {
 	return this->clusteringParams.minIterations;
 }
 
-uint64_t ConfigurationManager::GetMaxIterationsCount()
+uint64_t ConfigurationManager::getMaxIterationsCount()
 {
 	return this->clusteringParams.maxIterations;
 }
 
-double ConfigurationManager::GetMinFitness()
+double ConfigurationManager::getMinFitness()
 {
 	return this->clusteringParams.minFitness;
 }
 
-double ConfigurationManager::GetMaxFitness()
+double ConfigurationManager::getMaxFitness()
 {
 	return this->clusteringParams.maxFitness;
 }
 
-double ConfigurationManager::GetPhaseSwitchFitnessValue()
+double ConfigurationManager::getPhaseSwitchFitnessValue()
 {
 	return this->clusteringParams.phaseSwitchFitnessValue;
 }
 
-uint64_t ConfigurationManager::GetPhaseSwitchIterationValue()
+uint64_t ConfigurationManager::getPhaseSwitchIterationValue()
 {
 	return this->clusteringParams.phaseSwitchIterationValue;
 }
 
-uint64_t ConfigurationManager::GetPredictedClusterCount()
+uint64_t ConfigurationManager::getPredictedClusterCount()
 {
 	return this->clusteringParams.predictedClusterCount;
 }
 
-uint32_t ConfigurationManager::GetThreadCount()
+uint32_t ConfigurationManager::getThreadCount()
 {
 	return this->clusteringParams.threadCount;
 }
 
 
-void ConfigurationManager::SetClusteringParams(const ClusteringParams& clusteringParams)
+void ConfigurationManager::setClusteringParams(const ClusteringParams& clusteringParams)
 {
 	this->clusteringParams = clusteringParams;
 }
 
-void ConfigurationManager::SetMinIterationsCount(uint64_t minIterations)
+void ConfigurationManager::setMinIterationsCount(uint64_t minIterations)
 {
 	this->clusteringParams.minIterations = minIterations;
 }
 
-void ConfigurationManager::SetMaxIterationsCount(uint64_t maxIterations)
+void ConfigurationManager::setMaxIterationsCount(uint64_t maxIterations)
 {
 	this->clusteringParams.maxIterations = maxIterations;
 }
 
-void ConfigurationManager::SetMinFitness(double minFitness)
+void ConfigurationManager::setMinFitness(double minFitness)
 {
 	this->clusteringParams.minFitness = minFitness;
 }
 
-void ConfigurationManager::SetMaxFitness(double maxFitness)
+void ConfigurationManager::setMaxFitness(double maxFitness)
 {
 	this->clusteringParams.maxFitness = maxFitness;
 }
 
-void ConfigurationManager::SetPhaseSwitchFitnessValue(double phaseSwitchFitnessValue)
+void ConfigurationManager::setPhaseSwitchFitnessValue(double phaseSwitchFitnessValue)
 {
 	this->clusteringParams.phaseSwitchFitnessValue = phaseSwitchFitnessValue;
 }
 
-void ConfigurationManager::SetPhaseSwitchIterationValue(uint64_t phaseSwitchIterationValue)
+void ConfigurationManager::setPhaseSwitchIterationValue(uint64_t phaseSwitchIterationValue)
 {
 	this->clusteringParams.phaseSwitchIterationValue = phaseSwitchIterationValue;
 }
 
-void ConfigurationManager::SetPredictedClusterCount(uint64_t predictedClusterCount)
+void ConfigurationManager::setPredictedClusterCount(uint64_t predictedClusterCount)
 {
 	this->clusteringParams.predictedClusterCount = predictedClusterCount;
 }
 
-void ConfigurationManager::SetThreadCount(uint32_t threadCount)
+void ConfigurationManager::setThreadCount(uint32_t threadCount)
 {
 	this->clusteringParams.threadCount = threadCount;
 }
 
 
-void ConfigurationManager::LoadClusteringParams(const std::string& fullPathName)
+void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
 {
 	ConfigurationReaderWriter configReader(fullPathName);
 	std::unordered_map<std::string, std::string> parameterMap = configReader.readConfiguration();
@@ -198,7 +198,7 @@ void ConfigurationManager::LoadClusteringParams(const std::string& fullPathName)
 
 }
 
-void ConfigurationManager::SaveClusteringParams(const std::string& fullPathName)
+void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
 {
 	std::unordered_map<std::string, std::string> parameterMap;
 	parameterMap["minIterations"] = std::to_string(this->clusteringParams.minIterations);
