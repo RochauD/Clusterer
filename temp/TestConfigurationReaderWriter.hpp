@@ -20,21 +20,21 @@ using namespace CppUnit;
 using namespace std;
 
 class TestConfigurationReaderWriter:public CppUnit::TestFixture{
-  CPPUNIT_TEST_SUITE(TestConfigurationReaderWriter);
-  CPPUNIT_TEST(testReadConfiguration);
-  CPPUNIT_TEST(testWriteConfiguration);
-  CPPUNIT_TEST_SUITE_END();
-  
+    CPPUNIT_TEST_SUITE(TestConfigurationReaderWriter);
+    CPPUNIT_TEST(testReadConfiguration);
+    CPPUNIT_TEST(testWriteConfiguration);
+    CPPUNIT_TEST_SUITE_END();
+    
 public:
-  void setUp(void);
-  void tearDown(void);
+    void setUp(void);
+    void tearDown(void);
   
 protected:
-  void testReadConfiguration(void);
-  void testWriteConfiguration(void);
+    void testReadConfiguration(void);
+    void testWriteConfiguration(void);
   
 private:
-  ConfigurationReaderWriter *cTestObj;
+    ConfigurationReaderWriter *cTestObj;
 };
 
 #endif
