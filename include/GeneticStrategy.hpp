@@ -35,7 +35,7 @@ class GeneticStrategy {
       * @brief get the current clustering solution
       * @return the current clustering solution
       */
-     virtual CluterEncoder::Encoding getClusteringSolution() = 0;
+     virtual ClusterEncoder::Encoding getClusteringSolution() = 0;
 
      /**
       * @brief standard destructor
