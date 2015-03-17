@@ -1,3 +1,7 @@
+/**
+* @file ClusteringParams.hpp
+* @brief File in which the ClusteringParams structure is defined.
+*/
 #ifndef CLUSTERING_PARAMS_HPP
 #define CLUSTERING_PARAMS_HPP
 

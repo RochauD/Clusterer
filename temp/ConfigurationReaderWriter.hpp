@@ -1,3 +1,7 @@
+/**
+* @file ConfigurationReaderWriter.hpp
+* @brief File in which the ConfigurationReaderWriter class is defined.
+*/
 #ifndef _CONFIGURATION_READER_WRITER_HPP
 #define _CONFIGURATION_READER_WRITER_HPP
 

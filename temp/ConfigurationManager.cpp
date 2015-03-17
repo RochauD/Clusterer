@@ -1,3 +1,7 @@
+/**
+ * @file ConfigurationManager.cpp
+ * @brief File in which the ConfigurationManager is implemented.
+ */
 #include "ConfigurationManager.hpp"
 
 ConfigurationManager::ConfigurationManager()

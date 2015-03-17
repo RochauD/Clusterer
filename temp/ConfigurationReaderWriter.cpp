@@ -1,3 +1,7 @@
+/**
+ * @file ConfigurationReaderWriter.cpp
+ * @brief File in which the ConfigurationReaderWriter is implemented.
+ */
 #include "ConfigurationReaderWriter.hpp"
 
 ConfigurationReaderWriter::ConfigurationReaderWriter(const std::string& fullPathName, char commentCharacter, std::string separatorString)

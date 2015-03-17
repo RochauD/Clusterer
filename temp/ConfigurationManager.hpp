@@ -1,3 +1,7 @@
+/**
+ * @file ConfigurationManager.hpp
+ * @brief File in which the ConfigurationManager is defined.
+ */
 #ifndef _CONFIGURATION_MANAGER_HPP
 #define _CONFIGURATION_MANAGER_HPP
 
