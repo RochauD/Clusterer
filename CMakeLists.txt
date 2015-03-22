@@ -39,7 +39,7 @@ if( WIN32 )
     message("-- Windows detected")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
 else()
-    message("-- Linux detected")
+    message("-- Linux/UNIX detected")
     # Set C++11
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 

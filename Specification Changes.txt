@@ -3,3 +3,6 @@ We took the struct ConfigurationParams defined in SocialClusteringService.hpp ou
 
 Change 2: 
 We changed the folder structure of the project from having multiple subfolders in a src directory to a more stream lined and common model. We have now a folder include, which includes all the header files. All source files are added to the folder src and we will build the project always in the folder build, which only exist on our dev machines and will not be committed.
+
+Change 3:
+We changed the AbstractGraph class to be a non-template class and added a separate Vertex class because this greatly simplifies the implementation of this and other related classes. Most of the provided header stubs were not compatible with the AbstractGraph<V> class and had to be  modified, thus we opted for modifying the graph class instead.
