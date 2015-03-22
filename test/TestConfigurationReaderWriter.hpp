@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+
 #include <cppunit/TestCase.h>
 #include <cppunit/TestResult.h>
 #include <cppunit/TestRunner.h>
@@ -14,7 +15,7 @@
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
-#include "ConfigurationReaderWriter.hpp"
+#include "../include/ConfigurationReaderWriter.hpp"
 
 using namespace CppUnit;
 using namespace std;

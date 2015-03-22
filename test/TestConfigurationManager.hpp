@@ -16,9 +16,9 @@
 ///////////////////////////////////////////////////////
 #include <typeinfo>
 
-#include "ConfigurationManager.hpp"
-#include "ClusteringParams.hpp"
-//#include "ConfigurationReaderWriter.hpp"
+#include "../include/ConfigurationManager.hpp"
+#include "../include/ClusteringParams.hpp"
+
 
 using namespace CppUnit;
 using namespace std;

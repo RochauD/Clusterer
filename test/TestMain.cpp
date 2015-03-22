@@ -1,5 +1,5 @@
 #include "TestConfigurationReaderWriter.hpp"
-//#include "TestConfigurationManager.hpp"
+#include "TestConfigurationManager.hpp"
 
 int main(int argc, char* argv[]) {
     // informs test-listener about testresults
