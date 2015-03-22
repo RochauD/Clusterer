@@ -16,7 +16,7 @@ typedef uint64_t ClusterId;
 class Vertex{
    private:
       int number;
-      bool numberFlag;
+      bool numberFlag = true;
       info v_info;
       std::vector<Vertex> neighbors;
    public:

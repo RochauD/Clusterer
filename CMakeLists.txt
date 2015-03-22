@@ -87,6 +87,9 @@ set(CLUSTER_TEST_DIR ${PROJECT_SOURCE_DIR}/test)
 set(CLUSTER_SOURCES_CPP 
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
+        ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusterEncoder.cpp
+        ${CLUSTER_SOURCE_DIR}/Vertex.cpp
     )
 
 # header files
@@ -94,6 +97,10 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/ClusteringParams.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationManager.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
+        ${CLUSTER_INCLUDE_DIR}/AbstractGraph.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusterEncoder.hpp
+        ${CLUSTER_INCLUDE_DIR}/FitnessAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/Vertex.hpp
     )
 # combined
 set(CLUSTER_SOURCES 
