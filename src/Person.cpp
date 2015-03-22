@@ -24,14 +24,5 @@ Person::Person()
 }
 
 
-Person::Person(std::string sourceDoc = "", std::string name,
-                std::vector<PersonId> relations)
-        : sourceDoc(std::move(sourceDoc)), name(std::move(name)),
-        relations(std::move(relations))
-{
-
-}
-
-
 }  // namespace types
 }  // namespace common

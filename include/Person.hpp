@@ -37,21 +37,21 @@ struct Person : public common::types::Parcelable {
     
     Person();
 
-    Person(std::string sourceDoc = "", std::string name,
+    Person(std::string sourceDoc, std::string name,
                 std::vector<PersonId> relations)
         : sourceDoc(std::move(sourceDoc)), name(std::move(name)),
-        relations(std::move(relations));
+        relations(std::move(relations)) {}
 
     inline bool operator!=(const Person& rhs) const {
-        if (relations.length != rhs.relations.length) return false;
+        if (relations.size() != rhs.relations.size()) return false;
 
-        for (size_t i = 0; i < relations.length; i++) {
+        for (size_t i = 0; i < relations.size(); i++) {
             if (relations[i] != rhs.relations[i]) return false;
         }
         return name != rhs.name;
     }
 
-    virtual size_t getParcelableSize() const {
+    virtual const size_t getParcelableSize() {
         common::types::ParcelAllocator parcelAllocator;
         parcelAllocator.reserve(sourceDoc);
         parcelAllocator.reserve(name);
@@ -70,9 +70,10 @@ struct Person : public common::types::Parcelable {
     }
 
     virtual void readFromParcel(common::types::ParcelDecoder* decoder) {
-        decoder->decode(&souceDoc);
-        decoder->decode(&name);
-        decoder->decode(&relations);
+        // This was provided by group 2 but does not compile
+        // decoder->decode(&sourceDoc);
+        // decoder->decode(&name);
+        // decoder->decode(&relations);
     }
 };
 

@@ -27,7 +27,7 @@ size_t ParcelAllocator::getSize() const
 }
 
 
-explicit ParcelEncoder::ParcelEncoder(const ParcelAllocator& allocator)
+ParcelEncoder::ParcelEncoder(const ParcelAllocator& allocator)
 {
 
 }
@@ -66,9 +66,9 @@ ParcelEncoder::ParcelEncoder(const ParcelEncoder&)
 
 }
    
-const ParcelDecoder::ParcelEncoder& operator=(const ParcelEncoder&)
+const ParcelEncoder& ParcelEncoder::operator=(const ParcelEncoder& x)
 {
-    
+    return x;   
 }
 
 

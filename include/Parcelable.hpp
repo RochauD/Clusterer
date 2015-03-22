@@ -28,7 +28,7 @@ class Parcelable {
       * @brief get size of the current parcelable structure
       * @return the size of current parcelable structure
       */
-    virtual size_t getParcelableSize() const = 0;
+    virtual const size_t getParcelableSize() = 0;
     /** 
      * @brief deciding which fields to encode
      * @param encoder the encoder which will store the serialized fields
@@ -81,7 +81,7 @@ class ParcelEncoder {
 
     /**
      * @brief destructor to free up internal buffers
-     *//
+     */
     ~ParcelEncoder();
 
     /**
