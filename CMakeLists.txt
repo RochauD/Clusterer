@@ -90,6 +90,7 @@ set(CLUSTER_SOURCES_CPP
         ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
         ${CLUSTER_SOURCE_DIR}/ClusterEncoder.cpp
         ${CLUSTER_SOURCE_DIR}/Vertex.cpp
+        ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoder.cpp
     )
 
 # header files
@@ -101,6 +102,7 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/ClusterEncoder.hpp
         ${CLUSTER_INCLUDE_DIR}/FitnessAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/Vertex.hpp
+        ${CLUSTER_INCLUDE_DIR}/IntegerVectorEncoder.hpp
     )
 # combined
 set(CLUSTER_SOURCES 

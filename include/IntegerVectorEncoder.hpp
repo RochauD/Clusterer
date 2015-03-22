@@ -5,25 +5,26 @@
 #ifndef _BACKEND_GENETIC_INTEGERVECTORENCODER_HPP
 #define _BACKEND_GENETIC_INTEGERVECTORENCODER_HPP
 
-#include "AbstractGraph.hpp"
-
+// Standard libraries
 #include <stdint.h>
 #include <vector>
 #include <unordered_map>
+
+// Own headers
+#include "AbstractGraph.hpp"
+#include "ClusterEncoder.hpp"
 
 namespace backend {
 namespace genetic {
 
 
-template <typename VertexId, typename ClusterId> 
 class IntegerVectorEncoder : public ClusterEncoder {
  public:
-     typedef std::map<VertexId, ClusterId> Encoding;
      /**
       * @brief create a default clustering scheme from graph g
       * @param g the graph to cluster
       */
-     IntegerVectorEncoder(const AbstractGraph& g);
+     IntegerVectorEncoder(const common::types::AbstractGraph& g);
 
      /**
       * @brief move a vertex to a specific cluster
