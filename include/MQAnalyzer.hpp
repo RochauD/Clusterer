@@ -5,8 +5,10 @@
 #ifndef _BACKEND_GENETIC_MQANALYZER_HPP
 #define _BACKEND_GENETIC_MQANALYZER_HPP
 
+//Standard libraries
 #include <stdint.h>
 
+//Own libraries
 #include "ClusterEncoder.hpp"
 
 namespace backend {

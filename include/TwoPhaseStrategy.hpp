@@ -5,9 +5,10 @@
 #ifndef _BACKEND_TWOPHASESTRATEGY_HPP
 #define _BACKEND_TWOPHASESTRATEGY_HPP
 
-
+//Standard libraries
 #include <stdint.h>
 
+//Own libraries
 #include "ClusterEncoder.hpp"
 #include "AbstractGraph.hpp"
 

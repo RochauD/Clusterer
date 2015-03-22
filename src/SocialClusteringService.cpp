@@ -8,14 +8,9 @@
 #include <string>
 #include <functional>
 
-#include "common/daemon/QueryHandler.hpp"
-#include "CrossoverEngine.hpp"
-#include "MutationEngine.hpp"
-#include "FitnessAnalyzer.hpp"
-#include "IntegerVectorEncoder.hpp"
-#include "GeneticStrategy.hpp"
-#include "PersonDb.hpp"
-#include "GraphReader.hpp"
+#include "../include/QueryHandler.hpp"
+#include "../include/SocialClusteringService.hpp"
+
 
 
 namespace backend {

@@ -5,8 +5,10 @@
 #ifndef _BACKEND_GENETIC_FITNESSANALYZER_HPP
 #define _BACKEND_GENETIC_FITNESSANALYZER_HPP
 
+//Standard libraries
 #include <stdint.h>
 
+//Own libraries
 #include "ClusterEncoder.hpp"
 #include "Vertex.hpp"
 

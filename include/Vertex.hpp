@@ -1,6 +1,7 @@
 #ifndef _VERTEX_CLASS_H
 #define _VERTEX_CLASS_H
 
+//Standard libraries
 #include <string>
 #include <vector>
 
