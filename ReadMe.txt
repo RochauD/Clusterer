@@ -11,6 +11,8 @@ CppUnit:
 		sudo apt-get install libcppunit-doc libcppunit-dev
 	Windows:
 		Check libreoffice branch of cppunit and compile yourself
+	Mac (with homebrew):
+		brew install cppunit
 Boost:
 	Download newest version 
 	Linux:
@@ -20,6 +22,8 @@ Boost:
 	Windows:
 		move it somewhere and set BOOST_ROOT to the root
 		compile the libraries
+	Mac (with homebrew):
+		brew install boost
 
 Enviroment Variables:
 The following enviroment variables should be defined to ease compilation.
