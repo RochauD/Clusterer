@@ -4,6 +4,23 @@ Folder structure:
 
 // todo
 
+External Dependencies:
+
+CppUnit:
+	Linux: 
+		sudo apt-get install libcppunit-doc libcppunit-dev
+	Windows:
+		Check libreoffice branch of cppunit and compile yourself
+Boost:
+	Download newest version 
+	Linux:
+		move it to /usr/local/boost_1_57_0
+		sudo ./bootstrap.sh --prefix=/usr/local
+		sudo ./b2 install 
+	Windows:
+		move it somewhere and set BOOST_ROOT to the root
+		compile the libraries
+
 Enviroment Variables:
 The following enviroment variables should be defined to ease compilation.
 

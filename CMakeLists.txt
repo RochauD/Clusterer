@@ -37,15 +37,16 @@ endif()
 message("Setting compiler settings:")
 if( WIN32 )
     message("-- Windows detected")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
 else()
     message("-- Linux detected")
     # Set C++11
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
     # Enable all warnings
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-    message ("cxx Flags: " ${CMAKE_CXX_FLAGS})
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 endif()
+message ("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
 message("-- Finished setting compiler settings.")
 message("\n")
 
@@ -151,13 +152,9 @@ FOREACH(test ${CLUSTER_TEST_FILENAMES})
     add_executable(${TEST_NAME} ${CLUSTER_TEST_DRIVER} ${CLUSTER_TEST_SOURCES})
     target_link_libraries(${TEST_NAME} backend)
     # add library
-    if(WIN32)
-        target_link_libraries(${TEST_NAME} debug ${CPPUNIT_DEBUG_LIBRARY})
-        target_link_libraries(${TEST_NAME} optimized ${CPPUNIT_LIBRARY})
-    else(WIN32)
-        # Link to cpp unit
-        set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lcppunit")
-    endif(WIN32)
+    target_link_libraries(${TEST_NAME} debug ${CPPUNIT_DEBUG_LIBRARY})
+    target_link_libraries(${TEST_NAME} optimized ${CPPUNIT_LIBRARY})
+
     # add tests to test solution folder for IDEs
     set_target_properties(${TEST_NAME} PROPERTIES FOLDER testing)
 
