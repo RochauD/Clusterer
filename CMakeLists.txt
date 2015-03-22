@@ -56,6 +56,7 @@ if(Boost_FOUND)
 endif()
 
 # CPP UNIT
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 FIND_PACKAGE(CppUnit REQUIRED)
 if(CPPUNIT_FOUND)
     message("-- CppUnit include directories added")
