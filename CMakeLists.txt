@@ -28,10 +28,11 @@ endif()
 # Compiler Settings #
 #####################
 
+message("Setting compiler settings:")
 if( WIN32 )
-    message("Windows detected.")
+    message("-- Windows detected")
 else()
-    message("Linux detected.")
+    message("-- Linux detected")
     # Set C++11
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
@@ -39,6 +40,8 @@ else()
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
     message ("cxx Flags: " ${CMAKE_CXX_FLAGS})
 endif()
+message("-- Finished setting compiler settings.")
+message("\n")
 
 ################
 # Dependencies #
@@ -46,14 +49,19 @@ endif()
 
 # Boost
 set(Boost_USE_MULTITHREADED ON)
-FIND_PACKAGE(Boost)
+FIND_PACKAGE(Boost REQUIRED)
 if(Boost_FOUND)
+    message("-- Boost include directories added")
     include_directories(${INCLUDE_DIRECTORIES} ${Boost_INCLUDE_DIRS})
 endif()
 
 # CPP UNIT
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules/")
-FIND_PACKAGE(CPPUNIT REQUIRED)
+FIND_PACKAGE(CppUnit REQUIRED)
+if(CPPUNIT_FOUND)
+    message("-- CppUnit include directories added")
+    include_directories(${INCLUDE_DIRECTORIES} ${CPPUNIT_INCLUDE_DIR})
+endif()
+message("\n")
 
 #########################
 # Directories #
@@ -61,24 +69,32 @@ FIND_PACKAGE(CPPUNIT REQUIRED)
 
 set(CLUSTER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(CLUSTER_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
+set(CLUSTER_TEST_DIR ${PROJECT_SOURCE_DIR}/test)
 
 #########
 # Files #
 #########
 
+# source files
 set(CLUSTER_SOURCES_CPP 
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
     )
+
+# header files
 set(CLUSTER_SOURCES_H 
         ${CLUSTER_INCLUDE_DIR}/ClusteringParams.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationManager.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
     )
+# combined
 set(CLUSTER_SOURCES 
         ${CLUSTER_SOURCES_CPP}
         ${CLUSTER_SOURCES_H}   
     )
+
+# test files
+
 
 ######################
 # Output Directories #
@@ -92,12 +108,34 @@ set(COMMON_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/libs")
 #############
 
 add_library(backend ${CLUSTER_SOURCES})
-
-LINK_DIRECTORIES(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
+link_directories(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
  
 ##############
 # Executable #
 ##############
 
-ADD_EXECUTABLE(BlueClusterer main.cpp)
+add_executable(BlueClusterer main.cpp)
 target_link_libraries(BlueClusterer backend)
+
+###########
+# Testing #
+###########
+
+message("-- Configuring testing")
+FILE(GLOB UnitTests_SRCS RELATIVE ${CLUSTER_TEST_DIR} "*Test.cpp" )
+ADD_EXECUTABLE(UnitTester ${CLUSTER_TEST_DIR}/TestMain.cpp ${UnitTests_SRCS})
+
+# add library
+if(WIN32)
+    target_link_libraries(UnitTester debug ${CPPUNIT_DEBUG_LIBRARY})
+    target_link_libraries(UnitTester optimized ${CPPUNIT_LIBRARY})
+else(WIN32)
+    # Link to cpp unit
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lcppunit")
+endif(WIN32)
+
+FOREACH(test ${UnitTests_SRCS})
+        GET_FILENAME_COMPONENT(TestName ${test} NAME_WE)
+        ADD_TEST(${TestName} UnitTester ${TestName})
+ENDFOREACH(test)
+
