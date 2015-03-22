@@ -1,7 +1,4 @@
-/**
-  * @brief  PersonId and Person definitions
-  * @file   Person.hpp
-  */
+
 
 #include <stdint.h>
 
@@ -11,6 +8,8 @@
 #include <utility>
 
 #include "../include/Parcelable.hpp"
+#include "../include/Person.hpp"
+
 
 namespace common {
 namespace types {

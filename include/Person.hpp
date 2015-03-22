@@ -7,13 +7,14 @@
 #ifndef _COMMON_TYPES_PERSON_HPP
 #define _COMMON_TYPES_PERSON_HPP
 
+//Standard libraries
 #include <stdint.h>
-
 #include <cinttypes>
 #include <string>
 #include <vector>
 #include <utility>
 
+//Own libraries
 #include "Parcelable.hpp"
 
 namespace common {

@@ -3,9 +3,12 @@
   * @brief genetic strategy implementation
   */
 
+
 #include <stdint.h>
+  
 #include "../include/ClusterEncoder.hpp"
 #include "../include/AbstractGraph.hpp"
+#include "../include/TwoPhaseStrategy.hpp"
 
 namespace backend {
 namespace genetic {

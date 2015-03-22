@@ -5,12 +5,13 @@
 #ifndef _FRONTEND_SOCIALCLUSTERINGSERVICE_HPP
 #define _FRONTEND_SOCIALCLUSTERINGSERVICE_HPP
 
+//Standard libraries
 #include <cstdint>
-
 #include <string>
 #include <functional>
 
-#include "common/daemon/QueryHandler.hpp"
+//Own libraries
+#include "../include/QueryHandler.hpp"
 #include "CrossoverEngine.hpp"
 #include "MutationEngine.hpp"
 #include "FitnessAnalyzer.hpp"

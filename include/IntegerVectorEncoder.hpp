@@ -5,8 +5,10 @@
 #ifndef _BACKEND_GENETIC_INTEGERVECTORENCODER_HPP
 #define _BACKEND_GENETIC_INTEGERVECTORENCODER_HPP
 
+//Own libraries
 #include "AbstractGraph.hpp"
 
+//Standard libraries
 #include <stdint.h>
 #include <vector>
 #include <unordered_map>

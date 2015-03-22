@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include "../include/ClusterEncoder.hpp"
 #include "../include/AbstractGraph.hpp"
+#include "../include/GeneticStrategy.hpp"
 
 namespace backend {
 namespace genetic {
