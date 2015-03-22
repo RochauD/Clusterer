@@ -26,7 +26,7 @@ class GeneticStrategy {
       * @brief create a GeneticStrategy based on a graph
       * @param g the graph on which the strategy is based
       */
-     GeneticStrategy(const AbstractGraph& g);
+     GeneticStrategy(const common::types::AbstractGraph& g);
      /**
       * @brief obtain the next generation of the clustering solution
       * @return the order of the new generation

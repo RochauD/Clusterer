@@ -11,7 +11,7 @@
 #include <functional>
 
 //Own libraries
-#include "../include/QueryHandler.hpp"
+#include "QueryHandler.hpp"
 #include "CrossoverEngine.hpp"
 #include "MutationEngine.hpp"
 #include "FitnessAnalyzer.hpp"

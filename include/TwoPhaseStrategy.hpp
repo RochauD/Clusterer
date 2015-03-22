@@ -11,6 +11,7 @@
 //Own libraries
 #include "ClusterEncoder.hpp"
 #include "AbstractGraph.hpp"
+#include "GeneticStrategy.hpp"
 
 namespace backend {
 namespace genetic {
@@ -21,7 +22,7 @@ class TwoPhaseStrategy : public GeneticStrategy {
       * @brief create a TwoPhaseStrategy based on a graph
       * @param g the graph on which the strategy is based
       */
-     TwoPhaseStrategy(const AbstractGraph& g) : GeneticStrategy(g);
+     TwoPhaseStrategy(const common::types::AbstractGraph& g);
      /**
       * @brief obtain the next generation of the clustering solution
       * @return the order of the new generation
@@ -31,18 +32,18 @@ class TwoPhaseStrategy : public GeneticStrategy {
       * @brief obtain the next generation of the exploration phase
       * @return the order of the new generation
       */
-     virtual uint64_T runExplorationIteration();
+     virtual uint64_t runExplorationIteration();
       /**
       * @brief obtain the next generation of the refinement phase
       * @return the order of the new generation
       */
 
-     virtual uint64_T runRefinementIteration();
+     virtual uint64_t runRefinementIteration();
      /**
       * @brief get the current clustering solution
       * @return the current clustering solution
       */
-     virtual CluterEncoder::Encoding getClusteringSolution();
+     virtual ClusterEncoder::Encoding getClusteringSolution();
 
      virtual ~TwoPhaseStrategy();
 

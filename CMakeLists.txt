@@ -93,6 +93,8 @@ set(CLUSTER_SOURCES_CPP
         ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoder.cpp
         ${CLUSTER_SOURCE_DIR}/Parcelable.cpp
         ${CLUSTER_SOURCE_DIR}/Person.cpp
+        ${CLUSTER_SOURCE_DIR}/GeneticStrategy.cpp
+        ${CLUSTER_SOURCE_DIR}/TwoPhaseStrategy.cpp
     )
 
 # header files
@@ -110,6 +112,12 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/Parcelable.hpp
         ${CLUSTER_INCLUDE_DIR}/Person.hpp
         ${CLUSTER_INCLUDE_DIR}/PersonDb.hpp
+        ${CLUSTER_INCLUDE_DIR}/ExplorationMutation.hpp
+        ${CLUSTER_INCLUDE_DIR}/ExplorationCrossover.hpp
+        ${CLUSTER_INCLUDE_DIR}/RefinementMutationEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/compiler_defs.hpp
+        ${CLUSTER_INCLUDE_DIR}/GeneticStrategy.hpp
+        ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
     )
 # combined
 set(CLUSTER_SOURCES 

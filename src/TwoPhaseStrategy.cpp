@@ -9,19 +9,20 @@
 #include "../include/ClusterEncoder.hpp"
 #include "../include/AbstractGraph.hpp"
 #include "../include/TwoPhaseStrategy.hpp"
+#include "../include/GeneticStrategy.hpp"
 
 namespace backend {
 namespace genetic {
 
 
-TwoPhaseStrategy::TwoPhaseStrategy(const AbstractGraph& g) : GeneticStrategy(g)
+TwoPhaseStrategy::TwoPhaseStrategy(const common::types::AbstractGraph& g) : GeneticStrategy(g)
 {
 
 }
      
 double TwoPhaseStrategy::getMaxFitness()
 {
-	return maxFitness;
+	return 0.0;
 }
 
 }  // namespace genetic

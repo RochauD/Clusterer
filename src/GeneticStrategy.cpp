@@ -11,7 +11,7 @@
 namespace backend {
 namespace genetic {
 
-GeneticStrategy::GeneticStrategy(const AbstractGraph& g)
+GeneticStrategy::GeneticStrategy(const common::types::AbstractGraph& g)
 {
 
 }
