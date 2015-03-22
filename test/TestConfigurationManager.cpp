@@ -5,14 +5,14 @@ CPPUNIT_TEST_SUITE_REGISTRATION( TestConfigurationManager );
 void TestConfigurationManager::setUp(void){
     
     testConfManager=new ConfigurationManager();
-    CPPUNIT_ASSERT((testConfManager->GetMinIterationsCount())==10);
-    CPPUNIT_ASSERT((testConfManager->GetMaxIterationsCount())==1000);
-    CPPUNIT_ASSERT((testConfManager->GetMinFitness())==100.0);
-    CPPUNIT_ASSERT((testConfManager->GetMaxFitness())==1000.0);
-    CPPUNIT_ASSERT((testConfManager->GetPhaseSwitchFitnessValue())==50.0);
-    CPPUNIT_ASSERT((testConfManager->GetPhaseSwitchIterationValue())==700);
-    CPPUNIT_ASSERT((testConfManager->GetPredictedClusterCount())==10);
-    CPPUNIT_ASSERT((testConfManager->GetThreadCount())==2);
+    CPPUNIT_ASSERT((testConfManager->getMinIterationsCount())==10);
+    CPPUNIT_ASSERT((testConfManager->getMaxIterationsCount())==1000);
+    CPPUNIT_ASSERT((testConfManager->getMinFitness())==100.0);
+    CPPUNIT_ASSERT((testConfManager->getMaxFitness())==1000.0);
+    CPPUNIT_ASSERT((testConfManager->getPhaseSwitchFitnessValue())==50.0);
+    CPPUNIT_ASSERT((testConfManager->getPhaseSwitchIterationValue())==700);
+    CPPUNIT_ASSERT((testConfManager->getPredictedClusterCount())==10);
+    CPPUNIT_ASSERT((testConfManager->getThreadCount())==2);
     
 }
 
@@ -34,23 +34,23 @@ void TestConfigurationManager::testLoadClusteringParams(void){
     file<<"predictedClusterCount"<<" = "<<"100"<<endl;
     file<<"threadCount"<<" = "<<"12"<<endl;
     
-    testConfManager->LoadClusteringParams("TestFile1.txt");
+    testConfManager->loadClusteringParams("TestFile1.txt");
     //check if the parameters were loaded correctly.
-    CPPUNIT_ASSERT((testConfManager->GetMinIterationsCount())==1);
-    CPPUNIT_ASSERT((testConfManager->GetMaxIterationsCount())==1000);
-    CPPUNIT_ASSERT((testConfManager->GetMinFitness())==10.9);
-    CPPUNIT_ASSERT((testConfManager->GetMaxFitness())==100.9);
-    CPPUNIT_ASSERT((testConfManager->GetPhaseSwitchFitnessValue())==13);
-    CPPUNIT_ASSERT((testConfManager->GetPhaseSwitchIterationValue())==16);
-    CPPUNIT_ASSERT((testConfManager->GetPredictedClusterCount())==100);
-    CPPUNIT_ASSERT((testConfManager->GetThreadCount())==12);;
+    CPPUNIT_ASSERT((testConfManager->getMinIterationsCount())==1);
+    CPPUNIT_ASSERT((testConfManager->getMaxIterationsCount())==1000);
+    CPPUNIT_ASSERT((testConfManager->getMinFitness())==10.9);
+    CPPUNIT_ASSERT((testConfManager->getMaxFitness())==100.9);
+    CPPUNIT_ASSERT((testConfManager->getPhaseSwitchFitnessValue())==13);
+    CPPUNIT_ASSERT((testConfManager->getPhaseSwitchIterationValue())==16);
+    CPPUNIT_ASSERT((testConfManager->getPredictedClusterCount())==100);
+    CPPUNIT_ASSERT((testConfManager->getThreadCount())==12);;
     file.close();
 }
 
 void TestConfigurationManager::testSaveClusteringParams(void){
     
     
-    testConfManager->SaveClusteringParams("TestFile2.txt");
+    testConfManager->saveClusteringParams("TestFile2.txt");
     
     //load parameters from saved file using readConfiguration method
     std::ifstream file("TestFile2.txt");
@@ -58,14 +58,14 @@ void TestConfigurationManager::testSaveClusteringParams(void){
     std::unordered_map<std::string, std::string> parameterMap = configReaderWriter.readConfiguration();
     file.close();
     
-    CPPUNIT_ASSERT(parameterMap["maxIterations"]==(to_string(testConfManager->GetMaxIterationsCount())));
-    CPPUNIT_ASSERT(parameterMap["minIterations"]==(to_string(testConfManager->GetMinIterationsCount())));
-    CPPUNIT_ASSERT(parameterMap["minFitness"]==(to_string(testConfManager->GetMinFitness())));
-    CPPUNIT_ASSERT(parameterMap["maxFitness"]==(to_string(testConfManager->GetMaxFitness())));
-    CPPUNIT_ASSERT(parameterMap["phaseSwitchFitnessValue"]==(to_string(testConfManager->GetPhaseSwitchFitnessValue())));
-    CPPUNIT_ASSERT(parameterMap["phaseSwitchIterationValue"]==(to_string(testConfManager->GetPhaseSwitchIterationValue())));
-    CPPUNIT_ASSERT(parameterMap["predictedClusterCount"]==(to_string(testConfManager->GetPredictedClusterCount())));
-    CPPUNIT_ASSERT(parameterMap["threadCount"]==(to_string(testConfManager->GetThreadCount())));
+    CPPUNIT_ASSERT(parameterMap["maxIterations"]==(to_string(testConfManager->getMaxIterationsCount())));
+    CPPUNIT_ASSERT(parameterMap["minIterations"]==(to_string(testConfManager->getMinIterationsCount())));
+    CPPUNIT_ASSERT(parameterMap["minFitness"]==(to_string(testConfManager->getMinFitness())));
+    CPPUNIT_ASSERT(parameterMap["maxFitness"]==(to_string(testConfManager->getMaxFitness())));
+    CPPUNIT_ASSERT(parameterMap["phaseSwitchFitnessValue"]==(to_string(testConfManager->getPhaseSwitchFitnessValue())));
+    CPPUNIT_ASSERT(parameterMap["phaseSwitchIterationValue"]==(to_string(testConfManager->getPhaseSwitchIterationValue())));
+    CPPUNIT_ASSERT(parameterMap["predictedClusterCount"]==(to_string(testConfManager->getPredictedClusterCount())));
+    CPPUNIT_ASSERT(parameterMap["threadCount"]==(to_string(testConfManager->getThreadCount())));
 }
 
 void TestConfigurationManager::testGetSetMethods(void){
@@ -87,28 +87,28 @@ void TestConfigurationManager::testGetSetMethods(void){
     CPPUNIT_ASSERT(myClusteringParams==(testConfManager->GetClusteringParams()));
     */
     
-    testConfManager->SetMinIterationsCount(15);
-    CPPUNIT_ASSERT(15==(testConfManager->GetMinIterationsCount()));
+    testConfManager->setMinIterationsCount(15);
+    CPPUNIT_ASSERT(15==(testConfManager->getMinIterationsCount()));
     
-    testConfManager->SetMaxIterationsCount(16);
-    CPPUNIT_ASSERT(16==(testConfManager->GetMaxIterationsCount()));
+    testConfManager->setMaxIterationsCount(16);
+    CPPUNIT_ASSERT(16==(testConfManager->getMaxIterationsCount()));
     
-    testConfManager->SetMinFitness(16.5);
-    CPPUNIT_ASSERT(16.5==(testConfManager->GetMinFitness()));
+    testConfManager->setMinFitness(16.5);
+    CPPUNIT_ASSERT(16.5==(testConfManager->getMinFitness()));
     
-    testConfManager->SetMaxFitness(15.4);
-    CPPUNIT_ASSERT(15.4==(testConfManager->GetMaxFitness()));
+    testConfManager->setMaxFitness(15.4);
+    CPPUNIT_ASSERT(15.4==(testConfManager->getMaxFitness()));
     
-    testConfManager->SetPhaseSwitchFitnessValue(15.7);
-    CPPUNIT_ASSERT(15.7==(testConfManager->GetPhaseSwitchFitnessValue()));
+    testConfManager->setPhaseSwitchFitnessValue(15.7);
+    CPPUNIT_ASSERT(15.7==(testConfManager->getPhaseSwitchFitnessValue()));
     
-    testConfManager->SetPhaseSwitchIterationValue(18);
-    CPPUNIT_ASSERT(18==(testConfManager->GetPhaseSwitchIterationValue()));
+    testConfManager->setPhaseSwitchIterationValue(18);
+    CPPUNIT_ASSERT(18==(testConfManager->getPhaseSwitchIterationValue()));
     
-    testConfManager->SetPredictedClusterCount(19);
-    CPPUNIT_ASSERT(19==(testConfManager->GetPredictedClusterCount()));
+    testConfManager->setPredictedClusterCount(19);
+    CPPUNIT_ASSERT(19==(testConfManager->getPredictedClusterCount()));
     
-    testConfManager->SetThreadCount(20);
-    CPPUNIT_ASSERT(20==(testConfManager->GetThreadCount()));
+    testConfManager->setThreadCount(20);
+    CPPUNIT_ASSERT(20==(testConfManager->getThreadCount()));
     
 }
