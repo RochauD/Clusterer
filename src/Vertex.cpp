@@ -1,8 +1,6 @@
 
 #include "../include/Vertex.hpp"
 
-bool Vertex::numberFlag = true;
-
 Vertex::Vertex(){
 }
 
