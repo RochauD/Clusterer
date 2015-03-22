@@ -10,7 +10,7 @@
 #include <vector>
 
 //Own libraries
-#include compiler_defs.hpp
+#include "compiler_defs.hpp"
 
 namespace common {
 namespace utils {
