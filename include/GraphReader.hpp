@@ -30,7 +30,7 @@ class GraphReader {
       * @brief initalize a reader to read data into a graph
       * @param g the graph in which the data will be read
       */
-     GraphReader(AbstractGraph* g) : _graph(g) {}
+     GraphReader(common::types::AbstractGraph* g) : _graph(g) {}
      /**
       * @brief read file data into graph
       * @return 0 on success
@@ -43,7 +43,7 @@ class GraphReader {
       */
      virtual ~GraphReader();
  protected:
-     AbstractGraph* _graph;
+     common::types::AbstractGraph* _graph;
 };
 
 }  // namespace reader

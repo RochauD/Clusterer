@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 //Own libraries
-#include "../include/AbstractGraph.hpp"
+#include "AbstractGraph.hpp"
 #include "GraphReader.hpp"
 
 namespace backend {
@@ -23,11 +23,11 @@ namespace reader {
  */
 class JSONGraphReader : public GraphReader {
  public:
-     /** 
+     /**
       * @brief initalize a reader to read data into a graph
       * @param g the graph in which the data will be read
       */
-     JSONGraphReader(AbstractGraph* g) : GraphReader(g);
+     JSONGraphReader(common::types::AbstractGraph* g);
      /**
       * @brief read file data into graph
       * @return 0 on success

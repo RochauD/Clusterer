@@ -9,7 +9,7 @@
 
 //Own libraries
 #include "../include/JSONGraphReader.hpp"
-#include "GraphReader.hpp"
+#include "../include/GraphReader.hpp"
 
 namespace backend {
 namespace reader {
