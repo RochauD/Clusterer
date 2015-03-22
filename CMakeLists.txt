@@ -103,6 +103,7 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/FitnessAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/Vertex.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerVectorEncoder.hpp
+        ${CLUSTER_INCLUDE_DIR}/CrossoverEngine.hpp
     )
 # combined
 set(CLUSTER_SOURCES 
