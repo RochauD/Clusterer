@@ -1,13 +1,12 @@
 #include <iostream>
-
-#include "include/AbstractGraph.hpp"
-#include "include/ClusterEncoder.hpp"
-#include "include/FitnessAnalyzer.hpp"
+#include "include/ConfigurationManager.hpp"
 
 using namespace std;
 
 int main()
 {
+	ConfigurationManager cfg;
+	cfg.saveClusteringParams("test.txt");
     cout << "COMPILES!!!!\n";
     return 0;
 }

@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "ClusterEncoder.hpp"
+#include "Vertex.hpp"
 
 namespace backend {
 namespace genetic {
@@ -18,7 +19,6 @@ namespace genetic {
  * @brief interface for objects which can assess the value of a particular
  * clustering scheme
  */
-template <class Vertex, typename VertexId, typename ClusterId>
 class FitnessAnalyzer {
  public:
      typedef double Score;
@@ -27,8 +27,7 @@ class FitnessAnalyzer {
       * @param clusteringSolution a clustering solution
       * @return a score corresponding to the clustering solution
       */
-     virtual Score analyze
-        (const typename ClusterEncoder<Vertex, VertexId, ClusterId>::Encoding& clusteringSolution) = 0;
+     virtual Score analyze(const typename ClusterEncoder::Encoding& clusteringSolution) = 0;
 
      /**
       * @brief standard destructor
