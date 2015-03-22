@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 2.8)
 
+##################
+# CMAKE settings #
+##################
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
 #########################
 # Project Specification #
 #########################
@@ -95,7 +101,12 @@ set(CLUSTER_SOURCES
     )
 
 # test files
-
+# give the base name of your test class. Assume the base name of your test class is foo.
+# Then you need to create the files: Testfoo.cpp Testfoo.hpp TestMainFoo.cpp 
+set(CLUSTER_TEST_FILENAMES
+        ConfigurationManager
+        ConfigurationReaderWriter
+    )
 
 ######################
 # Output Directories #
@@ -123,20 +134,33 @@ target_link_libraries(BlueClusterer backend)
 ###########
 
 message("-- Configuring testing")
-FILE(GLOB UnitTests_SRCS RELATIVE ${CLUSTER_TEST_DIR} "*Test.cpp" )
-ADD_EXECUTABLE(UnitTester ${CLUSTER_TEST_DIR}/TestMain.cpp ${UnitTests_SRCS})
+enable_testing()
 
-# add library
-if(WIN32)
-    target_link_libraries(UnitTester debug ${CPPUNIT_DEBUG_LIBRARY})
-    target_link_libraries(UnitTester optimized ${CPPUNIT_LIBRARY})
-else(WIN32)
-    # Link to cpp unit
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lcppunit")
-endif(WIN32)
+FOREACH(test ${CLUSTER_TEST_FILENAMES})
+    set(TEST_NAME Test${test})
+    set(CLUSTER_TEST_SOURCES
+            ${CLUSTER_TEST_DIR}/Test${test}.cpp
+            ${CLUSTER_TEST_DIR}/Test${test}.hpp
+        )
+    set(CLUSTER_TEST_DRIVER
+            ${CLUSTER_TEST_DIR}/TestMain${test}.cpp
+        )
 
-FOREACH(test ${UnitTests_SRCS})
-        GET_FILENAME_COMPONENT(TestName ${test} NAME_WE)
-        ADD_TEST(${TestName} UnitTester ${TestName})
+    # add test executable
+    include_directories(${INCLUDE_DIRECTORIES} ${CLUSTER_SOURCES_H})
+    add_executable(${TEST_NAME} ${CLUSTER_TEST_DRIVER} ${CLUSTER_TEST_SOURCES})
+    target_link_libraries(${TEST_NAME} backend)
+    # add library
+    if(WIN32)
+        target_link_libraries(${TEST_NAME} debug ${CPPUNIT_DEBUG_LIBRARY})
+        target_link_libraries(${TEST_NAME} optimized ${CPPUNIT_LIBRARY})
+    else(WIN32)
+        # Link to cpp unit
+        set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lcppunit")
+    endif(WIN32)
+    # add tests to test solution folder for IDEs
+    set_target_properties(${TEST_NAME} PROPERTIES FOLDER testing)
+
+    ADD_TEST(${TEST_NAME} ${TEST_NAME} ${TEST_NAME})
 ENDFOREACH(test)
 
