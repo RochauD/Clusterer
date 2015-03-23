@@ -71,9 +71,9 @@ if(CPPUNIT_FOUND)
 endif()
 message("\n")
 
-#########################
+###############
 # Directories #
-#########################
+###############
 
 set(CLUSTER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 set(CLUSTER_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
@@ -87,6 +87,7 @@ set(CLUSTER_TEST_DIR ${PROJECT_SOURCE_DIR}/test)
 set(CLUSTER_SOURCES_CPP 
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
+        ${CLUSTER_SOURCE_DIR}/Logger.cpp
     )
 
 # header files
@@ -94,6 +95,7 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/ClusteringParams.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationManager.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
+        ${CLUSTER_SOURCE_DIR}/Logger.hpp
     )
 # combined
 set(CLUSTER_SOURCES 
