@@ -11,13 +11,15 @@
 #include "../include/JSONGraphReader.hpp"
 #include "../include/GraphReader.hpp"
 
-namespace backend {
-namespace reader {
+namespace backend
+{
+namespace reader
+{
 
 
 int JSONGraphReader::readFile(FILE* file)
 {
-  return 0;
+    return 0;
 }
 
 }  // namespace reader

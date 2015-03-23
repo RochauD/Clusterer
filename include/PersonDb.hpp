@@ -12,8 +12,10 @@
 //Own libraries
 #include "Person.hpp"
 
-namespace backend {
-namespace dbc {
+namespace backend
+{
+namespace dbc
+{
 
 typedef std::function<int (const common::types::Person&)> QueryCallback;
 
@@ -21,7 +23,8 @@ typedef std::function<int (const common::types::Person&)> QueryCallback;
  * @class PersonDb
  * @brief interface for databases which allow person insertion
  */
-class PersonDb {
+class PersonDb
+{
 public:
     virtual ~PersonDb() {}
 

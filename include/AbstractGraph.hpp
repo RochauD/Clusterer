@@ -14,32 +14,35 @@
 // local headers
 #include "Vertex.hpp"
 
-namespace common {
-namespace types {
+namespace common
+{
+namespace types
+{
 
 /**
  * @class AbstractGraph
  * @brief Wrapper for Boost Graph Lib
  */
 
-class AbstractGraph {
- public:
-     /*
-      * @brief initialize an empty graph
-      */
-     AbstractGraph();
-     virtual ~AbstractGraph() = 0;
-     /**
-      * @brief get the vertices in the graph
-      * @return a vector containing the vertices in the graph
-      */
-     virtual std::vector<VertexId> getVertices() = 0; 
-    /** 
+class AbstractGraph
+{
+public:
+    /*
+     * @brief initialize an empty graph
+     */
+    AbstractGraph();
+    virtual ~AbstractGraph() = 0;
+    /**
+     * @brief get the vertices in the graph
+     * @return a vector containing the vertices in the graph
+     */
+    virtual std::vector<VertexId> getVertices() = 0;
+    /**
      * @brief add a vertex to this graph
      * @param vert the vertex to be added
      */
     virtual void addVertex(const Vertex& vert) = 0;
-    /** 
+    /**
      * @brief create an edge between to vertices
      * @param vert1 an id representing the source vertex of the edge
      * @param vert2 an id representing the destination vertex of the edge

@@ -117,87 +117,87 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
 {
     ConfigurationReaderWriter configReader(fullPathName);
     std::unordered_map<std::string, std::string> parameterMap = configReader.readConfiguration();
-    
+
     // go through the map and assign our parameters
     std::unordered_map<std::string, std::string>::iterator iter;
     iter = parameterMap.find("minIterations");
     if (iter != parameterMap.end())
     {
-       this->clusteringParams.minIterations = std::stoull(iter->second);
+        this->clusteringParams.minIterations = std::stoull(iter->second);
     }
     else
     {
-       throw std::runtime_error("Error! Could not find minIterations value in configuration file.");
+        throw std::runtime_error("Error! Could not find minIterations value in configuration file.");
     }
 
     iter = parameterMap.find("maxIterations");
     if (iter != parameterMap.end())
     {
-       this->clusteringParams.maxIterations = std::stoull(iter->second);
+        this->clusteringParams.maxIterations = std::stoull(iter->second);
     }
     else
     {
-       throw std::runtime_error("Error! Could not find maxIterations value in configuration file.");
+        throw std::runtime_error("Error! Could not find maxIterations value in configuration file.");
     }
 
     iter = parameterMap.find("minFitness");
     if (iter != parameterMap.end())
     {
-       this->clusteringParams.minFitness = std::stod(iter->second);
+        this->clusteringParams.minFitness = std::stod(iter->second);
     }
     else
     {
-       throw std::runtime_error("Error! Could not find minFitness value in configuration file.");
+        throw std::runtime_error("Error! Could not find minFitness value in configuration file.");
     }
 
     iter = parameterMap.find("maxFitness");
     if (iter != parameterMap.end())
     {
-       this->clusteringParams.maxFitness = std::stod(iter->second);
+        this->clusteringParams.maxFitness = std::stod(iter->second);
     }
     else
     {
-       throw std::runtime_error("Error! Could not find maxFitness value in configuration file.");
+        throw std::runtime_error("Error! Could not find maxFitness value in configuration file.");
     }
 
     iter = parameterMap.find("phaseSwitchFitnessValue");
     if (iter != parameterMap.end())
     {
-       this->clusteringParams.phaseSwitchFitnessValue = std::stod(iter->second);
+        this->clusteringParams.phaseSwitchFitnessValue = std::stod(iter->second);
     }
     else
     {
-       throw std::runtime_error("Error! Could not find phaseSwitchFitnessValue value in configuration file.");
+        throw std::runtime_error("Error! Could not find phaseSwitchFitnessValue value in configuration file.");
     }
 
     iter = parameterMap.find("phaseSwitchIterationValue");
     if (iter != parameterMap.end())
     {
-       this->clusteringParams.phaseSwitchIterationValue = std::stoull(iter->second);
+        this->clusteringParams.phaseSwitchIterationValue = std::stoull(iter->second);
     }
     else
     {
-       throw std::runtime_error("Error! Could not find phaseSwitchIterationValue value in configuration file.");
+        throw std::runtime_error("Error! Could not find phaseSwitchIterationValue value in configuration file.");
     }
 
     iter = parameterMap.find("predictedClusterCount");
     if (iter != parameterMap.end())
     {
-       this->clusteringParams.predictedClusterCount = std::stoull(iter->second);
+        this->clusteringParams.predictedClusterCount = std::stoull(iter->second);
     }
     else
     {
-       throw std::runtime_error("Error! Could not find predictedClusterCount value in configuration file.");
+        throw std::runtime_error("Error! Could not find predictedClusterCount value in configuration file.");
     }
 
     iter = parameterMap.find("threadCount");
     if (iter != parameterMap.end())
     {
-       this->clusteringParams.threadCount = std::stoul(iter->second);
+        this->clusteringParams.threadCount = std::stoul(iter->second);
     }
     else
     {
-       throw std::runtime_error("Error! Could not find threadCount value in configuration file.");
+        throw std::runtime_error("Error! Could not find threadCount value in configuration file.");
     }
 
 }

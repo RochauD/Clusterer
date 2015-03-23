@@ -40,7 +40,7 @@ public:
 
     /**
     * @brief Loads the key value map from the file.
-    * @return A unordered map with each key value pair which was found in 
+    * @return A unordered map with each key value pair which was found in
     * the file.
     * @throws std::runtime_error
     */

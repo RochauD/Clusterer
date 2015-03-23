@@ -1,6 +1,7 @@
 #include "../include/GeneticGui.hpp"
 
-namespace frontend {
+namespace frontend
+{
 
 
 void GeneticGui::setConfigParams(const Config& config)
@@ -10,7 +11,7 @@ void GeneticGui::setConfigParams(const Config& config)
 
 GeneticGui::Config getConfigParams()
 {
-    GeneticGui::Config x; 
+    GeneticGui::Config x;
     return x;
 }
 
@@ -18,10 +19,10 @@ void GeneticGui::startGui()
 {
 
 }
-        
+
 GeneticGui::GeneticGui()
 {
-  
+
 }
 GeneticGui::GeneticGui(const GeneticGui& cpy)
 {

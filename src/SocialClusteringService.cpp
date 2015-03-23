@@ -12,12 +12,13 @@
 
 
 
-namespace backend {
+namespace backend
+{
 
 
 int SocialClusteringService::processSocialData(const std::string filePath)
 {
-  return 0;
+    return 0;
 }
 
 

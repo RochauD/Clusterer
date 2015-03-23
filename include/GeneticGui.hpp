@@ -5,18 +5,21 @@
 #ifndef _FRONTEND_GENETICGUI_HPP
 #define _FRONTEND_GENETICGUI_HPP
 
-namespace frontend {
+namespace frontend
+{
 
 /**
  * @class GeneticGui
  * @brief Singleton for the Qt frontend of social clustering
  * */
-class GeneticGui{
- public:
+class GeneticGui
+{
+public:
     /**
       * @brief configuration to decide how to display data
       */
-    struct Config {
+    struct Config
+    {
         char clusterDisplayMode;
         bool displayFitnessPlot;
     };
@@ -24,7 +27,8 @@ class GeneticGui{
     /**
      * @brief get the singleton instance
      */
-    static GeneticGui& getApp() {
+    static GeneticGui& getApp()
+    {
         static GeneticGui app;
         return app;
     }
@@ -43,9 +47,9 @@ class GeneticGui{
      * @brief start the GUI instance in its own thread
      */
     void startGui(void);
-        
- private:
-    /** 
+
+private:
+    /**
      * @brief constructor which registers a particular config
      * @param config the configuration of this query handler
      */

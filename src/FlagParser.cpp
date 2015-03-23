@@ -1,4 +1,3 @@
-#include <getopt.h>
 #include <cstdint>
 #include <map>
 #include <string>
@@ -6,12 +5,14 @@
 
 #include "../include/FlagParser.hpp"
 
-namespace common {
-namespace utils {
+namespace common
+{
+namespace utils
+{
 
 
 void FlagParser::addFlag(const char shortOpt, const std::string& longOpt,
-             bool optMandatory, bool argMandatory)
+                         bool optMandatory, bool argMandatory)
 {
 
 }

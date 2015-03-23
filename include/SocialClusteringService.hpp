@@ -20,43 +20,46 @@
 #include "GraphReader.hpp"
 
 
-namespace backend {
+namespace backend
+{
 
 /**
  * @class PersonDb
  * @brief interface for databases which allow person insertion
  */
-class SocialClusteringService {
- public:
-     /**
-      * @brief insert person in database
-      * @param person to be inserted in the database
-      * @return 0 on success and -1 on failure.
-      */
-     static SocialClusteringService& getService() {
-         static SocialClusteringService service;
-         return service;
-     }
+class SocialClusteringService
+{
+public:
+    /**
+     * @brief insert person in database
+     * @param person to be inserted in the database
+     * @return 0 on success and -1 on failure.
+     */
+    static SocialClusteringService& getService()
+    {
+        static SocialClusteringService service;
+        return service;
+    }
 
-     /**
-      * @brief process clustering input data
-      * @param filePath the path to the input file
-      * @return status EXIT_SUCESS or EXIT_FAILURE
-      */
-     int processSocialData(const std::string filePath);
+    /**
+     * @brief process clustering input data
+     * @param filePath the path to the input file
+     * @return status EXIT_SUCESS or EXIT_FAILURE
+     */
+    int processSocialData(const std::string filePath);
 
- private:
-     SocialClusteringService();
-     SocialClusteringService(const SocialClusteringService&);
+private:
+    SocialClusteringService();
+    SocialClusteringService(const SocialClusteringService&);
 
-     genetic::ClusterEncoder* _clusterEncoder;
-     genetic::CrossoverEngine* _crossoverEngine;
-     genetic::MutationEngine* _mutationEngine;
-     genetic::FitnessAnalyzer* _fitnessAnalyzer;
-     genetic::GeneticStrategy* _geneticStrategy;
-     reader::GraphReader* _graphReader;
+    genetic::ClusterEncoder* _clusterEncoder;
+    genetic::CrossoverEngine* _crossoverEngine;
+    genetic::MutationEngine* _mutationEngine;
+    genetic::FitnessAnalyzer* _fitnessAnalyzer;
+    genetic::GeneticStrategy* _geneticStrategy;
+    reader::GraphReader* _graphReader;
 
-     dbc::PersonDb* _personDb;
+    dbc::PersonDb* _personDb;
 };
 
 }  // namespace backend

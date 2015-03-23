@@ -12,8 +12,10 @@
 #include <string.h>
 #include <string>
 
-namespace common {
-namespace types {
+namespace common
+{
+namespace types
+{
 
 class ParcelEncoder;
 class ParcelDecoder;
@@ -22,19 +24,20 @@ class ParcelDecoder;
  * @class Parcelable
  * @brief an interface for serializable classes
  */
-class Parcelable {
- public:
-     /**
-      * @brief get size of the current parcelable structure
-      * @return the size of current parcelable structure
-      */
+class Parcelable
+{
+public:
+    /**
+     * @brief get size of the current parcelable structure
+     * @return the size of current parcelable structure
+     */
     virtual const size_t getParcelableSize() = 0;
-    /** 
+    /**
      * @brief deciding which fields to encode
      * @param encoder the encoder which will store the serialized fields
      */
     virtual void writeToParcel(ParcelEncoder* encoder) const = 0;
-    /** 
+    /**
      * @brief read a parcelable structure back from its serialization
      * @param decoder the decoder which will decode the serialized fields
      */
@@ -43,8 +46,9 @@ class Parcelable {
     virtual ~Parcelable();
 };
 
-class ParcelAllocator {
- public:
+class ParcelAllocator
+{
+public:
     ParcelAllocator();
 
     /**
@@ -63,7 +67,7 @@ class ParcelAllocator {
      */
     size_t getSize() const;
 
- private:
+private:
     size_t _size;
 };
 
@@ -71,12 +75,13 @@ class ParcelAllocator {
  * @class ParcelEncoder
  * @brief class capable of serializing Parcelable objects
  */
-class ParcelEncoder {
- public:
-     /**
-      * @brief construct a ParcelEncoder backed by an allocator
-      * @param allocator the backing allocator for the new ParcelEncoder
-      */
+class ParcelEncoder
+{
+public:
+    /**
+     * @brief construct a ParcelEncoder backed by an allocator
+     * @param allocator the backing allocator for the new ParcelEncoder
+     */
     explicit ParcelEncoder(const ParcelAllocator& allocator);
 
     /**
@@ -106,7 +111,7 @@ class ParcelEncoder {
      */
     size_t getSize() const;
 
- private:
+private:
     size_t _size;
     char* _data;
     char* _curr;
@@ -119,13 +124,14 @@ class ParcelEncoder {
  * @class ParcelDecoder
  * @brief class capable of restoring serialized objects
  */
-class ParcelDecoder {
- public:
-     /**
-      * @brief create a decoder from serialized data
-      * @param data a pointer to the serialized data
-      * @param the number of bytes of serialized data
-      */
+class ParcelDecoder
+{
+public:
+    /**
+     * @brief create a decoder from serialized data
+     * @param data a pointer to the serialized data
+     * @param the number of bytes of serialized data
+     */
     ParcelDecoder(const char* data, size_t size);
 
     /**
@@ -139,7 +145,7 @@ class ParcelDecoder {
      */
     void decode(std::string* str);
 
- private:
+private:
     size_t mSize;
     const char* mData;
     const char* mCurr;

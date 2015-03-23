@@ -41,7 +41,7 @@ struct ClusteringParams
     /**
     * @var minFitness
     * @brief Minimum fitness value.
-    * @details The member variable minFitness defines the minimum fitness 
+    * @details The member variable minFitness defines the minimum fitness
     * value a cluster solution must obtain before the algorithm may terminate.
     */
     double minFitness;
@@ -57,7 +57,7 @@ struct ClusteringParams
     /**
     * @var phaseSwitchFitnessValue
     * @brief Fitness value threshold for phase switch.
-    * @details The member variable phaseSwitchFitnessValue defines the 
+    * @details The member variable phaseSwitchFitnessValue defines the
     * fitness value threshold which should trigger the phase switch in the
     * algorithm.
     */

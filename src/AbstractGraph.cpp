@@ -5,8 +5,10 @@
   */
 #include "../include/AbstractGraph.hpp"
 
-namespace common {
-namespace types {
+namespace common
+{
+namespace types
+{
 
 AbstractGraph::AbstractGraph()
 {

@@ -11,22 +11,25 @@
 //Own libraries
 #include "ClusterEncoder.hpp"
 
-namespace backend {
-namespace genetic {
+namespace backend
+{
+namespace genetic
+{
 
 
-class PerformanceAnalyzer : public FitnessAnalyzer {
- public:
-     typedef Score double;
-     /**
-      * @brief report a score for a clustering solution
-      * @param clusteringSolution a clustering solution
-      * @return a score corresponding to the clustering solution
-      */
-     virtual Score
-         analyze(const ClusterEncoder::Encoding& clusteringSolution);
+class PerformanceAnalyzer : public FitnessAnalyzer
+{
+public:
+    typedef Score double;
+    /**
+     * @brief report a score for a clustering solution
+     * @param clusteringSolution a clustering solution
+     * @return a score corresponding to the clustering solution
+     */
+    virtual Score
+    analyze(const ClusterEncoder::Encoding& clusteringSolution);
 
-     virtual ~PerformanceAnalyzer();
+    virtual ~PerformanceAnalyzer();
 };
 
 }  // namespace genetic

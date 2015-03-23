@@ -11,8 +11,10 @@
 #include "../include/Person.hpp"
 
 
-namespace common {
-namespace types {
+namespace common
+{
+namespace types
+{
 
 /**
  * @brief Person Id uniquely representing a person

@@ -8,8 +8,10 @@
 #include "../include/AbstractGraph.hpp"
 #include "../include/GeneticStrategy.hpp"
 
-namespace backend {
-namespace genetic {
+namespace backend
+{
+namespace genetic
+{
 
 GeneticStrategy::GeneticStrategy(const common::types::AbstractGraph& g)
 {

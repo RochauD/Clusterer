@@ -12,8 +12,10 @@
 //Own libraries
 #include "../include/AbstractGraph.hpp"
 
-namespace backend {
-namespace reader {
+namespace backend
+{
+namespace reader
+{
 
 /**
  * @class GraphReader
@@ -24,26 +26,27 @@ namespace reader {
  * When a new input format is needed, just implement this interface for that
  * particular input format.
  */
-class GraphReader {
- public:
-     /** 
-      * @brief initalize a reader to read data into a graph
-      * @param g the graph in which the data will be read
-      */
-     GraphReader(common::types::AbstractGraph* g) : _graph(g) {}
-     /**
-      * @brief read file data into graph
-      * @return 0 on success
-      *         1 on failure
-      */
-     virtual int readFile(FILE* file) = 0;
+class GraphReader
+{
+public:
+    /**
+     * @brief initalize a reader to read data into a graph
+     * @param g the graph in which the data will be read
+     */
+    GraphReader(common::types::AbstractGraph* g) : _graph(g) {}
+    /**
+     * @brief read file data into graph
+     * @return 0 on success
+     *         1 on failure
+     */
+    virtual int readFile(FILE* file) = 0;
 
-     /**
-      * @brief standard destructor
-      */
-     virtual ~GraphReader();
- protected:
-     common::types::AbstractGraph* _graph;
+    /**
+     * @brief standard destructor
+     */
+    virtual ~GraphReader();
+protected:
+    common::types::AbstractGraph* _graph;
 };
 
 }  // namespace reader

@@ -13,27 +13,30 @@
 #include "AbstractGraph.hpp"
 #include "GraphReader.hpp"
 
-namespace backend {
-namespace reader {
+namespace backend
+{
+namespace reader
+{
 
 /**
  * @class JSONGraphReader
  * @brief Implementation of the GraphReader interface which accepts only
  * JSON-formatted files
  */
-class JSONGraphReader : public GraphReader {
- public:
-     /**
-      * @brief initalize a reader to read data into a graph
-      * @param g the graph in which the data will be read
-      */
-     JSONGraphReader(common::types::AbstractGraph* g);
-     /**
-      * @brief read file data into graph
-      * @return 0 on success
-      *         1 on failure
-      */
-     int readFile(FILE* file);
+class JSONGraphReader : public GraphReader
+{
+public:
+    /**
+     * @brief initalize a reader to read data into a graph
+     * @param g the graph in which the data will be read
+     */
+    JSONGraphReader(common::types::AbstractGraph* g);
+    /**
+     * @brief read file data into graph
+     * @return 0 on success
+     *         1 on failure
+     */
+    int readFile(FILE* file);
 };
 
 }  // namespace reader

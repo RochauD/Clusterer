@@ -12,72 +12,76 @@
 //Own libraries
 #include "compiler_defs.hpp"
 
-namespace common {
-namespace utils {
+namespace common
+{
+namespace utils
+{
 
 /**
  * @class ErrorLogger
  * @brief logging errors using a singleton logger
  */
 
-class ErrorLogger {
- public:
-     /**
-      * @brief get logger instance
-      * @return ErrorLogger instance
-      */
-     static ErrorLogger& getInstance() {
-         return instance;
-     }
-     
-     /**
-      * @brief log assert message
-      * @param tag used to identify message source
-      * @param msg logged message
-      */
-     void logAssert(const std::string& tag, const std::string& msg);
-    
-     
-     /**
-      * @brief log debug message
-      * @param tag used to identify message source
-      * @param msg logged message
-      */
-     void logDebug(const std::string& tag, const std::string& msg);
+class ErrorLogger
+{
+public:
+    /**
+     * @brief get logger instance
+     * @return ErrorLogger instance
+     */
+    static ErrorLogger& getInstance()
+    {
+        return instance;
+    }
 
-          
-     /**
-      * @brief log error message
-      * @param tag used to identify message source
-      * @param msg logged message
-      */
-     void logError(const std::string& tag, const std::string& msg);
-     
-     
-     /**
-      * @brief log info message
-      * @param tag used to identify message source
-      * @param msg logged message
-      */
-     void logInfo(const std::string& tag, const std::string& msg);
-     
-     
-     /**
-      * @brief log verbose message
-      * @param tag used to identify message source
-      * @param msg logged message
-      */
-     void logVerbose(const std::string& tag, const std::string& msg);
+    /**
+     * @brief log assert message
+     * @param tag used to identify message source
+     * @param msg logged message
+     */
+    void logAssert(const std::string& tag, const std::string& msg);
 
 
-     /**
-      * @brief log unexpected errors ("what a terrible failure")
-      * @param tag used to identify message source
-      * @param msg logged message
-      */
-     void logWtf(const std::string& tag, const std::string& msg);
+    /**
+     * @brief log debug message
+     * @param tag used to identify message source
+     * @param msg logged message
+     */
+    void logDebug(const std::string& tag, const std::string& msg);
 
- private:
+
+    /**
+     * @brief log error message
+     * @param tag used to identify message source
+     * @param msg logged message
+     */
+    void logError(const std::string& tag, const std::string& msg);
+
+
+    /**
+     * @brief log info message
+     * @param tag used to identify message source
+     * @param msg logged message
+     */
+    void logInfo(const std::string& tag, const std::string& msg);
+
+
+    /**
+     * @brief log verbose message
+     * @param tag used to identify message source
+     * @param msg logged message
+     */
+    void logVerbose(const std::string& tag, const std::string& msg);
+
+
+    /**
+     * @brief log unexpected errors ("what a terrible failure")
+     * @param tag used to identify message source
+     * @param msg logged message
+     */
+    void logWtf(const std::string& tag, const std::string& msg);
+
+private:
     static ErrorLogger instance;
     DISALLOW_CONSTRUCTION(ErrorLogger);
 };

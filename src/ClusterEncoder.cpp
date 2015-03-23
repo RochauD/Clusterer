@@ -6,8 +6,10 @@
 #include "../include/ClusterEncoder.hpp"
 #include "../include/Vertex.hpp"
 
-namespace backend {
-namespace genetic {
+namespace backend
+{
+namespace genetic
+{
 
 ClusterEncoder::ClusterEncoder(const common::types::AbstractGraph& g)
 {

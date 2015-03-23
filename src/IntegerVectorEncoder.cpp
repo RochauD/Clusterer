@@ -9,8 +9,10 @@
 #include <vector>
 #include <unordered_map>
 
-namespace backend {
-namespace genetic {
+namespace backend
+{
+namespace genetic
+{
 
 IntegerVectorEncoder::IntegerVectorEncoder(const common::types::AbstractGraph& g) : ClusterEncoder(g)
 {

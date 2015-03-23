@@ -19,8 +19,8 @@
 * @class ConfigurationManager
 * @brief Manages the configuration of the algorithm.
 * @details The class ConfigurationManager is a proxy class that manages the
-* algorithm parameters defined in the struct ClusteringParams. It provides 
-* setter and getter methods as well as the loading and saving of 
+* algorithm parameters defined in the struct ClusteringParams. It provides
+* setter and getter methods as well as the loading and saving of
 * configuration parameters to files.
 */
 class ConfigurationManager
@@ -122,7 +122,7 @@ public:
     */
     double getMaxFitness();
     /**
-    * @brief Returns the phase switch fitness value threshold, on which the 
+    * @brief Returns the phase switch fitness value threshold, on which the
     * algorithm should switch the phase.
     * @return The phase switch fitness value.
     */
@@ -139,7 +139,7 @@ public:
     */
     uint64_t getPredictedClusterCount();
     /**
-    * @brief Returns the number of threads that should be used in the 
+    * @brief Returns the number of threads that should be used in the
     * computation of the algorithm.
     * @return The number of threads.
     */
@@ -148,7 +148,7 @@ public:
     /**
     * @brief Loads clustering parameters from the specified file.
     * @param fullPathName The full path to a file. This should include both the
-    * absolute or relative directory and the filename and file extension of the 
+    * absolute or relative directory and the filename and file extension of the
     * file.
     * @return void
     * @throws std::runtime_error
@@ -169,7 +169,7 @@ private:
     /**
     * @var clusteringParams
     * @brief Clustering parameters.
-    * @details The member variable clusteringParams is the underlying data 
+    * @details The member variable clusteringParams is the underlying data
     * structure which stores the parameters.
     */
     ClusteringParams clusteringParams;
