@@ -26,9 +26,8 @@ public:
      * @return the new clustering solution if a mutation occurred, or the old
      * one otherwise
      */
-    virtual ClusterEncoder::Encoding
-    mutate(const ClusterEncoder::Encoding& cluster,
-           double probability);
+    virtual ClusterEncoder::Encoding mutate(const ClusterEncoder::Encoding& cluster,
+                                            double probability);
 
     virtual ~RefinementMutationEngine();
 };

@@ -144,6 +144,12 @@ set(CLUSTER_SOURCES
 set(CLUSTER_TEST_FILENAMES
         ConfigurationManager
         ConfigurationReaderWriter
+        ErrorLogger
+        FlagParser
+        GeneticGui
+        JSONGraphReader
+        SocialClusteringService
+        Vertex
     )
 
 ######################

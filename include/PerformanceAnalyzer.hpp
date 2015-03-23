@@ -26,8 +26,7 @@ public:
      * @param clusteringSolution a clustering solution
      * @return a score corresponding to the clustering solution
      */
-    virtual Score
-    analyze(const ClusterEncoder::Encoding& clusteringSolution);
+    virtual Score analyze(const ClusterEncoder::Encoding& clusteringSolution);
 
     virtual ~PerformanceAnalyzer();
 };
