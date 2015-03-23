@@ -37,7 +37,7 @@ class GeneticGui{
     /**
      * @brief get the configuration parameters
      */
-    Config getConfigParams() const;
+    const Config getConfigParams();
 
     /*
      * @brief start the GUI instance in its own thread
@@ -53,7 +53,7 @@ class GeneticGui{
     /**
      * @brief standard destructor
      */
-    ~FrontendQHandler() {}
+    ~GeneticGui() {}
     /**
      * @brief copy constructor
      */
@@ -62,7 +62,7 @@ class GeneticGui{
     /**
      * @brief config used when displaying information
      */
-    const Config& _config;
+    Config _config;
 };
 
 }  // namespace frontend

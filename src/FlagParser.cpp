@@ -10,36 +10,37 @@ namespace common {
 namespace utils {
 
 
-static void FlagParser::addFlag(const char shortOpt, const std::string& longOpt,
+void FlagParser::addFlag(const char shortOpt, const std::string& longOpt,
              bool optMandatory, bool argMandatory)
 {
 
 }
 
-static int FlagParser::parse(const int argc, char* const argv[])
+int FlagParser::parse(const int argc, char* const argv[])
 {
-  return 0;
+    return 0;
 }
 
-static bool FlagParser::hasArg(char shortOpt)
+bool FlagParser::hasArg(char shortOpt)
 {
-  return true;
+    return true;
 }
 
-static std::string FlagParser::getArg(char shortOpt)
+std::string FlagParser::getArg(char shortOpt)
 {
-  return shortOpt;
+    return "";
 }
 
- static std::vector<std::string> FlagParser::getArgs(char shortOpt)
- {
-  return shortOpt;
- }
-
-
-static std::string FlagParser::getUsage()
+std::vector<std::string> FlagParser::getArgs(char shortOpt)
 {
-  return "Usage message";
+    std::vector<std::string> a;
+    return a;
+}
+
+
+std::string FlagParser::getUsage()
+{
+    return "Usage message";
 }
 
 }  // namespace utils

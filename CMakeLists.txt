@@ -96,6 +96,10 @@ set(CLUSTER_SOURCES_CPP
         ${CLUSTER_SOURCE_DIR}/GeneticStrategy.cpp
         ${CLUSTER_SOURCE_DIR}/TwoPhaseStrategy.cpp
         ${CLUSTER_SOURCE_DIR}/JSONGraphReader.cpp
+        ${CLUSTER_SOURCE_DIR}/ErrorLogger.cpp
+        ${CLUSTER_SOURCE_DIR}/FlagParser.cpp
+        ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
+        ${CLUSTER_SOURCE_DIR}/SocialClusteringService.cpp
     )
 
 # header files
@@ -121,6 +125,12 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
+        ${CLUSTER_INCLUDE_DIR}/ErrorLogger.hpp
+        ${CLUSTER_INCLUDE_DIR}/FlagParser.hpp
+        ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/GeneticGui.hpp
+        ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
     )
 # combined
 set(CLUSTER_SOURCES 

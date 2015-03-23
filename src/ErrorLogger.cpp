@@ -3,7 +3,7 @@
 #include <vector>
 
 //Own libraries
-#include "compiler_defs.hpp"
+#include "../include/compiler_defs.hpp"
 #include "../include/ErrorLogger.hpp"
 
 namespace common {

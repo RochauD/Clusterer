@@ -11,7 +11,6 @@
 #include <functional>
 
 //Own libraries
-#include "QueryHandler.hpp"
 #include "CrossoverEngine.hpp"
 #include "MutationEngine.hpp"
 #include "FitnessAnalyzer.hpp"
@@ -50,14 +49,14 @@ class SocialClusteringService {
      SocialClusteringService();
      SocialClusteringService(const SocialClusteringService&);
 
-     IntegerVectorEncoder _clusterEncoder;
-     CrossoverEngine _crossoverEngine;
-     MutationEngine _mutationEngine;
-     FitnessAnalyzer _fitnessAnalyzer;
-     GeneticStrategy _geneticStrategy;
-     GraphReader _graphReader;
+     genetic::ClusterEncoder* _clusterEncoder;
+     genetic::CrossoverEngine* _crossoverEngine;
+     genetic::MutationEngine* _mutationEngine;
+     genetic::FitnessAnalyzer* _fitnessAnalyzer;
+     genetic::GeneticStrategy* _geneticStrategy;
+     reader::GraphReader* _graphReader;
 
-     PersonDb _personDb;
+     dbc::PersonDb* _personDb;
 };
 
 }  // namespace backend

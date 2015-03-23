@@ -8,7 +8,6 @@
 #include <string>
 #include <functional>
 
-#include "../include/QueryHandler.hpp"
 #include "../include/SocialClusteringService.hpp"
 
 
@@ -27,7 +26,7 @@ SocialClusteringService::SocialClusteringService()
 
 }
 
-SocialClusteringService(const SocialClusteringService&)
+SocialClusteringService::SocialClusteringService(const SocialClusteringService& cpy)
 {
 
 }

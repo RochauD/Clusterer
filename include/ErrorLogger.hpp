@@ -27,7 +27,6 @@ class ErrorLogger {
       * @return ErrorLogger instance
       */
      static ErrorLogger& getInstance() {
-         static ErrorLogger instance;
          return instance;
      }
      
@@ -79,6 +78,7 @@ class ErrorLogger {
      void logWtf(const std::string& tag, const std::string& msg);
 
  private:
+    static ErrorLogger instance;
     DISALLOW_CONSTRUCTION(ErrorLogger);
 };
 

@@ -8,9 +8,9 @@ void GeneticGui::setConfigParams(const Config& config)
 
 }
 
-Config getConfigParams() const
+GeneticGui::Config getConfigParams()
 {
-    Config x; 
+    GeneticGui::Config x; 
     return x;
 }
 
@@ -21,9 +21,9 @@ void GeneticGui::startGui()
         
 GeneticGui::GeneticGui()
 {
-
+  
 }
-GeneticGui::GeneticGui(const GeneticGui&)
+GeneticGui::GeneticGui(const GeneticGui& cpy)
 {
 
 }
