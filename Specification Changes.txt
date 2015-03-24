@@ -1,0 +1,11 @@
+Change 1:
+We took the struct ConfigurationParams defined in SocialClusteringService.hpp out of the file and put it into its own file. Moreover we added a managing utiltiy for it which is a proxy for the structure. Additionally we added the ability to load a configuration from a file.
+
+Change 2: 
+We changed the folder structure of the project from having multiple subfolders in a src directory to a more stream lined and common model. We have now a folder include, which includes all the header files. All source files are added to the folder src and we will build the project always in the folder build, which only exist on our dev machines and will not be committed.
+
+Change 3:
+We changed the AbstractGraph class to be a non-template class and added a separate Vertex class because this greatly simplifies the implementation of this and other related classes. Most of the provided header stubs were not compatible with the AbstractGraph<V> class and had to be  modified, thus we opted for modifying the graph class instead.
+
+Change 4:
+Renamed the "Encoder" classes to "Encoding" classes as it makes sense for them to be internally hoding a solution encoding and performing utility operations on it instead of just the latter. In fact, the design by group two seems to have this exact idea in mind, however no private/protected containers were specified.
