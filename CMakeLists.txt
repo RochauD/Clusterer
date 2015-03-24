@@ -100,7 +100,6 @@ set(CLUSTER_SOURCES_CPP
         ${CLUSTER_SOURCE_DIR}/GeneticStrategy.cpp
         ${CLUSTER_SOURCE_DIR}/TwoPhaseStrategy.cpp
         ${CLUSTER_SOURCE_DIR}/JSONGraphReader.cpp
-        ${CLUSTER_SOURCE_DIR}/ErrorLogger.cpp
         ${CLUSTER_SOURCE_DIR}/FlagParser.cpp
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
         ${CLUSTER_SOURCE_DIR}/SocialClusteringService.cpp
@@ -134,7 +133,6 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
-        ${CLUSTER_INCLUDE_DIR}/ErrorLogger.hpp
         ${CLUSTER_INCLUDE_DIR}/FlagParser.hpp
         ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
@@ -162,7 +160,6 @@ set(CLUSTER_SOURCES
 set(CLUSTER_TEST_FILENAMES
         ConfigurationManager
         ConfigurationReaderWriter
-        ErrorLogger
         FlagParser
         GeneticGui
         JSONGraphReader
@@ -176,8 +173,8 @@ set(CLUSTER_TEST_FILENAMES
 # Output Directories #
 ######################
 
-set(COMMON_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
-set(COMMON_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/libs")
+set(COMMON_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(COMMON_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/libs")
 
 #############
 # Libraries #
@@ -192,7 +189,10 @@ link_directories(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
 
 add_executable(BlueClusterer main.cpp)
 target_link_libraries(BlueClusterer backend)
-target_link_libraries(pthread)
+if(NOT WIN32 )
+    target_link_libraries(BlueClusterer pthread)
+endif()
+
 
 ###########
 # Testing #
