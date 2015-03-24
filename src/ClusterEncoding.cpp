@@ -4,7 +4,6 @@
   */
 
 #include "../include/ClusterEncoding.hpp"
-#include "../include/Vertex.hpp"
 
 namespace backend
 {
