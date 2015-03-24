@@ -6,3 +6,6 @@ We changed the folder structure of the project from having multiple subfolders i
 
 Change 3:
 We changed the AbstractGraph class to be a non-template class and added a separate Vertex class because this greatly simplifies the implementation of this and other related classes. Most of the provided header stubs were not compatible with the AbstractGraph<V> class and had to be  modified, thus we opted for modifying the graph class instead.
+
+Change 4:
+Renamed the "Encoder" classes to "Encoding" classes as it makes sense for them to be internally hoding a solution encoding and performing utility operations on it instead of just the latter. In fact, the design by group two seems to have this exact idea in mind, however no private/protected containers were specified.

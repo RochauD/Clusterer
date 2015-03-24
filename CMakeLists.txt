@@ -153,6 +153,7 @@ set(CLUSTER_TEST_FILENAMES
         SocialClusteringService
         Vertex
         Graph
+        IntegerVectorEncoding
     )
 
 ######################
