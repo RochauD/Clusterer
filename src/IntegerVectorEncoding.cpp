@@ -46,7 +46,7 @@ std::vector<VertexId> IntegerVectorEncoding::getVerticesInCluster(ClusterId clus
 	return result;
 }
 
-ClusterEncoding::Encoding IntegerVectorEncoding::getClusterEncoding()
+ClusterEncoding::Encoding IntegerVectorEncoding::getEncoding()
 {
 	return encoding;
 }
@@ -73,6 +73,7 @@ int IntegerVectorEncoding::normalize()
     }
 
     return 0;
+}
 
 IntegerVectorEncoding::~IntegerVectorEncoding()
 {

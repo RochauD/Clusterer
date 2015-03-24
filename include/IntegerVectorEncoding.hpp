@@ -55,7 +55,7 @@ public:
      * @brief get the current encoding
      * @return the current encoding of a solution
      */
-    ClusterEncoding::Encoding getClusterEncoding();
+    ClusterEncoding::Encoding getEncoding();
 
     /**
      * @brief does a renumbering procedure to ensure unique representation of a solution
