@@ -7,6 +7,8 @@
 #include "../include/Graph.hpp"
 //#include "../include/AbstractGraph.hpp"
 
+#include <iostream>
+
 namespace common
 {
 namespace types
