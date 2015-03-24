@@ -58,6 +58,12 @@ public:
     Encoding getClusterEncoding();
 
     /**
+     * @brief does a renumbering procedure to ensure unique representation of a solution
+     * @return 0 on success -1 on failiure
+     */
+    int normalize();
+
+    /**
      * @brief standard destructor
      */
     ~IntegerVectorEncoding();
