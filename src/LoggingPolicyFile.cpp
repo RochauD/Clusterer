@@ -23,7 +23,15 @@ void LoggingPolicyFile::executeHelper(const LoggerBufferEntry& entry)
     {
         std::time_t time = std::chrono::system_clock::to_time_t(entry.logTimePoint);
         std::tm* timeInfo = std::localtime(&time);
+
+        // remove when gcc finally reaches version 5.0 and put_time is implemented!
+        #ifdef __linux__
+        char buffer[255] = {0};
+        strftime(buffer, 255, "%d/%m/%Y %H:%M:%S", timeInfo);
+        outputFileStream << buffer << " : ";
+        #else
         outputFileStream << std::put_time(timeInfo, "%d/%m/%Y %H:%M:%S") << " : ";
+        #endif
         outputFileStream << severityTypeToString(entry.severityType) << " : ";
         outputFileStream << entry.logMessage << "\n";
 
