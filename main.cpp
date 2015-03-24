@@ -10,7 +10,7 @@ int main()
     Logger<LoggingPolicyFile> logger(std::move(uPtr), SeverityLevel::ALL);
 
 
-    logger.log(SeverityType::WARNING, "File: ", __FILE__, " | Function: ", __FUNCTIONW__);
+    logger.log(SeverityType::WARNING, "File: ", __FILE__);
 
     return 0;
 }
