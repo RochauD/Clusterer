@@ -100,6 +100,7 @@ set(CLUSTER_SOURCES_CPP
         ${CLUSTER_SOURCE_DIR}/FlagParser.cpp
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
         ${CLUSTER_SOURCE_DIR}/SocialClusteringService.cpp
+        ${CLUSTER_SOURCE_DIR}/Graph.cpp
     )
 
 # header files
@@ -131,6 +132,7 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/GeneticGui.hpp
         ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
+        ${CLUSTER_INCLUDE_DIR}/Graph.hpp
     )
 # combined
 set(CLUSTER_SOURCES 
@@ -150,6 +152,7 @@ set(CLUSTER_TEST_FILENAMES
         JSONGraphReader
         SocialClusteringService
         Vertex
+        Graph
     )
 
 ######################

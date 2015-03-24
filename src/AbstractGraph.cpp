@@ -12,7 +12,11 @@ namespace types
 
 AbstractGraph::AbstractGraph()
 {
+    //ctor
+}
 
+AbstractGraph::~AbstractGraph(){
+    //dtor
 }
 
 
