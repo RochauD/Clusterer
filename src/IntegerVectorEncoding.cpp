@@ -14,10 +14,10 @@ namespace backend
 namespace genetic
 {
 
-IntegerVectorEncoding::IntegerVectorEncoding(common::types::AbstractGraph& g) : ClusterEncoding(g)
+IntegerVectorEncoding::IntegerVectorEncoding(common::types::Graph& g) : graph(g), ClusterEncoding(g)
 {
     // Set encoding to be as big as the vertex array
-    encoding.resize(g.getVertices().size());
+    encoding.resize(g.getNoVertices());
 }
 
 int IntegerVectorEncoding::addToCluster(VertexId vertexId, ClusterId clusterId)

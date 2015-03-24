@@ -11,7 +11,7 @@
 #include <unordered_map>
 
 // Own headers
-#include "AbstractGraph.hpp"
+#include "Graph.hpp"
 #include "ClusterEncoding.hpp"
 
 namespace backend
@@ -27,7 +27,7 @@ public:
      * @brief create a default clustering scheme from graph g
      * @param g the graph to cluster
      */
-    IntegerVectorEncoding(common::types::AbstractGraph& g);
+    IntegerVectorEncoding(common::types::Graph& g);
 
     /**
      * @brief move a vertex to a specific cluster
@@ -70,6 +70,7 @@ public:
 
 private:
     ClusterEncoding::Encoding encoding;
+    common::types::Graph &graph;
 };
 
 }  // namespace genetic
