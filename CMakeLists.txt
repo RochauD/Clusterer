@@ -160,7 +160,6 @@ set(CLUSTER_SOURCES
 set(CLUSTER_TEST_FILENAMES
         ConfigurationManager
         ConfigurationReaderWriter
-        ErrorLogger
         FlagParser
         GeneticGui
         JSONGraphReader
@@ -174,8 +173,8 @@ set(CLUSTER_TEST_FILENAMES
 # Output Directories #
 ######################
 
-set(COMMON_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
-set(COMMON_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/libs")
+set(COMMON_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(COMMON_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/libs")
 
 #############
 # Libraries #
