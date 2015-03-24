@@ -1,12 +1,16 @@
 #include <iostream>
-#include "include/ConfigurationManager.hpp"
+#include <memory>
+#include "include/Logger.hpp"
+#include "include/LoggingPolicyFile.hpp"
 
-using namespace std;
 
 int main()
 {
-	ConfigurationManager cfg;
-	cfg.saveClusteringParams("test.txt");
-    cout << "COMPILES!!!!\n";
+    std::unique_ptr<LoggingPolicyFile> uPtr(new LoggingPolicyFile("test.txt"));
+    Logger<LoggingPolicyFile> logger(std::move(uPtr), SeverityLevel::ALL);
+
+
+    logger.log(SeverityType::WARNING, "File: ", __FILE__, " | Function: ", __FUNCTIONW__);
+
     return 0;
 }
