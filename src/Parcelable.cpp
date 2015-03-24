@@ -68,7 +68,7 @@ ParcelEncoder::ParcelEncoder(const ParcelEncoder&)
    
 const ParcelEncoder& ParcelEncoder::operator=(const ParcelEncoder& x)
 {
-    return x;   
+    return *this;   
 }
 
 
