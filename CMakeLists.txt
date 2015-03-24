@@ -45,6 +45,10 @@ else()
 
     # Enable all warnings
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+
+    # Add pthread to allow c++11 threads
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpthread")
+
 endif()
 message ("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
 message("-- Finished setting compiler settings.")
@@ -87,7 +91,10 @@ set(CLUSTER_TEST_DIR ${PROJECT_SOURCE_DIR}/test)
 set(CLUSTER_SOURCES_CPP 
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
-        ${CLUSTER_SOURCE_DIR}/Logger.cpp
+        ${CLUSTER_SOURCE_DIR}/LoggerSeverityLevel.cpp
+        ${CLUSTER_SOURCE_DIR}/LoggerSeverityType.cpp
+        ${CLUSTER_SOURCE_DIR}/LoggingPolicy.cpp
+        ${CLUSTER_SOURCE_DIR}/LoggingPolicyFile.cpp
     )
 
 # header files
@@ -95,7 +102,14 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/ClusteringParams.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationManager.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
-        ${CLUSTER_SOURCE_DIR}/Logger.hpp
+        ${CLUSTER_INCLUDE_DIR}/ConcurrentLockingQueue.hpp
+        ${CLUSTER_INCLUDE_DIR}/Logger.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerSeverityLevel.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerSeverityType.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerException.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerBufferEntry.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggingPolicy.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggingPolicyFile.hpp
     )
 # combined
 set(CLUSTER_SOURCES 
