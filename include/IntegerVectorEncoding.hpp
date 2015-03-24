@@ -27,7 +27,7 @@ public:
      * @brief create a default clustering scheme from graph g
      * @param g the graph to cluster
      */
-    IntegerVectorEncoding(const common::types::AbstractGraph& g);
+    IntegerVectorEncoding(common::types::AbstractGraph& g);
 
     /**
      * @brief move a vertex to a specific cluster
@@ -55,7 +55,7 @@ public:
      * @brief get the current encoding
      * @return the current encoding of a solution
      */
-    Encoding getClusterEncoding();
+    ClusterEncoding::Encoding getClusterEncoding();
 
     /**
      * @brief standard destructor
@@ -63,7 +63,7 @@ public:
     ~IntegerVectorEncoding();
 
 private:
-    Encoding encoding;
+    ClusterEncoding::Encoding encoding;
 };
 
 }  // namespace genetic

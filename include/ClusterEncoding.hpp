@@ -26,12 +26,12 @@ namespace genetic
 class ClusterEncoding
 {
 public:
-    typedef std::vector<VertexId> Encoding;
+    typedef std::vector<ClusterId> Encoding;
     /**
     * @brief create a default clustering scheme from graph g
     * @param g the graph to cluster
     */
-    ClusterEncoding(const common::types::AbstractGraph &g);
+    ClusterEncoding(common::types::AbstractGraph &g);
 
     /**
      * @brief standard destructor
@@ -63,7 +63,7 @@ public:
     virtual Encoding getEncoding () = 0;
 
 protected:
-    const common::types::AbstractGraph &graph;
+    common::types::AbstractGraph &graph;
 };
 
 }  // namespace genetic

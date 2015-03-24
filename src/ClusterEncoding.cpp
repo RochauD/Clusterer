@@ -11,7 +11,7 @@ namespace backend
 namespace genetic
 {
 
-ClusterEncoding::ClusterEncoding(const common::types::AbstractGraph& g) : graph(g)
+ClusterEncoding::ClusterEncoding(common::types::AbstractGraph& g) : graph(g)
 {
 
 }
