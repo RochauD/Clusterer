@@ -35,32 +35,32 @@ public:
      * @param clusterId the id of the destination cluster
      * @return 0 on success and -1 on failure.
      */
-    virtual int addToCluster(VertexId vertexId, ClusterId clusterId);
+    int addToCluster(VertexId vertexId, ClusterId clusterId);
 
     /**
      * @brief get the cluster of a vertex
      * @param vertexId the vertex for which we want to get the cluster
      * @return the clusterId of the vertex
      */
-    virtual ClusterId getClusterOfVertex(VertexId vertexId);
+    ClusterId getClusterOfVertex(VertexId vertexId);
 
     /**
      * @brief get the vertices in a cluster
      * @param clusterId the cluster for which we want to get the vertices
      * @return a vector containing all vertices in the cluster
      */
-    virtual std::vector<VertexId> getVerticesInCluster(ClusterId clusterId);
+    std::vector<VertexId> getVerticesInCluster(ClusterId clusterId);
 
     /**
      * @brief get the current encoding of the cluster
      * @return the encoding of the cluster
      */
-    virtual Encoding getClusterEncoding();
+    Encoding getClusterEncoding();
 
     /**
      * @brief standard destructor
      */
-    virtual ~IntegerVectorEncoder();
+    ~IntegerVectorEncoder();
 };
 
 }  // namespace genetic
