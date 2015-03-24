@@ -16,7 +16,8 @@ namespace genetic
 
 IntegerVectorEncoding::IntegerVectorEncoding(const common::types::AbstractGraph& g) : ClusterEncoding(g)
 {
-
+    // Set encoding to be as big as the vertex array
+    encoding.resize(g.getVertices().size());
 }
 
 
