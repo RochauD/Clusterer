@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 //Own libraries
-#include "ClusterEncoder.hpp"
+#include "ClusterEncoding.hpp"
 #include "AbstractGraph.hpp"
 #include "GeneticStrategy.hpp"
 
@@ -46,7 +46,7 @@ public:
      * @brief get the current clustering solution
      * @return the current clustering solution
      */
-    virtual ClusterEncoder::Encoding getClusteringSolution();
+    virtual ClusterEncoding::Encoding getClusteringSolution();
 
     virtual ~TwoPhaseStrategy();
 

@@ -14,7 +14,7 @@
 #include "CrossoverEngine.hpp"
 #include "MutationEngine.hpp"
 #include "FitnessAnalyzer.hpp"
-#include "IntegerVectorEncoder.hpp"
+#include "IntegerVectorEncoding.hpp"
 #include "GeneticStrategy.hpp"
 #include "PersonDb.hpp"
 #include "GraphReader.hpp"
@@ -52,7 +52,7 @@ private:
     SocialClusteringService();
     SocialClusteringService(const SocialClusteringService&);
 
-    genetic::ClusterEncoder* _clusterEncoder;
+    genetic::ClusterEncoding* _ClusterEncoding;
     genetic::CrossoverEngine* _crossoverEngine;
     genetic::MutationEngine* _mutationEngine;
     genetic::FitnessAnalyzer* _fitnessAnalyzer;

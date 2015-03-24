@@ -1,9 +1,9 @@
 /**
-  * @file IntegerVectorEncoder.hpp
+  * @file IntegerVectorEncoding.hpp
   * @brief encoder interface implementation
   */
 
-#include "../include/IntegerVectorEncoder.hpp"
+#include "../include/IntegerVectorEncoding.hpp"
 
 #include <stdint.h>
 #include <vector>
@@ -14,7 +14,7 @@ namespace backend
 namespace genetic
 {
 
-IntegerVectorEncoder::IntegerVectorEncoder(const common::types::AbstractGraph& g) : ClusterEncoder(g)
+IntegerVectorEncoding::IntegerVectorEncoding(const common::types::AbstractGraph& g) : ClusterEncoding(g)
 {
 
 }

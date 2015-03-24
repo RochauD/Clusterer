@@ -1,9 +1,9 @@
 /**
-  * @file ClusterEncoder.hpp
+  * @file ClusterEncoding.hpp
   * @brief cluster encoder interface
   */
-#ifndef _BACKEND_GENETIC_CLUSTERENCODER_HPP
-#define _BACKEND_GENETIC_CLUSTERENCODER_HPP
+#ifndef _BACKEND_GENETIC_ClusterEncoding_HPP
+#define _BACKEND_GENETIC_ClusterEncoding_HPP
 
 // Standard libraries
 #include <stdint.h>
@@ -20,10 +20,10 @@ namespace genetic
 
 
 /**
- * @class ClusterEncoder
+ * @class ClusterEncoding
  * @interface for objects that allow a cluster to be encoded
  */
-class ClusterEncoder
+class ClusterEncoding
 {
 public:
     typedef std::vector<VertexId> Encoding;
@@ -31,12 +31,12 @@ public:
     * @brief create a default clustering scheme from graph g
     * @param g the graph to cluster
     */
-    ClusterEncoder(const common::types::AbstractGraph &g);
+    ClusterEncoding(const common::types::AbstractGraph &g);
 
     /**
      * @brief standard destructor
      */
-    virtual ~ClusterEncoder();
+    virtual ~ClusterEncoding();
     /**
     * @brief move a vertex to a specific cluster
     * @param VertexId the id of the vertex to be moved
@@ -57,10 +57,13 @@ public:
     */
     virtual std::vector< VertexId > getVerticesInCluster (ClusterId clusterId) = 0;
     /**
-    * @brief get the current encoding of the cluster
-    * @return the encoding of the cluster
-    */
-    virtual Encoding getClusterEncoding () = 0;
+     * @brief get the current encoding
+     * @return the current encoding of a solution
+     */
+    virtual Encoding getEncoding () = 0;
+
+protected:
+    const common::types::AbstractGraph &graph;
 };
 
 }  // namespace genetic

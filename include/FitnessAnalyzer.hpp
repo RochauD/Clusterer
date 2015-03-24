@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 //Own libraries
-#include "ClusterEncoder.hpp"
+#include "ClusterEncoding.hpp"
 #include "Vertex.hpp"
 
 namespace backend
@@ -32,7 +32,7 @@ public:
      * @param clusteringSolution a clustering solution
      * @return a score corresponding to the clustering solution
      */
-    virtual Score analyze(const ClusterEncoder::Encoding& clusteringSolution) = 0;
+    virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution) = 0;
 
     /**
      * @brief standard destructor

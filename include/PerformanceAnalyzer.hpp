@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 //Own libraries
-#include "ClusterEncoder.hpp"
+#include "ClusterEncoding.hpp"
 
 namespace backend
 {
@@ -26,7 +26,7 @@ public:
      * @param clusteringSolution a clustering solution
      * @return a score corresponding to the clustering solution
      */
-    virtual Score analyze(const ClusterEncoder::Encoding& clusteringSolution);
+    virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution);
 
     virtual ~PerformanceAnalyzer();
 };

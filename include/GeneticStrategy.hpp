@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 //Own libraries
-#include "ClusterEncoder.hpp"
+#include "ClusterEncoding.hpp"
 #include "AbstractGraph.hpp"
 
 namespace backend
@@ -40,7 +40,7 @@ public:
      * @brief get the current clustering solution
      * @return the current clustering solution
      */
-    virtual ClusterEncoder::Encoding getClusteringSolution() = 0;
+    virtual ClusterEncoding::Encoding getClusteringSolution() = 0;
 
     /**
      * @brief standard destructor

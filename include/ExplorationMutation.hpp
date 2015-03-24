@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 //Own libraries
-#include "ClusterEncoder.hpp"
+#include "ClusterEncoding.hpp"
 
 namespace backend
 {
@@ -26,8 +26,8 @@ public:
      * @return the new clustering solution if a mutation occurred, or the old
      * one otherwise
      */
-    virtual ClusterEncoder::Encoding
-    mutate(const ClusterEncoder::Encoding& cluster,
+    virtual ClusterEncoding::Encoding
+    mutate(const ClusterEncoding::Encoding& cluster,
            double probability);
     /**
      * @brief standard destructor

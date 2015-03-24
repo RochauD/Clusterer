@@ -4,7 +4,7 @@
   */
 
 #include <stdint.h>
-#include "../include/ClusterEncoder.hpp"
+#include "../include/ClusterEncoding.hpp"
 #include "../include/AbstractGraph.hpp"
 #include "../include/GeneticStrategy.hpp"
 

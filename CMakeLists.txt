@@ -88,9 +88,9 @@ set(CLUSTER_SOURCES_CPP
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
         ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
-        ${CLUSTER_SOURCE_DIR}/ClusterEncoder.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusterEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Vertex.cpp
-        ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoder.cpp
+        ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Parcelable.cpp
         ${CLUSTER_SOURCE_DIR}/Person.cpp
         ${CLUSTER_SOURCE_DIR}/GeneticStrategy.cpp
@@ -109,10 +109,10 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/ConfigurationManager.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
         ${CLUSTER_INCLUDE_DIR}/AbstractGraph.hpp
-        ${CLUSTER_INCLUDE_DIR}/ClusterEncoder.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusterEncoding.hpp
         ${CLUSTER_INCLUDE_DIR}/FitnessAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/Vertex.hpp
-        ${CLUSTER_INCLUDE_DIR}/IntegerVectorEncoder.hpp
+        ${CLUSTER_INCLUDE_DIR}/IntegerVectorEncoding.hpp
         ${CLUSTER_INCLUDE_DIR}/CrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/MutationEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/Parcelable.hpp

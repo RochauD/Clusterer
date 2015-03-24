@@ -1,9 +1,9 @@
 /**
-  * @file IntegerVectorEncoder.hpp
+  * @file IntegerVectorEncoding.hpp
   * @brief encoder interface implementation
   */
-#ifndef _BACKEND_GENETIC_INTEGERVECTORENCODER_HPP
-#define _BACKEND_GENETIC_INTEGERVECTORENCODER_HPP
+#ifndef _BACKEND_GENETIC_IntegerVectorEncoding_HPP
+#define _BACKEND_GENETIC_IntegerVectorEncoding_HPP
 
 // Standard libraries
 #include <stdint.h>
@@ -12,7 +12,7 @@
 
 // Own headers
 #include "AbstractGraph.hpp"
-#include "ClusterEncoder.hpp"
+#include "ClusterEncoding.hpp"
 
 namespace backend
 {
@@ -20,14 +20,14 @@ namespace genetic
 {
 
 
-class IntegerVectorEncoder : public ClusterEncoder
+class IntegerVectorEncoding : public ClusterEncoding
 {
 public:
     /**
      * @brief create a default clustering scheme from graph g
      * @param g the graph to cluster
      */
-    IntegerVectorEncoder(const common::types::AbstractGraph& g);
+    IntegerVectorEncoding(const common::types::AbstractGraph& g);
 
     /**
      * @brief move a vertex to a specific cluster
@@ -52,18 +52,21 @@ public:
     std::vector<VertexId> getVerticesInCluster(ClusterId clusterId);
 
     /**
-     * @brief get the current encoding of the cluster
-     * @return the encoding of the cluster
+     * @brief get the current encoding
+     * @return the current encoding of a solution
      */
     Encoding getClusterEncoding();
 
     /**
      * @brief standard destructor
      */
-    ~IntegerVectorEncoder();
+    ~IntegerVectorEncoding();
+
+private:
+    Encoding encoding;
 };
 
 }  // namespace genetic
 }  // namespace backend
 
-#endif  // _BACKEND_GENETIC_INTEGERVECTORENCODER_HPP
+#endif  // _BACKEND_GENETIC_IntegerVectorEncoding_HPP

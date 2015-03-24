@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 //Own libraries
-#include "ClusterEncoder.hpp"
+#include "ClusterEncoding.hpp"
 
 namespace backend
 {
@@ -30,9 +30,9 @@ public:
      * @param parent2 the second parent contributing to the crossover
      * @return the new clustering encoding
      */
-    virtual ClusterEncoder::Encoding
-    crossover(const ClusterEncoder::Encoding& parent1,
-              const ClusterEncoder::Encoding& parent2) = 0;
+    virtual ClusterEncoding::Encoding
+    crossover(const ClusterEncoding::Encoding& parent1,
+              const ClusterEncoding::Encoding& parent2) = 0;
 
     /**
      * @brief standard destructor
