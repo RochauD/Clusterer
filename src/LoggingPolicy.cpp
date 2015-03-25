@@ -17,13 +17,11 @@ void LoggingPolicy::setLoggingQueue(ConcurrentLockingQueue<LoggerBufferEntry>* l
 void LoggingPolicy::execute()
 {
     LoggerBufferEntry currentEntry;
-
     while (!(this->finishedFlag.load() && this->concurrentLockingQueue->isEmpty()))
     {
         this->concurrentLockingQueue->pop(&currentEntry);
         this->executeHelper(currentEntry);
     }
-
 }
 
 void LoggingPolicy::kill()

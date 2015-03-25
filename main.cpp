@@ -7,6 +7,7 @@
 
 int main()
 {
+
     std::unique_ptr<LoggingPolicyFile> uPtr(new LoggingPolicyFile("test.txt"));
     Logger<LoggingPolicyFile> logger(std::move(uPtr), SeverityLevel::ALL);
 
@@ -16,6 +17,7 @@ int main()
     }
 
     logger.log(SeverityType::WARNING, "File: ", __FILE__);
+
 
 
     ConfigurationManager cfg;
