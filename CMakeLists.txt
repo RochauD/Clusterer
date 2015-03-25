@@ -188,8 +188,12 @@ link_directories(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
 ##############
 
 add_executable(BlueClusterer main.cpp)
-target_link_libraries(BlueClusterer backend)
-if(NOT WIN32 )
+
+if( WIN32 )
+    target_link_libraries(BlueClusterer debug backend)    
+    target_link_libraries(BlueClusterer optimized backend)   
+else()
+    target_link_libraries(BlueClusterer backend)
     target_link_libraries(BlueClusterer pthread)
 endif()
 

@@ -36,8 +36,7 @@ class ConcurrentLockingQueue
         void pop(Type* value);
         bool popNonWaiting(Type& value);
         bool popNonWaiting(Type* value);
-        void push(Type value);
-        //void push(const Type& value);
+        void push(const Type& value);
         void push(Type&& value);
         bool isEmpty();
 
@@ -126,17 +125,6 @@ bool ConcurrentLockingQueue<Type>::popNonWaiting(Type* value)
 }
 
 template <class Type>
-void ConcurrentLockingQueue<Type>::push(Type value)
-{
-    {
-        std::lock_guard<std::mutex> lock(this->queueMutex);
-        baseQueue.push(value);
-    }
-    queueCV.notify_one();
-}
-
-/*
-template <class Type>
 void ConcurrentLockingQueue<Type>::push(const Type& value)
 {
     {
@@ -145,7 +133,6 @@ void ConcurrentLockingQueue<Type>::push(const Type& value)
     }
     queueCV.notify_one();
 }
-*/
 
 template <class Type>
 void ConcurrentLockingQueue<Type>::push(Type&& value)
