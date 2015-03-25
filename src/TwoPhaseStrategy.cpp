@@ -22,6 +22,32 @@ TwoPhaseStrategy::TwoPhaseStrategy(const common::types::AbstractGraph& g) : Gene
 
 }
 
+TwoPhaseStrategy::~TwoPhaseStrategy()
+{
+
+}
+
+uint64_t TwoPhaseStrategy::runGeneticIteration()
+{
+    return 0;
+}
+
+uint64_t TwoPhaseStrategy::runExplorationIteration()
+{
+    return 0;
+}
+
+uint64_t TwoPhaseStrategy::runRefinementIteration()
+{
+    return 0;
+}
+
+ClusterEncoding::Encoding TwoPhaseStrategy::getClusteringSolution()
+{
+    ClusterEncoding::Encoding x;
+    return x;
+}
+
 double TwoPhaseStrategy::getMaxFitness()
 {
     return 0.0;

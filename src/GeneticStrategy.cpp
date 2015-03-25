@@ -18,5 +18,10 @@ GeneticStrategy::GeneticStrategy(const common::types::AbstractGraph& g)
 
 }
 
+GeneticStrategy::~GeneticStrategy()
+{
+
+}
+
 }  // namespace genetic
 }  // namespace backend

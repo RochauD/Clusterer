@@ -31,6 +31,7 @@ typedef uint64_t PersonId;
 /**
  * @class Person
  * @brief representation of a Social Network Person
+ * @todo fix this class. Currently outcommented as it is not compiling
  */
 struct Person : public common::types::Parcelable
 {
@@ -45,13 +46,15 @@ struct Person : public common::types::Parcelable
         : sourceDoc(std::move(sourceDoc)), name(std::move(name)),
           relations(std::move(relations)) {}
 
+    ~Person();
+
     inline bool operator!=(const Person& rhs) const
     {
-        if (relations.size() != rhs.relations.size()) return false;
+        if (relations.size() != rhs.relations.size()) { return false; }
 
         for (size_t i = 0; i < relations.size(); i++)
         {
-            if (relations[i] != rhs.relations[i]) return false;
+            if (relations[i] != rhs.relations[i]) { return false; }
         }
         return name != rhs.name;
     }

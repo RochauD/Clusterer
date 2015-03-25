@@ -2,9 +2,15 @@
 #include <string>
 #include "../include/Parcelable.hpp"
 
-namespace common {
-namespace types {
+namespace common
+{
+namespace types
+{
 
+Parcelable::~Parcelable()
+{
+
+}
 
 ParcelAllocator::ParcelAllocator()
 {
@@ -65,10 +71,10 @@ ParcelEncoder::ParcelEncoder(const ParcelEncoder&)
 {
 
 }
-   
+
 const ParcelEncoder& ParcelEncoder::operator=(const ParcelEncoder& x)
 {
-    return *this;   
+    return *this;
 }
 
 

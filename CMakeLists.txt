@@ -26,7 +26,7 @@ set(ENGINE_VERSION_FULL "${ENGINE_VERSION}.${ENGINE_VERSION_PATCH}${ENGINE_VERSI
 #################
 
 # Avoid in-source builds
-if (BlueClusterer_SOURCE_DIR STREQUAL BlueClusterer_BINARY_DIR)
+if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
     message(FATAL_ERROR "Warning: In-source build! I am not going to let you be stupid!")
 endif()
 
@@ -46,11 +46,8 @@ else()
     # Enable all warnings
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
-    # Add pthread to allow c++11 threads
-    # set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpthread")
-
 endif()
-message ("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
+message("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
 message("-- Finished setting compiler settings.")
 message("\n")
 
@@ -169,34 +166,55 @@ set(CLUSTER_TEST_FILENAMES
         IntegerVectorEncoding
     )
 
-######################
-# Output Directories #
-######################
-
-set(COMMON_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-set(COMMON_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/libs")
-
 #############
 # Libraries #
 #############
 
-add_library(backend ${CLUSTER_SOURCES})
-link_directories(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
- 
+link_directories(${LINK_DIRECTORIES}  ${Boost_LIBRARY_DIRS})
+
+# add shared library
+add_library(clusterer-shared SHARED ${CLUSTER_SOURCES}) 
+# output directories
+# for non dll systems
+set_target_properties(clusterer-shared PROPERTIES OUTPUT_NAME "clusterer")
+set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/shared)
+set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared/debug)
+set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared/release)
+# for dll systems
+set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/shared/lib)
+set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared/debug)
+set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared/release)
+set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/shared/lib)
+set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared/debug)
+set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared/release) 
+
+# add static library
+add_library(clusterer-static STATIC ${CLUSTER_SOURCES}) 
+# output directories 
+set_target_properties(clusterer-static PROPERTIES OUTPUT_NAME "clusterer") 
+set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/static)
+set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/static/debug)
+set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/static/release) 
+
 ##############
 # Executable #
 ##############
 
 add_executable(BlueClusterer main.cpp)
 
+# add libraries
 if( WIN32 )
-    target_link_libraries(BlueClusterer debug backend)    
-    target_link_libraries(BlueClusterer optimized backend)   
+    target_link_libraries(BlueClusterer debug clusterer-static)
+    target_link_libraries(BlueClusterer optimized clusterer-static)
 else()
-    target_link_libraries(BlueClusterer backend)
+    target_link_libraries(BlueClusterer clusterer-static)
     target_link_libraries(BlueClusterer pthread)
 endif()
 
+# output directories
+set_target_properties(BlueClusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set_target_properties(BlueClusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin/debug)
+set_target_properties(BlueClusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/release)
 
 ###########
 # Testing #
@@ -218,7 +236,7 @@ FOREACH(test ${CLUSTER_TEST_FILENAMES})
     # add test executable
     include_directories(${INCLUDE_DIRECTORIES} ${CLUSTER_SOURCES_H})
     add_executable(${TEST_NAME} ${CLUSTER_TEST_DRIVER} ${CLUSTER_TEST_SOURCES})
-    target_link_libraries(${TEST_NAME} backend)
+    target_link_libraries(${TEST_NAME} clusterer-static)
     # add library
     target_link_libraries(${TEST_NAME} debug ${CPPUNIT_DEBUG_LIBRARY})
     target_link_libraries(${TEST_NAME} optimized ${CPPUNIT_LIBRARY})
@@ -226,6 +244,10 @@ FOREACH(test ${CLUSTER_TEST_FILENAMES})
     # add tests to test solution folder for IDEs
     set_target_properties(${TEST_NAME} PROPERTIES FOLDER testing)
 
+    # output directories
+    set_target_properties(${TEST_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/testing)
+    set_target_properties(${TEST_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/testing/debug)
+    set_target_properties(${TEST_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/testing/release)
     ADD_TEST(${TEST_NAME} ${TEST_NAME} ${TEST_NAME})
 ENDFOREACH(test)
 

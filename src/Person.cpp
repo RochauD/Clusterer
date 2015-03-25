@@ -7,7 +7,6 @@
 #include <vector>
 #include <utility>
 
-#include "../include/Parcelable.hpp"
 #include "../include/Person.hpp"
 
 
@@ -21,6 +20,11 @@ namespace types
  */
 
 Person::Person()
+{
+
+}
+
+Person::~Person()
 {
 
 }
