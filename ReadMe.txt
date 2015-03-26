@@ -43,4 +43,5 @@ Building and testing commands:
 Go into the build directory(cd build) then:
 cmake ..
 cmake --build .
-ctest -VV 
+ctest -C <config> -VV 
+<config> = Debug or Release etc.
