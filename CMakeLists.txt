@@ -12,14 +12,27 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(BlueClusterer)
 
-# TODO CHANGE ENGINE TO PROJECT NAME
-# Set version
-set(ENGINE_VERSION_MAJOR "0")
-set(ENGINE_VERSION_MINOR "0")
-set(ENGINE_VERSION_PATCH "0")
-set(ENGINE_VERSION_EXTRA "")
-set(ENGINE_VERSION "${ENGINE_VERSION_MAJOR}.${ENGINE_VERSION_MINOR}")
-set(ENGINE_VERSION_FULL "${ENGINE_VERSION}.${ENGINE_VERSION_PATCH}${ENGINE_VERSION_EXTRA}")
+# set library version
+set(CLUSTERER_LIB_VERSION_MAJOR "0")
+set(CLUSTERER_LIB_VERSION_MINOR "1")
+set(CLUSTERER_LIB_VERSION_PATCH "0")
+set(CLUSTERER_LIB_VERSION_EXTRA "0")
+set(CLUSTERER_LIB_VERSION "${CLUSTERER_LIB_VERSION_MAJOR}.${CLUSTERER_LIB_VERSION_MINOR}")
+set(CLUSTERER_LIB_VERSION_FULL "${CLUSTERER_LIB_VERSION}.${CLUSTERER_LIB_VERSION_PATCH}.${CLUSTERER_LIB_VERSION_EXTRA}")
+# add library version macro definitions
+add_definitions(/DCLUSTERER_LIB_VERSION="${CLUSTERER_LIB_VERSION}")
+add_definitions(/DCLUSTERER_LIB_VERSION_FULL="${CLUSTERER_LIB_VERSION_FULL}")
+
+# set executable version
+set(CLUSTERER_VERSION_MAJOR "0")
+set(CLUSTERER_VERSION_MINOR "1")
+set(CLUSTERER_VERSION_PATCH "0")
+set(CLUSTERER_VERSION_EXTRA "0")
+set(CLUSTERER_VERSION "${CLUSTERER_VERSION_MAJOR}.${CLUSTERER_VERSION_MINOR}")
+set(CLUSTERER_VERSION_FULL "${CLUSTERER_VERSION}.${CLUSTERER_VERSION_PATCH}.${CLUSTERER_VERSION_EXTRA}")
+# add executable version macro definitions
+add_definitions(/DCLUSTERER_VERSION="${CLUSTERER_VERSION}")
+add_definitions(/DCLUSTERER_VERSION_FULL="${CLUSTERER_VERSION_FULL}")
 
 #################
 # Safety Checks #
@@ -27,7 +40,7 @@ set(ENGINE_VERSION_FULL "${ENGINE_VERSION}.${ENGINE_VERSION_PATCH}${ENGINE_VERSI
 
 # Avoid in-source builds
 if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
-    message(FATAL_ERROR "Warning: In-source build! I am not going to let you be stupid!")
+    message(FATAL_ERROR "Warning: In-source build! Aborting. Call cmake .. from a build folder.")
 endif()
 
 #####################
@@ -173,28 +186,34 @@ set(CLUSTER_TEST_FILENAMES
 link_directories(${LINK_DIRECTORIES}  ${Boost_LIBRARY_DIRS})
 
 # add shared library
+
 add_library(clusterer-shared SHARED ${CLUSTER_SOURCES}) 
+# set library name
+set_target_properties(clusterer-shared PROPERTIES OUTPUT_NAME "clusterer")
+set_target_properties(clusterer-shared PROPERTIES DEBUG_POSTFIX -d)
 # output directories
 # for non dll systems
-set_target_properties(clusterer-shared PROPERTIES OUTPUT_NAME "clusterer")
 set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/shared)
-set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared/debug)
-set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared/release)
+set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared)
+set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared)
 # for dll systems
 set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/shared/lib)
-set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared/debug)
-set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared/release)
+set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared)
+set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared)
 set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/shared/lib)
-set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared/debug)
-set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared/release) 
+set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared)
+set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared) 
 
 # add static library
+
 add_library(clusterer-static STATIC ${CLUSTER_SOURCES}) 
+# set library name
+set_target_properties(clusterer-static PROPERTIES OUTPUT_NAME "clusterer")
+set_target_properties(clusterer-static PROPERTIES DEBUG_POSTFIX -d)
 # output directories 
-set_target_properties(clusterer-static PROPERTIES OUTPUT_NAME "clusterer") 
 set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/static)
-set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/static/debug)
-set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/static/release) 
+set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/static)
+set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/static) 
 
 ##############
 # Executable #

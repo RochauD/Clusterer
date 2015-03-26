@@ -17,8 +17,11 @@ int main()
     }
 
     logger.log(SeverityType::WARNING, "File: ", __FILE__);
+    logger.log(SeverityType::WARNING, "Definition Exe Version: ", (CLUSTERER_VERSION));
+    logger.log(SeverityType::WARNING, "Definition Exe Version FUll: ", CLUSTERER_VERSION_FULL);
 
-
+    logger.log(SeverityType::WARNING, "Definition Lib Version: ", CLUSTERER_LIB_VERSION);
+    logger.log(SeverityType::WARNING, "Definition Lib Version FUll: ", CLUSTERER_LIB_VERSION_FULL);
 
     ConfigurationManager cfg;
     cfg.saveClusteringParams("config1.txt");
