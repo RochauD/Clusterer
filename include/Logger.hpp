@@ -1,10 +1,6 @@
 /**
  * @file Logger.hpp
-<<<<<<< HEAD
  * @brief File in which the Singleton Logger is defined
-=======
- * @brief File in which the Logger is defined
->>>>>>> hotfix_logger
  */
 #ifndef _LOGGER_HPP
 #define _LOGGER_HPP
