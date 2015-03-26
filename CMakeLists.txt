@@ -190,7 +190,9 @@ link_directories(${LINK_DIRECTORIES}  ${Boost_LIBRARY_DIRS})
 add_library(clusterer-shared SHARED ${CLUSTER_SOURCES}) 
 # set library name
 set_target_properties(clusterer-shared PROPERTIES OUTPUT_NAME "clusterer")
-set_target_properties(clusterer-shared PROPERTIES DEBUG_POSTFIX -d)
+if(WIN32)
+    set_target_properties(clusterer-shared PROPERTIES DEBUG_POSTFIX -d)
+endif()
 # output directories
 # for non dll systems
 set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/shared)
@@ -209,7 +211,9 @@ set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEA
 add_library(clusterer-static STATIC ${CLUSTER_SOURCES}) 
 # set library name
 set_target_properties(clusterer-static PROPERTIES OUTPUT_NAME "clusterer")
-set_target_properties(clusterer-static PROPERTIES DEBUG_POSTFIX -d)
+if(WIN32)
+    set_target_properties(clusterer-static PROPERTIES DEBUG_POSTFIX -d)
+endif()
 # output directories 
 set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/static)
 set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/static)
