@@ -225,7 +225,7 @@ set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEA
 
 add_executable(BlueClusterer main.cpp)
 
-# add libraries
+# link libraries
 if( WIN32 )
     target_link_libraries(BlueClusterer debug clusterer-static)
     target_link_libraries(BlueClusterer optimized clusterer-static)
@@ -259,8 +259,15 @@ FOREACH(test ${CLUSTER_TEST_FILENAMES})
     # add test executable
     include_directories(${INCLUDE_DIRECTORIES} ${CLUSTER_SOURCES_H})
     add_executable(${TEST_NAME} ${CLUSTER_TEST_DRIVER} ${CLUSTER_TEST_SOURCES})
-    target_link_libraries(${TEST_NAME} clusterer-static)
-    # add library
+    # link clusterer library
+    if( WIN32 )
+        target_link_libraries(${TEST_NAME} debug clusterer-static)
+        target_link_libraries(${TEST_NAME} optimized clusterer-static)
+    else()
+        target_link_libraries(${TEST_NAME} clusterer-static)
+        target_link_libraries(${TEST_NAME} pthread)
+    endif()
+    # link cpp unit library
     target_link_libraries(${TEST_NAME} debug ${CPPUNIT_DEBUG_LIBRARY})
     target_link_libraries(${TEST_NAME} optimized ${CPPUNIT_LIBRARY})
 
