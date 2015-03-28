@@ -2,20 +2,26 @@
 * @file ConcurrentLockingQueue.hpp
 * @brief Defines the class ConcurrentLockingQueue
 */
-
 #ifndef _CONCURRENT_LOCKING_QUEUE_H_
 #define _CONCURRENT_LOCKING_QUEUE_H_
 
-// [C++ header files]
-// [standard]
+// standard headers
 #include <queue>
 #include <mutex>
 #include <condition_variable>
 #include <utility>
-// [external]
+// external headers
 
-// [forward declarations]
+// internal headers
 
+
+/**
+* @namespace ClustererBackend
+* @brief The namespace ClustererBackend is the namespace for the complete backend
+* of the project.
+*/
+namespace ClustererBackend
+{
 
 /**
 * @class ConcurrentLockingQueue
@@ -150,5 +156,13 @@ bool ConcurrentLockingQueue<Type>::isEmpty()
     std::lock_guard<std::mutex> lock(this->queueMutex);
     return this->baseQueue.empty();
 }
+
+}
+
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+*/
+namespace clb = ClustererBackend;
 
 #endif

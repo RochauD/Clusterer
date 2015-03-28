@@ -4,6 +4,9 @@
 
 #include "../include/LoggerSeverityLevel.hpp"
 
+namespace ClustererBackend
+{
+
 std::string severityLevelToString(const SeverityLevel severityLevel)
 {
     switch (severityLevel)
@@ -71,4 +74,6 @@ bool checkSeverityTypeMatch(const SeverityLevel severityLevel, const SeverityTyp
             return false;
             break;
     }
+}
+
 }

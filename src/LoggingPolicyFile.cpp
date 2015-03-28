@@ -4,6 +4,9 @@
 
 #include "../include/LoggingPolicyFile.hpp"
 
+namespace ClustererBackend
+{
+
 LoggingPolicyFile::LoggingPolicyFile(const std::string& absoluteFilePath)
 {
     this->absoluteFilePath = absoluteFilePath;
@@ -42,4 +45,6 @@ void LoggingPolicyFile::executeHelper(const LoggerBufferEntry& entry)
         const std::string errorStr = "Logger Exception: Could not log to file. File Exception: " + std::string(ex.what());
         throw LoggerException(errorStr);
     }
+}
+
 }

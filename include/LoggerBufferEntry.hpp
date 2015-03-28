@@ -1,19 +1,25 @@
 /**
 * @file LoggerBufferEntry.hpp
 */
-
 #ifndef _LOGGER_BUFFER_ENTRY_H_
 #define _LOGGER_BUFFER_ENTRY_H_
 
-// [C++ header files]
-// [standard]
+// standard headers
 #include <string>
 #include <chrono>
-// [external]
+// external headers
+
+// internal headers
 #include "LoggerSeverityType.hpp"
 #include "ConcurrentLockingQueue.hpp"
-// [forward declarations]
 
+/**
+* @namespace ClustererBackend
+* @brief The namespace ClustererBackend is the namespace for the complete backend
+* of the project.
+*/
+namespace ClustererBackend
+{
 
 /**
 * @class LoggerBufferEntry
@@ -38,6 +44,12 @@ class LoggerBufferEntry
     private:
 };
 
+}
 
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+*/
+namespace clb = ClustererBackend;
 
 #endif

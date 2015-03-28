@@ -1,28 +1,34 @@
 /**
 * @file LoggingPolicy.hpp
 */
-
 #ifndef _LOGGING_POLICY_H_
 #define _LOGGING_POLICY_H_
 
-// [C++ header files]
-// [standard]
+// standard headers
 #include <sstream>
 #include <memory>
 #include <thread>
 #include <atomic>
-// [external]
+// external headers
+
+// internal headers
 #include "LoggerException.hpp"
 #include "LoggerBufferEntry.hpp"
 #include "LoggerSeverityLevel.hpp"
 #include "ConcurrentLockingQueue.hpp"
-// [forward declarations]
 
+/**
+* @namespace ClustererBackend
+* @brief The namespace ClustererBackend is the namespace for the complete backend
+* of the project.
+*/
+namespace ClustererBackend
+{
 
 /**
 * @class LoggingPolicy
-* \brief
-* \details Detailed Description missing
+* @brief
+* @details Detailed Description missing
 */
 class LoggingPolicy
 {
@@ -46,6 +52,12 @@ class LoggingPolicy
         std::atomic<bool> finishedFlag;
 };
 
+}
 
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+*/
+namespace clb = ClustererBackend;
 
 #endif

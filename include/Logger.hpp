@@ -22,6 +22,14 @@
 #include "LoggerSeverityLevel.hpp"
 
 /**
+* @namespace ClustererBackend
+* @brief The namespace ClustererBackend is the namespace for the complete backend
+* of the project.
+*/
+namespace ClustererBackend
+{
+
+/**
  * @class Logger
  * @brief Logs different kind of messages dependend on the LoggingPolicyType used.
  * @details The class Logger logs different kind of messages to an output defined by the
@@ -49,6 +57,7 @@ class Logger
         * @param SeverityLevel The severity level that decides whether or not a message is going to be logged.
         */
         Logger(std::unique_ptr<LoggingPolicyType> loggingPolicy, SeverityLevel severityLevel = SeverityLevel::ALL);
+
         /**
         * @brief Destructor for the Logger.
         */
@@ -63,6 +72,7 @@ class Logger
         */
         template<typename... Types>
         void log(SeverityType severityType, Types... arguments);
+
         /**
         * @brief Sets the severity level of a log message.
         * @details The method sets the severity level of a log message. The severity level is used to only log
@@ -71,6 +81,7 @@ class Logger
         * @return void
         */
         void setSeverityLevel(SeverityLevel severityLevel);
+
         /**
         * @brief Gets the severity level of a log message.
         * @details The method gets the severity level of a log message. The severity level is used to only log
@@ -84,6 +95,7 @@ class Logger
         * @brief Copy constructor for the Logger class is deleted.
         */
         Logger(const Logger&) = delete;
+
         /**
         * @brief Assignment constructor for the Logger class is deleted.
         */
@@ -168,5 +180,13 @@ void Logger<LoggingPolicyType>::logHelper(FirstArg firstArg, RemainingArgs... re
     this->logBufferStream << firstArg;
     this->logHelper(remainingArgs...);
 }
+
+}
+
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+*/
+namespace clb = ClustererBackend;
 
 #endif

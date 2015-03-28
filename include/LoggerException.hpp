@@ -1,17 +1,24 @@
 /**
 * @file LoggerException.hpp
 */
-
 #ifndef _LOGGER_EXCEPTION_H_
 #define _LOGGER_EXCEPTION_H_
 
-// [C++ header files]
-// [standard]
+// standard headers
 #include <stdexcept>
 #include <string>
-// [external]
+// external headers
 
-// [forward declarations]
+// internal headers
+
+
+/**
+* @namespace ClustererBackend
+* @brief The namespace ClustererBackend is the namespace for the complete backend
+* of the project.
+*/
+namespace ClustererBackend
+{
 
 /**
 * @class LoggerException
@@ -28,5 +35,13 @@ class LoggerException : public std::runtime_error
     protected:
     private:
 };
+
+}
+
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+*/
+namespace clb = ClustererBackend;
 
 #endif

@@ -13,6 +13,14 @@
 
 
 /**
+* @namespace ClustererBackend
+* @brief The namespace ClustererBackend is the namespace for the complete backend
+* of the project.
+*/
+namespace ClustererBackend
+{
+
+/**
 * @struct ClusteringParams
 * @brief Clustering parameters for the social clustering algorithm.
 * @details The struct ClusteringParams specifies the algorithm parameters for
@@ -88,5 +96,12 @@ struct ClusteringParams
     uint32_t threadCount;
 
 };
+}
+
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+*/
+namespace clb = ClustererBackend;
 
 #endif

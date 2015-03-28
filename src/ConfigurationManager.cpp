@@ -4,6 +4,9 @@
  */
 #include "../include/ConfigurationManager.hpp"
 
+namespace ClustererBackend
+{
+
 ConfigurationManager::ConfigurationManager()
 {
     this->clusteringParams.minIterations = 10;
@@ -216,4 +219,6 @@ void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
 
     ConfigurationReaderWriter configWriter(fullPathName);
     configWriter.writeConfiguration(parameterMap);
+}
+
 }

@@ -4,6 +4,7 @@
 #include "include/LoggingPolicyFile.hpp"
 #include "include/ConfigurationManager.hpp"
 
+using namespace clb;
 
 int main()
 {

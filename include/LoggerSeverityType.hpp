@@ -1,17 +1,23 @@
 /**
 * @file LoggerSeverityType.h
 */
-
 #ifndef _LOGGER_SEVERITY_TYPE_H_
 #define _LOGGER_SEVERITY_TYPE_H_
 
-// [C++ header files]
-// [standard]
+// standard headers
 #include <string>
-// [external]
+// external headers
 
-// [forward declarations]
+// internal headers
 
+
+/**
+* @namespace ClustererBackend
+* @brief The namespace ClustererBackend is the namespace for the complete backend
+* of the project.
+*/
+namespace ClustererBackend
+{
 
 /**
 * @enum SeverityType
@@ -28,5 +34,13 @@ enum class SeverityType : unsigned char
 };
 
 std::string severityTypeToString(SeverityType severityType);
+
+}
+
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+*/
+namespace clb = ClustererBackend;
 
 #endif

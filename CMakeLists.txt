@@ -10,7 +10,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Project Specification #
 #########################
 
-project(BlueClusterer)
+project(Clusterer)
 
 # set library version
 set(CLUSTERER_LIB_VERSION_MAJOR "0")
@@ -223,21 +223,21 @@ set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEA
 # Executable #
 ##############
 
-add_executable(BlueClusterer main.cpp)
+add_executable(Clusterer main.cpp)
 
 # link libraries
 if( WIN32 )
-    target_link_libraries(BlueClusterer debug clusterer-static)
-    target_link_libraries(BlueClusterer optimized clusterer-static)
+    target_link_libraries(Clusterer debug clusterer-static)
+    target_link_libraries(Clusterer optimized clusterer-static)
 else()
-    target_link_libraries(BlueClusterer clusterer-static)
-    target_link_libraries(BlueClusterer pthread)
+    target_link_libraries(Clusterer clusterer-static)
+    target_link_libraries(Clusterer pthread)
 endif()
 
 # output directories
-set_target_properties(BlueClusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-set_target_properties(BlueClusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin/debug)
-set_target_properties(BlueClusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/release)
+set_target_properties(Clusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set_target_properties(Clusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin/debug)
+set_target_properties(Clusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/release)
 
 ###########
 # Testing #
