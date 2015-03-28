@@ -2,8 +2,8 @@
  * @file ConfigurationManager.hpp
  * @brief File in which the ConfigurationManager is defined.
  */
-#ifndef _CONFIGURATION_MANAGER_HPP
-#define _CONFIGURATION_MANAGER_HPP
+#ifndef CLUSTERER_BACKEND_CONFIGURATION_MANAGER_HPP
+#define CLUSTERER_BACKEND_CONFIGURATION_MANAGER_HPP
 
 // standard headers
 #include <string>
@@ -15,11 +15,18 @@
 #include "ConfigurationReaderWriter.hpp"
 
 /**
-* @namespace ClustererBackend
-* @brief The namespace ClustererBackend is the namespace for the complete backend
-* of the project.
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
 */
-namespace ClustererBackend
+namespace clusterer
+{
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
 {
 
 /**
@@ -202,11 +209,12 @@ class ConfigurationManager
 };
 
 }
+}
 
 /**
 * @namespace clb
-* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
 */
-namespace clb = ClustererBackend;
+namespace clb = clusterer::backend;
 
 #endif

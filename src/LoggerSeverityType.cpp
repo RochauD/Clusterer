@@ -4,7 +4,9 @@
 
 #include "../include/LoggerSeverityType.hpp"
 
-namespace ClustererBackend
+namespace clusterer
+{
+namespace common
 {
 
 std::string severityTypeToString(const SeverityType severityType)
@@ -32,4 +34,5 @@ std::string severityTypeToString(const SeverityType severityType)
     }
 }
 
+}
 }

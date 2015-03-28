@@ -19,7 +19,7 @@
 
 using namespace CppUnit;
 using namespace std;
-using namespace ClustererBackend;
+using namespace clb;
 
 class TestConfigurationReaderWriter:public CppUnit::TestFixture
 {

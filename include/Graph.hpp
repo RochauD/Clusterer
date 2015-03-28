@@ -1,26 +1,35 @@
 /**
-  * @brief  subclass of AbstractGraph interface
-  *
-  * @file Graph.hpp
-  */
+* @file Graph.hpp
+* @brief Subclass of AbstractGraph interface
+*/
+#ifndef CLUSTERER_BACKEND_GRAPH_HPP
+#define CLUSTERER_BACKEND_GRAPH_HPP
 
-#ifndef GRAPH_HPP
-#define GRAPH_HPP
-
-// c++ libraries
+// standard headers
 #include <utility> //maybe pair
 #include <string>
 #include <vector>
 #include <algorithm>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_traits.hpp>
+// external headers
 
-// local headers
+// internal headers
 #include "AbstractGraph.hpp"
 
-namespace common
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
 {
-namespace types
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
 {
 
 using namespace boost;
@@ -30,14 +39,15 @@ typedef property<edge_weight_t,int> EdgeWeight;
 
 // an adjacency_list model
 typedef boost::adjacency_list<boost::vecS, boost::vecS,
-                              boost::directedS, VertexName,
-                              EdgeWeight> DirectedGraph;
+        boost::directedS, VertexName,
+        EdgeWeight> DirectedGraph;
 
 typedef graph_traits<DirectedGraph>::vertex_descriptor Vert;
 typedef graph_traits<DirectedGraph>::edge_descriptor Edge;
 //typedef std::pair<int, int> edgeG;
 
-class Graph : public virtual common::types::AbstractGraph{
+class Graph : public virtual AbstractGraph
+{
     public:
         //Graph();
         Graph(int);
@@ -57,7 +67,14 @@ class Graph : public virtual common::types::AbstractGraph{
         int no_vertices;
         int no_edges;
 };
-} //namespace types
-} //namespace common
+
+}
+}
+
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
 #endif // GRAPH_HPP

@@ -2,8 +2,8 @@
  * @file Logger.hpp
  * @brief File in which the Singleton Logger is defined
  */
-#ifndef _LOGGER_HPP
-#define _LOGGER_HPP
+#ifndef CLUSTERER_COMMON_LOGGER_HPP
+#define CLUSTERER_COMMON_LOGGER_HPP
 
 // standard headers
 #include <sstream>
@@ -22,11 +22,17 @@
 #include "LoggerSeverityLevel.hpp"
 
 /**
-* @namespace ClustererBackend
-* @brief The namespace ClustererBackend is the namespace for the complete backend
-* of the project.
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
 */
-namespace ClustererBackend
+namespace clusterer
+{
+
+/**
+* @namespace common
+* @brief The namespace common is the namespace for all common components of the project.
+*/
+namespace common
 {
 
 /**
@@ -182,11 +188,12 @@ void Logger<LoggingPolicyType>::logHelper(FirstArg firstArg, RemainingArgs... re
 }
 
 }
+}
 
 /**
-* @namespace clb
-* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+* @namespace clc
+* @brief The namespace clc is a namespace alias for the namespace clusterer::common.
 */
-namespace clb = ClustererBackend;
+namespace clc = clusterer::common;
 
 #endif

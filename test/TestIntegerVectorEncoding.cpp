@@ -3,14 +3,14 @@
 #include "../include/Graph.hpp"
 #include "../include/Vertex.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION( TestIntegerVectorEncoding );
+CPPUNIT_TEST_SUITE_REGISTRATION(TestIntegerVectorEncoding);
 
 /**
  * @brief Sets up an encoding object with a sample graph
  */
 void TestIntegerVectorEncoding::setUp(void)
 {
-    common::types::Graph g(3);
+    Graph g(3);
     Vertex v0(0);
     Vertex v1(1);
     Vertex v2(2);
@@ -19,7 +19,7 @@ void TestIntegerVectorEncoding::setUp(void)
     g.addVertex(v1);
     g.addVertex(v2);
 
-    testObj = new backend::genetic::IntegerVectorEncoding(g);
+    testObj = new IntegerVectorEncoding(g);
 }
 
 /**
@@ -59,7 +59,7 @@ void TestIntegerVectorEncoding::testNormalization(void)
     testObj->addToCluster(2, 1);
 
     CPPUNIT_ASSERT(0 == testObj->normalize());
-    backend::genetic::ClusterEncoding::Encoding enc = testObj->getEncoding();
+    ClusterEncoding::Encoding enc = testObj->getEncoding();
     CPPUNIT_ASSERT(0 == enc[0]);
     CPPUNIT_ASSERT(1 == enc[1]);
     CPPUNIT_ASSERT(0 == enc[2]);

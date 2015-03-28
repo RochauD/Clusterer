@@ -1,15 +1,14 @@
-#include <cstdint>
-#include <map>
-#include <string>
-#include <vector>
+/**
+* @file FlagParser.cpp
+* @brief
+*/
 
 #include "../include/FlagParser.hpp"
 
+namespace clusterer
+{
 namespace common
 {
-namespace utils
-{
-
 
 void FlagParser::addFlag(const char shortOpt, const std::string& longOpt,
                          bool optMandatory, bool argMandatory)
@@ -44,7 +43,5 @@ std::string FlagParser::getUsage()
     return "Usage message";
 }
 
-}  // namespace utils
-}  // namespace common
-
-
+}
+}

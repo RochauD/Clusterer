@@ -97,8 +97,40 @@ set(CLUSTER_TEST_DIR ${PROJECT_SOURCE_DIR}/test)
 # Files #
 #########
 
-# source files
-set(CLUSTER_SOURCES_CPP 
+# common files
+# common source files
+set(CLUSTER_SOURCES_COMMON_CPP 
+        ${CLUSTER_SOURCE_DIR}/LoggerSeverityLevel.cpp
+        ${CLUSTER_SOURCE_DIR}/LoggerSeverityType.cpp
+        ${CLUSTER_SOURCE_DIR}/LoggingPolicy.cpp
+        ${CLUSTER_SOURCE_DIR}/LoggingPolicyFile.cpp
+        ${CLUSTER_SOURCE_DIR}/FlagParser.cpp
+    )
+# common header files
+set(CLUSTER_SOURCES_COMMON_H 
+        ${CLUSTER_INCLUDE_DIR}/ConcurrentLockingQueue.hpp
+        ${CLUSTER_INCLUDE_DIR}/Logger.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerSeverityLevel.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerSeverityType.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerException.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerBufferEntry.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggingPolicy.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggingPolicyFile.hpp
+        ${CLUSTER_INCLUDE_DIR}/FlagParser.hpp
+    )
+# common combined
+set(CLUSTER_SOURCES_COMMON
+        ${CLUSTER_SOURCES_COMMON_CPP}
+        ${CLUSTER_SOURCES_COMMON_H}
+    )
+# common filters
+source_group("Common\\Header Files" FILES ${CLUSTER_SOURCES_COMMON_H})
+source_group("Common\\Source Files" FILES ${CLUSTER_SOURCES_COMMON_CPP})
+
+
+# backend files
+# backend source files
+set(CLUSTER_SOURCES_BACKEND_CPP 
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
         ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
@@ -110,18 +142,12 @@ set(CLUSTER_SOURCES_CPP
         ${CLUSTER_SOURCE_DIR}/GeneticStrategy.cpp
         ${CLUSTER_SOURCE_DIR}/TwoPhaseStrategy.cpp
         ${CLUSTER_SOURCE_DIR}/JSONGraphReader.cpp
-        ${CLUSTER_SOURCE_DIR}/FlagParser.cpp
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
         ${CLUSTER_SOURCE_DIR}/SocialClusteringService.cpp
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
-        ${CLUSTER_SOURCE_DIR}/LoggerSeverityLevel.cpp
-        ${CLUSTER_SOURCE_DIR}/LoggerSeverityType.cpp
-        ${CLUSTER_SOURCE_DIR}/LoggingPolicy.cpp
-        ${CLUSTER_SOURCE_DIR}/LoggingPolicyFile.cpp
     )
-
-# header files
-set(CLUSTER_SOURCES_H 
+# backend header files
+set(CLUSTER_SOURCES_BACKEND_H 
         ${CLUSTER_INCLUDE_DIR}/ClusteringParams.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationManager.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
@@ -138,31 +164,63 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/ExplorationMutation.hpp
         ${CLUSTER_INCLUDE_DIR}/ExplorationCrossover.hpp
         ${CLUSTER_INCLUDE_DIR}/RefinementMutationEngine.hpp
-        ${CLUSTER_INCLUDE_DIR}/compiler_defs.hpp
         ${CLUSTER_INCLUDE_DIR}/GeneticStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
-        ${CLUSTER_INCLUDE_DIR}/FlagParser.hpp
         ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
-        ${CLUSTER_INCLUDE_DIR}/GeneticGui.hpp
         ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
-        ${CLUSTER_INCLUDE_DIR}/ConcurrentLockingQueue.hpp
-        ${CLUSTER_INCLUDE_DIR}/Logger.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggerSeverityLevel.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggerSeverityType.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggerException.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggerBufferEntry.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggingPolicy.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggingPolicyFile.hpp
+    )
+# backend combined
+set(CLUSTER_SOURCES_BACKEND
+        ${CLUSTER_SOURCES_BACKEND_CPP}
+        ${CLUSTER_SOURCES_BACKEND_H}
+    )
+# backend filters
+source_group("Backend\\Header Files" FILES ${CLUSTER_SOURCES_BACKEND_H})
+source_group("Backend\\Source Files" FILES ${CLUSTER_SOURCES_BACKEND_CPP})
+
+
+# frontend files
+# frontend source files
+set(CLUSTER_SOURCES_FRONTEND_CPP 
+        ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
+    )
+# frontend header files
+set(CLUSTER_SOURCES_FRONTEND_H 
+        ${CLUSTER_INCLUDE_DIR}/GeneticGui.hpp
+    )
+# frontend combined
+set(CLUSTER_SOURCES_FRONTEND
+        ${CLUSTER_SOURCES_FRONTEND_CPP}
+        ${CLUSTER_SOURCES_FRONTEND_H}
+    )
+# frontend filters
+source_group("Frontend\\Header Files" FILES ${CLUSTER_SOURCES_FRONTEND_H})
+source_group("Frontend\\Source Files" FILES ${CLUSTER_SOURCES_FRONTEND_CPP})
+
+
+# all files
+# source files
+set(CLUSTER_SOURCES_CPP 
+        ${CLUSTER_SOURCES_COMMON_CPP}
+        ${CLUSTER_SOURCES_BACKEND_CPP}
+        ${CLUSTER_SOURCES_FRONTEND_CPP}
+    )
+# header files
+set(CLUSTER_SOURCES_H 
+        ${CLUSTER_SOURCES_COMMON_H}
+        ${CLUSTER_SOURCES_BACKEND_H}
+        ${CLUSTER_SOURCES_FRONTEND_H}
     )
 # combined
 set(CLUSTER_SOURCES 
         ${CLUSTER_SOURCES_CPP}
         ${CLUSTER_SOURCES_H}   
     )
+
 
 # test files
 # give the base name of your test class. Assume the base name of your test class is foo.

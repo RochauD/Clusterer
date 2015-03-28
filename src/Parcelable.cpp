@@ -2,9 +2,9 @@
 #include <string>
 #include "../include/Parcelable.hpp"
 
-namespace common
+namespace clusterer
 {
-namespace types
+namespace backend
 {
 
 Parcelable::~Parcelable()
@@ -94,8 +94,5 @@ void ParcelDecoder::decode(std::string* str)
 
 }
 
-
-}  // namespace types
-}  // namespace common
-
-
+}
+}

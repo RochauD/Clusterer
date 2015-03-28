@@ -4,7 +4,9 @@
 
 #include "../include/LoggingPolicy.hpp"
 
-namespace ClustererBackend
+namespace clusterer
+{
+namespace common
 {
 
 LoggingPolicy::LoggingPolicy()
@@ -32,4 +34,5 @@ void LoggingPolicy::kill()
     this->finishedFlag = true;
 }
 
+}
 }

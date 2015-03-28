@@ -1,23 +1,13 @@
-
-
-#include <stdint.h>
-
-#include <cinttypes>
-#include <string>
-#include <vector>
-#include <utility>
+/**
+* @file Person.cpp
+*/
 
 #include "../include/Person.hpp"
 
-
-namespace common
+namespace clusterer
 {
-namespace types
+namespace backend
 {
-
-/**
- * @brief Person Id uniquely representing a person
- */
 
 Person::Person()
 {
@@ -29,6 +19,5 @@ Person::~Person()
 
 }
 
-
-}  // namespace types
-}  // namespace common
+}
+}

@@ -1,16 +1,17 @@
 /**
-  * @file SocialClusteringService.hpp
-  * @brief Facade for backend items
-  */
-#ifndef _FRONTEND_SOCIALCLUSTERINGSERVICE_HPP
-#define _FRONTEND_SOCIALCLUSTERINGSERVICE_HPP
+ * @file SocialClusteringService.hpp
+ * @brief Facade for backend items
+ */
+#ifndef CLUSTERER_BACKEND_SOCIAL_CLUSTERING_SERVICE_HPP
+#define CLUSTERER_BACKEND_SOCIAL_CLUSTERING_SERVICE_HPP
 
-//Standard libraries
+// standard headers
 #include <cstdint>
 #include <string>
 #include <functional>
+// external headers
 
-//Own libraries
+// internal headers
 #include "CrossoverEngine.hpp"
 #include "MutationEngine.hpp"
 #include "FitnessAnalyzer.hpp"
@@ -19,7 +20,18 @@
 #include "PersonDb.hpp"
 #include "GraphReader.hpp"
 
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
+{
 
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
 namespace backend
 {
 
@@ -29,40 +41,46 @@ namespace backend
  */
 class SocialClusteringService
 {
-public:
-    /**
-     * @brief insert person in database
-     * @param person to be inserted in the database
-     * @return 0 on success and -1 on failure.
-     */
-    static SocialClusteringService& getService()
-    {
-        static SocialClusteringService service;
-        return service;
-    }
+    public:
+        /**
+         * @brief insert person in database
+         * @param person to be inserted in the database
+         * @return 0 on success and -1 on failure.
+         */
+        static SocialClusteringService& getService()
+        {
+            static SocialClusteringService service;
+            return service;
+        }
 
-    /**
-     * @brief process clustering input data
-     * @param filePath the path to the input file
-     * @return status EXIT_SUCESS or EXIT_FAILURE
-     */
-    int processSocialData(const std::string filePath);
+        /**
+         * @brief process clustering input data
+         * @param filePath the path to the input file
+         * @return status EXIT_SUCESS or EXIT_FAILURE
+         */
+        int processSocialData(const std::string filePath);
 
-private:
-    SocialClusteringService();
-    SocialClusteringService(const SocialClusteringService&);
+    private:
+        SocialClusteringService();
+        SocialClusteringService(const SocialClusteringService&);
 
-    genetic::ClusterEncoding* _ClusterEncoding;
-    genetic::CrossoverEngine* _crossoverEngine;
-    genetic::MutationEngine* _mutationEngine;
-    genetic::FitnessAnalyzer* _fitnessAnalyzer;
-    genetic::GeneticStrategy* _geneticStrategy;
-    reader::GraphReader* _graphReader;
+        ClusterEncoding* _ClusterEncoding;
+        CrossoverEngine* _crossoverEngine;
+        MutationEngine* _mutationEngine;
+        FitnessAnalyzer* _fitnessAnalyzer;
+        GeneticStrategy* _geneticStrategy;
+        GraphReader* _graphReader;
 
-    dbc::PersonDb* _personDb;
+        PersonDb* _personDb;
 };
 
-}  // namespace backend
+}
+}
 
-#endif  // _FRONTEND_SOCIALCLUSTERINGSERVICE_HPP
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
+#endif

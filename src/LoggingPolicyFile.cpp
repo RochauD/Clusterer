@@ -4,7 +4,9 @@
 
 #include "../include/LoggingPolicyFile.hpp"
 
-namespace ClustererBackend
+namespace clusterer
+{
+namespace common
 {
 
 LoggingPolicyFile::LoggingPolicyFile(const std::string& absoluteFilePath)
@@ -47,4 +49,5 @@ void LoggingPolicyFile::executeHelper(const LoggerBufferEntry& entry)
     }
 }
 
+}
 }

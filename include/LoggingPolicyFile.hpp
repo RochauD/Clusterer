@@ -1,8 +1,8 @@
 /**
 * @file LoggingPolicyFile.hpp
 */
-#ifndef _LOGGING_POLICY_FILE_H_
-#define _LOGGING_POLICY_FILE_H_
+#ifndef CLUSTERER_COMMON_LOGGING_POLICY_FILE_HPP
+#define CLUSTERER_COMMON_LOGGING_POLICY_FILE_HPP
 
 // standard headers
 #include <fstream>
@@ -15,11 +15,17 @@
 #include "LoggingPolicy.hpp"
 
 /**
-* @namespace ClustererBackend
-* @brief The namespace ClustererBackend is the namespace for the complete backend
-* of the project.
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
 */
-namespace ClustererBackend
+namespace clusterer
+{
+
+/**
+* @namespace common
+* @brief The namespace common is the namespace for all common components of the project.
+*/
+namespace common
 {
 
 /**
@@ -42,11 +48,12 @@ class LoggingPolicyFile : public LoggingPolicy
 };
 
 }
+}
 
 /**
-* @namespace clb
-* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+* @namespace clc
+* @brief The namespace clc is a namespace alias for the namespace clusterer::common.
 */
-namespace clb = ClustererBackend;
+namespace clc = clusterer::common;
 
 #endif

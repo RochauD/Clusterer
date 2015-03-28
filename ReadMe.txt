@@ -2,7 +2,15 @@ Clustering Social Networks by using Genetic Algorithms, Software Project for the
 
 Folder structure:
 
-// todo
+├───bin // created by cmake
+├───build
+├───cmake
+│   └───modules
+├───include
+├───lib // created by cmake
+├───src
+├───test
+└───testing // created by cmake
 
 External Dependencies:
 

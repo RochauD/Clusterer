@@ -4,7 +4,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestConfigurationManager);
 
 void TestConfigurationManager::setUp(void)
 {
-
     testConfManager=new ConfigurationManager();
     CPPUNIT_ASSERT((testConfManager->getMinIterationsCount())==10);
     CPPUNIT_ASSERT((testConfManager->getMaxIterationsCount())==1000);
@@ -14,7 +13,6 @@ void TestConfigurationManager::setUp(void)
     CPPUNIT_ASSERT((testConfManager->getPhaseSwitchIterationValue())==700);
     CPPUNIT_ASSERT((testConfManager->getPredictedClusterCount())==10);
     CPPUNIT_ASSERT((testConfManager->getThreadCount())==2);
-
 }
 
 void TestConfigurationManager::tearDown(void)
@@ -24,8 +22,6 @@ void TestConfigurationManager::tearDown(void)
 
 void TestConfigurationManager::testLoadClusteringParams(void)
 {
-
-
     //write to a file
     std::ofstream file("TestFile1.txt");
     file<<"minIterations"<<" = "<<"1"<<endl;
@@ -52,8 +48,6 @@ void TestConfigurationManager::testLoadClusteringParams(void)
 
 void TestConfigurationManager::testSaveClusteringParams(void)
 {
-
-
     testConfManager->saveClusteringParams("TestFile2.txt");
 
     //load parameters from saved file using readConfiguration method
@@ -74,24 +68,6 @@ void TestConfigurationManager::testSaveClusteringParams(void)
 
 void TestConfigurationManager::testGetSetMethods(void)
 {
-
-    //create a dummy ClusteringParams
-    /* No standard way to compare structs was found
-    ClusteringParams myClusteringParams;
-    myClusteringParams.minIterations=11;
-    myClusteringParams.maxIterations=12;
-    myClusteringParams.minFitness=12.3;
-    myClusteringParams.maxFitness=13.1;
-    myClusteringParams.phaseSwitchFitnessValue=12.1;
-    myClusteringParams.phaseSwitchIterationValue=5;
-    myClusteringParams.predictedClusterCount=1;
-    myClusteringParams.threadCount=10;
-
-
-    testConfManager->SetClusteringParams(myClusteringParams);
-    CPPUNIT_ASSERT(myClusteringParams==(testConfManager->GetClusteringParams()));
-    */
-
     testConfManager->setMinIterationsCount(15);
     CPPUNIT_ASSERT(15==(testConfManager->getMinIterationsCount()));
 

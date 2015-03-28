@@ -3,21 +3,18 @@
   * @brief genetic strategy implementation
   */
 
-
-#include <stdint.h>
-
 #include "../include/ClusterEncoding.hpp"
 #include "../include/AbstractGraph.hpp"
 #include "../include/TwoPhaseStrategy.hpp"
 #include "../include/GeneticStrategy.hpp"
 
+namespace clusterer
+{
 namespace backend
 {
-namespace genetic
-{
 
 
-TwoPhaseStrategy::TwoPhaseStrategy(const common::types::AbstractGraph& g) : GeneticStrategy(g)
+TwoPhaseStrategy::TwoPhaseStrategy(const AbstractGraph& g) : GeneticStrategy(g)
 {
 
 }
@@ -53,8 +50,5 @@ double TwoPhaseStrategy::getMaxFitness()
     return 0.0;
 }
 
-}  // namespace genetic
-}  // namespace backend
-
-
-
+}
+}

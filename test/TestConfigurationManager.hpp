@@ -22,7 +22,7 @@
 
 using namespace CppUnit;
 using namespace std;
-using namespace ClustererBackend;
+using namespace clb;
 
 class TestConfigurationManager:public CppUnit::TestFixture
 {

@@ -20,17 +20,18 @@
 using namespace CppUnit;
 using namespace std;
 
-class TestSocialClusteringService : public CppUnit::TestFixture {
-    CPPUNIT_TEST_SUITE(TestSocialClusteringService);
-    CPPUNIT_TEST(testFail);
-    CPPUNIT_TEST_SUITE_END();
-    
-public:
-    void setUp(void);
-    void tearDown(void);
-  
-protected:
-    void testFail(void);
+class TestSocialClusteringService : public CppUnit::TestFixture
+{
+        CPPUNIT_TEST_SUITE(TestSocialClusteringService);
+        CPPUNIT_TEST(testFail);
+        CPPUNIT_TEST_SUITE_END();
+
+    public:
+        void setUp(void);
+        void tearDown(void);
+
+    protected:
+        void testFail(void);
 };
 
 #endif

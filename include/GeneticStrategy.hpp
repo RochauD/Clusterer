@@ -1,20 +1,31 @@
 /**
-  * @file GeneticStrategy.hpp
-  * @brief genetic strategy interface
-  */
-#ifndef _BACKEND_GENETIC_GENETICSTRATEGY_HPP
-#define _BACKEND_GENETIC_GENETICSTRATEGY_HPP
+ * @file GeneticStrategy.hpp
+ * @brief genetic strategy interface
+ */
+#ifndef CLUSTERER_BACKEND_GENETIC_STRATEGY_HPP
+#define CLUSTERER_BACKEND_GENETIC_STRATEGY_HPP
 
-//Standard libraries
+// standard headers
 #include <stdint.h>
+// external headers
 
-//Own libraries
+// internal headers
 #include "ClusterEncoding.hpp"
 #include "AbstractGraph.hpp"
 
-namespace backend
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
 {
-namespace genetic
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
 {
 
 /**
@@ -24,32 +35,37 @@ namespace genetic
  */
 class GeneticStrategy
 {
-public:
-    /**
-     * @brief create a GeneticStrategy based on a graph
-     * @param g the graph on which the strategy is based
-     */
-    GeneticStrategy(const common::types::AbstractGraph& g);
-    /**
-     * @brief obtain the next generation of the clustering solution
-     * @return the order of the new generation
-     */
-    virtual uint64_t runGeneticIteration() = 0;
+    public:
+        /**
+         * @brief create a GeneticStrategy based on a graph
+         * @param g the graph on which the strategy is based
+         */
+        GeneticStrategy(const AbstractGraph& g);
+        /**
+         * @brief obtain the next generation of the clustering solution
+         * @return the order of the new generation
+         */
+        virtual uint64_t runGeneticIteration() = 0;
 
-    /**
-     * @brief get the current clustering solution
-     * @return the current clustering solution
-     */
-    virtual ClusterEncoding::Encoding getClusteringSolution() = 0;
+        /**
+         * @brief get the current clustering solution
+         * @return the current clustering solution
+         */
+        virtual ClusterEncoding::Encoding getClusteringSolution() = 0;
 
-    /**
-     * @brief standard destructor
-     */
-    virtual ~GeneticStrategy();
+        /**
+         * @brief standard destructor
+         */
+        virtual ~GeneticStrategy();
 };
 
-}  // namespace genetic
-}  // namespace backend
+}
+}
 
-#endif  // _BACKEND_GENETIC_GENETICSTRATEGY_HPP
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
+#endif

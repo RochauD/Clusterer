@@ -4,6 +4,7 @@
 #include "include/LoggingPolicyFile.hpp"
 #include "include/ConfigurationManager.hpp"
 
+using namespace clc;
 using namespace clb;
 
 int main()
@@ -29,10 +30,6 @@ int main()
     cfg.setMaxFitness(11235467889.000);
     cfg.saveClusteringParams("config2.txt");
     cfg.loadClusteringParams("config2.txt");
-
-
-
-
 
     return 0;
 }

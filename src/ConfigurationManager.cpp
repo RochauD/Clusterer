@@ -4,7 +4,9 @@
  */
 #include "../include/ConfigurationManager.hpp"
 
-namespace ClustererBackend
+namespace clusterer
+{
+namespace backend
 {
 
 ConfigurationManager::ConfigurationManager()
@@ -221,4 +223,5 @@ void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
     configWriter.writeConfiguration(parameterMap);
 }
 
+}
 }

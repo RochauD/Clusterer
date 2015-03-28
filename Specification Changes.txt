@@ -9,3 +9,15 @@ We changed the AbstractGraph class to be a non-template class and added a separa
 
 Change 4:
 Renamed the "Encoder" classes to "Encoding" classes as it makes sense for them to be internally hoding a solution encoding and performing utility operations on it instead of just the latter. In fact, the design by group two seems to have this exact idea in mind, however no private/protected containers were specified.
+
+Change 5:
+Removed file compiler_defs.hpp as define macros for C++ class setup like no copy constructor etc. is unnecessary. Additionally the constructors created by the macros are not part of the documentation in the end. Therefore we removed this file and replace the macros with the correct code.
+
+Change 6:
+Simplified the convoluted namespace to a simpler model. In our model now we have the following namespaces:
+The main namespace clusterer, which is the main namespace for the project.
+Then we have three sub namespaces and three aliases to the clusterer::subnamespace :
+1) common - all modules and classes with common functionality - alias namespace: clc
+2) backend - all modules and classes with backend functionality - alias namespace: clb
+3) frontend - all modules and classes with frontend functionality - alias namespace: clf
+

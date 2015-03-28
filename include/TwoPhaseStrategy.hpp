@@ -1,21 +1,32 @@
 /**
-  * @file TwoPhaseStrategy.hpp
-  * @brief genetic strategy implementation
-  */
-#ifndef _BACKEND_TWOPHASESTRATEGY_HPP
-#define _BACKEND_TWOPHASESTRATEGY_HPP
+ * @file TwoPhaseStrategy.hpp
+ * @brief genetic strategy implementation
+ */
+#ifndef CLUSTERER_BACKEND_TWO_PHASE_STRATEGY_HPP
+#define CLUSTERER_BACKEND_TWO_PHASE_STRATEGY_HPP
 
-//Standard libraries
+// standard headers
 #include <stdint.h>
+// external headers
 
-//Own libraries
+// internal headers
 #include "ClusterEncoding.hpp"
 #include "AbstractGraph.hpp"
 #include "GeneticStrategy.hpp"
 
-namespace backend
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
 {
-namespace genetic
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
 {
 
 class TwoPhaseStrategy : public GeneticStrategy
@@ -25,7 +36,7 @@ class TwoPhaseStrategy : public GeneticStrategy
          * @brief create a TwoPhaseStrategy based on a graph
          * @param g the graph on which the strategy is based
          */
-        TwoPhaseStrategy(const common::types::AbstractGraph& g);
+        TwoPhaseStrategy(const AbstractGraph& g);
         /**
          * @brief obtain the next generation of the clustering solution
          * @return the order of the new generation
@@ -57,8 +68,13 @@ class TwoPhaseStrategy : public GeneticStrategy
         double getMaxFitness();
 };
 
-}  // namespace genetic
-}  // namespace backend
+}
+}
 
-#endif // include guard
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
+#endif

@@ -4,22 +4,33 @@
   *
   */
 
-#ifndef _COMMON_TYPES_PERSON_HPP
-#define _COMMON_TYPES_PERSON_HPP
+#ifndef CLUSTERER_BACKEND_PERSON_HPP
+#define CLUSTERER_BACKEND_PERSON_HPP
 
-//Standard libraries
+// standard headers
 #include <stdint.h>
 #include <cinttypes>
 #include <string>
 #include <vector>
 #include <utility>
+// external headers
 
-//Own libraries
+// internal headers
 #include "Parcelable.hpp"
 
-namespace common
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
 {
-namespace types
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
 {
 
 /**
@@ -33,7 +44,7 @@ typedef uint64_t PersonId;
  * @brief representation of a Social Network Person
  * @todo fix this class. Currently outcommented as it is not compiling
  */
-struct Person : public common::types::Parcelable
+struct Person : public Parcelable
 {
     std::string sourceDoc;
     std::string name;
@@ -61,7 +72,7 @@ struct Person : public common::types::Parcelable
 
     virtual const size_t getParcelableSize()
     {
-        common::types::ParcelAllocator parcelAllocator;
+        ParcelAllocator parcelAllocator;
         parcelAllocator.reserve(sourceDoc);
         parcelAllocator.reserve(name);
         for (const auto& relation : relations)
@@ -71,7 +82,7 @@ struct Person : public common::types::Parcelable
         return parcelAllocator.getSize();
     }
 
-    virtual void writeToParcel(common::types::ParcelEncoder* encoder) const
+    virtual void writeToParcel(ParcelEncoder* encoder) const
     {
         encoder->encode(sourceDoc);
         encoder->encode(name);
@@ -81,7 +92,7 @@ struct Person : public common::types::Parcelable
         }
     }
 
-    virtual void readFromParcel(common::types::ParcelDecoder* decoder)
+    virtual void readFromParcel(ParcelDecoder* decoder)
     {
         // This was provided by group 2 but does not compile
         // decoder->decode(&sourceDoc);
@@ -90,8 +101,13 @@ struct Person : public common::types::Parcelable
     }
 };
 
-}  // namespace types
-}  // namespace common
+}
+}
 
-#endif  // _COMMON_TYPES_PERSON_HPP
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
+#endif

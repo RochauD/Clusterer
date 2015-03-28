@@ -5,12 +5,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestConfigurationReaderWriter);
 void TestConfigurationReaderWriter::setUp(void)
 {
     cTestObj=new ConfigurationReaderWriter("TestFile.txt",'%'," = ");
-    /*
-     * CPPUNIT_ASSERT_EQUAL(cTestObj->fullPathName,"TestFile.txt");
-     * CPPUNIT_ASSERT_EQUAL(cTestObj->commentCharacter,'%');
-     * CPPUNIT_ASSERT_EQUAL(cTestObj->seperatorString," = ");
-    */
-
 }
 
 void TestConfigurationReaderWriter::tearDown(void)
@@ -20,7 +14,6 @@ void TestConfigurationReaderWriter::tearDown(void)
 
 void TestConfigurationReaderWriter::testReadConfiguration(void)
 {
-
     //create a dummy parameter map
     std::unordered_map<std::string, std::string> testParm;
     testParm["minIteration"]="10";

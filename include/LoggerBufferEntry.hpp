@@ -1,8 +1,8 @@
 /**
 * @file LoggerBufferEntry.hpp
 */
-#ifndef _LOGGER_BUFFER_ENTRY_H_
-#define _LOGGER_BUFFER_ENTRY_H_
+#ifndef CLUSTERER_COMMON_LOGGER_BUFFER_ENTRY_HPP
+#define CLUSTERER_COMMON_LOGGER_BUFFER_ENTRY_HPP
 
 // standard headers
 #include <string>
@@ -14,11 +14,17 @@
 #include "ConcurrentLockingQueue.hpp"
 
 /**
-* @namespace ClustererBackend
-* @brief The namespace ClustererBackend is the namespace for the complete backend
-* of the project.
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
 */
-namespace ClustererBackend
+namespace clusterer
+{
+
+/**
+* @namespace common
+* @brief The namespace common is the namespace for all common components of the project.
+*/
+namespace common
 {
 
 /**
@@ -45,11 +51,12 @@ class LoggerBufferEntry
 };
 
 }
+}
 
 /**
-* @namespace clb
-* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+* @namespace clc
+* @brief The namespace clc is a namespace alias for the namespace clusterer::common.
 */
-namespace clb = ClustererBackend;
+namespace clc = clusterer::common;
 
 #endif

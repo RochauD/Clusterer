@@ -4,7 +4,9 @@
  */
 #include "../include/ConfigurationReaderWriter.hpp"
 
-namespace ClustererBackend
+namespace clusterer
+{
+namespace backend
 {
 
 ConfigurationReaderWriter::ConfigurationReaderWriter(const std::string& fullPathName, char commentCharacter, std::string separatorString)
@@ -65,4 +67,5 @@ void ConfigurationReaderWriter::writeConfiguration(const std::unordered_map<std:
     }
 }
 
+}
 }

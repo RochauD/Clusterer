@@ -1,8 +1,8 @@
 /**
 * @file LoggerException.hpp
 */
-#ifndef _LOGGER_EXCEPTION_H_
-#define _LOGGER_EXCEPTION_H_
+#ifndef CLUSTERER_COMMON_LOGGER_EXCEPTION_HPP
+#define CLUSTERER_COMMON_LOGGER_EXCEPTION_HPP
 
 // standard headers
 #include <stdexcept>
@@ -13,11 +13,17 @@
 
 
 /**
-* @namespace ClustererBackend
-* @brief The namespace ClustererBackend is the namespace for the complete backend
-* of the project.
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
 */
-namespace ClustererBackend
+namespace clusterer
+{
+
+/**
+* @namespace common
+* @brief The namespace common is the namespace for all common components of the project.
+*/
+namespace common
 {
 
 /**
@@ -37,11 +43,12 @@ class LoggerException : public std::runtime_error
 };
 
 }
+}
 
 /**
-* @namespace clb
-* @brief The namespace clb is a namespace alias for the namespace ClustererBackend.
+* @namespace clc
+* @brief The namespace clc is a namespace alias for the namespace clusterer::common.
 */
-namespace clb = ClustererBackend;
+namespace clc = clusterer::common;
 
 #endif
