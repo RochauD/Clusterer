@@ -21,3 +21,5 @@ Then we have three sub namespaces and three aliases to the clusterer::subnamespa
 2) backend - all modules and classes with backend functionality - alias namespace: clb
 3) frontend - all modules and classes with frontend functionality - alias namespace: clf
 
+Change 7:
+Replaced the simple and incomplete logger by a better and nicer engineered one. Firstly this new logger replaces the multiple log function with a single veradiac one. Also logging is now on a seperate thread and thread safe. This is really useful as logging to a file for example might be quite costly. Lastly the design is policy based and so we can exchange and extend the logger easily.

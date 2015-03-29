@@ -93,7 +93,7 @@ class GeneticGui
 
 /**
 * @namespace clf
-* @brief The namespace clc is a namespace alias for the namespace clusterer::common.
+* @brief The namespace clc is a namespace alias for the namespace clusterer::frontend.
 */
 namespace clf = clusterer::frontend;
 
