@@ -1,5 +1,6 @@
 /**
 * @file LoggerException.hpp
+* @brief File in which the LoggerException is defined.
 */
 #ifndef CLUSTERER_COMMON_LOGGER_EXCEPTION_HPP
 #define CLUSTERER_COMMON_LOGGER_EXCEPTION_HPP
@@ -28,14 +29,27 @@ namespace common
 
 /**
 * @class LoggerException
-* @brief
-* @details Detailed Description missing
+* @brief The Exception for the Logger and all related classes.
+* @details The Exception which should be thrown by all logger policies if something goes wrong.
 */
 class LoggerException : public std::runtime_error
 {
     public:
+        /**
+        * @brief Default Constructor for the LoggerException.
+        */
         LoggerException() : std::runtime_error("LoggerException") {}
+
+        /**
+        * @brief Constructor for the LoggerException.
+        * @param message The message for the exceptions.
+        */
         LoggerException(const char* message) : std::runtime_error(message) {}
+
+        /**
+        * @brief Constructor for the LoggerException.
+        * @param message The message for the exceptions.
+        */
         LoggerException(const std::string& message) : std::runtime_error(message) {}
 
     protected:

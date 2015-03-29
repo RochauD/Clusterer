@@ -1,6 +1,6 @@
 /**
  * @file Logger.hpp
- * @brief File in which the Singleton Logger is defined
+ * @brief File in which the Singleton Logger is defined.
  */
 #ifndef CLUSTERER_COMMON_LOGGER_HPP
 #define CLUSTERER_COMMON_LOGGER_HPP
@@ -59,8 +59,8 @@ class Logger
     public:
         /**
         * @brief Constructor for the Logger.
-        * @param std::unique_ptr<LoggingPolicyType> A unique pointer to the LoggingPolicyType which is used for logging.
-        * @param SeverityLevel The severity level that decides whether or not a message is going to be logged.
+        * @param loggingPolicy A unique pointer to the LoggingPolicyType which is used for logging.
+        * @param severityLevel The severity level that decides whether or not a message is going to be logged.
         */
         Logger(std::unique_ptr<LoggingPolicyType> loggingPolicy, SeverityLevel severityLevel = SeverityLevel::ALL);
 
@@ -71,8 +71,8 @@ class Logger
 
         /**
         * @brief Logs a log message.
-        * @param SeverityType The severity type of the message.
-        * @tparam Types A number of arguments of any type that can be converted to a string
+        * @param severityType The severity type of the message.
+        * @tparam arguments A number of arguments of any type that can be converted to a string
         * via an overloaded operator<< .
         * @return void
         */
@@ -83,7 +83,7 @@ class Logger
         * @brief Sets the severity level of a log message.
         * @details The method sets the severity level of a log message. The severity level is used to only log
         * certain messages.
-        * @param SeverityLevel The severity level of the logger.
+        * @param severityLevel The severity level of the logger.
         * @return void
         */
         void setSeverityLevel(SeverityLevel severityLevel);
@@ -116,7 +116,6 @@ class Logger
         std::unique_ptr<LoggingPolicyType> loggingPolicy;
         ConcurrentLockingQueue<LoggerBufferEntry> loggingQueue;
         SeverityLevel severityLevel;
-
         std::unique_ptr<std::thread> workerThread;
 
         // class variable with no state

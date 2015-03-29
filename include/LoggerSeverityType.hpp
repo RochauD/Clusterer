@@ -1,5 +1,6 @@
 /**
 * @file LoggerSeverityType.hpp
+* @brief File in which the SeverityType is defined.
 */
 #ifndef CLUSTERER_COMMON_LOGGER_SEVERITY_TYPE_HPP
 #define CLUSTERER_COMMON_LOGGER_SEVERITY_TYPE_HPP
@@ -27,18 +28,24 @@ namespace common
 
 /**
 * @enum SeverityType
-* @brief
-* @details Detailed Description missing
+* @brief The severity type of a log entry.
+* @details The severity type of a log entry. It can be one of the following values
+* DEBUG, INFO, WARNING, SEVERE or ERROR.
 */
 enum class SeverityType : unsigned char
 {
-    DEBUG = 0,
-    INFO,
-    WARNING,
-    SEVERE,
-    ERROR
+    DEBUG = 0, /**<severity type for the debug entries. */
+    INFO, /**<severity type for the information entries. */
+    WARNING, /**<severity type for the warning entries. */
+    SEVERE, /**<severity type for the severe entries. */
+    ERROR  /**<severity type for the error entries. */
 };
 
+/**
+* @brief Converts the severity type to a string.
+* @param severityType The severity type to be converted to a string.
+* @return std::string Returns the string representation of the severity type.
+*/
 std::string severityTypeToString(SeverityType severityType);
 
 }
