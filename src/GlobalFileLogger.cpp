@@ -29,7 +29,7 @@ void GlobalFileLogger::init(const std::string& theDirectory, const std::string& 
     filename = theFilename;
 }
 
-std::atomic<Logger<LoggingPolicyFile>*> GlobalFileLogger::logger = nullptr;
+std::atomic<Logger<LoggingPolicyFile>*> GlobalFileLogger::logger { nullptr };
 std::mutex GlobalFileLogger::mutex;
 std::string GlobalFileLogger::directory = "./";
 std::string GlobalFileLogger::filename = "clusterer-log";
