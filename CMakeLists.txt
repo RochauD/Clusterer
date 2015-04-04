@@ -64,13 +64,28 @@ message("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
 message("-- Finished setting compiler settings.")
 message("\n")
 
+###################
+# Linker settings #
+###################
+
+message("Setting linker settings:")
+if( WIN32 )
+    message("-- Windows detected -- setting corresponding linker settings")
+else()
+    message("-- Linux/UNIX detected -- setting corresponding linker settings")
+endif()
+message("-- Finished setting linker settings.")
+message("\n")
+
 ################
 # Dependencies #
 ################
 
 # Boost
-set(Boost_USE_MULTITHREADED ON)
-FIND_PACKAGE(Boost REQUIRED)
+set(Boost_USE_STATIC_LIBS ON) 
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF) 
+FIND_PACKAGE(Boost COMPONENTS filesystem system REQUIRED)
 if(Boost_FOUND)
     message("-- Boost include directories added")
     include_directories(${INCLUDE_DIRECTORIES} ${Boost_INCLUDE_DIRS})
@@ -104,6 +119,7 @@ set(CLUSTER_SOURCES_COMMON_CPP
         ${CLUSTER_SOURCE_DIR}/LoggerSeverityType.cpp
         ${CLUSTER_SOURCE_DIR}/LoggingPolicy.cpp
         ${CLUSTER_SOURCE_DIR}/LoggingPolicyFile.cpp
+        ${CLUSTER_SOURCE_DIR}/GlobalFileLogger.cpp
         ${CLUSTER_SOURCE_DIR}/FlagParser.cpp
     )
 # common header files
@@ -116,6 +132,7 @@ set(CLUSTER_SOURCES_COMMON_H
         ${CLUSTER_INCLUDE_DIR}/LoggerBufferEntry.hpp
         ${CLUSTER_INCLUDE_DIR}/LoggingPolicy.hpp
         ${CLUSTER_INCLUDE_DIR}/LoggingPolicyFile.hpp
+        ${CLUSTER_INCLUDE_DIR}/GlobalFileLogger.hpp
         ${CLUSTER_INCLUDE_DIR}/FlagParser.hpp
     )
 # common combined
@@ -283,7 +300,7 @@ set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEA
 
 add_executable(Clusterer main.cpp)
 
-# link libraries
+# link clusterer library
 if( WIN32 )
     target_link_libraries(Clusterer debug clusterer-static)
     target_link_libraries(Clusterer optimized clusterer-static)
@@ -291,6 +308,8 @@ else()
     target_link_libraries(Clusterer clusterer-static)
     target_link_libraries(Clusterer pthread)
 endif()
+# link boost library
+target_link_libraries(Clusterer ${Boost_LIBRARIES})
 
 # output directories
 set_target_properties(Clusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
@@ -328,6 +347,8 @@ FOREACH(test ${CLUSTER_TEST_FILENAMES})
     # link cpp unit library
     target_link_libraries(${TEST_NAME} debug ${CPPUNIT_DEBUG_LIBRARY})
     target_link_libraries(${TEST_NAME} optimized ${CPPUNIT_LIBRARY})
+    # link boost library
+    target_link_libraries(${TEST_NAME} ${Boost_LIBRARIES})
 
     # add tests to test solution folder for IDEs
     set_target_properties(${TEST_NAME} PROPERTIES FOLDER testing)

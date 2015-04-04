@@ -6,10 +6,7 @@
 #define CLUSTERER_COMMON_LOGGING_POLICY_FILE_HPP
 
 // standard headers
-#include <fstream>
-#include <iomanip>
-#include <stdexcept>
-#include <ctime>
+#include <string>
 // external headers
 
 // internal headers
@@ -47,9 +44,10 @@ class LoggingPolicyFile : public LoggingPolicy
         /**
         * @brief Constructor for the LoggingPolicyFile.
         * @param pathToFileDir The file path to the logging file directory.
-        * @param filename The filename of the logging file.
+        * @param filename The filename of the logging file without extension.
+        * @param extension The extension of the file not including a period as a seperator.
         */
-        LoggingPolicyFile(const std::string& pathToFileDir, const std::string& filename);
+        LoggingPolicyFile(const std::string& pathToFileDir, const std::string& filename, const std::string& extension = "log");
 
         /**
         * @brief Default destructor for the LoggingPolicyFile.
