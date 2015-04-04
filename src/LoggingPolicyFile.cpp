@@ -2,6 +2,15 @@
 * @file LoggingPolicyFile.hpp
 */
 
+// standard headers
+#include <fstream>
+#include <iomanip>
+#include <stdexcept>
+#include <ctime>
+// external headers
+#include <sstream>
+#include <boost/filesystem.hpp>
+// internal headers
 #include "../include/LoggingPolicyFile.hpp"
 
 namespace clusterer
@@ -14,10 +23,40 @@ LoggingPolicyFile::LoggingPolicyFile(const std::string& absoluteFilePath)
     this->absoluteFilePath = absoluteFilePath;
 }
 
-LoggingPolicyFile::LoggingPolicyFile(const std::string& pathToFileDir, const std::string& filename)
-    : LoggingPolicyFile(pathToFileDir + filename)
+LoggingPolicyFile::LoggingPolicyFile(const std::string& pathToFileDir, const std::string& filename, const std::string& extension)
 {
+    std::string timeSuffix;
+    std::chrono::system_clock::time_point currentTime = std::chrono::system_clock::now();
+    std::time_t time = std::chrono::system_clock::to_time_t(currentTime);
+    std::tm* timeInfo = std::localtime(&time);
+    // remove when gcc finally reaches version 5.0 and put_time is implemented!
+#ifdef __linux__
+    char buffer[255] = { 0 };
+    strftime(buffer, 255, "%d-%m-%Y_%H-%M-%S", timeInfo);
+    timeSuffix = buffer;
+#else
+    std::stringstream ss;
+    ss << std::put_time(timeInfo, "%d-%m-%Y_%H-%M-%S");
+    timeSuffix = ss.str();
+#endif
+    // check if file already exists if it does append a count number to the filename.
+    this->absoluteFilePath = pathToFileDir + filename + "_" + timeSuffix;
+    size_t coreFilenameLength = this->absoluteFilePath.length();
+    this->absoluteFilePath += "." + extension;
+    boost::filesystem::path p(this->absoluteFilePath);
+    if (boost::filesystem::exists(p))
+    {
+        size_t counter = 1;
+        while (boost::filesystem::exists(p))
+        {
 
+            this->absoluteFilePath.erase(coreFilenameLength, this->absoluteFilePath.npos);
+            this->absoluteFilePath = this->absoluteFilePath + "(" + std::to_string(counter) + ")";
+            this->absoluteFilePath += "." + extension;
+            p = this->absoluteFilePath;
+            counter++;
+        }
+    }
 }
 
 void LoggingPolicyFile::executeHelper(const LoggerBufferEntry& entry)
