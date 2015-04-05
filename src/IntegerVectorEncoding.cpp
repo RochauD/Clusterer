@@ -3,6 +3,11 @@
   * @brief encoder interface implementation
   */
 
+// standard headers
+#include <unordered_map>
+// external headers
+
+// internal headers
 #include "../include/IntegerVectorEncoding.hpp"
 
 namespace clusterer
@@ -44,6 +49,16 @@ std::vector<VertexId> IntegerVectorEncoding::getVerticesInCluster(ClusterId clus
         }
     }
     return result;
+}
+
+uint32_t IntegerVectorEncoding::getClusterCount()
+{
+    std::unordered_map<ClusterId, uint32_t> map;
+    for (auto& e : this->encoding)
+    {
+        ++map[e];
+    }
+    return map.size();
 }
 
 ClusterEncoding::Encoding IntegerVectorEncoding::getEncoding()

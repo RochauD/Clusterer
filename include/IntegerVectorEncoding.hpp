@@ -62,6 +62,13 @@ class IntegerVectorEncoding : public ClusterEncoding
         std::vector<VertexId> getVerticesInCluster(ClusterId clusterId);
 
         /**
+        * @brief Returns the number of clusters in the solution.
+        * @return The number of clusters in the solution.
+        * @todo add a test for this function
+        */
+        uint32_t getClusterCount();
+
+        /**
          * @brief get the current encoding
          * @return the current encoding of a solution
          */

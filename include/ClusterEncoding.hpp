@@ -37,6 +37,7 @@ class ClusterEncoding
 {
     public:
         typedef std::vector<ClusterId> Encoding;
+
         /**
         * @brief create a default clustering scheme from graph g
         * @param g the graph to cluster
@@ -47,6 +48,7 @@ class ClusterEncoding
          * @brief standard destructor
          */
         virtual ~ClusterEncoding();
+
         /**
         * @brief move a vertex to a specific cluster
         * @param VertexId the id of the vertex to be moved
@@ -54,18 +56,27 @@ class ClusterEncoding
         * @return 0 on success and -1 on failure
         */
         virtual int addToCluster(VertexId vertexId, ClusterId clusterId) = 0;
+
         /**
         * @brief get the current encoding of the cluster
         * @param VertexId the vertex for which we want to get the cluster
         * @return the clusterId of the vertex
         */
         virtual ClusterId getClusterOfVertex(VertexId vertexId) = 0;
+
         /**
         * @brief get the vertices in a cluster
         * @param ClusterId the cluster for which we want to get the vertices
         * @return a vector containing all vertices in the cluster
         */
         virtual std::vector< VertexId > getVerticesInCluster(ClusterId clusterId) = 0;
+
+        /**
+        * @brief Returns the number of clusters in the solution.
+        * @return The number of clusters in the solution.
+        */
+        virtual uint32_t getClusterCount() = 0;
+
         /**
          * @brief get the current encoding
          * @return the current encoding of a solution
