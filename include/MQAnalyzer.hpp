@@ -6,11 +6,10 @@
 #define CLUSTERER_BACKEND_MQ_ANALYZER_HPP
 
 // standard headers
-#include <stdint.h>
+
 // external headers
 
 // internal headers
-#include "ClusterEncoding.hpp"
 #include "FitnessAnalyzer.hpp"
 
 /**
@@ -37,7 +36,7 @@ class MQAnalyzer : public FitnessAnalyzer
          * @param clusteringSolution a clustering solution
          * @return a score corresponding to the clustering solution
          */
-        virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution);
+        virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution, const AbstractGraph& graph);
 
         virtual ~MQAnalyzer();
 };

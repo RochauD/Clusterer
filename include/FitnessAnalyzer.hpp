@@ -6,12 +6,12 @@
 #define CLUSTERER_BACKEND_FITNESS_ANALYZER_HPP
 
 // standard headers
-#include <stdint.h>
+
 // external headers
 
 // internal headers
 #include "ClusterEncoding.hpp"
-#include "Vertex.hpp"
+#include "AbstractGraph.hpp"
 
 /**
 * @namespace clusterer
@@ -42,7 +42,7 @@ class FitnessAnalyzer
          * @param clusteringSolution a clustering solution
          * @return a score corresponding to the clustering solution
          */
-        virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution) = 0;
+        virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution, const AbstractGraph& graph) = 0;
 
         /**
          * @brief standard destructor
