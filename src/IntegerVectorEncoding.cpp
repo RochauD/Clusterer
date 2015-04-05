@@ -19,7 +19,9 @@ IntegerVectorEncoding::IntegerVectorEncoding(Graph& g) : graph(g), ClusterEncodi
 int IntegerVectorEncoding::addToCluster(VertexId vertexId, ClusterId clusterId)
 {
     if (encoding.size() < vertexId)
-    { return -1; }
+    {
+        return -1;
+    }
     encoding[vertexId] = clusterId;
     return 0;
 }
@@ -37,7 +39,9 @@ std::vector<VertexId> IntegerVectorEncoding::getVerticesInCluster(ClusterId clus
     {
         //check if VertexId is in the cluster
         if (encoding[i] == clusterId)
-        { result.push_back(i); }
+        {
+            result.push_back(i);
+        }
     }
     return result;
 }
