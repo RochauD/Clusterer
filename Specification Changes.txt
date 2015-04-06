@@ -23,3 +23,6 @@ Then we have three sub namespaces and three aliases to the clusterer::subnamespa
 
 Change 7:
 Replaced the simple and incomplete logger by a better and nicer engineered one. Firstly this new logger replaces the multiple log function with a single veradiac one. Also logging is now on a seperate thread and thread safe. This is really useful as logging to a file for example might be quite costly. Lastly the design is policy based and so we can exchange and extend the logger easily. To keep with the old design we nevertheless provide a singleton threadsafe access to out logger class so we combine the best of both worlds.
+
+Change 8:
+Added test_files folder to simulate reading the data from files and store it into a graph. Also mainGraph.cpp should show how Graph and GraphReader can be used.
