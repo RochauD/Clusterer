@@ -17,9 +17,9 @@
 // local headers
 #include "AbstractGraph.hpp"
 
-namespace common
+namespace clusterer
 {
-namespace types
+namespace backend
 {
 
 using namespace boost;
@@ -42,7 +42,7 @@ typedef graph_traits<DirectedGraph>::edge_descriptor Edge;
 * provides methods to access relevant structures in the given
 * data such as vertices, edge connections and the neighbors vertex
 */
-class Graph : public virtual common::types::AbstractGraph{
+class Graph : public virtual clusterer::backend::AbstractGraph{
     public:
         /**
         * @brief empty Constructor for the Graph
@@ -151,7 +151,7 @@ class Graph : public virtual common::types::AbstractGraph{
         */
         std::map<VertexId,Vert> vertex_map;
 };
-} //namespace types
-} //namespace common
+} //namespace backend
+} //namespace clusterer
 
 #endif // GRAPH_HPP

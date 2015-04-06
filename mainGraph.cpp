@@ -4,7 +4,7 @@
 #include "include/Graph.hpp"
 #include "include/GraphReader.hpp"
 
-using namespace common::types;
+using namespace clusterer::backend;
 
 /**
 * Integrated testing of Graph and GraphReader

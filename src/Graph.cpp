@@ -6,9 +6,9 @@
 // local headers
 #include "../include/Graph.hpp"
 
-namespace common
+namespace clusterer
 {
-namespace types
+namespace backend
 {
 
 /*Graph::Graph(int No_vert){
@@ -227,5 +227,5 @@ std::vector<VertexId> Graph::getNeighbors(const Vertex& v){
     return vec;
 }
 
-} //namespace types
-} // namespace common
+} //namespace clusterer
+} // namespace backend
