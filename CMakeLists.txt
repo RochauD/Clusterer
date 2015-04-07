@@ -162,6 +162,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
         ${CLUSTER_SOURCE_DIR}/SocialClusteringService.cpp
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
+        ${CLUSTER_SOURCE_DIR}/IntegerEncodingInitializer.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -189,6 +190,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
+        ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
