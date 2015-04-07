@@ -1,4 +1,4 @@
-#include "../include/IntegerVectorEncoding.hpp"
+#include "../include/IntegerEncodingInitializer.hpp"
 
 namespace clusterer
 {
@@ -6,7 +6,7 @@ namespace backend
 {
 
 IntegerEncodingInitializer::IntegerEncodingInitializer(
-        common::types::graph& g, unsigned maxClusters = 0) : graph(g)
+        Graph& g, unsigned maxClusters) : graph(g)
 {
     if (maxClusters == 0 || maxClusters >= graph.getNoVertices())
     { maxClusters = graph.getNoVertices() - 1; }
@@ -19,21 +19,19 @@ IntegerEncodingInitializer::IntegerEncodingInitializer(
 IntegerVectorEncoding IntegerEncodingInitializer::getRandomSolution()
 {
     IntegerVectorEncoding result(graph);
-    for (vert = 0; vert < graph.getNoVertices(); vert++)
-    { result.addToCluster(i, *uni_dist(rng)); }
+    for (int vert = 0; vert < graph.getNoVertices(); vert++)
+    { result.addToCluster(vert, (*uni_dist)(rng)); }
     return result;
 }
 
 std::vector<IntegerVectorEncoding> IntegerEncodingInitializer::getInitialPopulation(int count)
 {
     std::vector<IntegerVectorEncoding> result;
-    for (i = 0; i < count; i++) 
+    for (int i = 0; i < count; i++) 
     { result.push_back(getRandomSolution()); }
     return result;
 }
 
 }  // namespace backend
 }  // namespace clusterer
-
-#endif  // _BACKEND_GENETIC_IntegerEncodingInitializer_HPP
 
