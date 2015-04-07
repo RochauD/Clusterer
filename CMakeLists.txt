@@ -264,8 +264,7 @@ link_directories(${LINK_DIRECTORIES}  ${Boost_LIBRARY_DIRS})
 
 add_library(clusterer-shared SHARED ${CLUSTER_SOURCES}) 
 # link boost library
-target_link_libraries(Clusterer debug ${Boost_LIBRARIES})
-target_link_libraries(Clusterer optimized ${Boost_LIBRARIES})
+target_link_libraries(clusterer-shared ${Boost_LIBRARIES})
 # set library name
 set_target_properties(clusterer-shared PROPERTIES OUTPUT_NAME "clusterer")
 if(WIN32)
@@ -288,8 +287,7 @@ set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEA
 
 add_library(clusterer-static STATIC ${CLUSTER_SOURCES})
 # link boost library
-target_link_libraries(Clusterer debug ${Boost_LIBRARIES})
-target_link_libraries(Clusterer optimized ${Boost_LIBRARIES})
+target_link_libraries(clusterer-static ${Boost_LIBRARIES})
 # set library name
 set_target_properties(clusterer-static PROPERTIES OUTPUT_NAME "clusterer")
 if(WIN32)
@@ -315,8 +313,7 @@ else()
     target_link_libraries(Clusterer pthread)
 endif()
 # link boost library
-target_link_libraries(Clusterer debug ${Boost_LIBRARIES})
-target_link_libraries(Clusterer optimized ${Boost_LIBRARIES})
+target_link_libraries(Clusterer ${Boost_LIBRARIES})
 
 # output directories
 set_target_properties(Clusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
