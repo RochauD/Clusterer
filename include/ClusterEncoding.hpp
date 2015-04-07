@@ -69,5 +69,5 @@ protected:
 }  // namespace genetic
 }  // namespace backend
 
-#endif  // _BACKEND_GENETIC_FITNESSANALYZER_HPP
+#endif  // _BACKEND_GENETIC_ClusterEncoding_HPP
 
