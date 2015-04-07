@@ -1,56 +1,132 @@
 /**
-  * @file GraphReader.hpp
-  * @brief class to read a graph from a file
-  */
-#ifndef _BACKEND_READER_GRAPHREADER_HPP
-#define _BACKEND_READER_GRAPHREADER_HPP
-
-//Standard libraries
+*@file GraphReader.h
+*@brief File in which GraphReader class is defined
+*/
+#ifndef GRAPHREADER_H_INCLUDED
+#define GRAPHREADER_H_INCLUDED
+#include <string>
+#include <vector>
 #include <stdint.h>
-#include <stdio.h>
-
-//Own libraries
-#include "../include/AbstractGraph.hpp"
-
-namespace backend
-{
-namespace reader
-{
 
 /**
- * @class GraphReader
- * @brief interface to read a file into an abstract graph
- * There might be many possible input formats to the social clustering program,
- * but in every case we need to read the data in a graph.
- * This class provides the interface for doing so:
- * When a new input format is needed, just implement this interface for that
- * particular input format.
- */
+*@class GraphReader
+*@brief Reads the edges of the graph and their weights from the given file
+*/
+
 class GraphReader
 {
-public:
-    /**
-     * @brief initalize a reader to read data into a graph
-     * @param g the graph in which the data will be read
-     */
-    GraphReader(common::types::AbstractGraph* g) : _graph(g) {}
-    /**
-     * @brief read file data into graph
-     * @return 0 on success
-     *         1 on failure
-     */
-    virtual int readFile(FILE* file) = 0;
+
+    public:
 
     /**
-     * @brief standard destructor
-     */
-    virtual ~GraphReader();
-protected:
-    common::types::AbstractGraph* _graph;
+    *@brief constructor with  a parameter
+    *@param filename, name of the file containing the data
+    */
+    GraphReader(std::string filename);
+
+    /**
+    *@brief Default destructor for GraphReader
+    */
+    ~GraphReader();
+
+    /**
+    *@brief setter method for filename
+    *@param filename, name of the file containing the data
+    *@return void
+    */
+    void setFilename(std::string filename);
+
+    /**
+    *@brief getter method for filename
+    *@return returns the name of the file containing the data
+    */
+    std::string getFilename();
+
+    /**
+    *@brief method for reading file and setting the Edges and EdgesWeight properties of an object.
+    *@return uint64_t
+    */
+    uint64_t readFile();
+
+
+    /**
+    *@brief method for getting the Edges property.
+    *@return vector containing the edges of the graph with the start and end nodes
+    */
+    std::vector<std::pair<uint64_t,uint64_t> >getEdges();
+
+    /**
+    *@brief method for printing the edges
+    *@param graphEdges, vector containing the edges of the graph with the start and end nodes
+    *@return void
+    */
+    void printEdges(std::vector<std::pair<uint64_t,uint64_t> > graphEdges);
+
+
+    /**
+    *@brief method for getting the EdgesWeight property of an object
+    *@return vector containing the edges with the start and end nodes and their corresponding weight
+    */
+    std::vector<std::pair<std::pair<uint64_t,uint64_t>, uint64_t > > getEdgesWeight();
+
+    /**
+    *@brief method for printing the edges with weight.
+    *@param graphEdgesWeight, vector containing the edges with the start and end nodes and their corresponding weight
+    *@return void
+    */
+    void printEdgesWeight(std::vector<std::pair<std::pair<uint64_t,uint64_t>, uint64_t > >graphEdgesWeight);
+
+    /**
+    *@brief method for getting the  vertices.
+    *@return vector<uint64_t>
+    */
+    std::vector<uint64_t> getVertices();
+
+    /**
+    *@brief method for printing the vertices
+    *@param graphVertices, vector containing the vertices
+    *@return void
+    */
+    void printVertices(std::vector<uint64_t> graphVertices);
+
+    /**
+    *@brief method for getting the total number of vertices.
+    *@return uint64_t
+    */
+    uint64_t getVerticesCount();
+
+    /**
+    *@brief method for getting the total number of edges.
+    *@return uint64_t
+    */
+    uint64_t getEdgesCount();
+
+    private:
+    /**
+    * @var vertices
+    * @brief vector containing the vertices
+    * @var edges
+    * @brief vector containing the edges with the start and end nodes
+    * @var edgesWeight
+    * @brief vector containing the edges with the start and end nodes and their corresponding weight
+    * @var filename
+    * @brief name of the file containing the data
+    * @var verticesCount
+    * @brief total number of vertices
+    * @var edgesCount
+    * @brief total number of edges
+    */
+
+    std::vector<uint64_t> vertices;
+    std::vector<std::pair<uint64_t, uint64_t> > edges;
+    std::vector<std::pair<std::pair<uint64_t,uint64_t>, uint64_t > >edgesWeight;
+    std::string filename;
+    uint64_t verticesCount;
+    uint64_t edgesCount;
+
 };
 
-}  // namespace reader
-}  // namespace backend
+#endif // GRAPHREADER_H_INCLUDED
 
-#endif  // _BACKEND_READER_GRAPHREADER_HPP
+
 

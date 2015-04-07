@@ -4,6 +4,11 @@
  */
 #include "../include/ConfigurationReaderWriter.hpp"
 
+namespace clusterer
+{
+namespace backend
+{
+
 ConfigurationReaderWriter::ConfigurationReaderWriter(const std::string& fullPathName, char commentCharacter, std::string separatorString)
 {
     this->fullPathName = fullPathName;
@@ -60,4 +65,7 @@ void ConfigurationReaderWriter::writeConfiguration(const std::unordered_map<std:
     {
         throw std::runtime_error("Error! Failed writing configuration file.");
     }
+}
+
+}
 }

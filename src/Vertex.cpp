@@ -1,5 +1,13 @@
+/**
+* @file Vertex.cpp
+*/
 
 #include "../include/Vertex.hpp"
+
+namespace clusterer
+{
+namespace backend
+{
 
 Vertex::Vertex()
 {
@@ -12,7 +20,7 @@ Vertex::Vertex(int n)
         numberFlag = false;
         number = -1;
     }
-    else number = n;
+    else { number = n; }
 
     v_info.name = "unspecified";
     v_info.value = -1;
@@ -74,7 +82,7 @@ bool Vertex::hasNeighbor(Vertex& v)
     std::vector<Vertex>::iterator it;
     for (it = neighbors.begin(); it != neighbors.end(); ++it)
     {
-        if ((*it).getVNumber() == v.getVNumber()) return true;
+        if ((*it).getVNumber() == v.getVNumber()) { return true; }
     }
     return false;
 }
@@ -84,3 +92,5 @@ bool Vertex::operator==(Vertex& v)
     return number == v.getVNumber(); // number of vertex should be unique
 }
 
+}
+}

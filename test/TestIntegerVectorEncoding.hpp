@@ -19,25 +19,27 @@
 
 using namespace CppUnit;
 using namespace std;
+using namespace clb;
 
-class TestIntegerVectorEncoding : public CppUnit::TestFixture {
-    CPPUNIT_TEST_SUITE(TestIntegerVectorEncoding);
+class TestIntegerVectorEncoding : public CppUnit::TestFixture
+{
+        CPPUNIT_TEST_SUITE(TestIntegerVectorEncoding);
 
-    CPPUNIT_TEST(testSettersGetters);
-    CPPUNIT_TEST(testNormalization);
+        CPPUNIT_TEST(testSettersGetters);
+        CPPUNIT_TEST(testNormalization);
 
-    CPPUNIT_TEST_SUITE_END();
-    
-public:
-    void setUp(void);
-    void tearDown(void);
-  
-protected:
-    void testSettersGetters(void);
-    void testNormalization(void);
+        CPPUNIT_TEST_SUITE_END();
 
-private:
-    backend::genetic::IntegerVectorEncoding* testObj;
+    public:
+        void setUp(void);
+        void tearDown(void);
+
+    protected:
+        void testSettersGetters(void);
+        void testNormalization(void);
+
+    private:
+        IntegerVectorEncoding* testObj;
 };
 
 #endif

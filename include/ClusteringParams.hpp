@@ -2,8 +2,8 @@
 * @file ClusteringParams.hpp
 * @brief File in which the ClusteringParams structure is defined.
 */
-#ifndef CLUSTERING_PARAMS_HPP
-#define CLUSTERING_PARAMS_HPP
+#ifndef CLUSTERER_BACKEND_CLUSTERING_PARAMS_HPP
+#define CLUSTERER_BACKEND_CLUSTERING_PARAMS_HPP
 
 // standard headers
 #include <cstdint>
@@ -11,6 +11,21 @@
 
 // internal headers
 
+
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
+{
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
+{
 
 /**
 * @struct ClusteringParams
@@ -88,5 +103,14 @@ struct ClusteringParams
     uint32_t threadCount;
 
 };
+
+}
+}
+
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
 #endif

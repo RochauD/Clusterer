@@ -1,17 +1,12 @@
 /**
-  * @file SocialClusteringService.cpp
-  * @brief implementation of Facade for backend items
-  */
-
-#include <cstdint>
-
-#include <string>
-#include <functional>
-
+ * @file SocialClusteringService.cpp
+ * @brief implementation of Facade for backend items
+ */
 #include "../include/SocialClusteringService.hpp"
 
 
-
+namespace clusterer
+{
 namespace backend
 {
 
@@ -32,6 +27,5 @@ SocialClusteringService::SocialClusteringService(const SocialClusteringService& 
 
 }
 
-
-}  // namespace backend
-
+}
+}

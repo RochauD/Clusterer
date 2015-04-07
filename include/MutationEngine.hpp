@@ -1,19 +1,30 @@
 /**
-  * @file MutationEngine.hpp
-  * @brief mutation interface
-  */
-#ifndef _BACKEND_GENETIC_MUTATIONENGINE_HPP
-#define _BACKEND_GENETIC_MUTATIONENGINE_HPP
+ * @file MutationEngine.hpp
+ * @brief mutation interface
+ */
+#ifndef CLUSTERER_BACKEND_MUTATION_ENGINE_HPP
+#define CLUSTERER_BACKEND_MUTATION_ENGINE_HPP
 
-//Standard libraries
+// standard headers
 #include <stdint.h>
+// external headers
 
-//Own libraries
+// internal headers
 #include "ClusterEncoding.hpp"
 
-namespace backend
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
 {
-namespace genetic
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
 {
 
 /**
@@ -23,26 +34,31 @@ namespace genetic
  */
 class MutationEngine
 {
-public:
-    /**
-     * @brief mutate a clustering solution
-     * @param cluster the clustering solution to mutate
-     * @param probability the probability with which the mutation will occur
-     * @return the new clustering solution if a mutation occurred, or the old
-     * one otherwise
-     */
-    virtual ClusterEncoding::Encoding
-    mutate(const ClusterEncoding::Encoding& cluster,
-           double probability) = 0;
+    public:
+        /**
+         * @brief mutate a clustering solution
+         * @param cluster the clustering solution to mutate
+         * @param probability the probability with which the mutation will occur
+         * @return the new clustering solution if a mutation occurred, or the old
+         * one otherwise
+         */
+        virtual ClusterEncoding::Encoding
+        mutate(const ClusterEncoding::Encoding& cluster,
+               double probability) = 0;
 
-    /**
-     * @brief standard destructor
-     */
-    virtual ~MutationEngine();
+        /**
+         * @brief standard destructor
+         */
+        virtual ~MutationEngine();
 };
 
-}  // namespace genetic
-}  // namespace backend
+}
+}
 
-#endif  // _BACKEND_GENETIC_MUTATIONENGINE_HPP
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
+#endif

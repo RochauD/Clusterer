@@ -1,22 +1,32 @@
 /**
-  * @file FitnessAnalyzer.hpp
-  * @brief fitness function interface
-  */
-#ifndef _BACKEND_GENETIC_FITNESSANALYZER_HPP
-#define _BACKEND_GENETIC_FITNESSANALYZER_HPP
+ * @file FitnessAnalyzer.hpp
+ * @brief fitness function interface
+ */
+#ifndef CLUSTERER_BACKEND_FITNESS_ANALYZER_HPP
+#define CLUSTERER_BACKEND_FITNESS_ANALYZER_HPP
 
-//Standard libraries
+// standard headers
 #include <stdint.h>
+// external headers
 
-//Own libraries
+// internal headers
 #include "ClusterEncoding.hpp"
 #include "Vertex.hpp"
 
-namespace backend
-{
-namespace genetic
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
 {
 
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
+{
 
 /**
  * @class FitnessAnalyzer
@@ -25,23 +35,28 @@ namespace genetic
  */
 class FitnessAnalyzer
 {
-public:
-    typedef double Score;
-    /**
-     * @brief report a score for a clustering solution
-     * @param clusteringSolution a clustering solution
-     * @return a score corresponding to the clustering solution
-     */
-    virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution) = 0;
+    public:
+        typedef double Score;
+        /**
+         * @brief report a score for a clustering solution
+         * @param clusteringSolution a clustering solution
+         * @return a score corresponding to the clustering solution
+         */
+        virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution) = 0;
 
-    /**
-     * @brief standard destructor
-     */
-    virtual ~FitnessAnalyzer();
+        /**
+         * @brief standard destructor
+         */
+        virtual ~FitnessAnalyzer();
 };
 
-}  // namespace genetic
-}  // namespace backend
+}
+}
 
-#endif  // _BACKEND_GENETIC_FITNESSANALYZER_HPP
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
+#endif

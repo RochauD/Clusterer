@@ -4,6 +4,11 @@
 
 #include "../include/LoggerSeverityLevel.hpp"
 
+namespace clusterer
+{
+namespace common
+{
+
 std::string severityLevelToString(const SeverityLevel severityLevel)
 {
     switch (severityLevel)
@@ -40,35 +45,32 @@ bool checkSeverityTypeMatch(const SeverityLevel severityLevel, const SeverityTyp
             if (severityType == SeverityType::DEBUG)
             {
                 return true;
-                break;
             }
         case SeverityLevel::INFO:
             if (severityType == SeverityType::INFO)
             {
                 return true;
-                break;
             }
         case SeverityLevel::WARNING:
             if (severityType == SeverityType::WARNING)
             {
                 return true;
-                break;
             }
         case SeverityLevel::SEVERE:
             if (severityType == SeverityType::SEVERE)
             {
                 return true;
-                break;
             }
         case SeverityLevel::ERROR:
             if (severityType == SeverityType::ERROR)
             {
                 return true;
-                break;
             }
 
         default:
             return false;
-            break;
     }
+}
+
+}
 }

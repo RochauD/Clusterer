@@ -22,24 +22,26 @@
 
 using namespace CppUnit;
 using namespace std;
+using namespace clb;
 
-class TestGraph : public CppUnit::TestFixture {
-    CPPUNIT_TEST_SUITE(TestGraph);
-    CPPUNIT_TEST(testGetMethods);
-    CPPUNIT_TEST(testAddMethods);
-    CPPUNIT_TEST_SUITE_END();
-    
-public:
-    void setUp(void);
-    void tearDown(void);
-  
-protected:
-    void testGetMethods(void);
-    void testAddMethods(void);
+class TestGraph : public CppUnit::TestFixture
+{
+        CPPUNIT_TEST_SUITE(TestGraph);
+        CPPUNIT_TEST(testGetMethods);
+        CPPUNIT_TEST(testAddMethods);
+        CPPUNIT_TEST_SUITE_END();
 
-private:
-	common::types::Graph* testg;
-	//static const int NO_V = 50;
+    public:
+        void setUp(void);
+        void tearDown(void);
+
+    protected:
+        void testGetMethods(void);
+        void testAddMethods(void);
+
+    private:
+        Graph* testg;
+        //static const int NO_V = 50;
 };
 
 #endif

@@ -20,17 +20,18 @@
 using namespace CppUnit;
 using namespace std;
 
-class TestJSONGraphReader : public CppUnit::TestFixture {
-    CPPUNIT_TEST_SUITE(TestJSONGraphReader);
-    CPPUNIT_TEST(testFail);
-    CPPUNIT_TEST_SUITE_END();
-    
-public:
-    void setUp(void);
-    void tearDown(void);
-  
-protected:
-    void testFail(void);
+class TestJSONGraphReader : public CppUnit::TestFixture
+{
+        CPPUNIT_TEST_SUITE(TestJSONGraphReader);
+        CPPUNIT_TEST(testFail);
+        CPPUNIT_TEST_SUITE_END();
+
+    public:
+        void setUp(void);
+        void tearDown(void);
+
+    protected:
+        void testFail(void);
 };
 
 #endif
