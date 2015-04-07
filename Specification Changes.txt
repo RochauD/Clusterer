@@ -28,3 +28,5 @@ Change 8:
 Added test_files folder to simulate reading the data from files and store it into a graph. Also mainGraph.cpp should show how Graph and GraphReader can be used. To run mainGraph.cpp
 $ g++ -Wall -o outr -std=c++11 mainGraph.cpp src/Vertex.cpp src/AbstractGraph.cpp src/Graph.cpp src/GraphReader.cpp
 should be enough
+Added a second class GraphReader2 as a second option for GraphReader following the structure in the initial class diagram in more detail. mainGraphReader2.cpp uses GraphReader2.cpp. To test mainGraphReader2.cpp:
+$ g++ -Wall -o out_mr2 -std=c++11 mainGraphReader2.cpp src/Vertex.cpp src/AbstractGraph.cpp src/GraphReader2.cpp src/Graph.cpp
