@@ -52,21 +52,35 @@ class IntegerVectorEncoding : public ClusterEncoding
          * @param vertexId the vertex for which we want to get the cluster
          * @return the clusterId of the vertex
          */
-        ClusterId getClusterOfVertex(VertexId vertexId);
+        ClusterId getClusterOfVertex(VertexId vertexId) const;
 
         /**
          * @brief get the vertices in a cluster
          * @param clusterId the cluster for which we want to get the vertices
          * @return a vector containing all vertices in the cluster
          */
-        std::vector<VertexId> getVerticesInCluster(ClusterId clusterId);
+        std::vector<VertexId> getVerticesInCluster(ClusterId clusterId) const;
+
+        /**
+        * @brief Returns a map that maps ClusterIds to the corresponding vertices count.
+        * @return The hashmap.
+        * @todo add a test for this function
+        */
+        std::unordered_map<ClusterId, uint64_t> getClusterVerticesCountMap() const;
+
+        /**
+        * @brief Returns the number of vertices in a cluster.
+        * @return The number of vertices in a cluster of the solution.
+        * @todo add a test for this function
+        */
+        uint64_t getVerticesCountInCluster(ClusterId clusterId) const;
 
         /**
         * @brief Returns the number of clusters in the solution.
         * @return The number of clusters in the solution.
         * @todo add a test for this function
         */
-        uint32_t getClusterCount();
+        uint32_t getClusterCount() const;
 
         /**
          * @brief get the current encoding

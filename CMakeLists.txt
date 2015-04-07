@@ -151,6 +151,10 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
         ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
+        ${CLUSTER_SOURCE_DIR}/FitnessAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/MQAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/PerformanceAnalyzer.cpp   
+        ${CLUSTER_SOURCE_DIR}/CoverageAnalyzer.cpp   
         ${CLUSTER_SOURCE_DIR}/ClusterEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Vertex.cpp
         ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoding.cpp
@@ -170,7 +174,11 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
         ${CLUSTER_INCLUDE_DIR}/AbstractGraph.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusterEncoding.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringSolutionAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/FitnessAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/CoverageAnalyzer.hpp        
         ${CLUSTER_INCLUDE_DIR}/Vertex.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerVectorEncoding.hpp
         ${CLUSTER_INCLUDE_DIR}/CrossoverEngine.hpp
@@ -185,8 +193,6 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
-        ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
-        ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
     )
@@ -264,8 +270,7 @@ link_directories(${LINK_DIRECTORIES}  ${Boost_LIBRARY_DIRS})
 
 add_library(clusterer-shared SHARED ${CLUSTER_SOURCES}) 
 # link boost library
-target_link_libraries(Clusterer debug ${Boost_LIBRARIES})
-target_link_libraries(Clusterer optimized ${Boost_LIBRARIES})
+target_link_libraries(clusterer-shared ${Boost_LIBRARIES})
 # set library name
 set_target_properties(clusterer-shared PROPERTIES OUTPUT_NAME "clusterer")
 if(WIN32)
@@ -288,8 +293,7 @@ set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEA
 
 add_library(clusterer-static STATIC ${CLUSTER_SOURCES})
 # link boost library
-target_link_libraries(Clusterer debug ${Boost_LIBRARIES})
-target_link_libraries(Clusterer optimized ${Boost_LIBRARIES})
+target_link_libraries(clusterer-static ${Boost_LIBRARIES})
 # set library name
 set_target_properties(clusterer-static PROPERTIES OUTPUT_NAME "clusterer")
 if(WIN32)
@@ -315,8 +319,7 @@ else()
     target_link_libraries(Clusterer pthread)
 endif()
 # link boost library
-target_link_libraries(Clusterer debug ${Boost_LIBRARIES})
-target_link_libraries(Clusterer optimized ${Boost_LIBRARIES})
+target_link_libraries(Clusterer ${Boost_LIBRARIES})
 
 # output directories
 set_target_properties(Clusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)

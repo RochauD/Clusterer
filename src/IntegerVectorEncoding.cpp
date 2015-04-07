@@ -31,12 +31,12 @@ int IntegerVectorEncoding::addToCluster(VertexId vertexId, ClusterId clusterId)
     return 0;
 }
 
-ClusterId IntegerVectorEncoding::getClusterOfVertex(VertexId vertexId)
+ClusterId IntegerVectorEncoding::getClusterOfVertex(VertexId vertexId) const
 {
     return encoding[vertexId];
 }
 
-std::vector<VertexId> IntegerVectorEncoding::getVerticesInCluster(ClusterId clusterId)
+std::vector<VertexId> IntegerVectorEncoding::getVerticesInCluster(ClusterId clusterId) const
 {
     std::vector<VertexId> result;
     //iterating through the encoding vector
@@ -51,9 +51,29 @@ std::vector<VertexId> IntegerVectorEncoding::getVerticesInCluster(ClusterId clus
     return result;
 }
 
-uint32_t IntegerVectorEncoding::getClusterCount()
+std::unordered_map<ClusterId, uint64_t> IntegerVectorEncoding::getClusterVerticesCountMap() const
 {
-    std::unordered_map<ClusterId, uint32_t> map;
+    std::unordered_map<ClusterId, uint64_t> map;
+    for (auto& e : this->encoding)
+    {
+        ++map[e];
+    }
+    return map;
+}
+
+uint64_t IntegerVectorEncoding::getVerticesCountInCluster(ClusterId clusterId) const
+{
+    std::unordered_map<ClusterId, uint64_t> map;
+    for (auto& e : this->encoding)
+    {
+        ++map[e];
+    }
+    return map[clusterId];
+}
+
+uint32_t IntegerVectorEncoding::getClusterCount() const
+{
+    std::unordered_map<ClusterId, uint64_t> map;
     for (auto& e : this->encoding)
     {
         ++map[e];

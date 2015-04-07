@@ -1,9 +1,9 @@
 /**
- * @file PerformanceAnalyzer.hpp
- * @brief fitness function interface implementation
- */
-#ifndef CLUSTERER_BACKEND_PERFORMANCE_ANALYZER_HPP
-#define CLUSTERER_BACKEND_PERFORMANCE_ANALYZER_HPP
+* @file CoverageAnalyzer.hpp
+* @brief fitness function interface implementation
+*/
+#ifndef CLUSTERER_BACKEND_COVERAGE_ANALYZER_HPP
+#define CLUSTERER_BACKEND_COVERAGE_ANALYZER_HPP
 
 // standard headers
 
@@ -11,7 +11,6 @@
 
 // internal headers
 #include "ClusteringSolutionAnalyzer.hpp"
-#include "CoverageAnalyzer.hpp"
 
 /**
 * @namespace clusterer
@@ -28,21 +27,18 @@ namespace clusterer
 namespace backend
 {
 
-class PerformanceAnalyzer : public ClusteringSolutionAnalyzer
+class CoverageAnalyzer : public ClusteringSolutionAnalyzer
 {
     public:
         /**
-         * @brief report a score for a clustering solution
-         * @param clusteringSolution a clustering solution
-         * @param graph The graph.
-         * @return a score corresponding to the clustering solution
-         */
+        * @brief Returns the coverage value for a clustering solution
+        * @param clusteringSolution A clustering solution.
+        * @param graph The graph.
+        * @return The coverage value.
+        */
         double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph);
 
-        ~PerformanceAnalyzer();
-    protected:
-    private:
-        CoverageAnalyzer coverageAnalyzer;
+        ~CoverageAnalyzer();
 };
 
 }

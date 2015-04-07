@@ -10,7 +10,7 @@
 // external headers
 
 // internal headers
-#include "FitnessAnalyzer.hpp"
+#include "ClusteringSolutionAnalyzer.hpp"
 
 /**
 * @namespace clusterer
@@ -27,18 +27,18 @@ namespace clusterer
 namespace backend
 {
 
-class MQAnalyzer : public FitnessAnalyzer
+class MQAnalyzer : public ClusteringSolutionAnalyzer
 {
     public:
-        typedef double Score;
         /**
          * @brief report a score for a clustering solution
          * @param clusteringSolution a clustering solution
-         * @return a score corresponding to the clustering solution
+         * @param graph The graph.
+         * @return the modularization quality of the solution
          */
-        virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution, const AbstractGraph& graph);
+        double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph);
 
-        virtual ~MQAnalyzer();
+        ~MQAnalyzer();
 };
 
 }

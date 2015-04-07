@@ -10,8 +10,9 @@
 // external headers
 
 // internal headers
-#include "ClusterEncoding.hpp"
-#include "AbstractGraph.hpp"
+#include "ClusteringSolutionAnalyzer.hpp"
+#include "PerformanceAnalyzer.hpp"
+#include "MQAnalyzer.hpp"
 
 /**
 * @namespace clusterer
@@ -33,21 +34,25 @@ namespace backend
  * @brief interface for objects which can assess the value of a particular
  * clustering scheme
  */
-class FitnessAnalyzer
+class FitnessAnalyzer : public ClusteringSolutionAnalyzer
 {
     public:
-        typedef double Score;
         /**
          * @brief report a score for a clustering solution
          * @param clusteringSolution a clustering solution
+         * @param graph The graph.
          * @return a score corresponding to the clustering solution
          */
-        virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution, const AbstractGraph& graph) = 0;
+        double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph) = 0;
 
         /**
          * @brief standard destructor
          */
-        virtual ~FitnessAnalyzer();
+        ~FitnessAnalyzer();
+    protected:
+    private:
+        PerformanceAnalyzer performanceAnalyzer;
+        MQAnalyzer mqAnalyzer;
 };
 
 }
