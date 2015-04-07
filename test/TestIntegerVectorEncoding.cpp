@@ -10,7 +10,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestIntegerVectorEncoding);
  */
 void TestIntegerVectorEncoding::setUp(void)
 {
-    Graph g(3);
+    Graph g;
     Vertex v0(0);
     Vertex v1(1);
     Vertex v2(2);
