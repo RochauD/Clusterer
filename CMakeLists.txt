@@ -256,7 +256,6 @@ set(CLUSTER_TEST_FILENAMES
         LoggerBufferEntry
         LoggerSeverityType
         LoggerSeverityLevel
-        LoggingPolicyFile
         ConcurrentLockingQueue
     )
 
