@@ -151,6 +151,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
         ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusteringSolutionAnalyzer.cpp
         ${CLUSTER_SOURCE_DIR}/FitnessAnalyzer.cpp
         ${CLUSTER_SOURCE_DIR}/MQAnalyzer.cpp
         ${CLUSTER_SOURCE_DIR}/PerformanceAnalyzer.cpp   
@@ -258,6 +259,7 @@ set(CLUSTER_TEST_FILENAMES
         Vertex
         Graph
         IntegerVectorEncoding
+        CoverageAnalyzer
     )
 
 #############
