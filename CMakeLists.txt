@@ -252,6 +252,11 @@ set(CLUSTER_TEST_FILENAMES
         Vertex
         Graph
         IntegerVectorEncoding
+        Logger
+        LoggerBufferEntry
+        LoggerSeverityType
+        LoggerSeverityLevel
+        ConcurrentLockingQueue
     )
 
 #############
