@@ -253,6 +253,11 @@ set(CLUSTER_TEST_FILENAMES
         Graph
         IntegerVectorEncoding
         Logger
+        LoggerBufferEntry
+        LoggerSeverityType
+        LoggerSeverityLevel
+        LoggingPolicyFile
+        ConcurrentLockingQueue
     )
 
 #############
