@@ -17,17 +17,15 @@ namespace backend
 
 double PerformanceAnalyzer::analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph)
 {
-
     auto clusterVerticesMap = clusteringSolution.getClusterVerticesCountMap();
-    double verticesCount = clusterVerticesMap.size();
     uint32_t clusterCount = clusteringSolution.getClusterCount();
     double coverageValue = this->coverageAnalyzer.analyze(clusteringSolution, graph);
     uint64_t sumOfClusterSizes = 0;
     double totalEdgeWeightSum = 0.0;
 
-    for (auto& e : graph.getEdges())
+    for (auto& e : graph.getEdgesAndWeights())
     {
-        totalEdgeWeightSum += e.weight;
+        totalEdgeWeightSum += e.second;
     }
 
     for (size_t i = 0; i < clusterCount; ++i)

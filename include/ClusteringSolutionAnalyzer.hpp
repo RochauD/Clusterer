@@ -47,7 +47,7 @@ class ClusteringSolutionAnalyzer
         /**
         * @brief standard destructor
         */
-        virtual ~ClusteringSolutionAnalyzer();
+        virtual ~ClusteringSolutionAnalyzer() = 0;
 };
 
 }

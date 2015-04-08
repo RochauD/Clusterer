@@ -20,14 +20,15 @@ double CoverageAnalyzer::analyze(const ClusterEncoding& clusteringSolution, cons
     double intraEdgeWeightSum = 0.0;
     double totalEdgeWeightSum = 0.0;
 
-    for (auto& e : graph.getEdges())
+    for (auto& e : graph.getEdgesAndWeights())
     {
-        if (clusteringSolution.getClusterOfVertex(e.startNode) == clusteringSolution.getClusterOfVertex(e.endNode))
+        if (clusteringSolution.getClusterOfVertex(e.first.first) == clusteringSolution.getClusterOfVertex(e.first.second))
         {
-            intraEdgeWeightSum += e.weight;
+            intraEdgeWeightSum += e.second;
         }
-        totalEdgeWeightSum += e.weight;
+        totalEdgeWeightSum += e.second;
     }
+
     return intraEdgeWeightSum / totalEdgeWeightSum;
 }
 
