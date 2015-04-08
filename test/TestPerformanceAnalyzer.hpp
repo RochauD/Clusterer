@@ -1,5 +1,5 @@
-#ifndef TEST_BACKEND_COVERAGE_ANALYZER_HPP
-#define TEST_BACKEND_COVERAGE_ANALYZER_HPP
+#ifndef TEST_BACKEND_PERFORMANCE_ANALYZER_HPP
+#define TEST_BACKEND_PERFORMANCE_ANALYZER_HPP
 
 // standard headers
 #include <typeinfo>
@@ -15,7 +15,7 @@
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 // internal headers
-#include "../include/CoverageAnalyzer.hpp"
+#include "../include/PerformanceAnalyzer.hpp"
 #include "../include/IntegerVectorEncoding.hpp"
 #include "../include/Graph.hpp"
 
@@ -23,9 +23,9 @@ using namespace CppUnit;
 using namespace std;
 using namespace clb;
 
-class TestCoverageAnalyzer : public CppUnit::TestFixture
+class TestPerformanceAnalyzer : public CppUnit::TestFixture
 {
-        CPPUNIT_TEST_SUITE(TestCoverageAnalyzer);
+        CPPUNIT_TEST_SUITE(TestPerformanceAnalyzer);
         CPPUNIT_TEST(testAnalyzeSingleElementClustersOnly);
         CPPUNIT_TEST(testAnalyzeOneClusterOnly);
         CPPUNIT_TEST(testAnalyzeFullyConnectedGraphTwoClusters);
@@ -44,7 +44,7 @@ class TestCoverageAnalyzer : public CppUnit::TestFixture
         void testAnalyzeFullyConnectedGraphTwoClusters(void);
 
     private:
-        clb::CoverageAnalyzer coverageAnalyzer;
+        clb::PerformanceAnalyzer performanceAnalyzer;
 };
 
 #endif

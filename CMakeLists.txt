@@ -260,6 +260,9 @@ set(CLUSTER_TEST_FILENAMES
         Graph
         IntegerVectorEncoding
         CoverageAnalyzer
+        MQAnalyzer
+        PerformanceAnalyzer
+        FitnessAnalyzer
     )
 
 #############

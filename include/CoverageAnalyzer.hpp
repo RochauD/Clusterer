@@ -34,7 +34,9 @@ class CoverageAnalyzer : public ClusteringSolutionAnalyzer
         * @brief Returns the coverage value for a clustering solution
         * @param clusteringSolution A clustering solution.
         * @param graph The graph.
-        * @return The coverage value.
+        * @return The coverage value, which is a value in the interval [0.0, 1.0]
+        * @pre The graph needs to have atleast on edge. In other words the graph is not allowed
+        * totally disconnected.
         */
         double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph);
 

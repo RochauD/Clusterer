@@ -42,8 +42,10 @@ class FitnessAnalyzer : public ClusteringSolutionAnalyzer
          * @param clusteringSolution a clustering solution
          * @param graph The graph.
          * @return a score corresponding to the clustering solution
+         * @pre The graph needs to have atleast on edge. In other words the graph is not allowed
+         * totally disconnected.
          */
-        double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph) = 0;
+        double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph);
 
         /**
          * @brief standard destructor

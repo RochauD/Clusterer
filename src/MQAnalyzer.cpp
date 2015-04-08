@@ -19,7 +19,8 @@ namespace backend
 double MQAnalyzer::analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph)
 {
     double mqValue = 0.0;
-    uint32_t clusterCount = clusteringSolution.getClusterCount();
+    auto clusterVerticesMap = clusteringSolution.getClusterVerticesCountMap();
+    uint32_t clusterCount = clusterVerticesMap.size();
     if (clusterCount == 1)
     {
         double totalEdgeWeightSum = 0.0;
@@ -33,10 +34,8 @@ double MQAnalyzer::analyze(const ClusterEncoding& clusteringSolution, const Abst
     {
         double clusterAValueSum = 0.0;
         double clusterBValueSum = 0.0;
-        auto clusterVerticesMap = clusteringSolution.getClusterVerticesCountMap();
-        uint32_t clusterCount = clusterVerticesMap.size();
         // @todo check if we can assume cluster ids from 0 to n or if they can be non continous
-        std::vector<double> clusterAValue;
+        std::vector<double> clusterAValue(clusterCount);
         std::vector<std::vector<double>> clusterBValue(clusterCount, std::vector<double>(clusterCount, 0.0));
 
         // go through all edges and compute either inter or intra edge weight sums
