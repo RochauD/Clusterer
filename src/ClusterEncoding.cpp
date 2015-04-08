@@ -10,9 +10,9 @@ namespace clusterer
 namespace backend
 {
 
-ClusterEncoding::ClusterEncoding(AbstractGraph& g) : graph(g)
+ClusterEncoding::ClusterEncoding(const AbstractGraph* g)
 {
-
+    this->graph = g;
 }
 
 ClusterEncoding::~ClusterEncoding()

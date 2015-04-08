@@ -1,6 +1,6 @@
 #include "TestGeneticGui.hpp"
 
-int main(int argc, char* argv[])
+int main(void)
 {
     // informs test-listener about testresults
     CPPUNIT_NS::TestResult testresult;

@@ -43,7 +43,7 @@ class ClusterEncoding
         * @brief create a default clustering scheme from graph g
         * @param g the graph to cluster
         */
-        ClusterEncoding(AbstractGraph& g);
+        ClusterEncoding(const AbstractGraph* g);
 
         /**
          * @brief standard destructor
@@ -97,7 +97,7 @@ class ClusterEncoding
         virtual Encoding getEncoding() = 0;
 
     protected:
-        AbstractGraph& graph;
+        const AbstractGraph* graph;
 };
 
 }

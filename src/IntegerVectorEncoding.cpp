@@ -15,35 +15,37 @@ namespace clusterer
 namespace backend
 {
 
-IntegerVectorEncoding::IntegerVectorEncoding(Graph& g) : graph(g), ClusterEncoding(g)
+IntegerVectorEncoding::IntegerVectorEncoding(const Graph* g) : ClusterEncoding(g)
 {
+    this->graph = g;
+
     // Set encoding to be as big as the vertex array
-    encoding.resize(g.getNoVertices());
+    this->encoding.resize(g->getNoVertices());
 }
 
 int IntegerVectorEncoding::addToCluster(VertexId vertexId, ClusterId clusterId)
 {
-    if (encoding.size() < vertexId)
+    if (this->encoding.size() < vertexId)
     {
         return -1;
     }
-    encoding[vertexId] = clusterId;
+    this->encoding[vertexId] = clusterId;
     return 0;
 }
 
 ClusterId IntegerVectorEncoding::getClusterOfVertex(VertexId vertexId) const
 {
-    return encoding[vertexId];
+    return this->encoding[vertexId];
 }
 
 std::vector<VertexId> IntegerVectorEncoding::getVerticesInCluster(ClusterId clusterId) const
 {
     std::vector<VertexId> result;
     //iterating through the encoding vector
-    for (int i = 0; i < encoding.size(); i++)
+    for (size_t i = 0; i < this->encoding.size(); i++)
     {
         //check if VertexId is in the cluster
-        if (encoding[i] == clusterId)
+        if (this->encoding[i] == clusterId)
         {
             result.push_back(i);
         }
@@ -83,7 +85,7 @@ uint32_t IntegerVectorEncoding::getClusterCount() const
 
 ClusterEncoding::Encoding IntegerVectorEncoding::getEncoding()
 {
-    return encoding;
+    return  this->encoding;
 }
 
 int IntegerVectorEncoding::normalize()
@@ -92,14 +94,14 @@ int IntegerVectorEncoding::normalize()
     VertexId i;
 
     // Find the minimum vertex id in each cluster
-    for (i = 0; i < encoding.size(); i++)
+    for (i = 0; i < this->encoding.size(); i++)
     {
-        if (minVertex.find(encoding[i]) == minVertex.end())
+        if (minVertex.find(this->encoding[i]) == minVertex.end())
         {
             // Newly found cluster
-            minVertex[encoding[i]] = i;
+            minVertex[this->encoding[i]] = i;
         }
-        else if (i < minVertex[encoding[i]])
+        else if (i < minVertex[this->encoding[i]])
         {
             // vertexId smaller than the current smallest
             minVertex[encoding[i]] = i;
@@ -107,9 +109,9 @@ int IntegerVectorEncoding::normalize()
     }
 
     // Rename all clusters
-    for (i = 0; i < encoding.size(); i++)
+    for (i = 0; i < this->encoding.size(); i++)
     {
-        encoding[i] = minVertex[encoding[i]];
+        this->encoding[i] = minVertex[this->encoding[i]];
     }
 
     return 0;

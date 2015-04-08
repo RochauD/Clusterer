@@ -39,7 +39,7 @@ void TestMQAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     graph.addEdge(Vertex(3), Vertex(1), 0.75);
     graph.addEdge(Vertex(3), Vertex(2), 0.75);
 
-    clb::IntegerVectorEncoding solution(graph);
+    clb::IntegerVectorEncoding solution(&graph);
 
     solution.addToCluster(0, 0);
     solution.addToCluster(1, 1);
@@ -77,7 +77,7 @@ void TestMQAnalyzer::testAnalyzeOneClusterOnly(void)
     graph.addEdge(Vertex(3), Vertex(1), 0.75);
     graph.addEdge(Vertex(3), Vertex(2), 0.75);
 
-    clb::IntegerVectorEncoding solution(graph);
+    clb::IntegerVectorEncoding solution(&graph);
 
     solution.addToCluster(0, 0);
     solution.addToCluster(1, 0);
@@ -115,7 +115,7 @@ void TestMQAnalyzer::testAnalyzeFullyConnectedGraphTwoClusters(void)
     graph.addEdge(Vertex(3), Vertex(1), 0.75);
     graph.addEdge(Vertex(3), Vertex(2), 0.75);
 
-    clb::IntegerVectorEncoding solution(graph);
+    clb::IntegerVectorEncoding solution(&graph);
 
     solution.addToCluster(0, 0);
     solution.addToCluster(1, 0);

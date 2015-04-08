@@ -37,7 +37,7 @@ class IntegerVectorEncoding : public ClusterEncoding
          * @brief create a default clustering scheme from graph g
          * @param g the graph to cluster
          */
-        IntegerVectorEncoding(Graph& g);
+        IntegerVectorEncoding(const Graph* g);
 
         /**
          * @brief move a vertex to a specific cluster
@@ -101,7 +101,7 @@ class IntegerVectorEncoding : public ClusterEncoding
 
     private:
         ClusterEncoding::Encoding encoding;
-        Graph& graph;
+        const Graph* graph;
 };
 
 }
