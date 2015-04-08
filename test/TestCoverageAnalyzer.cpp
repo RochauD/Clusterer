@@ -47,11 +47,9 @@ void TestCoverageAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution.addToCluster(3, 3);
 
     double result = this->coverageAnalyzer.analyze(solution, graph);
-    if (result <  std::numeric_limits<double>::epsilon() && result > -std::numeric_limits<double>::epsilon())
-    {
-        result = 0.0;
-    }
-    CPPUNIT_ASSERT(result == 0.0);
+    double actualValue = 0.0;
+    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
+                   (result > actualValue - std::numeric_limits<double>::epsilon()));
 }
 
 void TestCoverageAnalyzer::testAnalyzeOneClusterOnly(void)
@@ -87,11 +85,9 @@ void TestCoverageAnalyzer::testAnalyzeOneClusterOnly(void)
     solution.addToCluster(3, 0);
 
     double result = this->coverageAnalyzer.analyze(solution, graph);
-    if (result <  1.0 + std::numeric_limits<double>::epsilon() && result > -1.0 - std::numeric_limits<double>::epsilon())
-    {
-        result = 1.0;
-    }
-    CPPUNIT_ASSERT(result == 1.0);
+    double actualValue = 1.0;
+    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
+                   (result > actualValue - std::numeric_limits<double>::epsilon()));
 }
 
 void TestCoverageAnalyzer::testAnalyzeFullyConnectedGraphTwoClusters(void)
@@ -128,6 +124,6 @@ void TestCoverageAnalyzer::testAnalyzeFullyConnectedGraphTwoClusters(void)
 
     double result = this->coverageAnalyzer.analyze(solution, graph);
     double actualValue = (1.0/3.0); // @todo check with hand calculated one!!!
-    CPPUNIT_ASSERT((result <  actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > -actualValue - std::numeric_limits<double>::epsilon()));
+    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
+                   (result > actualValue - std::numeric_limits<double>::epsilon()));
 }

@@ -48,8 +48,8 @@ void TestFitnessAnalyzer::testAnalyzeSingleElementClustersOnly(void)
 
     double result = this->fitnessAnalyzer.analyze(solution, graph);
     double actualValue = 0.0; // @todo check with hand calculated one!!!
-    CPPUNIT_ASSERT((result <  actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > -actualValue - std::numeric_limits<double>::epsilon()));
+    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
+                   (result > actualValue - std::numeric_limits<double>::epsilon()));
 }
 
 void TestFitnessAnalyzer::testAnalyzeOneClusterOnly(void)
@@ -86,8 +86,8 @@ void TestFitnessAnalyzer::testAnalyzeOneClusterOnly(void)
 
     double result = this->fitnessAnalyzer.analyze(solution, graph);
     double actualValue = 0.0; // @todo check with hand calculated one!!!
-    CPPUNIT_ASSERT((result <  actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > -actualValue - std::numeric_limits<double>::epsilon()));
+    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
+                   (result > actualValue - std::numeric_limits<double>::epsilon()));
 }
 
 void TestFitnessAnalyzer::testAnalyzeFullyConnectedGraphTwoClusters(void)
@@ -124,6 +124,6 @@ void TestFitnessAnalyzer::testAnalyzeFullyConnectedGraphTwoClusters(void)
 
     double result = this->fitnessAnalyzer.analyze(solution, graph);
     double actualValue = 0.0; // @todo check with hand calculated one!!!
-    CPPUNIT_ASSERT((result <  actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > -actualValue - std::numeric_limits<double>::epsilon()));
+    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
+                   (result > actualValue - std::numeric_limits<double>::epsilon()));
 }

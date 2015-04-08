@@ -49,7 +49,7 @@ void TestMQAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     double result = this->mqAnalyzer.analyze(solution, graph);
     double actualValue = 0.0; // @todo check with hand calculated one!!!
     CPPUNIT_ASSERT((result <  actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > -actualValue - std::numeric_limits<double>::epsilon()));
+                   (result >  actualValue - std::numeric_limits<double>::epsilon()));
 }
 
 void TestMQAnalyzer::testAnalyzeOneClusterOnly(void)
@@ -87,7 +87,7 @@ void TestMQAnalyzer::testAnalyzeOneClusterOnly(void)
     double result = this->mqAnalyzer.analyze(solution, graph);
     double actualValue = 0.0; // @todo check with hand calculated one!!!
     CPPUNIT_ASSERT((result <  actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > -actualValue - std::numeric_limits<double>::epsilon()));
+                   (result >  actualValue - std::numeric_limits<double>::epsilon()));
 }
 
 void TestMQAnalyzer::testAnalyzeFullyConnectedGraphTwoClusters(void)
@@ -125,5 +125,5 @@ void TestMQAnalyzer::testAnalyzeFullyConnectedGraphTwoClusters(void)
     double result = this->mqAnalyzer.analyze(solution, graph);
     double actualValue = 0.0; // @todo check with hand calculated one!!!
     CPPUNIT_ASSERT((result <  actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > -actualValue - std::numeric_limits<double>::epsilon()));
+                   (result >  actualValue - std::numeric_limits<double>::epsilon()));
 }

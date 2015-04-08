@@ -49,7 +49,7 @@ void TestPerformanceAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     double result = this->performanceAnalyzer.analyze(solution, graph);
     double actualValue = 0.0; // @todo check with hand calculated one!!!
     CPPUNIT_ASSERT((result <  actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > -actualValue - std::numeric_limits<double>::epsilon()));
+                   (result >  actualValue - std::numeric_limits<double>::epsilon()));
 }
 
 void TestPerformanceAnalyzer::testAnalyzeOneClusterOnly(void)
@@ -87,7 +87,7 @@ void TestPerformanceAnalyzer::testAnalyzeOneClusterOnly(void)
     double result = this->performanceAnalyzer.analyze(solution, graph);
     double actualValue = 0.0; // @todo check with hand calculated one!!!
     CPPUNIT_ASSERT((result <  actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > -actualValue - std::numeric_limits<double>::epsilon()));
+                   (result >  actualValue - std::numeric_limits<double>::epsilon()));
 }
 
 void TestPerformanceAnalyzer::testAnalyzeFullyConnectedGraphTwoClusters(void)
@@ -125,5 +125,5 @@ void TestPerformanceAnalyzer::testAnalyzeFullyConnectedGraphTwoClusters(void)
     double result = this->performanceAnalyzer.analyze(solution, graph);
     double actualValue = 0.0; // @todo check with hand calculated one!!!
     CPPUNIT_ASSERT((result <  actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > -actualValue - std::numeric_limits<double>::epsilon()));
+                   (result >  actualValue - std::numeric_limits<double>::epsilon()));
 }
