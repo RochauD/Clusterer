@@ -4,6 +4,9 @@
  */
 #include "../include/ConfigurationManager.hpp"
 
+// standard headers
+#include "../include/GlobalFileLogger.hpp"
+
 namespace clusterer
 {
 namespace backend
@@ -132,6 +135,7 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
     }
     else
     {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find minIterations value in configuration file.");
         throw std::runtime_error("Error! Could not find minIterations value in configuration file.");
     }
 
@@ -142,6 +146,7 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
     }
     else
     {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find maxIterations value in configuration file.");
         throw std::runtime_error("Error! Could not find maxIterations value in configuration file.");
     }
 
@@ -152,6 +157,7 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
     }
     else
     {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find minFitness value in configuration file.");
         throw std::runtime_error("Error! Could not find minFitness value in configuration file.");
     }
 
@@ -162,6 +168,7 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
     }
     else
     {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find maxFitness value in configuration file.");
         throw std::runtime_error("Error! Could not find maxFitness value in configuration file.");
     }
 
@@ -172,6 +179,7 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
     }
     else
     {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find phaseSwitchFitnessValue value in configuration file.");
         throw std::runtime_error("Error! Could not find phaseSwitchFitnessValue value in configuration file.");
     }
 
@@ -182,6 +190,7 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
     }
     else
     {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find phaseSwitchIterationValue value in configuration file.");
         throw std::runtime_error("Error! Could not find phaseSwitchIterationValue value in configuration file.");
     }
 
@@ -192,6 +201,7 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
     }
     else
     {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find predictedClusterCount value in configuration file.");
         throw std::runtime_error("Error! Could not find predictedClusterCount value in configuration file.");
     }
 
@@ -202,9 +212,10 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
     }
     else
     {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find threadCount value in configuration file.");
         throw std::runtime_error("Error! Could not find threadCount value in configuration file.");
     }
-
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Loaded Clustering Params succesfully from the following file. File: ", fullPathName);
 }
 
 void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
@@ -221,6 +232,7 @@ void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
 
     ConfigurationReaderWriter configWriter(fullPathName);
     configWriter.writeConfiguration(parameterMap);
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Saved Clustering Params succesfully from the following file. File: ", fullPathName);
 }
 
 }
