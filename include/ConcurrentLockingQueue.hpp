@@ -176,7 +176,7 @@ void ConcurrentLockingQueue<Type>::pop(Type* value)
 template <class Type>
 bool ConcurrentLockingQueue<Type>::popNonWaiting(Type& value)
 {
-    if (std::try_lock(this->queueMutex))
+    if (this->queueMutex.try_lock())
     {
         if (baseQueue.empty())
         {
@@ -194,7 +194,7 @@ bool ConcurrentLockingQueue<Type>::popNonWaiting(Type& value)
 template <class Type>
 bool ConcurrentLockingQueue<Type>::popNonWaiting(Type* value)
 {
-    if (std::try_lock(this->queueMutex))
+    if (this->queueMutex.try_lock())
     {
         if (baseQueue.empty())
         {

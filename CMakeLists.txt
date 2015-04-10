@@ -59,6 +59,8 @@ else()
     # Enable all warnings
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
 endif()
 message("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
 message("-- Finished setting compiler settings.")
