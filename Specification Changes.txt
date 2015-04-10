@@ -25,8 +25,13 @@ Change 7:
 Replaced the simple and incomplete logger by a better and nicer engineered one. Firstly this new logger replaces the multiple log function with a single veradiac one. Also logging is now on a seperate thread and thread safe. This is really useful as logging to a file for example might be quite costly. Lastly the design is policy based and so we can exchange and extend the logger easily. To keep with the old design we nevertheless provide a singleton threadsafe access to out logger class so we combine the best of both worlds.
 
 Change 8:
+Created a new base class for all analyzer called ClusteringSolutionAnalyzer as FitnessAnalyzer cannot be the base class as we need also a FitnessAnalyzer which takes the other analyzers to compute the fitness.
+Added a new parameter to the analyze function of all analyzer classes, as we need to pass the graph to them in order to do anything meaningful and the designers forgot that. Also changed the first parameter from the encoding representation to the class representing the encoding as that makes more sense, as the class around the encoding is the one that actually provides the needed functions. Also removed the score typedef as the classes are not always reporting a score of a solution but sometimes just certain measures i.e. coverage. Therefore leaving it as a double and documenting it accordingly is the better option.
+
+Change 9:
 Added test_files folder to simulate reading the data from files and store it into a graph. Also mainGraph.cpp should show how Graph and GraphReader can be used. To run mainGraph.cpp
 $ g++ -Wall -o outr -std=c++11 mainGraph.cpp src/Vertex.cpp src/AbstractGraph.cpp src/Graph.cpp src/GraphReader.cpp
 should be enough
 Added a second class GraphReader2 as a second option for GraphReader following the structure in the initial class diagram in more detail. mainGraphReader2.cpp uses GraphReader2.cpp. To test mainGraphReader2.cpp:
 $ g++ -Wall -o out_mr2 -std=c++11 mainGraphReader2.cpp src/Vertex.cpp src/AbstractGraph.cpp src/GraphReader2.cpp src/Graph.cpp
+

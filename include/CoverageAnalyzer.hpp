@@ -1,9 +1,9 @@
 /**
- * @file MQAnalyzer.hpp
- * @brief fitness function interface implementation
- */
-#ifndef CLUSTERER_BACKEND_MQ_ANALYZER_HPP
-#define CLUSTERER_BACKEND_MQ_ANALYZER_HPP
+* @file CoverageAnalyzer.hpp
+* @brief fitness function interface implementation
+*/
+#ifndef CLUSTERER_BACKEND_COVERAGE_ANALYZER_HPP
+#define CLUSTERER_BACKEND_COVERAGE_ANALYZER_HPP
 
 // standard headers
 
@@ -27,20 +27,20 @@ namespace clusterer
 namespace backend
 {
 
-class MQAnalyzer : public ClusteringSolutionAnalyzer
+class CoverageAnalyzer : public ClusteringSolutionAnalyzer
 {
     public:
         /**
-         * @brief report a score for a clustering solution
-         * @param clusteringSolution a clustering solution
-         * @param graph The graph.
-         * @return the modularization quality of the solution
-         * @pre The graph needs to have atleast on edge. In other words the graph is not allowed
-         * totally disconnected.
-         */
+        * @brief Returns the coverage value for a clustering solution
+        * @param clusteringSolution A clustering solution.
+        * @param graph The graph.
+        * @return The coverage value, which is a value in the interval [0.0, 1.0]
+        * @pre The graph needs to have atleast on edge. In other words the graph is not allowed
+        * totally disconnected.
+        */
         double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph);
 
-        ~MQAnalyzer();
+        ~CoverageAnalyzer();
 };
 
 }

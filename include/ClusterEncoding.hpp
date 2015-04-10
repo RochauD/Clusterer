@@ -8,6 +8,7 @@
 // standard headers
 #include <stdint.h>
 #include <vector>
+#include <unordered_map>
 // external headers
 
 // internal headers
@@ -37,16 +38,18 @@ class ClusterEncoding
 {
     public:
         typedef std::vector<ClusterId> Encoding;
+
         /**
         * @brief create a default clustering scheme from graph g
         * @param g the graph to cluster
         */
-        ClusterEncoding(AbstractGraph& g);
+        ClusterEncoding(const AbstractGraph* g);
 
         /**
          * @brief standard destructor
          */
         virtual ~ClusterEncoding();
+
         /**
         * @brief move a vertex to a specific cluster
         * @param VertexId the id of the vertex to be moved
@@ -54,18 +57,39 @@ class ClusterEncoding
         * @return 0 on success and -1 on failure
         */
         virtual int addToCluster(VertexId vertexId, ClusterId clusterId) = 0;
+
         /**
         * @brief get the current encoding of the cluster
         * @param VertexId the vertex for which we want to get the cluster
         * @return the clusterId of the vertex
         */
-        virtual ClusterId getClusterOfVertex(VertexId vertexId) = 0;
+        virtual ClusterId getClusterOfVertex(VertexId vertexId) const = 0;
+
         /**
         * @brief get the vertices in a cluster
         * @param ClusterId the cluster for which we want to get the vertices
         * @return a vector containing all vertices in the cluster
         */
-        virtual std::vector< VertexId > getVerticesInCluster(ClusterId clusterId) = 0;
+        virtual std::vector< VertexId > getVerticesInCluster(ClusterId clusterId) const = 0;
+
+        /**
+        * @brief Returns a map that maps ClusterIds to the corresponding vertices count.
+        * @return The hashmap.
+        */
+        virtual std::unordered_map<ClusterId, uint64_t> getClusterVerticesCountMap() const = 0;
+
+        /**
+        * @brief Returns the number of vertices in a cluster.
+        * @return The number of vertices in a cluster of the solution.
+        */
+        virtual uint64_t getVerticesCountInCluster(ClusterId clusterId) const = 0;
+
+        /**
+        * @brief Returns the number of clusters in the solution.
+        * @return The number of clusters in the solution.
+        */
+        virtual uint32_t getClusterCount() const = 0;
+
         /**
          * @brief get the current encoding
          * @return the current encoding of a solution
@@ -73,7 +97,7 @@ class ClusterEncoding
         virtual Encoding getEncoding() = 0;
 
     protected:
-        AbstractGraph& graph;
+        const AbstractGraph* graph;
 };
 
 }

@@ -151,6 +151,11 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
         ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusteringSolutionAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/FitnessAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/MQAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/PerformanceAnalyzer.cpp   
+        ${CLUSTER_SOURCE_DIR}/CoverageAnalyzer.cpp   
         ${CLUSTER_SOURCE_DIR}/ClusterEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Vertex.cpp
         ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoding.cpp
@@ -170,7 +175,11 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
         ${CLUSTER_INCLUDE_DIR}/AbstractGraph.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusterEncoding.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringSolutionAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/FitnessAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/CoverageAnalyzer.hpp        
         ${CLUSTER_INCLUDE_DIR}/Vertex.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerVectorEncoding.hpp
         ${CLUSTER_INCLUDE_DIR}/CrossoverEngine.hpp
@@ -185,8 +194,6 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
-        ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
-        ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
     )
@@ -257,6 +264,10 @@ set(CLUSTER_TEST_FILENAMES
         LoggerSeverityType
         LoggerSeverityLevel
         ConcurrentLockingQueue
+        CoverageAnalyzer
+        MQAnalyzer
+        PerformanceAnalyzer
+        FitnessAnalyzer
     )
 
 #############

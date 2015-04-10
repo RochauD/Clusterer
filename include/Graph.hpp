@@ -29,8 +29,8 @@ typedef property<edge_weight_t,double> EdgeWeight;
 
 // an adjacency_list model
 typedef boost::adjacency_list<boost::vecS, boost::vecS,
-                              boost::directedS, VertexName,
-                              EdgeWeight> DirectedGraph;
+        boost::directedS, VertexName,
+        EdgeWeight> DirectedGraph;
 
 typedef graph_traits<DirectedGraph>::vertex_descriptor Vert;
 typedef graph_traits<DirectedGraph>::edge_descriptor Edge;
@@ -42,7 +42,8 @@ typedef graph_traits<DirectedGraph>::edge_descriptor Edge;
 * provides methods to access relevant structures in the given
 * data such as vertices, edge connections and the neighbors vertex
 */
-class Graph : public virtual clusterer::backend::AbstractGraph{
+class Graph : public virtual clusterer::backend::AbstractGraph
+{
     public:
         /**
         * @brief empty Constructor for the Graph
@@ -52,12 +53,12 @@ class Graph : public virtual clusterer::backend::AbstractGraph{
         * @brief getter for the current number of vertices added in the graph
         * @return number of vertices
         */
-        int getNoVertices();
+        int getNoVertices() const;
         /**
         * @brief getter for the current number of edges in the graph
         * @return number of edges
         */
-        int getNoEdges();
+        int getNoEdges() const;
         /**
         * @brief assign a node in the graph to a Vertex object
         * @param reference to a Vertex object
@@ -101,15 +102,15 @@ class Graph : public virtual clusterer::backend::AbstractGraph{
         std::vector<VertexId> getVertices();
         /**
         * @brief getter for the edges in the graph
-        * @return vector of pairs of type <VertexId,VertexId> 
+        * @return vector of pairs of type <VertexId,VertexId>
         */
         std::vector<std::pair<VertexId,VertexId>> getEdges();
         /**
         * @brief getter for the edges in the graph and their respective weights
         * @return vector of pairs <pair<VertexId,VertexId>, double>
-        * pair of node indeces and their respective weight  
+        * pair of node indeces and their respective weight
         */
-        std::vector<std::pair<std::pair<VertexId,VertexId>,double>> getEdgesAndWeights();
+        std::vector<std::pair<std::pair<VertexId, VertexId>, double>> getEdgesAndWeights() const;
         /**
         * @brief getter for the neighbor Vertexes of a given Vertex object
         * @return a vector of VertexId
@@ -131,7 +132,7 @@ class Graph : public virtual clusterer::backend::AbstractGraph{
         * @var g
         * @brief local representation of the graph created using BGL
         */
-        DirectedGraph g; 
+        DirectedGraph g;
     private:
         /**
         * @var no_vertices
