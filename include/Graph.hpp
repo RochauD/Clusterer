@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 #include <map>
+#include <cstdint>
 // external headers
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_traits.hpp>
@@ -65,13 +66,13 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         * @brief getter for the current number of vertices added in the graph
         * @return number of vertices
         */
-        int getNoVertices() const;
+        uint64_t getNoVertices() const;
 
         /**
         * @brief getter for the current number of edges in the graph
         * @return number of edges
         */
-        int getNoEdges() const;
+        uint64_t getNoEdges() const;
 
         /**
         * @brief assign a node in the graph to a Vertex object
@@ -161,13 +162,13 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         * @var no_vertices
         * @brief keeping track of the number of vertices in the graph
         */
-        int no_vertices;
+        uint64_t no_vertices;
 
         /**
         * @var no_edges
         * @brief keeping track of the number of edges in the graph
         */
-        int no_edges;
+        uint64_t no_edges;
 
         /**
         * @var vertex_map

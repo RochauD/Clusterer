@@ -20,13 +20,13 @@ Graph::~Graph()
 
 }
 
-int Graph::getNoVertices() const
+uint64_t Graph::getNoVertices() const
 {
     return no_vertices;
 }
 
 
-int Graph::getNoEdges() const
+uint64_t Graph::getNoEdges() const
 {
     return no_edges;
 }

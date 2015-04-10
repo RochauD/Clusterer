@@ -7,6 +7,7 @@
 
 // standard headers
 #include <vector>
+#include <cstdint>
 // external headers
 
 // internal headers
@@ -49,13 +50,13 @@ class AbstractGraph
         * @brief getter for the current number of vertices added in the graph
         * @return number of vertices
         */
-        virtual int getNoVertices() const = 0;
+        virtual uint64_t getNoVertices() const = 0;
 
         /**
         * @brief getter for the current number of edges in the graph
         * @return number of edges
         */
-        virtual int getNoEdges() const = 0;
+        virtual uint64_t getNoEdges() const = 0;
 
         /**
         * @brief assign a node in the graph to a Vertex object
