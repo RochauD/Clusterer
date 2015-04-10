@@ -1,39 +1,45 @@
 /**
-  * @brief  subclass of AbstractGraph interface
-  *
-  * @file Graph.hpp
-  */
+* @file Graph.hpp
+* @brief Implementation of AbstractGraph interface
+*/
+#ifndef CLUSTERER_BACKEND_GRAPH_HPP
+#define CLUSTERER_BACKEND_GRAPH_HPP
 
-#ifndef GRAPH_HPP
-#define GRAPH_HPP
-
-// c++ libraries
-#include <utility> //maybe pair
+// standard headers
+#include <utility>
 #include <vector>
 #include <map>
+// external headers
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_traits.hpp>
-
-// local headers
+// internal headers
 #include "AbstractGraph.hpp"
 
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
 namespace clusterer
 {
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
 namespace backend
 {
 
-using namespace boost;
-
-typedef property<vertex_name_t,VertexId> VertexName;
-typedef property<edge_weight_t,double> EdgeWeight;
+typedef boost::property<boost::vertex_name_t, VertexId> VertexName;
+typedef boost::property<boost::edge_weight_t, double> EdgeWeight;
 
 // an adjacency_list model
 typedef boost::adjacency_list<boost::vecS, boost::vecS,
         boost::directedS, VertexName,
         EdgeWeight> DirectedGraph;
 
-typedef graph_traits<DirectedGraph>::vertex_descriptor Vert;
-typedef graph_traits<DirectedGraph>::edge_descriptor Edge;
+typedef boost::graph_traits<DirectedGraph>::vertex_descriptor Vert;
+typedef boost::graph_traits<DirectedGraph>::edge_descriptor Edge;
 
 /**
 * @class Graph
@@ -49,84 +55,101 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         * @brief empty Constructor for the Graph
         */
         Graph();
+
+        /**
+        * @brief destructor for the class Graph
+        */
+        ~Graph();
+
         /**
         * @brief getter for the current number of vertices added in the graph
         * @return number of vertices
         */
         int getNoVertices() const;
+
         /**
         * @brief getter for the current number of edges in the graph
         * @return number of edges
         */
         int getNoEdges() const;
+
         /**
         * @brief assign a node in the graph to a Vertex object
-        * @param reference to a Vertex object
+        * @param v constant reference to a Vertex object
         * @return void
         */
-        void addVertex(const Vertex&);
+        void addVertex(const Vertex& v);
+
         /**
         * @brief assign an edge in the graph as a connection between 2 Vertex objects
-        * @param constant reference to first Vertex object
-        * @param constant reference to second Vertex object
+        * @param v1 constant reference to first Vertex object
+        * @param v2 constant reference to second Vertex object
         * @return void
         */
-        void addEdge(const Vertex&, const Vertex&);
+        void addEdge(const Vertex& v1, const Vertex& v2);
+
         /**
         * @brief assign an edge in the graph between 2 Vertex objects and its weight
-        * @param constant reference to first Vertex object
-        * @param constant reference to second Vertex object
-        * @param last parameter the weight to be assigned to the edge
+        * @param v1 constant reference to first Vertex object
+        * @param v2 constant reference to second Vertex object
+        * @param weight last parameter the weight to be assigned to the edge
         * @return void
         */
-        void addEdge(const Vertex&, const Vertex&, double);
+        void addEdge(const Vertex& v1, const Vertex& v2, double weight);
+
         /**
         * @brief set the weight of an edge if it exists
-        * @param constant reference to first Vertex object
-        * @param constant reference to second Vertex object
-        * @param double value for the weight
+        * @param v1 constant reference to first Vertex object
+        * @param v2 constant reference to second Vertex object
+        * @param weight double value for the weight
         * @return void
         */
-        void setEdgeWeight(const Vertex&, const Vertex&, double);
+        void setEdgeWeight(const Vertex& v1, const Vertex& v2, double weight);
+
         /**
-        * @brief get the weight of an edge
-        * @param constant reference to first Vertex object
-        * @param constant reference to second Vertex object
-        * @double the value of the edge weight
+        * @brief Returns the weight of an edge.
+        * @param[in] v1 Constant reference to first Vertex object
+        * @param[in] v2 Constant reference to second Vertex object
+        * @param[out] edgeWeight The weight of the edge
+        * @bool True if edge exists, false if edge does not exist and therefore cannot have
+        * a weight
         */
-        double getEdgeWeight(const Vertex&, const Vertex&);
+        bool getEdgeWeight(const Vertex& v1, const Vertex& v2, double* edgeWeight) const;
+
         /**
         * @brief getter for the node representations in the graph
         * @return vector of VertexId, each VertexId partaining to a Vertex object
         */
-        std::vector<VertexId> getVertices();
+        std::vector<VertexId> getVertices() const;
+
         /**
         * @brief getter for the edges in the graph
         * @return vector of pairs of type <VertexId,VertexId>
         */
-        std::vector<std::pair<VertexId,VertexId>> getEdges();
+        std::vector<std::pair<VertexId, VertexId>> getEdges() const;
+
         /**
         * @brief getter for the edges in the graph and their respective weights
         * @return vector of pairs <pair<VertexId,VertexId>, double>
         * pair of node indeces and their respective weight
         */
         std::vector<std::pair<std::pair<VertexId, VertexId>, double>> getEdgesAndWeights() const;
+
         /**
         * @brief getter for the neighbor Vertexes of a given Vertex object
         * @return a vector of VertexId
         */
-        std::vector<VertexId> getNeighbors(const Vertex&);
+        std::vector<VertexId> getNeighbors(const Vertex&) const;
+
         /**
         * @brief check if edge exists
         * @param constant reference to first Vertex object
         * @param constant reference to second Vertex object
         * @return true if it does, false if it doesn't figures...
         */
-        bool existsEdge(const Vertex&, const Vertex&);
-        /**
-        * @brief destructor for the class Graph
-        */
-        virtual ~Graph();
+        bool existsEdge(const Vertex&, const Vertex&) const;
+
+
     protected:
         /**
         * @var g
@@ -139,11 +162,13 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         * @brief keeping track of the number of vertices in the graph
         */
         int no_vertices;
+
         /**
         * @var no_edges
         * @brief keeping track of the number of edges in the graph
         */
         int no_edges;
+
         /**
         * @var vertex_map
         * @brief a map between VertexId, representative of a Vertex object,
@@ -152,7 +177,14 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         */
         std::map<VertexId,Vert> vertex_map;
 };
-} //namespace backend
-} //namespace clusterer
 
-#endif // GRAPH_HPP
+}
+}
+
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
+
+#endif
