@@ -6,10 +6,10 @@ namespace backend
 {
 
 IntegerEncodingInitializer::IntegerEncodingInitializer(
-        Graph& g, unsigned maxClusters) : graph(g)
+        const Graph* g, unsigned maxClusters) : graph(g)
 {
-    if (maxClusters == 0 || maxClusters >= graph.getNoVertices())
-    { maxClusters = graph.getNoVertices() - 1; }
+    if (maxClusters == 0 || maxClusters >= graph->getNoVertices())
+    { maxClusters = graph->getNoVertices() - 1; }
 
     std::random_device rd;
     rng.seed(rd());
@@ -19,7 +19,7 @@ IntegerEncodingInitializer::IntegerEncodingInitializer(
 IntegerVectorEncoding IntegerEncodingInitializer::getRandomSolution()
 {
     IntegerVectorEncoding result(graph);
-    for (int vert = 0; vert < graph.getNoVertices(); vert++)
+    for (int vert = 0; vert < graph->getNoVertices(); vert++)
     { result.addToCluster(vert, (*uni_dist)(rng)); }
     return result;
 }

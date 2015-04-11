@@ -33,7 +33,7 @@ public:
      * @param The graph to be clustered
      * @param The maximum number of clusters in a solution (the number of vertices by default)
      */
-    IntegerEncodingInitializer(Graph& g, unsigned maxClusters = 0);
+    IntegerEncodingInitializer(const Graph* g, unsigned maxClusters = 0);
 
     /**
      * @brief Returns one randomly initialized clustering solution
@@ -50,7 +50,7 @@ public:
 
 protected:
     unsigned maxClusters;
-    Graph &graph;
+    const Graph* graph;
     std::mt19937 rng;
     // TODO: Make this a smart pointer
     std::uniform_int_distribution<unsigned>* uni_dist;
