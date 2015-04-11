@@ -19,7 +19,7 @@ void TestIntegerVectorEncoding::setUp(void)
     g.addVertex(v1);
     g.addVertex(v2);
 
-    testObj = new IntegerVectorEncoding(g);
+    testObj = new IntegerVectorEncoding(&g);
 }
 
 /**

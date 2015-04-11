@@ -6,12 +6,13 @@
 #define CLUSTERER_BACKEND_FITNESS_ANALYZER_HPP
 
 // standard headers
-#include <stdint.h>
+
 // external headers
 
 // internal headers
-#include "ClusterEncoding.hpp"
-#include "Vertex.hpp"
+#include "ClusteringSolutionAnalyzer.hpp"
+#include "PerformanceAnalyzer.hpp"
+#include "MQAnalyzer.hpp"
 
 /**
 * @namespace clusterer
@@ -33,21 +34,27 @@ namespace backend
  * @brief interface for objects which can assess the value of a particular
  * clustering scheme
  */
-class FitnessAnalyzer
+class FitnessAnalyzer : public ClusteringSolutionAnalyzer
 {
     public:
-        typedef double Score;
         /**
          * @brief report a score for a clustering solution
          * @param clusteringSolution a clustering solution
+         * @param graph The graph.
          * @return a score corresponding to the clustering solution
+         * @pre The graph needs to have atleast on edge. In other words the graph is not allowed
+         * totally disconnected.
          */
-        virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution) = 0;
+        double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph);
 
         /**
          * @brief standard destructor
          */
-        virtual ~FitnessAnalyzer();
+        ~FitnessAnalyzer();
+    protected:
+    private:
+        PerformanceAnalyzer performanceAnalyzer;
+        MQAnalyzer mqAnalyzer;
 };
 
 }

@@ -59,6 +59,8 @@ else()
     # Enable all warnings
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
 endif()
 message("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
 message("-- Finished setting compiler settings.")
@@ -151,6 +153,11 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
         ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusteringSolutionAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/FitnessAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/MQAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/PerformanceAnalyzer.cpp   
+        ${CLUSTER_SOURCE_DIR}/CoverageAnalyzer.cpp   
         ${CLUSTER_SOURCE_DIR}/ClusterEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Vertex.cpp
         ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoding.cpp
@@ -171,7 +178,11 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
         ${CLUSTER_INCLUDE_DIR}/AbstractGraph.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusterEncoding.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringSolutionAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/FitnessAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/CoverageAnalyzer.hpp        
         ${CLUSTER_INCLUDE_DIR}/Vertex.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerVectorEncoding.hpp
         ${CLUSTER_INCLUDE_DIR}/CrossoverEngine.hpp
@@ -186,8 +197,6 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
-        ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
-        ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
@@ -254,6 +263,15 @@ set(CLUSTER_TEST_FILENAMES
         Vertex
         Graph
         IntegerVectorEncoding
+        Logger
+        LoggerBufferEntry
+        LoggerSeverityType
+        LoggerSeverityLevel
+        ConcurrentLockingQueue
+        CoverageAnalyzer
+        MQAnalyzer
+        PerformanceAnalyzer
+        FitnessAnalyzer
     )
 
 #############
@@ -265,6 +283,8 @@ link_directories(${LINK_DIRECTORIES}  ${Boost_LIBRARY_DIRS})
 # add shared library
 
 add_library(clusterer-shared SHARED ${CLUSTER_SOURCES}) 
+# link boost library
+target_link_libraries(clusterer-shared ${Boost_LIBRARIES})
 # set library name
 set_target_properties(clusterer-shared PROPERTIES OUTPUT_NAME "clusterer")
 if(WIN32)
@@ -285,7 +305,9 @@ set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEA
 
 # add static library
 
-add_library(clusterer-static STATIC ${CLUSTER_SOURCES}) 
+add_library(clusterer-static STATIC ${CLUSTER_SOURCES})
+# link boost library
+target_link_libraries(clusterer-static ${Boost_LIBRARIES})
 # set library name
 set_target_properties(clusterer-static PROPERTIES OUTPUT_NAME "clusterer")
 if(WIN32)
