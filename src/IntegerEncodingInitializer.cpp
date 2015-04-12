@@ -21,6 +21,7 @@ IntegerVectorEncoding IntegerEncodingInitializer::getRandomSolution()
     IntegerVectorEncoding result(graph);
     for (int vert = 0; vert < graph->getNoVertices(); vert++)
     { result.addToCluster(vert, (*uni_dist)(rng)); }
+    result.normalize();
     return result;
 }
 
