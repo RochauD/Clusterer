@@ -1,5 +1,11 @@
 #include <iostream>
+#include <cstdlib>
+#include <iostream>
 #include <memory>
+#include "include/Vertex.hpp"
+#include "include/AbstractGraph.hpp"
+#include "include/Graph.hpp"
+#include "include/GraphReader.hpp"
 #include "include/Logger.hpp"
 #include "include/LoggingPolicyFile.hpp"
 #include "include/ConfigurationManager.hpp"
@@ -21,7 +27,42 @@ int main()
         GlobalFileLogger::instance()->log(SeverityType::DEBUG, "test", i);
     }
 
+    Graph g;
+    GraphReader gr(&g);
+    gr.readFile("../test_files/out.ucidata-zachary");
+    // can be replaced with "test_files/out.ucidata-zachary"
 
+    std::cout << "number of edges: " << g.getNoEdges() << "\n";
+    std::cout << "number of vertices: " << g.getNoVertices() << "\n";
+
+    std::vector<std::pair<VertexId, VertexId>> edges = g.getEdges();
+
+    std::cout << "edges: \n";
+    std::vector<std::pair<VertexId, VertexId>>::iterator it;
+    for (it = edges.begin(); it != edges.end(); ++it)
+    {
+        std::cout << (*it).first << " " << (*it).second << "\n";
+    }
+
+    std::cout << "vertices: \n";
+    std::vector<VertexId> vec = g.getVertices();
+
+    std::vector<VertexId>::iterator it2;
+    for (auto t : vec)
+    {
+        std::cout << t << " ";
+    }
+    std::cout << "\n";
+
+    std::vector<std::pair<std::pair<VertexId, VertexId>, double>> wedges = g.getEdgesAndWeights();
+
+    std::cout << "edges: \n";
+    std::vector<std::pair<std::pair<VertexId, VertexId>, double>>::iterator wit;
+    for (wit = wedges.begin(); wit != wedges.end(); ++wit)
+    {
+        std::cout << (*wit).first.first << " " << (*wit).first.second;
+        std::cout << " with weight: " << (*wit).second << "\n";
+    }
 
 
     logger.log(SeverityType::WARNING, "File: ", __FILE__);
@@ -39,3 +80,4 @@ int main()
 
     return 0;
 }
+
