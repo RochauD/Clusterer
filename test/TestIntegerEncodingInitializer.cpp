@@ -50,7 +50,7 @@ void TestIntegerEncodingInitializer::testGetRandomSolution(void)
     for (int v = 0; v < g->getNoVertices(); v++)
     {
         CPPUNIT_ASSERT(solution1.getClusterOfVertex(v) >= 0);
-        CPPUNIT_ASSERT(solution1.getClusterOfVertex(v) < g->getNoVertices());
+        CPPUNIT_ASSERT(solution1.getClusterOfVertex(v) < 3);
 
         CPPUNIT_ASSERT(solution2.getClusterOfVertex(v) >= 0);
         CPPUNIT_ASSERT(solution2.getClusterOfVertex(v) < g->getNoVertices());
