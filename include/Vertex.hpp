@@ -28,6 +28,9 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @struct info
+*/
 typedef struct info
 {
     std::string name;
@@ -38,26 +41,28 @@ typedef struct info
 typedef uint64_t VertexId;
 typedef uint64_t ClusterId;
 
+/**
+* @class Vertex
+*/
 class Vertex
 {
-    private:
-        int number;
-        bool numberFlag = true;
-        info v_info;
-        std::vector<Vertex> neighbors;
     public:
         Vertex();
-        Vertex(int);
+        Vertex(VertexId);
         Vertex(const Vertex&);
         ~Vertex();
-        int getVNumber() const;
+        VertexId getVNumber() const;
         info getVInfo();
-        bool getVNumberFlag();
-        void setVNumber(int);
+        void setVNumber(VertexId);
         void setVInfo(const info&);
         void addNeighbor(const Vertex&);
         bool hasNeighbor(Vertex&);
         bool operator==(Vertex&);
+    protected:
+    private:
+        VertexId number;
+        info v_info;
+        std::vector<Vertex> neighbors;
 };
 
 }
