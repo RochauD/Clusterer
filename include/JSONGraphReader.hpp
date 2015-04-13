@@ -12,7 +12,7 @@
 
 // internal headers
 #include "AbstractGraph.hpp"
-#include "GraphReader.hpp"
+
 
 /**
 * @namespace clusterer
@@ -34,7 +34,7 @@ namespace backend
  * @brief Implementation of the GraphReader interface which accepts only
  * JSON-formatted files
  */
-class JSONGraphReader : public GraphReader
+class JSONGraphReader
 {
     public:
         /**

@@ -1,132 +1,72 @@
 /**
-*@file GraphReader.h
-*@brief File in which GraphReader class is defined
-*/
-#ifndef GRAPHREADER_H_INCLUDED
-#define GRAPHREADER_H_INCLUDED
-#include <string>
-#include <vector>
+ * @file GraphReader.hpp
+ * @brief class to read a graph from a file
+ */
+#ifndef CLUSTERER_BACKEND_GRAPH_READER_HPP
+#define CLUSTERER_BACKEND_GRAPH_READER_HPP
+
+// standard headers
 #include <stdint.h>
+#include <vector>
+#include <stdio.h>
+// external headers
+
+// internal headers
+#include "AbstractGraphReader.hpp"
 
 /**
-*@class GraphReader
-*@brief Reads the edges of the graph and their weights from the given file
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
 */
-
-class GraphReader
+namespace clusterer
 {
 
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
+{
+
+/**
+ * @class GraphReader
+ * @brief GraphReader reads a graph with the following format for each line:
+ * - vertex1 vertex2 weight
+ * - % This is a comment and should not be read in.
+ */
+class GraphReader : AbstractGraphReader
+{
     public:
+        /**
+        * @brief Initalize a reader to read data into a graph.
+        * @param graph The graph in which the data will be read.
+        */
+        GraphReader(AbstractGraph* graph);
 
-    /**
-    *@brief constructor with  a parameter
-    *@param filename, name of the file containing the data
-    */
-    GraphReader(std::string filename);
+        /**
+        * @brief standard destructor
+        */
+        ~GraphReader();
 
-    /**
-    *@brief Default destructor for GraphReader
-    */
-    ~GraphReader();
-
-    /**
-    *@brief setter method for filename
-    *@param filename, name of the file containing the data
-    *@return void
-    */
-    void setFilename(std::string filename);
-
-    /**
-    *@brief getter method for filename
-    *@return returns the name of the file containing the data
-    */
-    std::string getFilename();
-
-    /**
-    *@brief method for reading file and setting the Edges and EdgesWeight properties of an object.
-    *@return uint64_t
-    */
-    uint64_t readFile();
-
-
-    /**
-    *@brief method for getting the Edges property.
-    *@return vector containing the edges of the graph with the start and end nodes
-    */
-    std::vector<std::pair<uint64_t,uint64_t> >getEdges();
-
-    /**
-    *@brief method for printing the edges
-    *@param graphEdges, vector containing the edges of the graph with the start and end nodes
-    *@return void
-    */
-    void printEdges(std::vector<std::pair<uint64_t,uint64_t> > graphEdges);
-
-
-    /**
-    *@brief method for getting the EdgesWeight property of an object
-    *@return vector containing the edges with the start and end nodes and their corresponding weight
-    */
-    std::vector<std::pair<std::pair<uint64_t,uint64_t>, uint64_t > > getEdgesWeight();
-
-    /**
-    *@brief method for printing the edges with weight.
-    *@param graphEdgesWeight, vector containing the edges with the start and end nodes and their corresponding weight
-    *@return void
-    */
-    void printEdgesWeight(std::vector<std::pair<std::pair<uint64_t,uint64_t>, uint64_t > >graphEdgesWeight);
-
-    /**
-    *@brief method for getting the  vertices.
-    *@return vector<uint64_t>
-    */
-    std::vector<uint64_t> getVertices();
-
-    /**
-    *@brief method for printing the vertices
-    *@param graphVertices, vector containing the vertices
-    *@return void
-    */
-    void printVertices(std::vector<uint64_t> graphVertices);
-
-    /**
-    *@brief method for getting the total number of vertices.
-    *@return uint64_t
-    */
-    uint64_t getVerticesCount();
-
-    /**
-    *@brief method for getting the total number of edges.
-    *@return uint64_t
-    */
-    uint64_t getEdgesCount();
+        /**
+        * @brief Read file containing a graph into a graph object.
+        * @param filename The filename (which is the fullPathFilename)
+        * @return bool Indicating whether or not it read the file in succesfully.
+        */
+        bool readFile(std::string);
+    protected:
 
     private:
-    /**
-    * @var vertices
-    * @brief vector containing the vertices
-    * @var edges
-    * @brief vector containing the edges with the start and end nodes
-    * @var edgesWeight
-    * @brief vector containing the edges with the start and end nodes and their corresponding weight
-    * @var filename
-    * @brief name of the file containing the data
-    * @var verticesCount
-    * @brief total number of vertices
-    * @var edgesCount
-    * @brief total number of edges
-    */
-
-    std::vector<uint64_t> vertices;
-    std::vector<std::pair<uint64_t, uint64_t> > edges;
-    std::vector<std::pair<std::pair<uint64_t,uint64_t>, uint64_t > >edgesWeight;
-    std::string filename;
-    uint64_t verticesCount;
-    uint64_t edgesCount;
-
 };
 
-#endif // GRAPHREADER_H_INCLUDED
+}
+}
 
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
-
+#endif

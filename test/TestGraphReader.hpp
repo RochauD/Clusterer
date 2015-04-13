@@ -1,5 +1,5 @@
-#ifndef TEST_BACKEND_VERTEX_HPP
-#define TEST_BACKEND_VERTEX_HPP
+#ifndef TEST_BACKEND_GRAPH_READER_HPP
+#define TEST_BACKEND_GRAPH_READER_HPP
 
 // standard headers
 #include <typeinfo>
@@ -15,18 +15,19 @@
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 // internal headers
-#include "../include/Vertex.hpp"
+#include "../include/GraphReader.hpp"
 
 using namespace CppUnit;
 using namespace std;
 using namespace clb;
 
-class TestVertex : public CppUnit::TestFixture
+class TestGraphReader : public CppUnit::TestFixture
 {
-        CPPUNIT_TEST_SUITE(TestVertex);
-        CPPUNIT_TEST(testGetVNumber);
-        CPPUNIT_TEST(testSetVNumber);
-        CPPUNIT_TEST(testAddHasNeighbor);
+        CPPUNIT_TEST_SUITE(TestGraphReader);
+        CPPUNIT_TEST(testReadFileNonExistentFile);
+        CPPUNIT_TEST(testReadTestGraph1);
+        CPPUNIT_TEST(testReadTestGraph2);
+        CPPUNIT_TEST(testReadTestZachary);
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -34,10 +35,10 @@ class TestVertex : public CppUnit::TestFixture
         void tearDown(void);
 
     protected:
-        void testGetVNumber(void);
-        void testSetVNumber(void);
-        void testAddHasNeighbor(void);
-
+        void testReadFileNonExistentFile(void);
+        void testReadTestGraph1(void);
+        void testReadTestGraph2(void);
+        void testReadTestZachary(void);
     private:
 
 };
