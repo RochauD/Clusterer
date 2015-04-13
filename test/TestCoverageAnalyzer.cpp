@@ -150,7 +150,7 @@ void TestCoverageAnalyzer::testAnalyzeTwoClusters(void)
     solution2.addToCluster(7, 1);
     
     result = this->coverageAnalyzer.analyze(solution2, graph2);
-    actualValue = 3.4/3.6;
+    actualValue = 3.3/3.5;
     CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
                    (result > actualValue - std::numeric_limits<double>::epsilon()));
     
