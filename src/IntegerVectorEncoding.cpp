@@ -114,6 +114,37 @@ int IntegerVectorEncoding::normalize()
         this->encoding[i] = minVertex[this->encoding[i]];
     }
 
+    // Change the labels to be in [0, clusterCount)
+    bool changed = true;
+    int newId = 1, min, last = 0;
+    int invalidClusterId = this->graph->getNoVertices() + 1;
+    while (changed)
+    {
+        changed = false;
+        min = invalidClusterId;
+        for (i = 0; i < this->encoding.size(); i++)
+        {
+            if (this->encoding[i] > last && this->encoding[i] < min)
+            {
+                min = this->encoding[i];
+            }
+        }
+
+        if (min != invalidClusterId)
+        { 
+            changed = true;
+            for (i = 0; i < this->encoding.size(); i++)
+            {
+                if (this->encoding[i] == min)
+                {
+                    this->encoding[i] = newId;
+                }
+            }
+            last = min;
+            newId++;
+        }
+    }
+
     return 0;
 }
 

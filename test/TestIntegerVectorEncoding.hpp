@@ -40,6 +40,7 @@ class TestIntegerVectorEncoding : public CppUnit::TestFixture
 
     private:
         IntegerVectorEncoding* testObj;
+        Graph* g;
 };
 
 #endif
