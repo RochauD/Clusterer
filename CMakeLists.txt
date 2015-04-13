@@ -272,6 +272,7 @@ set(CLUSTER_TEST_FILENAMES
         MQAnalyzer
         PerformanceAnalyzer
         FitnessAnalyzer
+        IntegerEncodingInitializer
     )
 
 #############
