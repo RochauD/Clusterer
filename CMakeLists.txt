@@ -83,16 +83,6 @@ message("\n")
 # Dependencies #
 ################
 
-# Boost
-set(Boost_USE_STATIC_LIBS ON) 
-set(Boost_USE_MULTITHREADED ON)  
-set(Boost_USE_STATIC_RUNTIME OFF) 
-FIND_PACKAGE(Boost COMPONENTS filesystem system REQUIRED)
-if(Boost_FOUND)
-    message("-- Boost include directories added")
-    include_directories(${INCLUDE_DIRECTORIES} ${Boost_INCLUDE_DIRS})
-endif()
-
 # CPP UNIT
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 FIND_PACKAGE(CppUnit REQUIRED)
@@ -280,11 +270,22 @@ set(CLUSTER_TEST_FILENAMES
 # Libraries #
 #############
 
-link_directories(${LINK_DIRECTORIES}  ${Boost_LIBRARY_DIRS})
+###########################
+# Boost shared dependency #
+###########################
+set(Boost_USE_STATIC_LIBS OFF) 
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF) 
+FIND_PACKAGE(Boost COMPONENTS filesystem system REQUIRED)
+if(Boost_FOUND)
+    message("-- Boost include directories added")
+    include_directories(${INCLUDE_DIRECTORIES} ${Boost_INCLUDE_DIRS})
+endif()
+link_directories(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
 
 # add shared library
 
-add_library(clusterer-shared SHARED ${CLUSTER_SOURCES}) 
+add_library(clusterer-shared SHARED ${CLUSTER_SOURCES})
 # link boost library
 target_link_libraries(clusterer-shared ${Boost_LIBRARIES})
 # set library name
@@ -304,6 +305,19 @@ set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEA
 set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/shared/lib)
 set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared)
 set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared) 
+
+###########################
+# Boost static dependency #
+###########################
+set(Boost_USE_STATIC_LIBS ON) 
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF) 
+FIND_PACKAGE(Boost COMPONENTS filesystem system REQUIRED)
+if(Boost_FOUND)
+    message("--Reload boost include directories")
+    include_directories(${INCLUDE_DIRECTORIES} ${Boost_INCLUDE_DIRS})
+endif()
+link_directories(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
 
 # add static library
 
