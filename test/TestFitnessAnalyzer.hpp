@@ -28,7 +28,7 @@ class TestFitnessAnalyzer : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(TestFitnessAnalyzer);
         CPPUNIT_TEST(testAnalyzeSingleElementClustersOnly);
         CPPUNIT_TEST(testAnalyzeOneClusterOnly);
-        CPPUNIT_TEST(testAnalyzeFullyConnectedGraphTwoClusters);
+        CPPUNIT_TEST(testAnalyzeTwoClusters);
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -44,7 +44,7 @@ class TestFitnessAnalyzer : public CppUnit::TestFixture
         void testAnalyzeTwoClusters(void);
 
     private:
-        clb::FitnessAnalyzer fitnessAnalyzer;
+    clb::FitnessAnalyzer fitnessAnalyzer;
 	clb::Graph graph1;
 	clb::Graph graph2;
 };

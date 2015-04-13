@@ -28,7 +28,7 @@ class TestPerformanceAnalyzer : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(TestPerformanceAnalyzer);
         CPPUNIT_TEST(testAnalyzeSingleElementClustersOnly);
         CPPUNIT_TEST(testAnalyzeOneClusterOnly);
-        CPPUNIT_TEST(testAnalyzeFullyConnectedGraphTwoClusters);
+        CPPUNIT_TEST(testAnalyzeTwoClusters);
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -44,7 +44,7 @@ class TestPerformanceAnalyzer : public CppUnit::TestFixture
         void testAnalyzeTwoClusters(void);
 
     private:
-        clb::PerformanceAnalyzer performanceAnalyzer;
+    clb::PerformanceAnalyzer performanceAnalyzer;
 	clb::Graph graph1;
 	clb::Graph graph2;
 };

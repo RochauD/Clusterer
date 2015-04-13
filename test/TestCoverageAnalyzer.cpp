@@ -79,7 +79,6 @@ void TestCoverageAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     actualValue = 0.0;
     CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
                    (result > actualValue - std::numeric_limits<double>::epsilon()));
-    
 }
 
 void TestCoverageAnalyzer::testAnalyzeOneClusterOnly(void)
@@ -88,13 +87,13 @@ void TestCoverageAnalyzer::testAnalyzeOneClusterOnly(void)
     // clustering solution for graph1
     clb::IntegerVectorEncoding solution1(&graph1);
 
-    solution.addToCluster(0, 0);
-    solution.addToCluster(1, 0);
-    solution.addToCluster(2, 0);
-    solution.addToCluster(3, 0);
-    solution.addToCluster(4, 0);
+    solution1.addToCluster(0, 0);
+    solution1.addToCluster(1, 0);
+    solution1.addToCluster(2, 0);
+    solution1.addToCluster(3, 0);
+    solution1.addToCluster(4, 0);
     
-    double result = this->coverageAnalyzer.analyze(solution, graph);
+    double result = this->coverageAnalyzer.analyze(solution1, graph1);
     double actualValue = 1.0;
     CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
                    (result > actualValue - std::numeric_limits<double>::epsilon()));
@@ -115,8 +114,7 @@ void TestCoverageAnalyzer::testAnalyzeOneClusterOnly(void)
     result = this->coverageAnalyzer.analyze(solution2, graph2);
     actualValue = 1.0;
     CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > actualValue - std::numeric_limits<double>::epsilon()));
-    
+                   (result > actualValue - std::numeric_limits<double>::epsilon()));  
 }
 
 void TestCoverageAnalyzer::testAnalyzeTwoClusters(void)
@@ -125,13 +123,13 @@ void TestCoverageAnalyzer::testAnalyzeTwoClusters(void)
     // clustering solution for graph1
     clb::IntegerVectorEncoding solution1(&graph1);
 
-    solution.addToCluster(0, 0);
-    solution.addToCluster(1, 0);
-    solution.addToCluster(2, 0);
-    solution.addToCluster(3, 1);
-    solution.addToCluster(4, 1);
+    solution1.addToCluster(0, 0);
+    solution1.addToCluster(1, 0);
+    solution1.addToCluster(2, 0);
+    solution1.addToCluster(3, 1);
+    solution1.addToCluster(4, 1);
     
-    double result = this->coverageAnalyzer.analyze(solution, graph);
+    double result = this->coverageAnalyzer.analyze(solution1, graph1);
     double actualValue = 1.0;
     CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
                    (result > actualValue - std::numeric_limits<double>::epsilon()));
@@ -153,5 +151,4 @@ void TestCoverageAnalyzer::testAnalyzeTwoClusters(void)
     actualValue = 3.3/3.5;
     CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
                    (result > actualValue - std::numeric_limits<double>::epsilon()));
-    
 }

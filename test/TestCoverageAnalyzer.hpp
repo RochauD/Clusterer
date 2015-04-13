@@ -28,7 +28,7 @@ class TestCoverageAnalyzer : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(TestCoverageAnalyzer);
         CPPUNIT_TEST(testAnalyzeSingleElementClustersOnly);
         CPPUNIT_TEST(testAnalyzeOneClusterOnly);
-        CPPUNIT_TEST(testAnalyzeFullyConnectedGraphTwoClusters);
+        CPPUNIT_TEST(testAnalyzeTwoClusters);
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -44,7 +44,7 @@ class TestCoverageAnalyzer : public CppUnit::TestFixture
         void testAnalyzeTwoClusters(void);
 
     private:
-        clb::CoverageAnalyzer coverageAnalyzer;
+    clb::CoverageAnalyzer coverageAnalyzer;
 	clb::Graph graph1;
 	clb::Graph graph2;
 };

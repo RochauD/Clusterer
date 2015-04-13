@@ -28,7 +28,7 @@ class TestMQAnalyzer : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(TestMQAnalyzer);
         CPPUNIT_TEST(testAnalyzeSingleElementClustersOnly);
         CPPUNIT_TEST(testAnalyzeOneClusterOnly);
-        CPPUNIT_TEST(testAnalyzeFullyConnectedGraphTwoClusters);
+        CPPUNIT_TEST(testAnalyzeTwoClusters);
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -44,7 +44,7 @@ class TestMQAnalyzer : public CppUnit::TestFixture
         void testAnalyzeTwoClusters(void);
 
     private:
-        clb::MQAnalyzer mqAnalyzer;
+    clb::MQAnalyzer mqAnalyzer;
 	clb::Graph graph1;
 	clb::Graph graph2;
 };

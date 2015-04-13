@@ -116,7 +116,7 @@ void TestMQAnalyzer::testAnalyzeOneClusterOnly(void)
                    (result >  actualValue - std::numeric_limits<double>::epsilon()));
 }
 
-void TestMQAnalyzer::testAnalyzeGraphTwoClusters(void)
+void TestMQAnalyzer::testAnalyzeTwoClusters(void)
 {
     // Test for graph1
     // clustering solution for graph1

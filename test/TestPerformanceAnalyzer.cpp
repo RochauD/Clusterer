@@ -57,7 +57,7 @@ void TestPerformanceAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution1.addToCluster(3, 3);
     solution1.addToCluster(4, 4);
     
-    double result = this->fitnessAnalyzer.analyze(solution1, graph1);
+    double result = this->performanceAnalyzer.analyze(solution1, graph1);
     double actualValue = 7/5;
     CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
                    (result > actualValue - std::numeric_limits<double>::epsilon()));
@@ -94,7 +94,7 @@ void TestPerformanceAnalyzer::testAnalyzeOneClusterOnly(void)
     solution1.addToCluster(3, 0);
     solution1.addToCluster(4, 0);
     
-    double result = this->fitnessAnalyzer.analyze(solution1, graph1);
+    double result = this->performanceAnalyzer.analyze(solution1, graph1);
     double actualValue = 2/5;
     CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
                    (result > actualValue - std::numeric_limits<double>::epsilon()));
@@ -130,7 +130,7 @@ void TestPerformanceAnalyzer::testAnalyzeTwoClusters(void)
     solution1.addToCluster(3, 1);
     solution1.addToCluster(4, 1);
     
-    double result = this->fitnessAnalyzer.analyze(solution1, graph1);
+    double result = this->performanceAnalyzer.analyze(solution1, graph1);
     double actualValue = 1;
     CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
                    (result > actualValue - std::numeric_limits<double>::epsilon()));
