@@ -68,6 +68,7 @@ bool GraphReader::readFile(std::string filename)
         }
         myfile.close();
     }
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Read the following file containing a graph succesfully. File: ", filename);
     return true;
 }
 
