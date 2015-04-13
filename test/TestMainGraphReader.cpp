@@ -1,4 +1,4 @@
-#include "TestJSONGraphReader.hpp"
+#include "TestGraphReader.hpp"
 
 int main(void)
 {
@@ -25,4 +25,3 @@ int main(void)
     // return 0 if tests were successful
     return collectedresults.wasSuccessful() ? 0 : 1;
 }
-

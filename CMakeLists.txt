@@ -151,6 +151,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
         ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
+        ${CLUSTER_SOURCE_DIR}/AbstractGraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/ClusteringSolutionAnalyzer.cpp
         ${CLUSTER_SOURCE_DIR}/FitnessAnalyzer.cpp
         ${CLUSTER_SOURCE_DIR}/MQAnalyzer.cpp
@@ -167,6 +168,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
         ${CLUSTER_SOURCE_DIR}/SocialClusteringService.cpp
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
+        ${CLUSTER_SOURCE_DIR}/GraphReader.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -174,6 +176,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ConfigurationManager.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
         ${CLUSTER_INCLUDE_DIR}/AbstractGraph.hpp
+        ${CLUSTER_INCLUDE_DIR}/AbstractGraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusterEncoding.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringSolutionAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/FitnessAnalyzer.hpp
@@ -196,6 +199,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
+        ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
@@ -254,7 +258,7 @@ set(CLUSTER_TEST_FILENAMES
         ConfigurationReaderWriter
         FlagParser
         GeneticGui
-        JSONGraphReader
+        GraphReader
         SocialClusteringService
         Vertex
         Graph
