@@ -18,7 +18,7 @@ namespace backend
 double PerformanceAnalyzer::analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph)
 {
     auto clusterVerticesMap = clusteringSolution.getClusterVerticesCountMap();
-    uint32_t clusterCount = clusteringSolution.getClusterCount();
+    uint32_t clusterCount = graph.getNoEdges();
     double coverageValue = this->coverageAnalyzer.analyze(clusteringSolution, graph);
     uint64_t sumOfClusterSizes = 0;
     double totalEdgeWeightSum = 0.0;

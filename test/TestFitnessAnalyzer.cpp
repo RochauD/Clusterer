@@ -4,6 +4,9 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestFitnessAnalyzer);
 
+// use double epsilon value
+double testEpsilon = 2 * std::numeric_limits<double>::epsilon();
+
 void TestFitnessAnalyzer::setUp(void)
 {
     // Initialize graph 1
@@ -17,7 +20,7 @@ void TestFitnessAnalyzer::setUp(void)
     graph1.addEdge(Vertex(0), Vertex(2), 0.1);
     graph1.addEdge(Vertex(1), Vertex(2), 0.3);
     graph1.addEdge(Vertex(3), Vertex(4), 0.4);
-    
+
     // Initialize graph 2
     graph2.addVertex(Vertex(0));
     graph2.addVertex(Vertex(1));
@@ -27,7 +30,7 @@ void TestFitnessAnalyzer::setUp(void)
     graph2.addVertex(Vertex(5));
     graph2.addVertex(Vertex(6));
     graph2.addVertex(Vertex(7));
-    
+
     graph2.addEdge(Vertex(0), Vertex(1), 0.2);
     graph2.addEdge(Vertex(1), Vertex(2), 0.3);
     graph2.addEdge(Vertex(1), Vertex(3), 0.5);
@@ -56,16 +59,16 @@ void TestFitnessAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution1.addToCluster(2, 2);
     solution1.addToCluster(3, 3);
     solution1.addToCluster(4, 4);
-    
+
     double result = this->fitnessAnalyzer.analyze(solution1, graph1);
     double actualValue = 37/20;
-    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > actualValue - std::numeric_limits<double>::epsilon()));
-    
+    CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
+                   (result > actualValue - testEpsilon));
+
     // Test for graph2
     // clustering solution for graph2
     clb::IntegerVectorEncoding solution2(&graph2);
-    
+
     solution2.addToCluster(0, 0);
     solution2.addToCluster(1, 1);
     solution2.addToCluster(2, 2);
@@ -77,8 +80,8 @@ void TestFitnessAnalyzer::testAnalyzeSingleElementClustersOnly(void)
 
     result = this->fitnessAnalyzer.analyze(solution2, graph2);
     actualValue = 125/112;
-    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > actualValue - std::numeric_limits<double>::epsilon()));
+    CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
+                   (result > actualValue - testEpsilon));
 }
 
 void TestFitnessAnalyzer::testAnalyzeOneClusterOnly(void)
@@ -92,16 +95,16 @@ void TestFitnessAnalyzer::testAnalyzeOneClusterOnly(void)
     solution1.addToCluster(2, 0);
     solution1.addToCluster(3, 0);
     solution1.addToCluster(4, 0);
-    
+
     double result = this->fitnessAnalyzer.analyze(solution1, graph1);
     double actualValue = 23/25;
-    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > actualValue - std::numeric_limits<double>::epsilon()));
-    
+    CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
+                   (result > actualValue - testEpsilon));
+
     // Test for graph2
     // clustering solution for graph2
     clb::IntegerVectorEncoding solution2(&graph2);
-    
+
     solution2.addToCluster(0, 0);
     solution2.addToCluster(1, 0);
     solution2.addToCluster(2, 0);
@@ -113,8 +116,8 @@ void TestFitnessAnalyzer::testAnalyzeOneClusterOnly(void)
 
     result = this->fitnessAnalyzer.analyze(solution2, graph2);
     actualValue = 1521/1792;
-    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > actualValue - std::numeric_limits<double>::epsilon()));
+    CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
+                   (result > actualValue - testEpsilon));
 }
 
 void TestFitnessAnalyzer::testAnalyzeTwoClusters(void)
@@ -128,16 +131,16 @@ void TestFitnessAnalyzer::testAnalyzeTwoClusters(void)
     solution1.addToCluster(2, 0);
     solution1.addToCluster(3, 1);
     solution1.addToCluster(4, 1);
-    
+
     double result = this->fitnessAnalyzer.analyze(solution1, graph1);
     double actualValue = 37/24;
-    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > actualValue - std::numeric_limits<double>::epsilon()));
-    
+    CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
+                   (result > actualValue - testEpsilon));
+
     // Test for graph2
     // clustering solution for graph2
     clb::IntegerVectorEncoding solution2(&graph2);
-    
+
     solution2.addToCluster(0, 0);
     solution2.addToCluster(1, 0);
     solution2.addToCluster(2, 0);
@@ -149,6 +152,6 @@ void TestFitnessAnalyzer::testAnalyzeTwoClusters(void)
 
     result = this->fitnessAnalyzer.analyze(solution2, graph2);
     actualValue = 44047/31360;
-    CPPUNIT_ASSERT((result < actualValue + std::numeric_limits<double>::epsilon()) &&
-                   (result > actualValue - std::numeric_limits<double>::epsilon()));
+    CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
+                   (result > actualValue - testEpsilon));
 }
