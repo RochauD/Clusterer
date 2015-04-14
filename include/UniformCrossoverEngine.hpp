@@ -7,6 +7,8 @@
 
 // standard headers
 #include <stdint.h>
+#include <random>
+
 // external headers
 
 // internal headers
@@ -40,14 +42,16 @@ class UniformCrossoverEngine : public virtual CrossoverEngine
          * @param parent2 The second parent contributing to the crossover
          * @param child The encoding object that will hold the child
          */
-        void crossover(const ClusterEncoding& parent1,
-                                  const ClusterEncoding& parent2,
-                                  ClusterEncoding& child);
+        void crossover(ClusterEncoding& parent1, ClusterEncoding& parent2, ClusterEncoding& child);
 
         /**
          * @brief standard destructor
          */
         ~UniformCrossoverEngine();
+
+    private:
+        static std::uniform_int_distribution<unsigned> uni_dist;
+        static std::mt19937 rng;
 };
 
 }

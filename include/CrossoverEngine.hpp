@@ -40,9 +40,9 @@ class CrossoverEngine
          * @param parent2 the second parent contributing to the crossover
          * @param child The encoding object that will hold the child
          */
-        virtual void crossover(const ClusterEncoding& parent1,
-                       const ClusterEncoding& parent2,
-                       ClusterEncoding& child) = 0;
+        virtual void crossover(ClusterEncoding& parent1,
+                               ClusterEncoding& parent2, 
+                               ClusterEncoding& child) = 0;
 
         /**
          * @brief standard destructor
