@@ -13,7 +13,7 @@ IntegerEncodingInitializer::IntegerEncodingInitializer(
 
     std::random_device rd;
     rng.seed(rd());
-    uni_dist = new std::uniform_int_distribution<unsigned>(0, maxClusters);
+    uni_dist = new std::uniform_int_distribution<unsigned>(0, maxClusters - 1);
 }
 
 IntegerVectorEncoding IntegerEncodingInitializer::getRandomSolution()
