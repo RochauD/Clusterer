@@ -35,7 +35,7 @@ double MQAnalyzer::analyze(const ClusterEncoding& clusteringSolution, const Abst
         double clusterAValueSum = 0.0;
         double clusterBValueSum = 0.0;
         // @todo check if we can assume cluster ids from 0 to n or if they can be non continous
-        std::vector<double> clusterAValue(clusterCount);
+        std::vector<double> clusterAValue(clusterCount, 0.0);
         std::vector<std::vector<double>> clusterBValue(clusterCount, std::vector<double>(clusterCount, 0.0));
 
         // go through all edges and compute either inter or intra edge weight sums
