@@ -162,6 +162,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
         ${CLUSTER_SOURCE_DIR}/GraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/IntegerEncodingInitializer.cpp
+        ${CLUSTER_SOURCE_DIR}/UniformCrossoverEngine.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -194,6 +195,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
+        ${CLUSTER_INCLUDE_DIR}/UniformCrossoverEngine.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND

@@ -38,16 +38,16 @@ class CrossoverEngine
          * @brief crossover 2 encodings to create a new one
          * @param parent1 the first parent contributing to the crossover
          * @param parent2 the second parent contributing to the crossover
-         * @return the new clustering encoding
+         * @param child The encoding object that will hold the child
          */
-        virtual ClusterEncoding::Encoding
-        crossover(const ClusterEncoding::Encoding& parent1,
-                  const ClusterEncoding::Encoding& parent2) = 0;
+        virtual void crossover(const ClusterEncoding& parent1,
+                       const ClusterEncoding& parent2,
+                       ClusterEncoding& child) = 0;
 
         /**
          * @brief standard destructor
          */
-        virtual ~CrossoverEngine();
+        virtual ~CrossoverEngine() {}
 };
 
 }

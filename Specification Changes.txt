@@ -31,3 +31,7 @@ Added a new parameter to the analyze function of all analyzer classes, as we nee
 Change 9:
 Changed returnValue from readFile of GraphReader form int to bool to adhere to a more C++ way of doing things. Also renamed GraphReader to AbstractGraphReader and implemented a normal GraphReader.
 Added test_files folder to simulate reading the data from files and store it into a graph. 
+
+Change 10:
+Changed the signature of CrossoverEngine::crossover to be using the ClusterEncoding class instead of the underlying data structure ClusterEncoding::Encoding. Moreover changed the method to void that has a parameter child because it is impossible to instantiate the ClusterEncoding class because it is virtual and thus we cannot create an object to return.
+
