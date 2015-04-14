@@ -15,18 +15,18 @@
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
-#include "../include/IntegerVectorEncoding.hpp"
+#include "../include/IntegerEncodingInitializer.hpp"
 
 using namespace CppUnit;
 using namespace std;
 using namespace clb;
 
-class TestIntegerVectorEncoding : public CppUnit::TestFixture
+class TestIntegerEncodingInitializer : public CppUnit::TestFixture
 {
-        CPPUNIT_TEST_SUITE(TestIntegerVectorEncoding);
+        CPPUNIT_TEST_SUITE(TestIntegerEncodingInitializer);
 
-        CPPUNIT_TEST(testSettersGetters);
-        CPPUNIT_TEST(testNormalization);
+        CPPUNIT_TEST(testGetRandomSolution);
+        CPPUNIT_TEST(testGetInitialPopulation);
 
         CPPUNIT_TEST_SUITE_END();
 
@@ -35,12 +35,13 @@ class TestIntegerVectorEncoding : public CppUnit::TestFixture
         void tearDown(void);
 
     protected:
-        void testSettersGetters(void);
-        void testNormalization(void);
+        void testGetRandomSolution(void);
+        void testGetInitialPopulation(void);
 
     private:
-        IntegerVectorEncoding* testObj;
         Graph* g;
+        IntegerEncodingInitializer* testObj1;
+        IntegerEncodingInitializer* testObj2; 
 };
 
 #endif

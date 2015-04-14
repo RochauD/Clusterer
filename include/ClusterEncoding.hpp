@@ -109,5 +109,6 @@ class ClusterEncoding
 */
 namespace clb = clusterer::backend;
 
-#endif
+#endif  // _BACKEND_GENETIC_ClusterEncoding_HPP
+
 

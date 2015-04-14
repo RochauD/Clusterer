@@ -2,7 +2,6 @@
 #include "../include/IntegerVectorEncoding.hpp"
 #include "../include/Graph.hpp"
 #include "../include/Vertex.hpp"
-
 CPPUNIT_TEST_SUITE_REGISTRATION(TestIntegerVectorEncoding);
 
 /**
@@ -10,16 +9,17 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestIntegerVectorEncoding);
  */
 void TestIntegerVectorEncoding::setUp(void)
 {
-    Graph g;
+    g= new Graph();
     Vertex v0(0);
     Vertex v1(1);
     Vertex v2(2);
+    Vertex v3(3);
 
-    g.addVertex(v0);
-    g.addVertex(v1);
-    g.addVertex(v2);
-
-    testObj = new IntegerVectorEncoding(&g);
+    g->addVertex(v0);
+    g->addVertex(v1);
+    g->addVertex(v2);
+    g->addVertex(v3);
+    testObj = new IntegerVectorEncoding(g);
 }
 
 /**
@@ -28,6 +28,7 @@ void TestIntegerVectorEncoding::setUp(void)
 void TestIntegerVectorEncoding::tearDown(void)
 {
     delete testObj;
+    delete g;
 }
 
 /**
@@ -55,13 +56,14 @@ void TestIntegerVectorEncoding::testSettersGetters(void)
 void TestIntegerVectorEncoding::testNormalization(void)
 {
     testObj->addToCluster(0, 1);
-    testObj->addToCluster(1, 2);
-    testObj->addToCluster(2, 1);
+    testObj->addToCluster(1, 1);
+    testObj->addToCluster(2, 2);
+    testObj->addToCluster(3, 3);
 
     CPPUNIT_ASSERT(0 == testObj->normalize());
     ClusterEncoding::Encoding enc = testObj->getEncoding();
     CPPUNIT_ASSERT(0 == enc[0]);
-    CPPUNIT_ASSERT(1 == enc[1]);
-    CPPUNIT_ASSERT(0 == enc[2]);
-
+    CPPUNIT_ASSERT(0 == enc[1]);
+    CPPUNIT_ASSERT(1 == enc[2]);
+    CPPUNIT_ASSERT(2 == enc[3]);
 }
