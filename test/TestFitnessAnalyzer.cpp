@@ -61,7 +61,7 @@ void TestFitnessAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution1.addToCluster(4, 4);
 
     double result = this->fitnessAnalyzer.analyze(solution1, graph1);
-    double actualValue = 37/20;
+    double actualValue = 11.0/8.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
 
@@ -79,7 +79,7 @@ void TestFitnessAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution2.addToCluster(7, 7);
 
     result = this->fitnessAnalyzer.analyze(solution2, graph2);
-    actualValue = 125/112;
+    actualValue = 43.0/32.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
 }
@@ -97,7 +97,7 @@ void TestFitnessAnalyzer::testAnalyzeOneClusterOnly(void)
     solution1.addToCluster(4, 0);
 
     double result = this->fitnessAnalyzer.analyze(solution1, graph1);
-    double actualValue = 23/25;
+    double actualValue = 31.0/50.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
 
@@ -115,7 +115,7 @@ void TestFitnessAnalyzer::testAnalyzeOneClusterOnly(void)
     solution2.addToCluster(7, 0);
 
     result = this->fitnessAnalyzer.analyze(solution2, graph2);
-    actualValue = 1521/1792;
+    actualValue = 167.0/256.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
 }
@@ -133,7 +133,7 @@ void TestFitnessAnalyzer::testAnalyzeTwoClusters(void)
     solution1.addToCluster(4, 1);
 
     double result = this->fitnessAnalyzer.analyze(solution1, graph1);
-    double actualValue = 37/24;
+    double actualValue = 149.0/120.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
 
@@ -151,7 +151,7 @@ void TestFitnessAnalyzer::testAnalyzeTwoClusters(void)
     solution2.addToCluster(7, 1);
 
     result = this->fitnessAnalyzer.analyze(solution2, graph2);
-    actualValue = 44047/31360;
+    actualValue = 5513.0/4480.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
 }

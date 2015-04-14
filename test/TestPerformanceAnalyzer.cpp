@@ -134,7 +134,7 @@ void TestPerformanceAnalyzer::testAnalyzeTwoClusters(void)
     solution1.addToCluster(4, 1);
 
     double result = this->performanceAnalyzer.analyze(solution1, graph1);
-    double actualValue = 17.0/20.0;
+    double actualValue = 14.0/20.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
 
@@ -152,7 +152,7 @@ void TestPerformanceAnalyzer::testAnalyzeTwoClusters(void)
     solution2.addToCluster(7, 1);
 
     result = this->performanceAnalyzer.analyze(solution2, graph2);
-    actualValue = 79.0/140.0;
+    actualValue = 191.0/280.0;
     CPPUNIT_ASSERT((result <  actualValue + testEpsilon) &&
                    (result >  actualValue - testEpsilon));
 }
