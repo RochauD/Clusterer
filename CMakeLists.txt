@@ -271,8 +271,12 @@ set(CLUSTER_TEST_FILENAMES
         PerformanceAnalyzer
         FitnessAnalyzer
         IntegerEncodingInitializer
+<<<<<<< HEAD
         ExplorationMutation
+||||||| merged common ancestors
+=======
         UniformCrossoverEngine
+>>>>>>> 00622be7e341d9c8ade9f19df8e1bb6cb20afd7b
     )
 
 #############
