@@ -162,6 +162,8 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
         ${CLUSTER_SOURCE_DIR}/GraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/IntegerEncodingInitializer.cpp
+        ${CLUSTER_SOURCE_DIR}/ExplorationMutation.cpp
+        ${CLUSTER_SOURCE_DIR}/MutationEngine.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -267,6 +269,7 @@ set(CLUSTER_TEST_FILENAMES
         PerformanceAnalyzer
         FitnessAnalyzer
         IntegerEncodingInitializer
+        ExplorationMutation
     )
 
 #############

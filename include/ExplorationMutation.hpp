@@ -43,9 +43,7 @@ class ExplorationMutation: public MutationEngine
          * one otherwise
          */
         // chooses a new ClusterId based on the maximum ClusterId in the cluster
-        virtual ClusterEncoding::Encoding
-        mutate(const ClusterEncoding::Encoding& cluster,
-               double probability);
+        void mutate(ClusterEncoding& cluster, double probability, ClusterEncoding& result);
         /**
          * @brief mutate a clustering solution
          * @param cluster the clustering solution to mutate
@@ -54,9 +52,7 @@ class ExplorationMutation: public MutationEngine
          * one otherwise
          */
         //chooses a new ClusterId based on the number of vertices
-        virtual ClusterEncoding::Encoding
-        mutate2(const ClusterEncoding::Encoding& cluster,
-               double probability);
+        void mutate2(ClusterEncoding& cluster, double probability, ClusterEncoding& result);
         /**
          * @brief standard destructor
          */

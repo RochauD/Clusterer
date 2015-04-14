@@ -8,7 +8,7 @@
 #include <ctime> /*time*/
 
 //local headers
-#include "../include/ExplorationMutation"
+#include "../include/ExplorationMutation.hpp"
 
 namespace clusterer
 {
@@ -23,19 +23,20 @@ ExplorationMutation::~ExplorationMutation(){
 	//dtor
 }
 
-ClusterEncoding::Encoding ExplorationMutation::mutate(const ClusterEncoding::Encoding& cluster,
-               double probability){
-    ClusterEncoding::Encoding mutated_version;
+void ExplorationMutation::mutate(ClusterEncoding& clusterSol,
+               double probability, ClusterEncoding& result){
+    result = clusterSol;
+    ClusterEncoding::Encoding cluster = clusterSol.getEncoding(); 
     
     // if the probability is not between 0 and 1 perform no mutation, and return
     // the cluster as it is
-    if(probability < 0 || probability > 1) return cluster;
+    if(probability < 0 || probability > 1) return;
 
     srand(time(NULL));
     // chance random number between 0 and 1
     double chance = rand()/double(RAND_MAX);
     // no mutation if probability is not enough
-    if(probability < chance) return cluster;
+    if(probability < chance) return;
 
     //find the biggest clustering number
     std::vector<ClusterId>::iterator it;
@@ -48,45 +49,42 @@ ClusterEncoding::Encoding ExplorationMutation::mutate(const ClusterEncoding::Enc
     while(new_clusterId == maxId) new_clusterId = rand()%maxId+1;
 
     int i=0;
-    int lucky_vertex = rand()%cluster.size();
+    VertexId lucky_vertex = rand()%cluster.size();
 
     for(it = cluster.begin(); it != cluster.end(); ++it){
-    	if(i == lucky_vertex) mutated_version.push_back(new_clusterId);
-    	else mutated_version.push_back(*it);
+    	if(i == lucky_vertex) result.addToCluster(lucky_vertex,new_clusterId);
     	i++;
     }
-
-    return mutated_version;
 }
 
-ClusterEncoding::Encoding ExplorationMutation::mutate2(const ClusterEncoding::Encoding& cluster,
-               double probability){
-    ClusterEncoding::Encoding mutated_version;
+void ExplorationMutation::mutate2(ClusterEncoding& clusterSol,
+               double probability, ClusterEncoding& result){
+
+    result = clusterSol;
+    ClusterEncoding::Encoding cluster = clusterSol.getEncoding();
+
     
     // if the probability is not between 0 and 1 perform no mutation, and return
     // the cluster as it is
-    if(probability < 0 || probability > 1) return cluster;
+    if(probability < 0 || probability > 1) return;
 
     srand(time(NULL));
     // chance random number between 0 and 1
     double chance = rand()/double(RAND_MAX);
     // no mutation if probability is not enough
-    if(probability < chance) return cluster;
+    if(probability < chance) return;
 
     int i=0;
-    int lucky_vertex = rand()%cluster.size();
+    VertexId lucky_vertex = rand()%cluster.size();
     ClusterId new_clusterId = rand()%cluster.size();
     // make sure the new clusterId is different than the current one
     while(new_clusterId == cluster.at(lucky_vertex)) new_clusterId = rand()%cluster.size();
 
     std::vector<ClusterId>::iterator it;
     for(it = cluster.begin(); it != cluster.end(); ++it){
-    	if(i == lucky_vertex) mutated_version.push_back(new_clusterId);
-    	else mutated_version.push_back(*it);
+    	if(i == lucky_vertex) result.addToCluster(lucky_vertex, new_clusterId);
     	i++;
     }
-
-    return mutated_version;
 }
 
 } //namespace backend

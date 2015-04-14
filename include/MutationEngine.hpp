@@ -42,9 +42,8 @@ class MutationEngine
          * @return the new clustering solution if a mutation occurred, or the old
          * one otherwise
          */
-        virtual ClusterEncoding::Encoding
-        mutate(const ClusterEncoding::Encoding& cluster,
-               double probability) = 0;
+        virtual void mutate(ClusterEncoding& cluster,double probability,
+            ClusterEncoding& result) = 0;
 
         /**
          * @brief standard destructor
