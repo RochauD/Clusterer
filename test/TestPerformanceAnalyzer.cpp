@@ -61,7 +61,7 @@ void TestPerformanceAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution1.addToCluster(4, 4);
 
     double result = this->performanceAnalyzer.analyze(solution1, graph1);
-    double actualValue = 7.0/5.0;
+    double actualValue = 9.0/10.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
 
@@ -79,7 +79,7 @@ void TestPerformanceAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution2.addToCluster(7, 7);
 
     result = this->performanceAnalyzer.analyze(solution2, graph2);
-    actualValue = 19.0/28.0;
+    actualValue = 7.0/8.0;
     CPPUNIT_ASSERT((result <  actualValue + testEpsilon) &&
                    (result >  actualValue - testEpsilon));
 
@@ -98,7 +98,7 @@ void TestPerformanceAnalyzer::testAnalyzeOneClusterOnly(void)
     solution1.addToCluster(4, 0);
 
     double result = this->performanceAnalyzer.analyze(solution1, graph1);
-    double actualValue = 2.0/5.0;
+    double actualValue = 1.0/10.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
 
@@ -116,7 +116,7 @@ void TestPerformanceAnalyzer::testAnalyzeOneClusterOnly(void)
     solution2.addToCluster(7, 0);
 
     result = this->performanceAnalyzer.analyze(solution2, graph2);
-    actualValue = 9.0/28.0;
+    actualValue = 1.0/8.0;
     CPPUNIT_ASSERT((result <  actualValue + testEpsilon) &&
                    (result >  actualValue - testEpsilon));
 }
@@ -134,7 +134,7 @@ void TestPerformanceAnalyzer::testAnalyzeTwoClusters(void)
     solution1.addToCluster(4, 1);
 
     double result = this->performanceAnalyzer.analyze(solution1, graph1);
-    double actualValue = 1.0;
+    double actualValue = 17.0/20.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
 
@@ -152,7 +152,7 @@ void TestPerformanceAnalyzer::testAnalyzeTwoClusters(void)
     solution2.addToCluster(7, 1);
 
     result = this->performanceAnalyzer.analyze(solution2, graph2);
-    actualValue = 839.0/980.0;
+    actualValue = 79.0/140.0;
     CPPUNIT_ASSERT((result <  actualValue + testEpsilon) &&
                    (result >  actualValue - testEpsilon));
 }
