@@ -377,7 +377,6 @@ FOREACH(test ${CLUSTER_TEST_FILENAMES})
         )
 
     # add test executable
-    include_directories(${INCLUDE_DIRECTORIES} ${CLUSTER_SOURCES_H})
     add_executable(${TEST_NAME} ${CLUSTER_TEST_DRIVER} ${CLUSTER_TEST_SOURCES})
     # link clusterer library
     if( WIN32 )
