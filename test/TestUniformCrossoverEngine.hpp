@@ -16,6 +16,8 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
 #include "../include/UniformCrossoverEngine.hpp"
+#include "../include/Graph.hpp"
+
 
 using namespace CppUnit;
 using namespace std;
@@ -38,6 +40,7 @@ class TestUniformCrossoverEngine : public CppUnit::TestFixture
 
     private:
         UniformCrossoverEngine *testObj;
+        Graph* g;
 };
 
 #endif

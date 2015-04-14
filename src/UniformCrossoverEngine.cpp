@@ -25,6 +25,10 @@ namespace backend
     std::mt19937 UniformCrossoverEngine::rng;
     std::uniform_int_distribution<unsigned> UniformCrossoverEngine::uni_dist(0, 1);
 
+    bool UniformCrossoverEngine::getTrueOrFalse()
+    {
+        return uni_dist(rng) == 1;
+    }
 
     void UniformCrossoverEngine::crossover(ClusterEncoding& parent1, 
                                            ClusterEncoding& parent2,
@@ -36,7 +40,7 @@ namespace backend
         {
             // Put vertex i in the cluster it is in one of the parents
             // With probability 50% for picking each parent
-            if (uni_dist(rng) == 0)
+            if (getTrueOrFalse() == true)
             {
                 child.addToCluster(i, parent1.getClusterOfVertex(i));
             } 

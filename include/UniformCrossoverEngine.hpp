@@ -50,7 +50,18 @@ class UniformCrossoverEngine : public virtual CrossoverEngine
         ~UniformCrossoverEngine();
 
     private:
+        /**
+         * @brief Returns true or false with probability 50%
+         * @return The returned random boolean
+         */
+        bool getTrueOrFalse();
+        /**
+         * @brief A [0, 1] integer distribution
+         */
         static std::uniform_int_distribution<unsigned> uni_dist;
+        /**
+         * @brief Standard configuration of a random number generator
+         */
         static std::mt19937 rng;
 };
 
