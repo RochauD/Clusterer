@@ -269,6 +269,7 @@ set(CLUSTER_TEST_FILENAMES
         PerformanceAnalyzer
         FitnessAnalyzer
         IntegerEncodingInitializer
+        UniformCrossoverEngine
     )
 
 #############
