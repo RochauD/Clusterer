@@ -164,6 +164,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/IntegerEncodingInitializer.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationMutation.cpp
         ${CLUSTER_SOURCE_DIR}/MutationEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/UniformCrossoverEngine.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -196,6 +197,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
+        ${CLUSTER_INCLUDE_DIR}/UniformCrossoverEngine.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
@@ -269,7 +271,12 @@ set(CLUSTER_TEST_FILENAMES
         PerformanceAnalyzer
         FitnessAnalyzer
         IntegerEncodingInitializer
+<<<<<<< HEAD
         ExplorationMutation
+||||||| merged common ancestors
+=======
+        UniformCrossoverEngine
+>>>>>>> 00622be7e341d9c8ade9f19df8e1bb6cb20afd7b
     )
 
 #############
@@ -380,7 +387,6 @@ FOREACH(test ${CLUSTER_TEST_FILENAMES})
         )
 
     # add test executable
-    include_directories(${INCLUDE_DIRECTORIES} ${CLUSTER_SOURCES_H})
     add_executable(${TEST_NAME} ${CLUSTER_TEST_DRIVER} ${CLUSTER_TEST_SOURCES})
     # link clusterer library
     if( WIN32 )

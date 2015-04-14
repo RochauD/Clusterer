@@ -38,7 +38,7 @@ class IntegerVectorEncoding : public ClusterEncoding
          * @param g the graph to cluster
          */
         IntegerVectorEncoding(const Graph* g);
-
+         
         /**
          * @brief move a vertex to a specific cluster
          * @param vertexId the id of the vertex to be moved
