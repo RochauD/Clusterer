@@ -69,7 +69,7 @@ void Graph::addEdge(const Vertex& v1, const Vertex& v2)
     {
         boost::add_edge(u, v, g);
         auto e = boost::edge(u, v, g).first;
-        edgeW[e] = 0.0; // set weight to 0 just in case
+        edgeW[e] = 1.0; // set weight to 1.0 just in case
         no_edges++;
     }
 }

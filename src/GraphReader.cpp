@@ -41,7 +41,7 @@ bool GraphReader::readFile(std::string filename)
     std::string line;
     VertexId first;
     VertexId second;
-    double third = 0.0;
+    double third = 1.0;
     std::map<VertexId, Vertex> vertexIdMap;
 
     if (myfile.is_open())
