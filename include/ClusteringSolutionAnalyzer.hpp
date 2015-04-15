@@ -44,7 +44,7 @@ class ClusteringSolutionAnalyzer
         * @pre The graph needs to have atleast on edge. In other words the graph is not allowed
         * totally disconnected.
         */
-        virtual double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph) = 0;
+        virtual double analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph) = 0;
 
         /**
         * @brief standard destructor

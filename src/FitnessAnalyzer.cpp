@@ -15,7 +15,7 @@ namespace clusterer
 namespace backend
 {
 
-double FitnessAnalyzer::analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph)
+double FitnessAnalyzer::analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph)
 {
     auto mqValue = this->mqAnalyzer.analyze(clusteringSolution, graph);
     auto performanceValue = this->performanceAnalyzer.analyze(clusteringSolution, graph);

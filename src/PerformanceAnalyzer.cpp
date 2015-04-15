@@ -15,16 +15,16 @@ namespace clusterer
 namespace backend
 {
 
-double PerformanceAnalyzer::analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph)
+double PerformanceAnalyzer::analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph)
 {
-    auto clusterVerticesMap = clusteringSolution.getClusterVerticesCountMap();
-    uint32_t verticesCount = graph.getNoVertices();
+    auto clusterVerticesMap = clusteringSolution->getClusterVerticesCountMap();
+    uint32_t verticesCount = graph->getNoVertices();
     uint32_t clusterCount = clusterVerticesMap.size();
     double coverageValue = this->coverageAnalyzer.analyze(clusteringSolution, graph);
     uint64_t sumOfClusterSizes = 0;
     double totalEdgeWeightSum = 0.0;
 
-    for (auto& e : graph.getEdgesAndWeights())
+    for (auto& e : graph->getEdgesAndWeights())
     {
         totalEdgeWeightSum += e.second;
     }
