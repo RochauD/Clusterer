@@ -198,6 +198,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
         ${CLUSTER_INCLUDE_DIR}/UniformCrossoverEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationAnalyzer.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
@@ -273,6 +274,7 @@ set(CLUSTER_TEST_FILENAMES
         IntegerEncodingInitializer
         ExplorationMutation
         UniformCrossoverEngine
+        ClusteringPopulationAnalyzer
     )
 
 #############

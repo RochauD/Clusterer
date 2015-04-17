@@ -15,14 +15,14 @@ namespace clusterer
 namespace backend
 {
 
-double CoverageAnalyzer::analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph)
+double CoverageAnalyzer::analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph)
 {
     double intraEdgeWeightSum = 0.0;
     double totalEdgeWeightSum = 0.0;
 
-    for (auto& e : graph.getEdgesAndWeights())
+    for (auto& e : graph->getEdgesAndWeights())
     {
-        if (clusteringSolution.getClusterOfVertex(e.first.first) == clusteringSolution.getClusterOfVertex(e.first.second))
+        if (clusteringSolution->getClusterOfVertex(e.first.first) == clusteringSolution->getClusterOfVertex(e.first.second))
         {
             intraEdgeWeightSum += e.second;
         }

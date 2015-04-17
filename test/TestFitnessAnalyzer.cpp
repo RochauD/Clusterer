@@ -60,7 +60,7 @@ void TestFitnessAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution1.addToCluster(3, 3);
     solution1.addToCluster(4, 4);
 
-    double result = this->fitnessAnalyzer.analyze(solution1, graph1);
+    double result = this->fitnessAnalyzer.analyze(&solution1, &graph1);
     double actualValue = 11.0/8.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
@@ -78,7 +78,7 @@ void TestFitnessAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution2.addToCluster(6, 6);
     solution2.addToCluster(7, 7);
 
-    result = this->fitnessAnalyzer.analyze(solution2, graph2);
+    result = this->fitnessAnalyzer.analyze(&solution2, &graph2);
     actualValue = 43.0/32.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
@@ -96,7 +96,7 @@ void TestFitnessAnalyzer::testAnalyzeOneClusterOnly(void)
     solution1.addToCluster(3, 0);
     solution1.addToCluster(4, 0);
 
-    double result = this->fitnessAnalyzer.analyze(solution1, graph1);
+    double result = this->fitnessAnalyzer.analyze(&solution1, &graph1);
     double actualValue = 31.0/50.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
@@ -114,7 +114,7 @@ void TestFitnessAnalyzer::testAnalyzeOneClusterOnly(void)
     solution2.addToCluster(6, 0);
     solution2.addToCluster(7, 0);
 
-    result = this->fitnessAnalyzer.analyze(solution2, graph2);
+    result = this->fitnessAnalyzer.analyze(&solution2, &graph2);
     actualValue = 167.0/256.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
@@ -132,7 +132,7 @@ void TestFitnessAnalyzer::testAnalyzeTwoClusters(void)
     solution1.addToCluster(3, 1);
     solution1.addToCluster(4, 1);
 
-    double result = this->fitnessAnalyzer.analyze(solution1, graph1);
+    double result = this->fitnessAnalyzer.analyze(&solution1, &graph1);
     double actualValue = 149.0/120.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
@@ -150,7 +150,7 @@ void TestFitnessAnalyzer::testAnalyzeTwoClusters(void)
     solution2.addToCluster(6, 1);
     solution2.addToCluster(7, 1);
 
-    result = this->fitnessAnalyzer.analyze(solution2, graph2);
+    result = this->fitnessAnalyzer.analyze(&solution2, &graph2);
     actualValue = 5513.0/4480.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));

@@ -17,8 +17,6 @@ namespace backend
 
 IntegerVectorEncoding::IntegerVectorEncoding(const Graph* g) : ClusterEncoding(g)
 {
-    this->graph = g;
-
     // Set encoding to be as big as the vertex array
     this->encoding.resize(g->getNoVertices());
 }
@@ -117,7 +115,7 @@ int IntegerVectorEncoding::normalize()
     // Change the labels to be in [0, clusterCount)
     bool changed = true;
     int newId = 1, min, last = 0;
-    int invalidClusterId = this->graph->getNoVertices() + 1;
+    int invalidClusterId = this->encoding.size() + 1;
     while (changed)
     {
         changed = false;
@@ -131,7 +129,7 @@ int IntegerVectorEncoding::normalize()
         }
 
         if (min != invalidClusterId)
-        { 
+        {
             changed = true;
             for (i = 0; i < this->encoding.size(); i++)
             {

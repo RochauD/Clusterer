@@ -60,7 +60,7 @@ void TestCoverageAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution1.addToCluster(3, 3);
     solution1.addToCluster(4, 4);
 
-    double result = this->coverageAnalyzer.analyze(solution1, graph1);
+    double result = this->coverageAnalyzer.analyze(&solution1, &graph1);
     double actualValue = 0.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
@@ -78,7 +78,7 @@ void TestCoverageAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution2.addToCluster(6, 6);
     solution2.addToCluster(7, 7);
 
-    result = this->coverageAnalyzer.analyze(solution1, graph1);
+    result = this->coverageAnalyzer.analyze(&solution1, &graph1);
     actualValue = 0.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
@@ -96,7 +96,7 @@ void TestCoverageAnalyzer::testAnalyzeOneClusterOnly(void)
     solution1.addToCluster(3, 0);
     solution1.addToCluster(4, 0);
 
-    double result = this->coverageAnalyzer.analyze(solution1, graph1);
+    double result = this->coverageAnalyzer.analyze(&solution1, &graph1);
     double actualValue = 1.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
@@ -114,7 +114,7 @@ void TestCoverageAnalyzer::testAnalyzeOneClusterOnly(void)
     solution2.addToCluster(6, 0);
     solution2.addToCluster(7, 0);
 
-    result = this->coverageAnalyzer.analyze(solution2, graph2);
+    result = this->coverageAnalyzer.analyze(&solution2, &graph2);
     actualValue = 1.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
@@ -132,7 +132,7 @@ void TestCoverageAnalyzer::testAnalyzeTwoClusters(void)
     solution1.addToCluster(3, 1);
     solution1.addToCluster(4, 1);
 
-    double result = this->coverageAnalyzer.analyze(solution1, graph1);
+    double result = this->coverageAnalyzer.analyze(&solution1, &graph1);
     double actualValue = 1.0;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));
@@ -150,7 +150,7 @@ void TestCoverageAnalyzer::testAnalyzeTwoClusters(void)
     solution2.addToCluster(6, 1);
     solution2.addToCluster(7, 1);
 
-    result = this->coverageAnalyzer.analyze(solution2, graph2);
+    result = this->coverageAnalyzer.analyze(&solution2, &graph2);
     actualValue = 3.3/3.5;
     CPPUNIT_ASSERT((result < actualValue + testEpsilon) &&
                    (result > actualValue - testEpsilon));

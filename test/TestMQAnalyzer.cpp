@@ -59,7 +59,7 @@ void TestMQAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution1.addToCluster(3, 3);
     solution1.addToCluster(4, 4);
 
-    double result = this->mqAnalyzer.analyze(solution1, graph1);
+    double result = this->mqAnalyzer.analyze(&solution1, &graph1);
     double actualValue = -1.0/20.0;
     CPPUNIT_ASSERT((result <  actualValue + testEpsilon) &&
                    (result >  actualValue - testEpsilon));
@@ -77,7 +77,7 @@ void TestMQAnalyzer::testAnalyzeSingleElementClustersOnly(void)
     solution2.addToCluster(6, 6);
     solution2.addToCluster(7, 7);
 
-    result = this->mqAnalyzer.analyze(solution2, graph2);
+    result = this->mqAnalyzer.analyze(&solution2, &graph2);
     actualValue = -3.5/56.0;
     CPPUNIT_ASSERT((result <  actualValue + testEpsilon) &&
                    (result >  actualValue - testEpsilon));
@@ -95,7 +95,7 @@ void TestMQAnalyzer::testAnalyzeOneClusterOnly(void)
     solution1.addToCluster(3, 0);
     solution1.addToCluster(4, 0);
 
-    double result = this->mqAnalyzer.analyze(solution1, graph1);
+    double result = this->mqAnalyzer.analyze(&solution1, &graph1);
     double actualValue = 1.0/25.0;
     CPPUNIT_ASSERT((result <  actualValue + testEpsilon) &&
                    (result >  actualValue - testEpsilon));
@@ -113,7 +113,7 @@ void TestMQAnalyzer::testAnalyzeOneClusterOnly(void)
     solution2.addToCluster(6, 0);
     solution2.addToCluster(7, 0);
 
-    result = this->mqAnalyzer.analyze(solution2, graph2);
+    result = this->mqAnalyzer.analyze(&solution2, &graph2);
     actualValue = 3.5/64.0;
     CPPUNIT_ASSERT((result <  actualValue + testEpsilon) &&
                    (result >  actualValue - testEpsilon));
@@ -131,7 +131,7 @@ void TestMQAnalyzer::testAnalyzeTwoClusters(void)
     solution1.addToCluster(3, 1);
     solution1.addToCluster(4, 1);
 
-    double result = this->mqAnalyzer.analyze(solution1, graph1);
+    double result = this->mqAnalyzer.analyze(&solution1, &graph1);
     double actualValue = 1.0/12.0;
     CPPUNIT_ASSERT((result <  actualValue + testEpsilon) &&
                    (result >  actualValue - testEpsilon));
@@ -149,7 +149,7 @@ void TestMQAnalyzer::testAnalyzeTwoClusters(void)
     solution2.addToCluster(6, 1);
     solution2.addToCluster(7, 1);
 
-    result = this->mqAnalyzer.analyze(solution2, graph2);
+    result = this->mqAnalyzer.analyze(&solution2, &graph2);
     actualValue = 3.1/32.0;
     CPPUNIT_ASSERT((result <  actualValue + testEpsilon) &&
                    (result >  actualValue - testEpsilon));

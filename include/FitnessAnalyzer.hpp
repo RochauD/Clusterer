@@ -31,8 +31,7 @@ namespace backend
 
 /**
  * @class FitnessAnalyzer
- * @brief interface for objects which can assess the value of a particular
- * clustering scheme
+ * @brief class to determine the fitness of a solution
  */
 class FitnessAnalyzer : public ClusteringSolutionAnalyzer
 {
@@ -45,7 +44,7 @@ class FitnessAnalyzer : public ClusteringSolutionAnalyzer
          * @pre The graph needs to have atleast on edge. In other words the graph is not allowed
          * totally disconnected.
          */
-        double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph);
+        double analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph);
 
         /**
          * @brief standard destructor

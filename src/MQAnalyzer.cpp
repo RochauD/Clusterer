@@ -16,19 +16,19 @@ namespace clusterer
 namespace backend
 {
 
-double MQAnalyzer::analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph)
+double MQAnalyzer::analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph)
 {
     double mqValue = 0.0;
-    auto clusterVerticesMap = clusteringSolution.getClusterVerticesCountMap();
+    auto clusterVerticesMap = clusteringSolution->getClusterVerticesCountMap();
     uint32_t clusterCount = clusterVerticesMap.size();
     if (clusterCount == 1)
     {
         double totalEdgeWeightSum = 0.0;
-        for (auto& e : graph.getEdgesAndWeights())
+        for (auto& e : graph->getEdgesAndWeights())
         {
             totalEdgeWeightSum += e.second;
         }
-        mqValue = totalEdgeWeightSum / (graph.getNoVertices() * graph.getNoVertices());
+        mqValue = totalEdgeWeightSum / (graph->getNoVertices() * graph->getNoVertices());
     }
     else
     {
@@ -39,10 +39,10 @@ double MQAnalyzer::analyze(const ClusterEncoding& clusteringSolution, const Abst
         std::vector<std::vector<double>> clusterBValue(clusterCount, std::vector<double>(clusterCount, 0.0));
 
         // go through all edges and compute either inter or intra edge weight sums
-        for (auto& e : graph.getEdgesAndWeights())
+        for (auto& e : graph->getEdgesAndWeights())
         {
-            ClusterId startNodeCluster = clusteringSolution.getClusterOfVertex(e.first.first);
-            ClusterId endNodeCluster = clusteringSolution.getClusterOfVertex(e.first.second);
+            ClusterId startNodeCluster = clusteringSolution->getClusterOfVertex(e.first.first);
+            ClusterId endNodeCluster = clusteringSolution->getClusterOfVertex(e.first.second);
             if (startNodeCluster == endNodeCluster)
             {
                 clusterAValue[startNodeCluster] += e.second;

@@ -39,7 +39,7 @@ class PerformanceAnalyzer : public ClusteringSolutionAnalyzer
          * @pre The graph needs to have atleast on edge. In other words the graph is not allowed
          * totally disconnected.
          */
-        double analyze(const ClusterEncoding& clusteringSolution, const AbstractGraph& graph);
+        double analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph);
 
         ~PerformanceAnalyzer();
     protected:
