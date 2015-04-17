@@ -97,7 +97,6 @@ class ClusterEncoding
         virtual Encoding getEncoding() = 0;
 
     protected:
-        const AbstractGraph* graph;
 };
 
 }
