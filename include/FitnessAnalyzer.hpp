@@ -31,8 +31,7 @@ namespace backend
 
 /**
  * @class FitnessAnalyzer
- * @brief interface for objects which can assess the value of a particular
- * clustering scheme
+ * @brief class to determine the fitness of a solution
  */
 class FitnessAnalyzer : public ClusteringSolutionAnalyzer
 {
