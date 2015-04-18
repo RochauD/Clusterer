@@ -87,6 +87,12 @@ class IntegerVectorEncoding : public ClusterEncoding
          * @return the current encoding of a solution
          */
         ClusterEncoding::Encoding getEncoding();
+        
+        /**
+         * @brief get the size of the current encoding
+         * @return the number of vertices
+         */
+        unsigned size() const;
 
         /**
          * @brief does a renumbering procedure to ensure unique representation of a solution

@@ -164,6 +164,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/IntegerEncodingInitializer.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationMutation.cpp
         ${CLUSTER_SOURCE_DIR}/MutationEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/CrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/UniformCrossoverEngine.cpp
     )
 # backend header files

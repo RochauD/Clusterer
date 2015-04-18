@@ -96,6 +96,12 @@ class ClusterEncoding
          */
         virtual Encoding getEncoding() = 0;
 
+        /**
+         * @brief get the size of the current encoding
+         * @return the number of vertices
+         */
+         virtual unsigned size() const = 0;
+
     protected:
 };
 

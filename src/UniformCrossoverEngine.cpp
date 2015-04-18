@@ -30,12 +30,12 @@ namespace backend
         return uni_dist(rng) == 1;
     }
 
-    void UniformCrossoverEngine::crossover(ClusterEncoding& parent1, 
-                                           ClusterEncoding& parent2,
+    void UniformCrossoverEngine::crossover(const ClusterEncoding& parent1, 
+                                           const ClusterEncoding& parent2,
                                            ClusterEncoding& child)
     {
         unsigned i;
-        unsigned n = parent1.getEncoding().size();
+        unsigned n = parent1.size();
         for (i = 0; i < n; i++)
         {
             // Put vertex i in the cluster it is in one of the parents

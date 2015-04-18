@@ -42,7 +42,8 @@ class UniformCrossoverEngine : public virtual CrossoverEngine
          * @param parent2 The second parent contributing to the crossover
          * @param child The encoding object that will hold the child
          */
-        void crossover(ClusterEncoding& parent1, ClusterEncoding& parent2, ClusterEncoding& child);
+        void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
+                       ClusterEncoding& child);
 
         /**
          * @brief standard destructor
@@ -52,7 +53,7 @@ class UniformCrossoverEngine : public virtual CrossoverEngine
     private:
         /**
          * @brief Returns true or false with probability 50%
-         * @return The returned random boolean
+         * @return A random boolean
          */
         bool getTrueOrFalse();
         /**

@@ -86,6 +86,11 @@ ClusterEncoding::Encoding IntegerVectorEncoding::getEncoding()
     return  this->encoding;
 }
 
+unsigned IntegerVectorEncoding::size() const
+{
+    return this->encoding.size();
+}
+
 int IntegerVectorEncoding::normalize()
 {
     std::map<ClusterId, VertexId> minVertex;
