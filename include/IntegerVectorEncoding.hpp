@@ -106,6 +106,7 @@ class IntegerVectorEncoding : public ClusterEncoding
         ~IntegerVectorEncoding();
 
     private:
+        bool isNormalized = false;
         ClusterEncoding::Encoding encoding;
         const Graph* graph;
 };

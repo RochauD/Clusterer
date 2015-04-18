@@ -28,6 +28,7 @@ int IntegerVectorEncoding::addToCluster(VertexId vertexId, ClusterId clusterId)
         return -1;
     }
     this->encoding[vertexId] = clusterId;
+    this->isNormalized = false;
     return 0;
 }
 
@@ -93,6 +94,10 @@ unsigned IntegerVectorEncoding::size() const
 
 int IntegerVectorEncoding::normalize()
 {
+    // Don't run the algorithm if not necessary
+    if (isNormalized)
+    { return 0; }
+
     std::map<ClusterId, VertexId> minVertex;
     VertexId i;
 
@@ -147,7 +152,8 @@ int IntegerVectorEncoding::normalize()
             newId++;
         }
     }
-
+    // Keep internal track of normalization state
+    isNormalized = true;
     return 0;
 }
 
