@@ -6,8 +6,9 @@ namespace backend
 {
 
 IntegerEncodingInitializer::IntegerEncodingInitializer(
-    const Graph* g, unsigned maxClusters) : graph(g)
+    const AbstractGraph* g, unsigned maxClusters)
 {
+    this->graph = g;
     if (maxClusters == 0 || maxClusters >= graph->getNoVertices())
     {
         maxClusters = graph->getNoVertices() - 1;

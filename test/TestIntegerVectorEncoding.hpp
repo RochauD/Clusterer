@@ -16,6 +16,7 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
 #include "../include/IntegerVectorEncoding.hpp"
+#include "../include/Graph.hpp"
 
 using namespace CppUnit;
 using namespace std;

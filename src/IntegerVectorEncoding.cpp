@@ -5,6 +5,7 @@
 
 // standard headers
 #include <unordered_map>
+#include <map>
 // external headers
 
 // internal headers
@@ -15,7 +16,12 @@ namespace clusterer
 namespace backend
 {
 
-IntegerVectorEncoding::IntegerVectorEncoding(const Graph* g) : ClusterEncoding(g)
+IntegerVectorEncoding::IntegerVectorEncoding() : ClusterEncoding()
+{
+
+}
+
+IntegerVectorEncoding::IntegerVectorEncoding(const AbstractGraph* g) : ClusterEncoding(g)
 {
     // Set encoding to be as big as the vertex array
     this->encoding.resize(g->getNoVertices());
