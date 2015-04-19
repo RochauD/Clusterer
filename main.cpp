@@ -14,23 +14,61 @@
 #include "include/IntegerEncodingInitializer.hpp"
 #include "include/IntegerVectorEncoding.hpp"
 #include "include/FitnessAnalyzer.hpp"
-
+#include "include/TwoPhaseStrategy.hpp"
+#include "include/ConcurrentLockingQueue.hpp"
 
 using namespace clc;
 using namespace clb;
 
 int main()
 {
-
-    std::unique_ptr<LoggingPolicyFile> uPtr(new LoggingPolicyFile("./", "test"));
-    Logger<LoggingPolicyFile> logger(std::move(uPtr), SeverityLevel::ALL);
     GlobalFileLogger::init();
+    GlobalFileLogger::instance()->log(SeverityType::INFO, "Definition Exe Version: ", CLUSTERER_VERSION);
+    GlobalFileLogger::instance()->log(SeverityType::INFO, "Definition Exe Version FUll: ", CLUSTERER_VERSION_FULL);
+    GlobalFileLogger::instance()->log(SeverityType::INFO, "Definition Lib Version: ", CLUSTERER_LIB_VERSION);
+    GlobalFileLogger::instance()->log(SeverityType::INFO, "Definition Lib Version FUll: ", CLUSTERER_LIB_VERSION_FULL);
 
-    for (size_t i = 0; i < 100; i++)
-    {
-        logger.log(SeverityType::INFO, "Info: ", i);
-        GlobalFileLogger::instance()->log(SeverityType::DEBUG, "test", i);
-    }
+    Graph graph;
+    // Initialize graph 2
+    graph.addVertex(Vertex(0));
+    graph.addVertex(Vertex(1));
+    graph.addVertex(Vertex(2));
+    graph.addVertex(Vertex(3));
+    graph.addVertex(Vertex(4));
+    graph.addVertex(Vertex(5));
+    graph.addVertex(Vertex(6));
+    graph.addVertex(Vertex(7));
+
+    graph.addEdge(Vertex(0), Vertex(1), 0.2);
+    graph.addEdge(Vertex(1), Vertex(2), 0.3);
+    graph.addEdge(Vertex(1), Vertex(3), 0.5);
+    graph.addEdge(Vertex(2), Vertex(3), 0.4);
+    graph.addEdge(Vertex(3), Vertex(4), 0.2);
+    graph.addEdge(Vertex(4), Vertex(5), 0.5);
+    graph.addEdge(Vertex(4), Vertex(6), 0.6);
+    graph.addEdge(Vertex(5), Vertex(6), 0.7);
+    graph.addEdge(Vertex(6), Vertex(7), 0.1);
+
+
+
+
+
+    ConfigurationManager cfg;
+    cfg.saveClusteringParams("config1.txt");
+    cfg.setMaxFitness(1.8);
+    cfg.saveClusteringParams("config2.txt");
+    cfg.loadClusteringParams("config2.txt");
+
+    ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>> outQueue;
+    std::vector<std::pair<IntegerVectorEncoding, double>> population;
+
+    TwoPhaseStrategy<IntegerVectorEncoding, IntegerEncodingInitializer> algorithmService(&graph, cfg.getClusteringParams(), &population, &outQueue);
+    algorithmService.runAlgorithm();
+
+
+
+
+
     /*
     Graph g;
     GraphReader gr(&g);
@@ -69,59 +107,7 @@ int main()
         std::cout << " with weight: " << (*wit).second << "\n";
     }
     */
-    Graph graph2;
-    // Initialize graph 2
-    graph2.addVertex(Vertex(0));
-    graph2.addVertex(Vertex(1));
-    graph2.addVertex(Vertex(2));
-    graph2.addVertex(Vertex(3));
-    graph2.addVertex(Vertex(4));
-    graph2.addVertex(Vertex(5));
-    graph2.addVertex(Vertex(6));
-    graph2.addVertex(Vertex(7));
 
-    graph2.addEdge(Vertex(0), Vertex(1), 0.2);
-    graph2.addEdge(Vertex(1), Vertex(2), 0.3);
-    graph2.addEdge(Vertex(1), Vertex(3), 0.5);
-    graph2.addEdge(Vertex(2), Vertex(3), 0.4);
-    graph2.addEdge(Vertex(3), Vertex(4), 0.2);
-    graph2.addEdge(Vertex(4), Vertex(5), 0.5);
-    graph2.addEdge(Vertex(4), Vertex(6), 0.6);
-    graph2.addEdge(Vertex(5), Vertex(6), 0.7);
-    graph2.addEdge(Vertex(6), Vertex(7), 0.1);
-
-
-    IntegerEncodingInitializer initVec(&graph2);
-    std::vector<std::pair<IntegerVectorEncoding, double>> vecPop;
-
-    for (size_t i = 0; i < 100000; i++)
-    {
-        vecPop.push_back(std::make_pair(initVec.getRandomSolution(), 1.0));
-    }
-
-    std::cout << "Start analyzing" << std::endl;
-    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<IntegerVectorEncoding, double>>> analyzer(&graph2,  16);
-    analyzer.setPopulation(&vecPop);
-    analyzer.evaluatePopulation();
-    std::sort(vecPop.begin(), vecPop.end(),
-              [=](const std::pair<IntegerVectorEncoding, double>& v1, const std::pair<IntegerVectorEncoding, double>& v2)->bool { return v1.second > v2.second; });
-    for (size_t i = 0; i < vecPop.size(); i++)
-    {
-        std::cout << vecPop[i].second << std::endl;
-    }
-
-    logger.log(SeverityType::WARNING, "File: ", __FILE__);
-    logger.log(SeverityType::WARNING, "Definition Exe Version: ", (CLUSTERER_VERSION));
-    logger.log(SeverityType::WARNING, "Definition Exe Version FUll: ", CLUSTERER_VERSION_FULL);
-
-    logger.log(SeverityType::WARNING, "Definition Lib Version: ", CLUSTERER_LIB_VERSION);
-    logger.log(SeverityType::WARNING, "Definition Lib Version FUll: ", CLUSTERER_LIB_VERSION_FULL);
-
-    ConfigurationManager cfg;
-    cfg.saveClusteringParams("config1.txt");
-    cfg.setMaxFitness(11235467889.000);
-    cfg.saveClusteringParams("config2.txt");
-    cfg.loadClusteringParams("config2.txt");
 
     return 0;
 }
