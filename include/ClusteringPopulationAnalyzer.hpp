@@ -118,13 +118,6 @@ void ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFi
         populationIndexBegin = populationIndexEnd;
     }
 
-    // 0 53
-    // 0 - 10 -> 0 - 11  / 11
-    // 11 - 21 -> 11 - 22 / 11
-    // 22 - 33 -> 22 - 34 / 11
-    // 34 - 44
-    // 44 -54
-
     // get and combine result
     for (auto& thread : threadPool)
     {
