@@ -14,14 +14,15 @@ namespace backend
 
 ConfigurationManager::ConfigurationManager()
 {
-    this->clusteringParams.minIterations = 10;
-    this->clusteringParams.maxIterations = 1000;
-    this->clusteringParams.minFitness = 100.0; //@todo add a good default value here
-    this->clusteringParams.maxFitness = 1000.0;
-    this->clusteringParams.phaseSwitchFitnessValue = 50.0;
-    this->clusteringParams.phaseSwitchIterationValue = 700;
-    this->clusteringParams.predictedClusterCount = 10;
-    this->clusteringParams.threadCount = 2;
+    this->clusteringParams.minPopulationSize = 100;
+    this->clusteringParams.maxPopulationSize = 500;
+    this->clusteringParams.minIterations = 10000;
+    this->clusteringParams.maxIterations = 100000;
+    this->clusteringParams.minFitness = 1.4;
+    this->clusteringParams.maxFitness = 1.7;
+    this->clusteringParams.phaseSwitchFitnessValue = 1.4;
+    this->clusteringParams.phaseSwitchIterationValue = 5000;
+    this->clusteringParams.threadCount = 4;
 }
 
 ConfigurationManager::~ConfigurationManager()
@@ -32,6 +33,16 @@ ConfigurationManager::~ConfigurationManager()
 ClusteringParams ConfigurationManager::getClusteringParams()
 {
     return this->clusteringParams;
+}
+
+uint64_t ConfigurationManager::getMinPopulationSize()
+{
+    return this->clusteringParams.minPopulationSize;
+}
+
+uint64_t ConfigurationManager::getMaxPopulationSize()
+{
+    return this->clusteringParams.maxPopulationSize;
 }
 
 uint64_t ConfigurationManager::getMinIterationsCount()
@@ -64,11 +75,6 @@ uint64_t ConfigurationManager::getPhaseSwitchIterationValue()
     return this->clusteringParams.phaseSwitchIterationValue;
 }
 
-uint64_t ConfigurationManager::getPredictedClusterCount()
-{
-    return this->clusteringParams.predictedClusterCount;
-}
-
 uint32_t ConfigurationManager::getThreadCount()
 {
     return this->clusteringParams.threadCount;
@@ -78,6 +84,16 @@ uint32_t ConfigurationManager::getThreadCount()
 void ConfigurationManager::setClusteringParams(const ClusteringParams& clusteringParams)
 {
     this->clusteringParams = clusteringParams;
+}
+
+void ConfigurationManager::setMinPopulationSize(uint64_t minPopulationSize)
+{
+    this->clusteringParams.minPopulationSize = minPopulationSize;
+}
+
+void ConfigurationManager::setMaxPopulationSize(uint64_t maxPopulationSize)
+{
+    this->clusteringParams.maxPopulationSize = maxPopulationSize;
 }
 
 void ConfigurationManager::setMinIterationsCount(uint64_t minIterations)
@@ -110,11 +126,6 @@ void ConfigurationManager::setPhaseSwitchIterationValue(uint64_t phaseSwitchIter
     this->clusteringParams.phaseSwitchIterationValue = phaseSwitchIterationValue;
 }
 
-void ConfigurationManager::setPredictedClusterCount(uint64_t predictedClusterCount)
-{
-    this->clusteringParams.predictedClusterCount = predictedClusterCount;
-}
-
 void ConfigurationManager::setThreadCount(uint32_t threadCount)
 {
     this->clusteringParams.threadCount = threadCount;
@@ -128,6 +139,29 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
 
     // go through the map and assign our parameters
     std::unordered_map<std::string, std::string>::iterator iter;
+
+    iter = parameterMap.find("minPopulationSize");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.minPopulationSize = std::stoull(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find minPopulationSize value in configuration file.");
+        throw std::runtime_error("Error! Could not find minPopulationSize value in configuration file.");
+    }
+
+    iter = parameterMap.find("maxPopulationSize");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.maxPopulationSize = std::stoull(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find maxPopulationSize value in configuration file.");
+        throw std::runtime_error("Error! Could not find maxPopulationSize value in configuration file.");
+    }
+
     iter = parameterMap.find("minIterations");
     if (iter != parameterMap.end())
     {
@@ -194,17 +228,6 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
         throw std::runtime_error("Error! Could not find phaseSwitchIterationValue value in configuration file.");
     }
 
-    iter = parameterMap.find("predictedClusterCount");
-    if (iter != parameterMap.end())
-    {
-        this->clusteringParams.predictedClusterCount = std::stoull(iter->second);
-    }
-    else
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find predictedClusterCount value in configuration file.");
-        throw std::runtime_error("Error! Could not find predictedClusterCount value in configuration file.");
-    }
-
     iter = parameterMap.find("threadCount");
     if (iter != parameterMap.end())
     {
@@ -221,18 +244,19 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
 void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
 {
     std::unordered_map<std::string, std::string> parameterMap;
+    parameterMap["minPopulationSize"] = std::to_string(this->clusteringParams.minPopulationSize);
+    parameterMap["maxPopulationSize"] = std::to_string(this->clusteringParams.maxPopulationSize);
     parameterMap["minIterations"] = std::to_string(this->clusteringParams.minIterations);
     parameterMap["maxIterations"] = std::to_string(this->clusteringParams.maxIterations);
     parameterMap["minFitness"] = std::to_string(this->clusteringParams.minFitness);
     parameterMap["maxFitness"] = std::to_string(this->clusteringParams.maxFitness);
     parameterMap["phaseSwitchFitnessValue"] = std::to_string(this->clusteringParams.phaseSwitchFitnessValue);
     parameterMap["phaseSwitchIterationValue"] = std::to_string(this->clusteringParams.phaseSwitchIterationValue);
-    parameterMap["predictedClusterCount"] = std::to_string(this->clusteringParams.predictedClusterCount);
     parameterMap["threadCount"] = std::to_string(this->clusteringParams.threadCount);
 
     ConfigurationReaderWriter configWriter(fullPathName);
     configWriter.writeConfiguration(parameterMap);
-    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Saved Clustering Params succesfully from the following file. File: ", fullPathName);
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Saved Clustering Params succesfully to the following file. File: ", fullPathName);
 }
 
 }
