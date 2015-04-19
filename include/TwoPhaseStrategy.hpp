@@ -109,6 +109,8 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         this->clusteringParameters.threadCount);
     populationFitnessAnalyzer.setPopulation(this->population);
 
+    // @todo check for valid parameters!
+
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initalized helper classes");
     // reset if needed
     if (restart)
@@ -129,7 +131,6 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     {
         if (this->currentPhase)
         {
-
             // refinement phase
         }
         else

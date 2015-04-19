@@ -49,15 +49,9 @@ int main()
     graph.addEdge(Vertex(5), Vertex(6), 0.7);
     graph.addEdge(Vertex(6), Vertex(7), 0.1);
 
-
-
-
-
     ConfigurationManager cfg;
-    cfg.saveClusteringParams("config1.txt");
-    cfg.setMaxFitness(1.8);
-    cfg.saveClusteringParams("config2.txt");
-    cfg.loadClusteringParams("config2.txt");
+    cfg.saveClusteringParams("config.cfg");
+    cfg.loadClusteringParams("config2.cfg");
 
     ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>> outQueue;
     std::vector<std::pair<IntegerVectorEncoding, double>> population;
