@@ -35,7 +35,7 @@ class ExplorationSplit: public MutationEngine
         /**
         * @brief empty constructor
         */
-        ExplorationSplit(std::mt19937 *rand_gen = nullptr);
+        ExplorationSplit(std::mt19937* rand_gen);
 
         /**
          * @brief mutate a clustering solution
@@ -50,9 +50,8 @@ class ExplorationSplit: public MutationEngine
         virtual ~ExplorationSplit();
 
     private:
-        std::mt19937 *gen;
+        std::mt19937* gen;
         std::bernoulli_distribution bd;
-
 };
 
 }

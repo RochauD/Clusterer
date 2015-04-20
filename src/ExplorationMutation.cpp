@@ -13,31 +13,30 @@ namespace clusterer
 namespace backend
 {
 
-ExplorationMutation::ExplorationMutation(std::mt19937* rand_gen):
-MutationEngine(){
-
+ExplorationMutation::ExplorationMutation(std::mt19937* rand_gen) : MutationEngine()
+{
     gen = rand_gen;
-    // setting the seed for the pseudo-random number generator
-    auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-    gen->seed(seed);
 }
 
-ExplorationMutation::~ExplorationMutation(){
+ExplorationMutation::~ExplorationMutation()
+{
 }
 
-void ExplorationMutation::mutate(ClusterEncoding& clusterSol){
-    
+void ExplorationMutation::mutate(ClusterEncoding& clusterSol)
+{
+
     ClusterEncoding::Encoding cluster = clusterSol.getEncoding();
 
     //find the biggest cluster id number
     std::vector<ClusterId>::iterator it;
     ClusterId maxId = *(cluster.begin());
-    for(it = cluster.begin(); it != cluster.end(); ++it){
-        if(maxId < (*it)) maxId = *it;
+    for (it = cluster.begin(); it != cluster.end(); ++it)
+    {
+        if (maxId < (*it)) { maxId = *it; }
     }
 
     std::uniform_int_distribution<uint64_t> intDist(0,maxId);
-    
+
     // new cluster Id
     ClusterId new_clusterId = intDist((*gen));
 

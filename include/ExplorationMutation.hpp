@@ -35,7 +35,7 @@ class ExplorationMutation: public MutationEngine
         /**
         * @brief empty constructor
         */
-        ExplorationMutation(std::mt19937 *rand_gen = nullptr);
+        ExplorationMutation(std::mt19937* rand_gen);
 
         /**
          * @brief mutate a clustering solution
@@ -47,10 +47,10 @@ class ExplorationMutation: public MutationEngine
         /**
          * @brief standard destructor
          */
-        virtual ~ExplorationMutation();
+        ~ExplorationMutation();
 
     private:
-        std::mt19937 *gen;
+        std::mt19937* gen;
 
 };
 

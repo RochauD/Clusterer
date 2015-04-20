@@ -35,7 +35,7 @@ class ExplorationJoin: public MutationEngine
         /**
         * @brief empty constructor
         */
-        ExplorationJoin(std::mt19937 *rand_gen = nullptr);
+        ExplorationJoin(std::mt19937* rand_gen);
 
         /**
          * @brief mutate a clustering solution
@@ -50,7 +50,7 @@ class ExplorationJoin: public MutationEngine
         virtual ~ExplorationJoin();
 
     private:
-        std::mt19937 *gen;
+        std::mt19937* gen;
 
 };
 
