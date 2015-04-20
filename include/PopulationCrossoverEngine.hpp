@@ -134,7 +134,7 @@ EncodingFitnessDataStructure PopulationCrossoverEngine<EncodingFitnessDataStruct
 crossoverSubPopulation(size_t iterationCount, size_t threadID)
 {
     CrossoverFunction crossover(&(this->randomDeviceVec[threadID]));
-    SelectorFunction selector(&(this->randomDeviceVec[threadID]));
+    SelectorFunction selector(this->populationPtr,&(this->randomDeviceVec[threadID]));
     EncodingFitnessDataStructure result;
     result.reserve(iterationCount * 2);
     Encoding firstChild(this->graph);

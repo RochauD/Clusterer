@@ -124,7 +124,9 @@ void Selector<EncodingFitnessDataStructure>::generateRollingSum(std::vector<doub
     {
         // skip this index
         if (i == without)
-        { continue; }
+        {
+            continue;
+        }
 
         sum += (*population)[i].second;
         probSum[ind] = sum;
@@ -148,13 +150,15 @@ size_t Selector<EncodingFitnessDataStructure>::getRandomId(const std::vector<dou
     if (rnum < probSum[0])
     {
         if (without == 0)
-        { return 1; }
+        {
+            return 1;
+        }
         return 0;
     }
 
     // Use binary search to find in which interval does the random number fall
-    int l = 0;
-    int r = probSum.size();
+    size_t l = 0;
+    size_t r = probSum.size();
     while (l + 1 < r)
     {
         int m = (l + r) / 2;

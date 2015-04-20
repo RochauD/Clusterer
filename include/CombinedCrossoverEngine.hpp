@@ -35,7 +35,7 @@ namespace backend
  * @class CombinedCrossoverEngine
  * @brief interface for objects that allow encoding crossovers
  */
-class CombinedCrossoverEngine : public virtual CrossoverEngine
+class CombinedCrossoverEngine : public CrossoverEngine
 {
     public:
 
@@ -52,13 +52,13 @@ class CombinedCrossoverEngine : public virtual CrossoverEngine
          * @param child1 The encoding object that will hold the first child
          * @param child2 The encoding object to hold the second child
          */
-        void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2, 
+        void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
                        ClusterEncoding& child1, ClusterEncoding& child2);
 
         /**
          * @brief standard destructor
          */
-        ~CombinedCrossoverEngine() {}
+        ~CombinedCrossoverEngine();
     private:
         /**
          * @brief Returns true or false with probability 50%
@@ -72,7 +72,6 @@ class CombinedCrossoverEngine : public virtual CrossoverEngine
 
         UniformCrossoverEngine uniformCrossover;
         ClusterwiseCrossoverEngine clusterwiseCrossover;
-
 };
 
 }

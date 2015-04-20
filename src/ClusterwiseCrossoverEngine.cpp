@@ -25,9 +25,8 @@ namespace clusterer
 namespace backend
 {
 
-ClusterwiseCrossoverEngine::ClusterwiseCrossoverEngine(std::mt19937* gen)
+ClusterwiseCrossoverEngine::ClusterwiseCrossoverEngine(std::mt19937* gen) : CrossoverEngine()
 {
-
     rng = gen;
 }
 
@@ -68,7 +67,10 @@ void ClusterwiseCrossoverEngine::crossover(const ClusterEncoding& parent1,
     child2.normalize();
 }
 
-ClusterwiseCrossoverEngine::~ClusterwiseCrossoverEngine() {}
+ClusterwiseCrossoverEngine::~ClusterwiseCrossoverEngine()
+{
+
+}
 
 }
 }
