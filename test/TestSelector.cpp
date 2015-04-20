@@ -16,7 +16,8 @@ void TestSelector::setUp(void)
     data->push_back(std::make_pair(2, 0.5));
     data->push_back(std::make_pair(3, 1.7));
 
-    testObj = new Selector<std::vector<std::pair<int, double>>>(data);
+    rng = new std::mt19937();
+    testObj = new Selector<std::vector<std::pair<int, double>>>(data, rng);
 }
 
 /**
@@ -26,6 +27,7 @@ void TestSelector::tearDown(void)
 {
     delete data;
     delete testObj;
+    delete rng;
 }
 
 

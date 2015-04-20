@@ -40,6 +40,7 @@ class TestSelector : public CppUnit::TestFixture
         void testSelect(void);
 
     private:
+        std::mt19937* rng;
         std::vector<std::pair<int, double>>* data;
         Selector<std::vector<std::pair<int, double>>> *testObj;
 };
