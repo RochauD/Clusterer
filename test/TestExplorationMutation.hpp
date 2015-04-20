@@ -21,6 +21,9 @@
 #include "../include/IntegerVectorEncoding.hpp"
 #include "../include/ClusterEncoding.hpp"
 #include "../include/ExplorationMutation.hpp"
+#include "../include/ExplorationSplit.hpp"
+#include "../include/ExplorationJoin.hpp"
+#include "../include/CombinedMutation.hpp"
 
 using namespace CppUnit;
 using namespace std;
@@ -29,7 +32,7 @@ using namespace clb;
 class TestExplorationMutation : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(TestExplorationMutation);
-        CPPUNIT_TEST(testMutateAndSplitFunction);
+        CPPUNIT_TEST(testMutateFunction);
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -38,10 +41,10 @@ class TestExplorationMutation : public CppUnit::TestFixture
 
     protected:
         // test mutation function
-        void testMutateAndSplitFunction(void);
+        void testMutateFunction(void);
 
     private:
-        clb::ExplorationMutation mutator;
+        std::mt19937 mt;
         void printSol(const ClusterEncoding&,int);
 };
 
