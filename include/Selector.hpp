@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 #include <cstdint>
+#include <random>
 
 // external headers
 
@@ -60,12 +61,12 @@ class Selector
     private:
         EncodingFitnessDataStructure* population;
         std::mt19937 rng;
-        std::uniform_real_distribution<double> uni_dist(0.0, 1.0);
+        std::uniform_real_distribution<double> uni_dist = std::uniform_real_distribution<double>(0.0, 1.0);
 
         /**
          * @brief A constant to denote no individual is skipped
          */
-        const uint64_t NOTHING = std::numeric_limits<uint64_t>::max();
+        static const uint64_t NOTHING = std::numeric_limits<uint64_t>::max();
 
         /**
          * @brief Fills out probSum with the probabilities of picking each member
@@ -82,10 +83,6 @@ class Selector
          */
         uint64_t getRandomId(const std::vector<double>& probSum, uint64_t without = NOTHING);
 };
-
-}
-}
-
 
 template<class EncodingFitnessDataStructure>
 Selector<EncodingFitnessDataStructure>::Selector(EncodingFitnessDataStructure* ppl) : population(ppl)
@@ -146,10 +143,18 @@ void Selector<EncodingFitnessDataStructure>::generateRollingSum(std::vector<doub
 }
 
 template<class EncodingFitnessDataStructure>
-uint64_t Selector<EncodingFitnessDataStructure>::getRandomId(std::vector<double>& probSum, uint64_t without)
+uint64_t Selector<EncodingFitnessDataStructure>::getRandomId(const std::vector<double>& probSum, uint64_t without)
 {
     // Random double in [0, 1]
     double rnum = uni_dist(rng);
+    
+    // 1st (edge) case, necessary for the binary search to work properly
+    if (rnum < probSum[0]) {
+        if (without == 0)
+            { return 1; }
+        return 0;
+    }
+
     // Use binary search to find in which interval does the random number fall
     int l = 0;
     int r = probSum.size();
@@ -177,6 +182,8 @@ uint64_t Selector<EncodingFitnessDataStructure>::getRandomId(std::vector<double>
 }
 
 
+}   // End namespaces
+}
 
 /**
 * @namespace clb

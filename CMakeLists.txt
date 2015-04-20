@@ -280,6 +280,7 @@ set(CLUSTER_TEST_FILENAMES
         UniformCrossoverEngine
         ClusterwiseCrossoverEngine
         ClusteringPopulationAnalyzer
+        Selector
     )
 
 #############
