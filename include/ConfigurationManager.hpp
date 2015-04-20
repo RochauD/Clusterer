@@ -135,13 +135,13 @@ class ConfigurationManager
         * @brief Returns the minimum population size.
         * @return The minimum population size
         */
-        uint64_t ConfigurationManager::getMinPopulationSize();
+        uint64_t getMinPopulationSize();
 
         /**
         * @brief Returns the maximum population size.
         * @return The maximum population size
         */
-        uint64_t ConfigurationManager::getMaxPopulationSize();
+        uint64_t getMaxPopulationSize();
 
         /**
         * @brief Returns the minimum iteration count.
