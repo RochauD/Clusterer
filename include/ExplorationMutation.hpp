@@ -35,7 +35,7 @@ class ExplorationMutation: public MutationEngine
         /**
         * @brief empty constructor
         */
-        ExplorationMutation();
+        ExplorationMutation(std::mt19937 *rand_gen = NULL);
 
         /**
          * @brief mutate a clustering solution
@@ -52,12 +52,19 @@ class ExplorationMutation: public MutationEngine
         void split(ClusterEncoding& clusterSol);
 
         /**
+         * @brief mutate a clustering solution
+         * @param cluster the clustering solution to mutate
+         */
+        // joins 2 clusters into 1 cluster
+        void join(ClusterEncoding& clusterSol);
+
+        /**
          * @brief standard destructor
          */
         virtual ~ExplorationMutation();
 
     private:
-        std::mt19937 gen;
+        std::mt19937 *gen;
         std::bernoulli_distribution bd;
 
 };

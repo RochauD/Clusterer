@@ -2,6 +2,7 @@
 #define TEST_BACKEND_MUTATION_HPP
 
 // standard headers
+#include <random>
 #include <typeinfo>
 // external headers
 #include <cppunit/TestCase.h>

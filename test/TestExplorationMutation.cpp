@@ -55,6 +55,7 @@ void TestExplorationMutation::testMutateAndSplitFunction(void){
     solution.addToCluster(3,1);
     solution.addToCluster(4,3);
     
+    std::cout<<"before mutate--test\n";
     clb::IntegerVectorEncoding result1 = solution;
     this->mutator.mutate(result1);
 
