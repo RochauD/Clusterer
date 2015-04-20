@@ -16,6 +16,7 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
 #include "../include/IntegerEncodingInitializer.hpp"
+#include "../include/Graph.hpp"
 
 using namespace CppUnit;
 using namespace std;
@@ -41,7 +42,7 @@ class TestIntegerEncodingInitializer : public CppUnit::TestFixture
     private:
         Graph* g;
         IntegerEncodingInitializer* testObj1;
-        IntegerEncodingInitializer* testObj2; 
+        IntegerEncodingInitializer* testObj2;
 };
 
 #endif

@@ -36,6 +36,18 @@ namespace backend
 struct ClusteringParams
 {
     /**
+    * @var minPopulationSize
+    * @brief Minimum size of the population.
+    */
+    uint64_t minPopulationSize;
+
+    /**
+    * @var maxPopulationSize
+    * @brief Maximum size of the population.
+    */
+    uint64_t maxPopulationSize;
+
+    /**
     * @var minIterations
     * @brief Minimum algorithm iteration count.
     * @details The member variable minIterations specifies the minimum number

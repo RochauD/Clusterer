@@ -2,8 +2,8 @@
  * @file ClusterwiseCrossoverEngine.hpp
  * @brief Interface of Clusterwise crossover
  */
-#ifndef CLUSTERER_BACKEND_UNIFROM_CROSSOVER_ENGINE_HPP
-#define CLUSTERER_BACKEND_UNIFROM_CROSSOVER_ENGINE_HPP
+#ifndef CLUSTERER_BACKEND_CLUSTERWISE_CROSSOVER_ENGINE_HPP
+#define CLUSTERER_BACKEND_CLUSTERWISE_CROSSOVER_ENGINE_HPP
 
 // standard headers
 #include <stdint.h>
@@ -33,7 +33,7 @@ namespace backend
  * @class ClusterwiseCrossoverEngine
  * @brief Interface for the Clusterwise crossover method
  */
-class ClusterwiseCrossoverEngine : public virtual CrossoverEngine
+class ClusterwiseCrossoverEngine : public CrossoverEngine
 {
     public:
         /**

@@ -41,19 +41,12 @@ class ClusteringPopulationAnalyzer
         /**
         * @brief standard constructor
         */
-        ClusteringPopulationAnalyzer(const AbstractGraph* graph, const size_t threadCount = 1);
+        ClusteringPopulationAnalyzer(const AbstractGraph* graph, EncodingFitnessDataStructure* populationPtr, const size_t threadCount = 1);
 
         /**
         * @brief standard destructor
         */
         ~ClusteringPopulationAnalyzer();
-
-        /*
-        * @brief Sets the population which is going to be analyzed
-        * @param populationPtr pointer to a population
-        * @return void
-        */
-        void setPopulation(EncodingFitnessDataStructure* populationPtr);
 
         /**
         * @brief Evaluates the given population.
@@ -74,9 +67,10 @@ class ClusteringPopulationAnalyzer
 };
 
 template<class ClusteringSolutionAnalyzerFunction, class EncodingFitnessDataStructure>
-ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFitnessDataStructure>::ClusteringPopulationAnalyzer(const AbstractGraph* graph, const size_t threadCount)
+ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFitnessDataStructure>::ClusteringPopulationAnalyzer(const AbstractGraph* graph, EncodingFitnessDataStructure* populationPtr, const size_t threadCount)
 {
     this->graph = graph;
+    this->populationPtr = populationPtr;
     this->threadCount = threadCount;
 }
 
@@ -84,12 +78,6 @@ template<class ClusteringSolutionAnalyzerFunction, class EncodingFitnessDataStru
 ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFitnessDataStructure>::~ClusteringPopulationAnalyzer()
 {
 
-}
-
-template<class ClusteringSolutionAnalyzerFunction, class EncodingFitnessDataStructure>
-void ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFitnessDataStructure>::setPopulation(EncodingFitnessDataStructure* populationPtr)
-{
-    this->populationPtr = populationPtr;
 }
 
 template<class ClusteringSolutionAnalyzerFunction, class EncodingFitnessDataStructure>
@@ -117,13 +105,6 @@ void ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFi
         threadPool.push_back(std::thread(&ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFitnessDataStructure>::evaluateSubPopulation, this, populationIndexBegin, populationIndexEnd));
         populationIndexBegin = populationIndexEnd;
     }
-
-    // 0 53
-    // 0 - 10 -> 0 - 11  / 11
-    // 11 - 21 -> 11 - 22 / 11
-    // 22 - 33 -> 22 - 34 / 11
-    // 34 - 44
-    // 44 -54
 
     // get and combine result
     for (auto& thread : threadPool)

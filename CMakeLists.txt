@@ -154,8 +154,6 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Parcelable.cpp
         ${CLUSTER_SOURCE_DIR}/Person.cpp
-        ${CLUSTER_SOURCE_DIR}/GeneticStrategy.cpp
-        ${CLUSTER_SOURCE_DIR}/TwoPhaseStrategy.cpp
         ${CLUSTER_SOURCE_DIR}/JSONGraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
         ${CLUSTER_SOURCE_DIR}/SocialClusteringService.cpp
@@ -167,6 +165,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/CrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/UniformCrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/ClusterwiseCrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/CombinedCrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationJoin.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationSplit.cpp
         ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp       
@@ -205,6 +204,8 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/UniformCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusterwiseCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationMutatorEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/Selector.hpp
         ${CLUSTER_INCLUDE_DIR}/ExplorationJoin.hpp
         ${CLUSTER_INCLUDE_DIR}/ExplorationSplit.hpp

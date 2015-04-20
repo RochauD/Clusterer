@@ -34,15 +34,7 @@ namespace backend
 class CrossoverEngine
 {
     public:
-        /**
-         * @brief crossover 2 encodings to create a new one
-         * @param parent1 the first parent contributing to the crossover
-         * @param parent2 the second parent contributing to the crossover
-         * @param child The encoding object that will hold the child
-         */
-        virtual void crossover(const ClusterEncoding& parent1,
-                               const ClusterEncoding& parent2, 
-                               ClusterEncoding& child);
+        CrossoverEngine() {}
 
         /**
          * @brief crossover 2 encodings to create two new ones
@@ -51,10 +43,10 @@ class CrossoverEngine
          * @param child1 The encoding object that will hold the first child
          * @param child2 The encoding object to hold the second child
          */
-         virtual void crossover(const ClusterEncoding& parent1,
-                                const ClusterEncoding& parent2, 
-                                ClusterEncoding& child1,
-                                ClusterEncoding& child2);
+        virtual void crossover(const ClusterEncoding& parent1,
+                               const ClusterEncoding& parent2,
+                               ClusterEncoding& child1,
+                               ClusterEncoding& child2) = 0;
 
         /**
          * @brief standard destructor

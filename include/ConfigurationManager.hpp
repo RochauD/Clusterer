@@ -58,6 +58,20 @@ class ConfigurationManager
         void setClusteringParams(const ClusteringParams& clusteringParams);
 
         /**
+        * @brief Sets the minimum iteration population size.
+        * @param minPopulationSize The value minimum population size.
+        * @return void
+        */
+        void setMinPopulationSize(uint64_t minPopulationSize);
+
+        /**
+        * @brief Sets the maximum population size.
+        * @param maxPopulationSize The maximum population size.
+        * @return void
+        */
+        void setMaxPopulationSize(uint64_t maxPopulationSize);
+
+        /**
         * @brief Sets the minimum iteration count.
         * @param minIterations The value of the minimum iteration count.
         * @return void
@@ -104,13 +118,6 @@ class ConfigurationManager
         void setPhaseSwitchIterationValue(uint64_t phaseSwitchIterationValue);
 
         /**
-        * @brief Sets the number of clusters one suspects.
-        * @param predictedClusterCount The number of clusters.
-        * @return void
-        */
-        void setPredictedClusterCount(uint64_t predictedClusterCount);
-
-        /**
         * @brief Sets the number of threads used in the computation.
         * @param threadCount The number of threads.
         * @return void
@@ -123,6 +130,18 @@ class ConfigurationManager
         * @return The current clustering parameters.
         */
         ClusteringParams getClusteringParams();
+
+        /**
+        * @brief Returns the minimum population size.
+        * @return The minimum population size
+        */
+        uint64_t ConfigurationManager::getMinPopulationSize();
+
+        /**
+        * @brief Returns the maximum population size.
+        * @return The maximum population size
+        */
+        uint64_t ConfigurationManager::getMaxPopulationSize();
 
         /**
         * @brief Returns the minimum iteration count.
@@ -163,12 +182,6 @@ class ConfigurationManager
         * @return The phase switch iteration value.
         */
         uint64_t getPhaseSwitchIterationValue();
-
-        /**
-        * @brief Returns the predicted cluster count.
-        * @return The predicted cluster count.
-        */
-        uint64_t getPredictedClusterCount();
 
         /**
         * @brief Returns the number of threads that should be used in the

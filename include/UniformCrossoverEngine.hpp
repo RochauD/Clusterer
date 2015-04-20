@@ -33,22 +33,22 @@ namespace backend
  * @class UniformCrossoverEngine
  * @brief Interface for the uniform crossover method
  */
-class UniformCrossoverEngine : public virtual CrossoverEngine
+class UniformCrossoverEngine : public CrossoverEngine
 {
     public:
         /**
          * @brief Performs a Crossover on 2 encodings and creates a new one.
-         *  It is necessary to call normalize on the parents if using integer encoding 
+         *  It is necessary to call normalize on the parents if using integer encoding
          * @param parent1 The first NORMALIZED parent contributing to the crossover
          * @param parent2 The second NORMALIZED parent contributing to the crossover
          * @param child The encoding object that will hold the child
          */
         void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
                        ClusterEncoding& child);
-        
+
         /**
          * @brief Performs a Crossover on 2 encodings and creates two ones.
-         *  It is necessary to call normalize on the parents if using integer encoding 
+         *  It is necessary to call normalize on the parents if using integer encoding
          * @param parent1 The first NORMALIZED parent contributing to the crossover
          * @param parent2 The second NORMALIZED parent contributing to the crossover
          * @param child1 The encoding object that will hold the first child
@@ -56,7 +56,7 @@ class UniformCrossoverEngine : public virtual CrossoverEngine
          */
         void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
                        ClusterEncoding& child1, ClusterEncoding& child2);
-        
+
         /**
          * @brief Uniform Crossover constructor
          * @param gen An mt19937 random generator

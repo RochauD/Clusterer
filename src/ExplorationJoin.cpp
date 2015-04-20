@@ -41,8 +41,11 @@ void ExplorationJoin::mutate(ClusterEncoding& clusterSol)
     for (int i = 0; i < n; i++)
     {
         if (clusterSol.getClusterOfVertex(i) == clusterId2)
-        { clusterSol.addToCluster(i,clusterId1); }
+        {
+            clusterSol.addToCluster(i,clusterId1);
+        }
     }
+    clusterSol.normalize();
 }
 
 

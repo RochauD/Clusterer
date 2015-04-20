@@ -6,22 +6,21 @@
 
 namespace clusterer
 {
-
 namespace backend
 {
 
-UniformCrossoverEngine::UniformCrossoverEngine(std::mt19937* gen) : 
+CombinedCrossoverEngine::CombinedCrossoverEngine(std::mt19937* gen) :
     uniformCrossover(gen), clusterwiseCrossover(gen)
 {
     rng = gen;
-}    
+}
 
-UniformCrossoverEngine::~UniformCrossoverEngine()
+CombinedCrossoverEngine::~CombinedCrossoverEngine()
 {
 }
 
-void CrossoverEngine::crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2, 
-                                ClusterEncoding& child1, ClusterEncoding& child2)
+void CombinedCrossoverEngine::crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
+                                        ClusterEncoding& child1, ClusterEncoding& child2)
 {
     bool uniform = dist((*rng));
 

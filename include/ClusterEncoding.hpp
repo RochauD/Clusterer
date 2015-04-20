@@ -40,6 +40,11 @@ class ClusterEncoding
         typedef std::vector<ClusterId> Encoding;
 
         /**
+        * @brief default constructor
+        */
+        ClusterEncoding();
+
+        /**
         * @brief create a default clustering scheme from graph g
         * @param g the graph to cluster
         */
