@@ -46,7 +46,7 @@ class Selector
          * @param population The population from which we are picking
          */
         Selector(EncodingFitnessDataStructure* population, std::mt19937* gen);
-        
+
         /**
          * @brief Selects two clusters from the given population
          * @return A pair of indices pointing to the selected elements
@@ -64,24 +64,19 @@ class Selector
         std::uniform_real_distribution<double> uni_dist = std::uniform_real_distribution<double>(0.0, 1.0);
 
         /**
-         * @brief A constant to denote no individual is skipped
-         */
-        static const size_t NOTHING = std::numeric_limits<size_t>::max();
-
-        /**
          * @brief Fills out probSum with the probabilities of picking each member
          * of the population except the one with index without
          * @param probSum The vector of probabilities to fill
          * @param without The index of the individual to skip
          */
-        void generateRollingSum(std::vector<double>& probSum, size_t without = NOTHING);
+        void generateRollingSum(std::vector<double>& probSum, size_t without = std::numeric_limits<size_t>::max());
 
         /**
          * @brief Picks a random if based on the probabilities in probSum
          * @param probSum A rolling sum of the probabilities to pick each element
          * @param without The element that was skipped and is not included in probSum
          */
-        size_t getRandomId(const std::vector<double>& probSum, size_t without = NOTHING);
+        size_t getRandomId(const std::vector<double>& probSum, size_t without = std::numeric_limits<size_t>::max());
 };
 
 template<class EncodingFitnessDataStructure>
@@ -129,13 +124,13 @@ void Selector<EncodingFitnessDataStructure>::generateRollingSum(std::vector<doub
     {
         // skip this index
         if (i == without)
-            { continue; }
+        { continue; }
 
         sum += (*population)[i].second;
         probSum[ind] = sum;
         ind++;
     }
-    
+
     // Now devide everything by sum so that we get numbers in [0, 1]
     for (size_t i = 0; i < size; i++)
     {
@@ -148,11 +143,12 @@ size_t Selector<EncodingFitnessDataStructure>::getRandomId(const std::vector<dou
 {
     // Random double in [0, 1]
     double rnum = uni_dist((*rng));
-    
+
     // 1st (edge) case, necessary for the binary search to work properly
-    if (rnum < probSum[0]) {
+    if (rnum < probSum[0])
+    {
         if (without == 0)
-            { return 1; }
+        { return 1; }
         return 0;
     }
 
@@ -165,14 +161,14 @@ size_t Selector<EncodingFitnessDataStructure>::getRandomId(const std::vector<dou
         if (probSum[m] > rnum)
         {
             r = m;
-        } 
+        }
         else
         {
             l = m;
         }
     }
 
-    if (without != NOTHING && r >= without)
+    if (without != std::numeric_limits<size_t>::max() && r >= without)
     {
         // If we picked an id past the skipped one, then the actual index of the element
         // is one plus the one in the probability sum array
