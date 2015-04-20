@@ -36,15 +36,21 @@ class ExplorationMutation: public MutationEngine
         * @brief empty constructor
         */
         ExplorationMutation();
+
         /**
          * @brief mutate a clustering solution
          * @param cluster the clustering solution to mutate
-         * @param probability the probability with which the mutation will occur
-         * @return the new clustering solution if a mutation occurred, or the old
-         * one otherwise
          */
         // chooses a new ClusterId based on the maximum ClusterId in the cluster
-        void mutate(ClusterEncoding& cluster);
+        void mutate(ClusterEncoding& clusterSol);
+
+        /**
+         * @brief mutate a clustering solution
+         * @param cluster the clustering solution to mutate
+         */
+        // splits a cluster into 2 clusters
+        void split(ClusterEncoding& clusterSol);
+
         /**
          * @brief standard destructor
          */
@@ -52,6 +58,7 @@ class ExplorationMutation: public MutationEngine
 
     private:
         std::mt19937 gen;
+        std::bernoulli_distribution bd;
 
 };
 

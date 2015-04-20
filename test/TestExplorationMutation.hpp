@@ -28,7 +28,7 @@ using namespace clb;
 class TestExplorationMutation : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(TestExplorationMutation);
-        CPPUNIT_TEST(testMutateFunction);
+        CPPUNIT_TEST(testMutateAndSplitFunction);
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -37,7 +37,7 @@ class TestExplorationMutation : public CppUnit::TestFixture
 
     protected:
         // test mutation function
-        void testMutateFunction(void);
+        void testMutateAndSplitFunction(void);
 
     private:
         clb::ExplorationMutation mutator;

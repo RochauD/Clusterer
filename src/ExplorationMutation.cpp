@@ -5,7 +5,7 @@
 
 //external headers
 #include <chrono>
-
+#include <iostream>
 //local headers
 #include "../include/ExplorationMutation.hpp"
 
@@ -15,7 +15,9 @@ namespace backend
 {
 
 ExplorationMutation::ExplorationMutation(){
-	//empty ctor
+    // setting the seed for the pseudo-random number generator
+    auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    gen.seed(seed);
 }
 
 ExplorationMutation::~ExplorationMutation(){
@@ -25,10 +27,6 @@ ExplorationMutation::~ExplorationMutation(){
 void ExplorationMutation::mutate(ClusterEncoding& clusterSol){
     
     ClusterEncoding::Encoding cluster = clusterSol.getEncoding();
-
-    // setting the seed for the pseudo-random number generator
-    auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-    gen.seed(seed);
 
     //find the biggest cluster id number
     std::vector<ClusterId>::iterator it;
@@ -47,6 +45,27 @@ void ExplorationMutation::mutate(ClusterEncoding& clusterSol){
     VertexId lucky_vertex = vDist(gen);
 
     clusterSol.addToCluster(lucky_vertex,new_clusterId);
+}
+
+void ExplorationMutation::split(ClusterEncoding& clusterSol){
+    int n = clusterSol.size();
+
+    std::uniform_int_distribution<uint64_t> vDist(0,n-1);
+
+    //cluster Id to be changed
+    ClusterId clusterIdToChange = clusterSol.getClusterOfVertex(vDist(gen));
+    
+    // pick 2 new cluster ids
+    ClusterId clusterId1 = vDist(gen);
+    ClusterId clusterId2 = vDist(gen);
+
+    for(int i = 0; i < n; i++){
+        if(clusterSol.getClusterOfVertex(i) == clusterIdToChange){
+            if(bd(gen)) clusterSol.addToCluster(i,clusterId1); 
+            else clusterSol.addToCluster(i,clusterId2);
+        }
+    }
+
 }
 
 

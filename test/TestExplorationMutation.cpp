@@ -19,9 +19,8 @@ void TestExplorationMutation::printSol(const ClusterEncoding& clusterSol,int n){
     std::cout<<"\n";
 }
 
-void TestExplorationMutation::testMutateFunction(void){
-
-	clb::Graph graph;
+void TestExplorationMutation::testMutateAndSplitFunction(void){
+    clb::Graph graph;
 
 	graph.addVertex(Vertex(0));
 	graph.addVertex(Vertex(1));
@@ -106,7 +105,33 @@ void TestExplorationMutation::testMutateFunction(void){
     std::cout<<"checker4: "<<checker4<<"\n";
     std::cout<<"checker5: "<<checker5<<"\n";
 
-    CPPUNIT_ASSERT(checker1 <= 1 && checker2 <= 1 && checker3 == 1
+    CPPUNIT_ASSERT(checker1 <= 1 && checker2 <= 1 && checker3 <= 1
     	&& checker4 <= 1 && checker5 <= 1);
 
+    clb::IntegerVectorEncoding split1 = solution;
+    this->mutator.split(split1);    
+
+    clb::IntegerVectorEncoding split2 = solution;
+    this->mutator.split(split2);   
+
+    clb::IntegerVectorEncoding split3 = solution;
+    this->mutator.split(split3);
+
+    std::cout<<"original: ";
+    printSol(solution,5);
+    std::cout<<"splitted: ";
+    printSol(split1,5);
+    std::cout<<"splitted: ";
+    printSol(split2,5);
+    std::cout<<"splitted: ";
+    printSol(split3,5);
+
+    int solClusterCount = solution.getClusterCount();
+    int split1CC = solution.getClusterCount();
+    int split2CC = solution.getClusterCount();
+    int split3CC = solution.getClusterCount();
+
+    CPPUNIT_ASSERT(std::abs(solClusterCount-split1CC) <= 2 &&
+        std::abs(solClusterCount-split2CC) <= 2 &&
+        std::abs(solClusterCount-split3CC) <= 2);
 }

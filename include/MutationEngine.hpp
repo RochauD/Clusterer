@@ -40,6 +40,11 @@ class MutationEngine
          * @param cluster the clustering solution to mutate
         */
         virtual void mutate(ClusterEncoding& cluster) = 0;
+        /**
+         * @brief mutates a clustering solution
+         * @param cluster the clustering solution to mutate 
+        */
+        virtual void split(ClusterEncoding& cluster) = 0;
 
         /**
          * @brief standard destructor
