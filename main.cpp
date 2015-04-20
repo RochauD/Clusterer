@@ -23,7 +23,7 @@ int main()
     GlobalFileLogger::instance()->log(SeverityType::INFO, "Definition Lib Version FUll: ", CLUSTERER_LIB_VERSION_FULL);
 
     Graph graph;
-    GraphReader graphReader(&g);
+    GraphReader graphReader(&graph);
     graphReader.readFile("../test_files/out.ucidata-zachary");
 
 

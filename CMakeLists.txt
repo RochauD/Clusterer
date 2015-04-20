@@ -165,6 +165,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/CrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/UniformCrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/ClusterwiseCrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/CombinedCrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationJoin.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationSplit.cpp
         ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp       

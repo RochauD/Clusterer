@@ -20,7 +20,12 @@
 #include "ClusteringPopulationAnalyzer.hpp"
 #include "PopulationMutatorEngine.hpp"
 #include "PopulationCrossoverEngine.hpp"
+#include "CombinedCrossoverEngine.hpp"
+#include "CombinedMutation.hpp"
+#include "Selector.hpp"
 #include "GlobalFileLogger.hpp"
+
+#include <fstream>
 
 /**
 * @namespace clusterer
@@ -109,6 +114,8 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
 
     // @todo add parameter to parameters
     size_t crossoverCount = this->clusteringParameters.minPopulationSize/2;
+    double mutationChance = 0.05;
+    this->clusteringParameters.phaseSwitchFitnessValue = 1.6;
 
     ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<Encoding, double>>> populationFitnessAnalyzer(
         this->graph,
@@ -117,8 +124,9 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     PopulationMutatorEngine<std::vector<std::pair<Encoding, double>>, CombinedMutation> populationExplorationMutatorEngine(
                 this->graph,
                 this->population,
+                mutationChance,
                 this->clusteringParameters.threadCount);
-    PopulationCrossoverEngine<std::vector<std::pair<Encoding, double>>, Encoding, CombinedCrossoverEngine, Selector> populationCrossoverEngine(
+    PopulationCrossoverEngine<std::vector<std::pair<Encoding, double>>, Encoding, CombinedCrossoverEngine, Selector<std::vector<std::pair<Encoding, double>>>> populationCrossoverEngine(
                 this->graph,
                 this->population,
                 crossoverCount,
@@ -144,7 +152,7 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     // main algorithmic loop
     while (this->checkRunningConditions())
     {
-        if (this->currentPhase)
+        if (false)//this->currentPhase)
         {
             // refinement phase
             populationExplorationMutatorEngine.mutatePopulation();
@@ -162,13 +170,14 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         }
         populationFitnessAnalyzer.evaluatePopulation();
         this->sortPopulation();
+        this->currentMaxFitness = (*this->population)[0].second;
         if (this->population->size() > this->clusteringParameters.maxPopulationSize)
         {
             this->population->resize(this->clusteringParameters.maxPopulationSize);
         }
 
         // log our progress
-        if (iterationCount % 1000 == 0)
+        if (iterationCount % 10 == 0)
         {
             clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Iteration: ",
                                                    this->iterationCount,
@@ -187,6 +196,17 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished. The maximal fitness is: ", this->currentMaxFitness);
     }
 
+    // print output
+    std::ofstream file("file.txt");
+    for (auto& e : (*this->population))
+    {
+        for (auto& p : e.first.getEncoding())
+        {
+            file << p << " ";
+        }
+        file << "\n";
+    }
+    file.close();
 }
 
 template<class Encoding, class EncodingInitalizer>
