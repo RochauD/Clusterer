@@ -78,7 +78,7 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         * @brief getter for the offset
         * @return offset
         */
-        uint64_t getOffset() const;
+        int64_t getOffset() const;
 
         /**
         * @brief assign a node in the graph to a Vertex object

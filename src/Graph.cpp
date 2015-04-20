@@ -31,7 +31,7 @@ uint64_t Graph::getNoEdges() const
     return no_edges;
 }
 
-uint64_t Graph::getOffset() const
+int64_t Graph::getOffset() const
 {
     if(no_vertices >= 1) return OFFSET;
     else return -1; // no OFFSET yet established
