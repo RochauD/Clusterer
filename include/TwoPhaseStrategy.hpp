@@ -18,6 +18,7 @@
 #include "ConcurrentLockingQueue.hpp"
 #include "FitnessAnalyzer.hpp"
 #include "ClusteringPopulationAnalyzer.hpp"
+#include "PopulationMutatorEngine.hpp"
 #include "GlobalFileLogger.hpp"
 
 /**
@@ -123,7 +124,6 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     populationFitnessAnalyzer.evaluatePopulation();
     this->sortPopulation();
     this->currentMaxFitness = (*this->population)[0].second;
-    this->clusteringParameters.maxIterations = 10000;
 
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Starting in exploration phase");
     // main algorithmic loop
@@ -143,7 +143,11 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
             }
         }
         populationFitnessAnalyzer.evaluatePopulation();
-
+        this->sortPopulation();
+        if (this->population->size() > this->clusteringParameters.maxPopulationSize)
+        {
+            this->population->resize(this->clusteringParameters.maxPopulationSize);
+        }
 
         // log our progress
         if (iterationCount % 1000 == 0)
@@ -187,6 +191,7 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::initalizePopulation()
     if (this->population->size() < this->clusteringParameters.minPopulationSize ||
             this->population->size() > this->clusteringParameters.maxPopulationSize)
     {
+        this->population->reserve(this->clusteringParameters.maxPopulationSize);
         this->population->resize(this->clusteringParameters.minPopulationSize);
     }
     EncodingInitalizer encodingInitalizer(this->graph);

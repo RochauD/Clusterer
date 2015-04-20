@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <iostream>
+#include <random>
 #include <memory>
 #include "include/Vertex.hpp"
 #include "include/AbstractGraph.hpp"
@@ -16,12 +17,40 @@
 #include "include/FitnessAnalyzer.hpp"
 #include "include/TwoPhaseStrategy.hpp"
 #include "include/ConcurrentLockingQueue.hpp"
+#include "include/PopulationMutatorEngine.hpp"
+#include "include/ExplorationMutation.hpp"
 
 using namespace clc;
 using namespace clb;
 
+
+class A
+{
+    public:
+        A()
+        {
+
+        }
+        A(std::mt19937* randomGenerator)
+        {
+            this->randomGenerator = randomGenerator;
+        }
+        IntegerVectorEncoding mutate(IntegerVectorEncoding& enc)
+        {
+            std::uniform_real_distribution<> dis(0, 1);
+            std::cout << dis(*randomGenerator) << std::endl;
+            return enc;
+        }
+    private:
+        std::mt19937* randomGenerator;
+};
+
 int main()
 {
+
+
+
+
     GlobalFileLogger::init();
     GlobalFileLogger::instance()->log(SeverityType::INFO, "Definition Exe Version: ", CLUSTERER_VERSION);
     GlobalFileLogger::instance()->log(SeverityType::INFO, "Definition Exe Version FUll: ", CLUSTERER_VERSION_FULL);
@@ -51,14 +80,20 @@ int main()
 
     ConfigurationManager cfg;
     cfg.saveClusteringParams("config.cfg");
-    cfg.loadClusteringParams("config2.cfg");
+    cfg.loadClusteringParams("config.cfg");
 
     ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>> outQueue;
     std::vector<std::pair<IntegerVectorEncoding, double>> population;
 
+
+
+    PopulationMutatorEngine<std::vector<std::pair<IntegerVectorEncoding, double>>, A> mutatorEngine(&graph, &population);
+
+    cfg.setMaxIterationsCount(10);
     TwoPhaseStrategy<IntegerVectorEncoding, IntegerEncodingInitializer> algorithmService(&graph, cfg.getClusteringParams(), &population, &outQueue);
     algorithmService.runAlgorithm();
 
+    mutatorEngine.mutatePopulation();
 
 
 
