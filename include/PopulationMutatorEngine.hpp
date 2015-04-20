@@ -13,7 +13,6 @@
 // external headers
 
 // internal headers
-#include "ClusterEncoding.hpp"
 #include "AbstractGraph.hpp"
 
 /**
@@ -32,11 +31,12 @@ namespace backend
 {
 
 /**
-* @class ClusteringPopulationAnalyzer
-* @brief object which assess the quality of a population
+* @class PopulationMutatorEngine
+* @brief PopulationMutatorEngine is a class that mutates each member of a population
+* with a certain probability.
 */
 template<class EncodingFitnessDataStructure, class MutatorFunction>
-struct PopulationMutatorEngine
+class PopulationMutatorEngine
 {
     public:
         /**
@@ -49,22 +49,15 @@ struct PopulationMutatorEngine
         */
         ~PopulationMutatorEngine();
 
-        /*
-        * @brief Sets the population which is going to be analyzed
-        * @param populationPtr pointer to a population
-        * @return void
-        */
-        void setPopulation(EncodingFitnessDataStructure* populationPtr);
-
         /**
-        * @brief Evaluates the given population.
+        * @brief Mutate the given population.
         * @return void
         */
         void mutatePopulation();
     protected:
     private:
         /**
-        * @brief Evaluates the given sub population.
+        * @brief Mutates the given sub population.
         * @return void
         */
         void mutateSubPopulation(size_t populationIndexBegin, size_t populationIndexEnd, size_t threadID);
@@ -91,12 +84,6 @@ template<class EncodingFitnessDataStructure, class MutatorFunction>
 PopulationMutatorEngine<EncodingFitnessDataStructure, MutatorFunction>::~PopulationMutatorEngine()
 {
 
-}
-
-template<class EncodingFitnessDataStructure, class MutatorFunction>
-void PopulationMutatorEngine<EncodingFitnessDataStructure, MutatorFunction>::setPopulation(EncodingFitnessDataStructure* populationPtr)
-{
-    this->populationPtr = populationPtr;
 }
 
 template<class EncodingFitnessDataStructure, class MutatorFunction>
@@ -141,7 +128,7 @@ void PopulationMutatorEngine<EncodingFitnessDataStructure, MutatorFunction>::mut
     {
         if (dis(this->randomDeviceVec[threadID]) < this->mutationProbability)
         {
-            (*this->populationPtr)[i].first = mutator.mutate((*this->populationPtr)[i].first);
+            mutator.mutate((*this->populationPtr)[i].first);
         }
     }
 }

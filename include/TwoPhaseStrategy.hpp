@@ -19,6 +19,7 @@
 #include "FitnessAnalyzer.hpp"
 #include "ClusteringPopulationAnalyzer.hpp"
 #include "PopulationMutatorEngine.hpp"
+#include "PopulationCrossoverEngine.hpp"
 #include "GlobalFileLogger.hpp"
 
 /**
@@ -105,12 +106,26 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
 {
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm run started");
     // set up
+
+    // @todo add parameter to parameters
+    size_t crossoverCount = this->clusteringParameters.minPopulationSize/2;
+
     ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<Encoding, double>>> populationFitnessAnalyzer(
-        graph,
+        this->graph,
+        this->population,
         this->clusteringParameters.threadCount);
-    populationFitnessAnalyzer.setPopulation(this->population);
+    PopulationMutatorEngine<std::vector<std::pair<Encoding, double>>, CombinedMutation> populationExplorationMutatorEngine(
+                this->graph,
+                this->population,
+                this->clusteringParameters.threadCount);
+    PopulationCrossoverEngine<std::vector<std::pair<Encoding, double>>, Encoding, CombinedCrossoverEngine, Selector> populationCrossoverEngine(
+                this->graph,
+                this->population,
+                crossoverCount,
+                this->clusteringParameters.threadCount);
 
     // @todo check for valid parameters!
+    // if not restart then make usre populaion exists
 
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initalized helper classes");
     // reset if needed
@@ -132,10 +147,13 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         if (this->currentPhase)
         {
             // refinement phase
+            populationExplorationMutatorEngine.mutatePopulation();
         }
         else
         {
             // exploration phase
+            populationCrossoverEngine.crossoverPopulation();
+            populationExplorationMutatorEngine.mutatePopulation();
             if (this->checkForPhaseSwitch())
             {
                 clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Switched to refinement phase.");

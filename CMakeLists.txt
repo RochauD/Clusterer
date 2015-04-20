@@ -201,6 +201,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ClusterwiseCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/PopulationMutatorEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationCrossoverEngine.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND

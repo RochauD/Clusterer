@@ -41,19 +41,12 @@ class ClusteringPopulationAnalyzer
         /**
         * @brief standard constructor
         */
-        ClusteringPopulationAnalyzer(const AbstractGraph* graph, const size_t threadCount = 1);
+        ClusteringPopulationAnalyzer(const AbstractGraph* graph, EncodingFitnessDataStructure* populationPtr, const size_t threadCount = 1);
 
         /**
         * @brief standard destructor
         */
         ~ClusteringPopulationAnalyzer();
-
-        /*
-        * @brief Sets the population which is going to be analyzed
-        * @param populationPtr pointer to a population
-        * @return void
-        */
-        void setPopulation(EncodingFitnessDataStructure* populationPtr);
 
         /**
         * @brief Evaluates the given population.
@@ -74,9 +67,10 @@ class ClusteringPopulationAnalyzer
 };
 
 template<class ClusteringSolutionAnalyzerFunction, class EncodingFitnessDataStructure>
-ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFitnessDataStructure>::ClusteringPopulationAnalyzer(const AbstractGraph* graph, const size_t threadCount)
+ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFitnessDataStructure>::ClusteringPopulationAnalyzer(const AbstractGraph* graph, EncodingFitnessDataStructure* populationPtr, const size_t threadCount)
 {
     this->graph = graph;
+    this->populationPtr = populationPtr;
     this->threadCount = threadCount;
 }
 
@@ -84,12 +78,6 @@ template<class ClusteringSolutionAnalyzerFunction, class EncodingFitnessDataStru
 ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFitnessDataStructure>::~ClusteringPopulationAnalyzer()
 {
 
-}
-
-template<class ClusteringSolutionAnalyzerFunction, class EncodingFitnessDataStructure>
-void ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFitnessDataStructure>::setPopulation(EncodingFitnessDataStructure* populationPtr)
-{
-    this->populationPtr = populationPtr;
 }
 
 template<class ClusteringSolutionAnalyzerFunction, class EncodingFitnessDataStructure>
