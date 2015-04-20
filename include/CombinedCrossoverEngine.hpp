@@ -70,8 +70,8 @@ class CombinedCrossoverEngine : public virtual CrossoverEngine
          */
         std::bernoulli_distribution dist;
 
-        UniformCrossoverEngine* uniformCrossover;
-        ClusterwiseCrossoverEngine* clusterwiseCrossover;
+        UniformCrossoverEngine uniformCrossover;
+        ClusterwiseCrossoverEngine clusterwiseCrossover;
 
 };
 

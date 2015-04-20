@@ -10,17 +10,14 @@ namespace clusterer
 namespace backend
 {
 
-UniformCrossoverEngine::UniformCrossoverEngine(std::mt19937* gen)
+UniformCrossoverEngine::UniformCrossoverEngine(std::mt19937* gen) : 
+    uniformCrossover(gen), clusterwiseCrossover(gen)
 {
     rng = gen;
-    uniformCrossover = new UniformCrossoverEngine(rng);
-    clusterwiseCrossover = new ClusterwiseCrossoverEngine(rng);
-}
+}    
 
 UniformCrossoverEngine::~UniformCrossoverEngine()
 {
-    delete uniformCrossover;
-    delete clusterwiseCrossover;
 }
 
 void CrossoverEngine::crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2, 
@@ -30,11 +27,11 @@ void CrossoverEngine::crossover(const ClusterEncoding& parent1, const ClusterEnc
 
     if (uniform)
     {
-        uniformCrossover->crossover(parent1, parent2, child1, child2);
+        uniformCrossover.crossover(parent1, parent2, child1, child2);
     }
     else
     {
-        clusterwiseCrossover->crossover(parent1, parent2, child1, child2);
+        clusterwiseCrossover.crossover(parent1, parent2, child1, child2);
     }
 }
 
