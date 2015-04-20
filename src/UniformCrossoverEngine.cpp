@@ -57,6 +57,32 @@ namespace backend
         child.normalize();
     }
 
+    void UniformCrossoverEngine::crossover(const ClusterEncoding& parent1, 
+                                           const ClusterEncoding& parent2,
+                                           ClusterEncoding& child1,
+                                           ClusterEncoding& child2)
+    {
+        unsigned i;
+        unsigned n = parent1.size();
+        for (i = 0; i < n; i++)
+        {
+            // Put vertex i in the cluster it is in one of the parents
+            // With probability 50% for picking each parent
+            if (getTrueOrFalse() == true)
+            {
+                child1.addToCluster(i, parent1.getClusterOfVertex(i));
+                child2.addToCluster(i, parent2.getClusterOfVertex(i));
+            } 
+            else
+            {
+                child1.addToCluster(i, parent2.getClusterOfVertex(i));
+                child2.addToCluster(i, parent1.getClusterOfVertex(i));
+            }
+        }
+        child1.normalize();
+        child2.normalize();
+    }
+
     UniformCrossoverEngine::~UniformCrossoverEngine() {}
 
 }
