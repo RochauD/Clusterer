@@ -45,6 +45,7 @@ void ExplorationMutation::mutate(ClusterEncoding& clusterSol)
     VertexId lucky_vertex = vDist((*gen));
 
     clusterSol.addToCluster(lucky_vertex,new_clusterId);
+    clusterSol.normalize();
 }
 
 } //namespace backend

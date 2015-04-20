@@ -43,6 +43,7 @@ void ExplorationSplit::mutate(ClusterEncoding& clusterSol)
             else { clusterSol.addToCluster(i,clusterId2); }
         }
     }
+    clusterSol.normalize();
 }
 
 
