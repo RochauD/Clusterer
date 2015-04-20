@@ -18,6 +18,7 @@
 //internal headers
 #include "../include/Graph.hpp"
 #include "../include/IntegerVectorEncoding.hpp"
+#include "../include/ClusterEncoding.hpp"
 #include "../include/ExplorationMutation.hpp"
 
 using namespace CppUnit;
@@ -40,6 +41,7 @@ class TestExplorationMutation : public CppUnit::TestFixture
 
     private:
         clb::ExplorationMutation mutator;
+        void printSol(const ClusterEncoding&,int);
 };
 
 #endif

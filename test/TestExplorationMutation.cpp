@@ -12,6 +12,13 @@ void TestExplorationMutation::tearDown(void)
 
 }
 
+void TestExplorationMutation::printSol(const ClusterEncoding& clusterSol,int n){
+    for(int i = 0; i < n; i++){
+        std::cout<<clusterSol.getClusterOfVertex(i)<<" ";
+    }
+    std::cout<<"\n";
+}
+
 void TestExplorationMutation::testMutateFunction(void){
 
 	clb::Graph graph;
@@ -49,28 +56,42 @@ void TestExplorationMutation::testMutateFunction(void){
     solution.addToCluster(3,1);
     solution.addToCluster(4,3);
     
-    double prob1 = 0.1;
     clb::IntegerVectorEncoding result1 = solution;
-    this->mutator.mutate(solution,prob1,result1);
+    this->mutator.mutate(result1);
 
-    double prob2 = 0.99;
     clb::IntegerVectorEncoding result2 = solution;
-    this->mutator.mutate(solution,prob2,result2);
+    this->mutator.mutate(result2);
 
-    double prob3 = 1.5;
     clb::IntegerVectorEncoding result3 = solution;
-    this->mutator.mutate(solution,prob3,result3);
+    this->mutator.mutate(result3);
 
-    double prob4 = 0.7;
     clb::IntegerVectorEncoding result4 = solution;
-    this->mutator.mutate(solution,prob4,result4);
+    this->mutator.mutate(result4);
 
-    double prob5 = -0.6;
     clb::IntegerVectorEncoding result5 = solution;
-    this->mutator.mutate(solution,prob5,result5);
+    this->mutator.mutate(result5);
 
     int checker1,checker2,checker3,checker4,checker5;
     checker1 = checker2 = checker3 = checker4 = checker5 = 0;
+    
+    std::cout<<"\noriginal: ";
+    printSol(solution,5);
+
+    std::cout<<"mutated: ";
+    printSol(result1,5);
+
+    std::cout<<"mutated: ";
+    printSol(result2,5);
+
+    std::cout<<"mutated: ";
+    printSol(result3,5);
+
+    std::cout<<"mutated: ";
+    printSol(result4,5);
+
+    std::cout<<"mutated: ";
+    printSol(result5,5);
+
     for(int i = 0; i < 5; i++){
     	if(solution.getClusterOfVertex(i) != result1.getClusterOfVertex(i)) checker1++;
     	if(solution.getClusterOfVertex(i) != result2.getClusterOfVertex(i)) checker2++;
@@ -78,13 +99,14 @@ void TestExplorationMutation::testMutateFunction(void){
     	if(solution.getClusterOfVertex(i) != result4.getClusterOfVertex(i)) checker4++;
     	if(solution.getClusterOfVertex(i) != result5.getClusterOfVertex(i)) checker5++;
     }
-    std::cout<<"\nchecker1: "<<checker1<<"\n";
+
+    std::cout<<"checker1: "<<checker1<<"\n";
     std::cout<<"checker2: "<<checker2<<"\n";
     std::cout<<"checker3: "<<checker3<<"\n";
     std::cout<<"checker4: "<<checker4<<"\n";
     std::cout<<"checker5: "<<checker5<<"\n";
 
-    CPPUNIT_ASSERT(checker1 <= 1 && checker2 <= 1 && checker3 == 0
-    	&& checker4 <= 1 && checker5 == 0);
+    CPPUNIT_ASSERT(checker1 <= 1 && checker2 <= 1 && checker3 == 1
+    	&& checker4 <= 1 && checker5 <= 1);
 
 }

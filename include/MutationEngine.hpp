@@ -38,12 +38,8 @@ class MutationEngine
         /**
          * @brief mutate a clustering solution
          * @param cluster the clustering solution to mutate
-         * @param probability the probability with which the mutation will occur
-         * @return the new clustering solution if a mutation occurred, or the old
-         * one otherwise
-         */
-        virtual void mutate(ClusterEncoding& cluster,double probability,
-            ClusterEncoding& result) = 0;
+        */
+        virtual void mutate(ClusterEncoding& cluster) = 0;
 
         /**
          * @brief standard destructor
