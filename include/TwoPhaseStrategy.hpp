@@ -116,6 +116,7 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     size_t crossoverCount = this->clusteringParameters.minPopulationSize/2;
     double mutationChance = 0.05;
     this->clusteringParameters.phaseSwitchFitnessValue = 1.6;
+    size_t logFrequency = 10;
 
     ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<Encoding, double>>> populationFitnessAnalyzer(
         this->graph,
@@ -177,7 +178,7 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         }
 
         // log our progress
-        if (iterationCount % 10 == 0)
+        if (iterationCount % logFrequency == 0)
         {
             clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Iteration: ",
                                                    this->iterationCount,

@@ -39,13 +39,19 @@ void ExplorationSplit::mutate(ClusterEncoding& clusterSol)
     {
         if (clusterSol.getClusterOfVertex(i) == clusterIdToChange)
         {
-            if (bd(*gen)) { clusterSol.addToCluster(i,clusterId1); }
-            else { clusterSol.addToCluster(i,clusterId2); }
+            if (bd(*gen))
+            {
+                clusterSol.addToCluster(i, clusterId1);
+            }
+            else
+            {
+                clusterSol.addToCluster(i, clusterId2);
+            }
         }
     }
     clusterSol.normalize();
 }
 
 
-} //namespace backend
-} //namespace clusterer
+}
+}
