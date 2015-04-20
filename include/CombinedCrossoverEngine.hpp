@@ -35,7 +35,7 @@ namespace backend
  * @class CombinedCrossoverEngine
  * @brief interface for objects that allow encoding crossovers
  */
-class CombinedCrossoverEngine
+class CombinedCrossoverEngine : public virtual CrossoverEngine
 {
     public:
 
