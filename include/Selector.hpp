@@ -51,7 +51,7 @@ class Selector
          * @brief Selects two clusters from the given population
          * @return A pair of indices pointing to the selected elements
          */
-        std::pair<uint64_t, uint64_t> selectTwoClusters();
+        std::pair<size_t, size_t> selectTwoClusters();
 
         /**
          * @brief standard destructor
@@ -66,7 +66,7 @@ class Selector
         /**
          * @brief A constant to denote no individual is skipped
          */
-        static const uint64_t NOTHING = std::numeric_limits<uint64_t>::max();
+        static const size_t NOTHING = std::numeric_limits<size_t>::max();
 
         /**
          * @brief Fills out probSum with the probabilities of picking each member
@@ -74,14 +74,14 @@ class Selector
          * @param probSum The vector of probabilities to fill
          * @param without The index of the individual to skip
          */
-        void generateRollingSum(std::vector<double>& probSum, uint64_t without = NOTHING);
+        void generateRollingSum(std::vector<double>& probSum, size_t without = NOTHING);
 
         /**
          * @brief Picks a random if based on the probabilities in probSum
          * @param probSum A rolling sum of the probabilities to pick each element
          * @param without The element that was skipped and is not included in probSum
          */
-        uint64_t getRandomId(const std::vector<double>& probSum, uint64_t without = NOTHING);
+        size_t getRandomId(const std::vector<double>& probSum, size_t without = NOTHING);
 };
 
 template<class EncodingFitnessDataStructure>
@@ -96,9 +96,9 @@ Selector<EncodingFitnessDataStructure>::~Selector()
 }
 
 template<class EncodingFitnessDataStructure>
-std::pair<uint64_t, uint64_t> Selector<EncodingFitnessDataStructure>::selectTwoClusters()
+std::pair<size_t, size_t> Selector<EncodingFitnessDataStructure>::selectTwoClusters()
 {
-    std::pair<uint64_t, uint64_t> result;
+    std::pair<size_t, size_t> result;
     std::vector<double> probabilities;
 
     // Pick the first parent
@@ -113,9 +113,9 @@ std::pair<uint64_t, uint64_t> Selector<EncodingFitnessDataStructure>::selectTwoC
 
 
 template<class EncodingFitnessDataStructure>
-void Selector<EncodingFitnessDataStructure>::generateRollingSum(std::vector<double>& probSum, uint64_t without)
+void Selector<EncodingFitnessDataStructure>::generateRollingSum(std::vector<double>& probSum, size_t without)
 {
-    uint64_t size = population->size();
+    size_t size = population->size();
     if (without != -1)
     {
         size--;
@@ -124,8 +124,8 @@ void Selector<EncodingFitnessDataStructure>::generateRollingSum(std::vector<doub
     double sum = 0.0;
 
     // Get the total sum everywhere
-    uint64_t ind = 0;
-    for (uint64_t i = 0; i < population->size(); i++)
+    size_t ind = 0;
+    for (size_t i = 0; i < population->size(); i++)
     {
         // skip this index
         if (i == without)
@@ -137,14 +137,14 @@ void Selector<EncodingFitnessDataStructure>::generateRollingSum(std::vector<doub
     }
     
     // Now devide everything by sum so that we get numbers in [0, 1]
-    for (uint64_t i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         probSum[i] = probSum[i] / sum;
     }
 }
 
 template<class EncodingFitnessDataStructure>
-uint64_t Selector<EncodingFitnessDataStructure>::getRandomId(const std::vector<double>& probSum, uint64_t without)
+size_t Selector<EncodingFitnessDataStructure>::getRandomId(const std::vector<double>& probSum, size_t without)
 {
     // Random double in [0, 1]
     double rnum = uni_dist((*rng));
