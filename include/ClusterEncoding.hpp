@@ -101,6 +101,18 @@ class ClusterEncoding
          */
         virtual Encoding getEncoding() = 0;
 
+        /**
+         * @brief get the size of the current encoding
+         * @return the number of vertices
+         */
+         virtual uint32_t size() const = 0;
+
+         /*
+          * @brief Normalizes the clustering solution
+          * @return 0 on success -1 on failiure
+          */
+         virtual int32_t normalize();
+
     protected:
 };
 

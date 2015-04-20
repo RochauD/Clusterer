@@ -21,21 +21,26 @@ namespace clusterer
 */
 namespace backend
 {
-
-    std::mt19937 UniformCrossoverEngine::rng;
-    std::uniform_int_distribution<unsigned> UniformCrossoverEngine::uni_dist(0, 1);
+    UniformCrossoverEngine::UniformCrossoverEngine(std::mt19937* gen)
+    {
+        if (gen == NULL)
+        {
+            gen = new std::mt19937();
+        }
+        rng = gen;
+    }
 
     bool UniformCrossoverEngine::getTrueOrFalse()
     {
-        return uni_dist(rng) == 1;
+        return dist((*rng));
     }
 
-    void UniformCrossoverEngine::crossover(ClusterEncoding& parent1, 
-                                           ClusterEncoding& parent2,
+    void UniformCrossoverEngine::crossover(const ClusterEncoding& parent1, 
+                                           const ClusterEncoding& parent2,
                                            ClusterEncoding& child)
     {
         unsigned i;
-        unsigned n = parent1.getEncoding().size();
+        unsigned n = parent1.size();
         for (i = 0; i < n; i++)
         {
             // Put vertex i in the cluster it is in one of the parents
@@ -49,6 +54,7 @@ namespace backend
                 child.addToCluster(i, parent2.getClusterOfVertex(i));
             }
         }
+        child.normalize();
     }
 
     UniformCrossoverEngine::~UniformCrossoverEngine() {}

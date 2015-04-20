@@ -25,5 +25,10 @@ ClusterEncoding::~ClusterEncoding()
 
 }
 
+int32_t ClusterEncoding::normalize()
+{
+    return 0;
+}
+
 }
 }

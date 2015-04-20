@@ -1,6 +1,6 @@
 /**
- * @file UniformCrossoverEngine.hpp
- * @brief Interface of uniform crossover
+ * @file ClusterwiseCrossoverEngine.hpp
+ * @brief Interface of Clusterwise crossover
  */
 #ifndef CLUSTERER_BACKEND_UNIFROM_CROSSOVER_ENGINE_HPP
 #define CLUSTERER_BACKEND_UNIFROM_CROSSOVER_ENGINE_HPP
@@ -30,42 +30,34 @@ namespace backend
 {
 
 /**
- * @class UniformCrossoverEngine
- * @brief Interface for the uniform crossover method
+ * @class ClusterwiseCrossoverEngine
+ * @brief Interface for the Clusterwise crossover method
  */
-class UniformCrossoverEngine : public virtual CrossoverEngine
+class ClusterwiseCrossoverEngine : public virtual CrossoverEngine
 {
     public:
         /**
-         * @brief Performs a Crossover on 2 encodings and creates a new one.
-         *  It is necessary to call normalize on the parents if using integer encoding 
-         * @param parent1 The first NORMALIZED parent contributing to the crossover
-         * @param parent2 The second NORMALIZED parent contributing to the crossover
-         * @param child The encoding object that will hold the child
+         * @brief crossover 2 encodings to create two new ones
+         * @param parent1 the first parent contributing to the crossover
+         * @param parent2 the second parent contributing to the crossover
+         * @param child1 The encoding object that will hold the first child
+         * @param child2 The encoding object to hold the second child
          */
         void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
-                       ClusterEncoding& child);
+                       ClusterEncoding& child1, ClusterEncoding& child2);
+
         /**
-         * @brief Uniform Crossover constructor
+         * @brief Clusterwise Crossover constructor
          * @param gen An mt19937 random generator
          */
-        UniformCrossoverEngine(std::mt19937* gen = NULL);
+        ClusterwiseCrossoverEngine(std::mt19937* gen = NULL);
 
         /**
          * @brief standard destructor
          */
-        ~UniformCrossoverEngine();
+        ~ClusterwiseCrossoverEngine();
 
     private:
-        /**
-         * @brief Returns true or false with probability 50%
-         * @return A random boolean
-         */
-        bool getTrueOrFalse();
-        /**
-         * @brief A [0, 1] integer distribution
-         */
-        std::bernoulli_distribution dist;
         /**
          * @brief Standard configuration of a random number generator
          */

@@ -31,6 +31,12 @@ uint64_t Graph::getNoEdges() const
     return no_edges;
 }
 
+uint64_t Graph::getOffset() const
+{
+    if(no_vertices >= 1) return OFFSET;
+    else return -1; // no OFFSET yet established
+}
+
 void Graph::addVertex(const Vertex& v)
 {
     // only add vertex if it isn't in the graph
@@ -39,6 +45,10 @@ void Graph::addVertex(const Vertex& v)
         auto u = boost::add_vertex(v.getVNumber(), g);
         vertex_map.insert(std::make_pair(v.getVNumber(), u));
         no_vertices++;
+
+        if(no_vertices == 1) OFFSET = v.getVNumber();
+        else if(OFFSET > v.getVNumber()) OFFSET = v.getVNumber();
+
     }
 }
 
@@ -53,6 +63,9 @@ void Graph::addEdge(const Vertex& v1, const Vertex& v2)
         auto u = boost::add_vertex(v1.getVNumber(), g);
         vertex_map.insert(std::pair<VertexId, Vert>(v1.getVNumber(), u));
         no_vertices++;
+
+        if(no_vertices == 1) OFFSET = v1.getVNumber();
+        else if(OFFSET > v1.getVNumber()) OFFSET = v1.getVNumber();
     }
 
     if (vertex_map.find(v2.getVNumber()) == vertex_map.end())
@@ -60,6 +73,9 @@ void Graph::addEdge(const Vertex& v1, const Vertex& v2)
         auto u = boost::add_vertex(v2.getVNumber(), g);
         vertex_map.insert(std::pair<VertexId, Vert>(v2.getVNumber(), u));
         no_vertices++;
+
+        if(no_vertices == 1) OFFSET = v2.getVNumber();
+        else if(OFFSET > v2.getVNumber()) OFFSET = v2.getVNumber();
     }
 
     auto u = vertex_map[v1.getVNumber()];
@@ -85,6 +101,9 @@ void Graph::addEdge(const Vertex& v1, const Vertex& v2, double weight)
         auto u = boost::add_vertex(v1.getVNumber(), g);
         vertex_map.insert(std::pair<VertexId, Vert>(v1.getVNumber(), u));
         no_vertices++;
+
+        if(no_vertices == 1) OFFSET = v1.getVNumber();
+        else if(OFFSET > v1.getVNumber()) OFFSET = v1.getVNumber();
     }
 
     if (vertex_map.find(v2.getVNumber()) == vertex_map.end())
@@ -92,6 +111,9 @@ void Graph::addEdge(const Vertex& v1, const Vertex& v2, double weight)
         auto u = boost::add_vertex(v2.getVNumber(), g);
         vertex_map.insert(std::pair<VertexId, Vert>(v2.getVNumber(), u));
         no_vertices++;
+
+        if(no_vertices == 1) OFFSET = v2.getVNumber();
+        else if(OFFSET > v2.getVNumber()) OFFSET = v2.getVNumber();
     }
 
     auto u = vertex_map[v1.getVNumber()];
@@ -144,6 +166,20 @@ bool Graph::getEdgeWeight(const Vertex& v1, const Vertex& v2, double* edgeWeight
     return true;
 }
 
+uint64_t Graph::getVertexOffsetName(const Vertex& v) const
+{
+    auto name = boost::get(boost::vertex_name, g);
+    auto iterVertex = vertex_map.find(v.getVNumber());
+    if (iterVertex == vertex_map.end())
+    {
+        return -1; // vertex not in the graph
+    }
+
+    auto u = iterVertex->second;
+    return name[u] - OFFSET;
+
+}
+
 std::vector<VertexId> Graph::getVertices() const
 {
     std::vector<VertexId> verts;
@@ -152,7 +188,7 @@ std::vector<VertexId> Graph::getVertices() const
     for (auto vp = boost::vertices(g); vp.first != vp.second; ++vp.first)
     {
         auto v = *vp.first;
-        verts.push_back(name[v]);
+        verts.push_back(name[v] - OFFSET);
     }
     return verts;
 }
@@ -166,7 +202,7 @@ std::vector<std::pair<VertexId, VertexId>> Graph::getEdges() const
     boost::graph_traits<DirectedGraph>::edge_iterator ei_end;
     for (boost::tie(ei, ei_end) = boost::edges(g); ei != ei_end; ++ei)
     {
-        edges.push_back(std::make_pair(name[source(*ei, g)], name[target(*ei, g)]));
+        edges.push_back(std::make_pair(name[source(*ei, g)] - OFFSET, name[target(*ei, g)] - OFFSET));
     }
 
     return edges;
@@ -186,7 +222,7 @@ std::vector<std::pair<std::pair<VertexId, VertexId>, double>> Graph::getEdgesAnd
         auto u = source(*ei,g);
         auto v = target(*ei,g);
         auto e = boost::edge(u,v,g).first;
-        wedges.push_back(std::make_pair(std::make_pair(name[source(*ei,g)],name[target(*ei,g)]),edgeW[e]));
+        wedges.push_back(std::make_pair(std::make_pair(name[source(*ei,g)] - OFFSET, name[target(*ei,g)] - OFFSET),edgeW[e]));
     }
 
     return wedges;
@@ -208,7 +244,7 @@ std::vector<VertexId> Graph::getNeighbors(const Vertex& v) const
 
     for (; neighbors.first != neighbors.second; ++neighbors.first)
     {
-        vec.push_back(name[*neighbors.first]);
+        vec.push_back(name[*neighbors.first] - OFFSET);
     }
     return vec;
 }

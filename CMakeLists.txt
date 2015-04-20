@@ -162,7 +162,9 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/IntegerEncodingInitializer.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationMutation.cpp
         ${CLUSTER_SOURCE_DIR}/MutationEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/CrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/UniformCrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusterwiseCrossoverEngine.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -196,6 +198,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
         ${CLUSTER_INCLUDE_DIR}/UniformCrossoverEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusterwiseCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/PopulationMutatorEngine.hpp
     )
@@ -273,6 +276,7 @@ set(CLUSTER_TEST_FILENAMES
         IntegerEncodingInitializer
         ExplorationMutation
         UniformCrossoverEngine
+        ClusterwiseCrossoverEngine
         ClusteringPopulationAnalyzer
     )
 

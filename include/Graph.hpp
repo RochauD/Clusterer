@@ -75,6 +75,12 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         uint64_t getNoEdges() const;
 
         /**
+        * @brief getter for the offset
+        * @return offset
+        */
+        uint64_t getOffset() const;
+
+        /**
         * @brief assign a node in the graph to a Vertex object
         * @param v constant reference to a Vertex object
         * @return void
@@ -116,6 +122,12 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         * a weight
         */
         bool getEdgeWeight(const Vertex& v1, const Vertex& v2, double* edgeWeight) const;
+
+        /**
+        * @brief getter to get the offsetted vertex name
+        * @return the value described 
+        */
+        uint64_t getVertexOffsetName(const Vertex& v) const;
 
         /**
         * @brief getter for the node representations in the graph
@@ -177,6 +189,13 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         * graph.
         */
         std::map<VertexId,Vert> vertex_map;
+
+        /**
+        * @var OFFSET
+        * @brief will map each vertex id starting from 0
+        */
+        uint64_t OFFSET;
+
 };
 
 }

@@ -92,12 +92,18 @@ class IntegerVectorEncoding : public ClusterEncoding
          * @return the current encoding of a solution
          */
         ClusterEncoding::Encoding getEncoding();
+        
+        /**
+         * @brief get the size of the current encoding
+         * @return the number of vertices
+         */
+        uint32_t size() const;
 
         /**
          * @brief does a renumbering procedure to ensure unique representation of a solution
          * @return 0 on success -1 on failiure
          */
-        int normalize();
+        int32_t normalize();
 
         /**
          * @brief standard destructor
@@ -105,6 +111,7 @@ class IntegerVectorEncoding : public ClusterEncoding
         ~IntegerVectorEncoding();
 
     private:
+        bool isNormalized = false;
         ClusterEncoding::Encoding encoding;
         const AbstractGraph* graph;
 };
