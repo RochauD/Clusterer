@@ -45,7 +45,7 @@ class Selector
          * @brief Constructor for the selector
          * @param population The population from which we are picking
          */
-        Selector(EncodingFitnessDataStructure* population);
+        Selector(EncodingFitnessDataStructure* population, std::mt19937* gen = nullptr);
         
         /**
          * @brief Selects two clusters from the given population
@@ -60,7 +60,7 @@ class Selector
 
     private:
         EncodingFitnessDataStructure* population;
-        std::mt19937 rng;
+        std::mt19937* rng;
         std::uniform_real_distribution<double> uni_dist = std::uniform_real_distribution<double>(0.0, 1.0);
 
         /**
@@ -85,8 +85,16 @@ class Selector
 };
 
 template<class EncodingFitnessDataStructure>
-Selector<EncodingFitnessDataStructure>::Selector(EncodingFitnessDataStructure* ppl) : population(ppl)
+Selector<EncodingFitnessDataStructure>::Selector(EncodingFitnessDataStructure* ppl, std::mt19937* gen) : population(ppl)
 {
+    if (gen == nullptr)
+    {
+        rng = new std::mt19937();
+    }
+    else
+    {
+        rng = gen;
+    }
 }
 
 template<class EncodingFitnessDataStructure>
@@ -146,7 +154,7 @@ template<class EncodingFitnessDataStructure>
 uint64_t Selector<EncodingFitnessDataStructure>::getRandomId(const std::vector<double>& probSum, uint64_t without)
 {
     // Random double in [0, 1]
-    double rnum = uni_dist(rng);
+    double rnum = uni_dist((*rng));
     
     // 1st (edge) case, necessary for the binary search to work properly
     if (rnum < probSum[0]) {
