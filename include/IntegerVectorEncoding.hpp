@@ -92,13 +92,13 @@ class IntegerVectorEncoding : public ClusterEncoding
          * @brief get the size of the current encoding
          * @return the number of vertices
          */
-        unsigned size() const;
+        uint32_t size() const;
 
         /**
          * @brief does a renumbering procedure to ensure unique representation of a solution
          * @return 0 on success -1 on failiure
          */
-        int normalize();
+        int32_t normalize();
 
         /**
          * @brief standard destructor

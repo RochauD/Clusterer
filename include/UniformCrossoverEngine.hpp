@@ -60,11 +60,11 @@ class UniformCrossoverEngine : public virtual CrossoverEngine
         /**
          * @brief A [0, 1] integer distribution
          */
-        static std::uniform_int_distribution<unsigned> uni_dist;
+        std::bernoulli_distribution dist;
         /**
          * @brief Standard configuration of a random number generator
          */
-        static std::mt19937 rng;
+        std::mt19937 rng;
 };
 
 }

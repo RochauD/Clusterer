@@ -277,6 +277,7 @@ set(CLUSTER_TEST_FILENAMES
         IntegerEncodingInitializer
         ExplorationMutation
         UniformCrossoverEngine
+        ClusterwiseCrossoverEngine
         ClusteringPopulationAnalyzer
     )
 

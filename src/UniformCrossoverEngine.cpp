@@ -22,12 +22,9 @@ namespace clusterer
 namespace backend
 {
 
-    std::mt19937 UniformCrossoverEngine::rng;
-    std::uniform_int_distribution<unsigned> UniformCrossoverEngine::uni_dist(0, 1);
-
     bool UniformCrossoverEngine::getTrueOrFalse()
     {
-        return uni_dist(rng) == 1;
+        return dist(rng) == 1;
     }
 
     void UniformCrossoverEngine::crossover(const ClusterEncoding& parent1, 
@@ -49,6 +46,7 @@ namespace backend
                 child.addToCluster(i, parent2.getClusterOfVertex(i));
             }
         }
+        child.normalize();
     }
 
     UniformCrossoverEngine::~UniformCrossoverEngine() {}

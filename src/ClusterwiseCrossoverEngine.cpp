@@ -25,8 +25,6 @@ namespace clusterer
 namespace backend
 {
 
-    std::mt19937 ClusterwiseCrossoverEngine::rng;
-
     void ClusterwiseCrossoverEngine::crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
                        ClusterEncoding& child1, ClusterEncoding& child2)
     {
@@ -38,7 +36,9 @@ namespace backend
             child1.addToCluster(i, parent1.getClusterOfVertex(i));
             child2.addToCluster(i, parent2.getClusterOfVertex(i));
         }
-
+        child1.normalize();
+        child2.normalize();
+        
         // Randomly get a cluster to exchange
         int possibleClusters = std::min(child1.getClusterCount(), child2.getClusterCount());
         std::uniform_int_distribution<unsigned> uni_dist(0, possibleClusters - 1);
@@ -54,7 +54,10 @@ namespace backend
                 child1.addToCluster(i, child2.getClusterOfVertex(i));
                 child2.addToCluster(i, tmp);
             }
+
         }
+        child1.normalize();
+        child2.normalize();
     }
 
     ClusterwiseCrossoverEngine::~ClusterwiseCrossoverEngine() {}

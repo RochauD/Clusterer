@@ -55,7 +55,7 @@ class ClusterwiseCrossoverEngine : public virtual CrossoverEngine
         /**
          * @brief Standard configuration of a random number generator
          */
-        static std::mt19937 rng;
+        std::mt19937 rng;
 };
 
 }
