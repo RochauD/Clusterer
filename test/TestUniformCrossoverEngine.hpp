@@ -2,6 +2,7 @@
 #define TEST_BASIC_CONF_HPP
 
 #include <iostream>
+#include <random>
 #include <fstream>
 
 #include <cppunit/TestCase.h>
@@ -39,6 +40,7 @@ class TestUniformCrossoverEngine : public CppUnit::TestFixture
         void testCrossover(void);
 
     private:
+        std::mt19937* rng;
         UniformCrossoverEngine *testObj;
         Graph* g;
 };

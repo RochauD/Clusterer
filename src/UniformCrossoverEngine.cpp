@@ -23,10 +23,6 @@ namespace backend
 {
     UniformCrossoverEngine::UniformCrossoverEngine(std::mt19937* gen)
     {
-        if (gen == NULL)
-        {
-            gen = new std::mt19937();
-        }
         rng = gen;
     }
 

@@ -19,7 +19,9 @@ void TestUniformCrossoverEngine::setUp(void)
     g->addVertex(v1);
     g->addVertex(v2);
     g->addVertex(v3);
-    testObj = new UniformCrossoverEngine();
+
+    rng = new std::mt19937();
+    testObj = new UniformCrossoverEngine(rng);
 }
 
 /**

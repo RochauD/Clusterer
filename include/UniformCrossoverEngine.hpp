@@ -61,7 +61,7 @@ class UniformCrossoverEngine : public virtual CrossoverEngine
          * @brief Uniform Crossover constructor
          * @param gen An mt19937 random generator
          */
-        UniformCrossoverEngine(std::mt19937* gen = NULL);
+        UniformCrossoverEngine(std::mt19937* gen);
 
         /**
          * @brief standard destructor
