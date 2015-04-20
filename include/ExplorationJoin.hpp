@@ -1,16 +1,18 @@
 /**
- * @file MutationEngine.hpp
- * @brief mutation interface
+ * @file ExplorationJoin.hpp
+ * @brief mutation interface implementation
  */
-#ifndef CLUSTERER_BACKEND_MUTATION_ENGINE_HPP
-#define CLUSTERER_BACKEND_MUTATION_ENGINE_HPP
+#ifndef CLUSTERER_BACKEND_EXPLORATION_JOIN_HPP
+#define CLUSTERER_BACKEND_EXPLORATION_JOIN_HPP
 
 // standard headers
 #include <stdint.h>
-// external headers
+#include <random>
+
 
 // internal headers
 #include "ClusterEncoding.hpp"
+#include "MutationEngine.hpp"
 
 /**
 * @namespace clusterer
@@ -27,25 +29,29 @@ namespace clusterer
 namespace backend
 {
 
-/**
- * @class MutationEngine
- * @brief interface for objects which allow mutating a particular configuration
- * with a given probability
- */
-class MutationEngine
+class ExplorationJoin: public MutationEngine
 {
     public:
-        MutationEngine();
+        /**
+        * @brief empty constructor
+        */
+        ExplorationJoin(std::mt19937 *rand_gen = nullptr);
+
         /**
          * @brief mutate a clustering solution
          * @param cluster the clustering solution to mutate
-        */
-        virtual void mutate(ClusterEncoding& cluster) = 0;
+         */
+        // joins 2 clusters into 1 cluster
+        void mutate(ClusterEncoding& clusterSol);
 
         /**
          * @brief standard destructor
          */
-        virtual ~MutationEngine();
+        virtual ~ExplorationJoin();
+
+    private:
+        std::mt19937 *gen;
+
 };
 
 }

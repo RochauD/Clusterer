@@ -1,9 +1,9 @@
 /**
- * @file ExplorationMutation.hpp
+ * @file CombinedMutation.hpp
  * @brief mutation interface implementation
  */
-#ifndef CLUSTERER_BACKEND_EXPLORATION_MUTATION_HPP
-#define CLUSTERER_BACKEND_EXPLORATION_MUTATION_HPP
+#ifndef CLUSTERER_BACKEND_COMBINED_MUTATION_HPP
+#define CLUSTERER_BACKEND_COMBINED_MUTATION_HPP
 
 // standard headers
 #include <stdint.h>
@@ -13,6 +13,9 @@
 // internal headers
 #include "ClusterEncoding.hpp"
 #include "MutationEngine.hpp"
+#include "ExplorationJoin.hpp"
+#include "ExplorationSplit.hpp"
+#include "ExplorationMutation.hpp"
 
 /**
 * @namespace clusterer
@@ -29,28 +32,31 @@ namespace clusterer
 namespace backend
 {
 
-class ExplorationMutation: public MutationEngine
+class CombinedMutation: public MutationEngine
 {
     public:
         /**
         * @brief empty constructor
         */
-        ExplorationMutation(std::mt19937 *rand_gen = nullptr);
+        CombinedMutation(std::mt19937 *rand_gen);
 
         /**
          * @brief mutate a clustering solution
          * @param cluster the clustering solution to mutate
          */
-        // chooses a new ClusterId based on the maximum ClusterId in the cluster
+        // picks one of the 3 mutate functions to execute
         void mutate(ClusterEncoding& clusterSol);
 
         /**
          * @brief standard destructor
          */
-        virtual ~ExplorationMutation();
+        ~CombinedMutation();
 
     private:
         std::mt19937 *gen;
+        ExplorationJoin join;
+        ExplorationMutation mut;
+        ExplorationSplit split;
 
 };
 

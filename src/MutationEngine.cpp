@@ -11,6 +11,10 @@ namespace clusterer
 namespace backend
 {
 
+MutationEngine::MutationEngine(){
+	//ctor
+}
+
 MutationEngine::~MutationEngine()
 {
 	//dtor
