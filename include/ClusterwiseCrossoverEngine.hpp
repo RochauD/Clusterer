@@ -47,6 +47,12 @@ class ClusterwiseCrossoverEngine : public virtual CrossoverEngine
                        ClusterEncoding& child1, ClusterEncoding& child2);
 
         /**
+         * @brief Clusterwise Crossover constructor
+         * @param gen An mt19937 random generator
+         */
+        ClusterwiseCrossoverEngine(std::mt19937* gen = NULL);
+
+        /**
          * @brief standard destructor
          */
         ~ClusterwiseCrossoverEngine();
@@ -55,7 +61,7 @@ class ClusterwiseCrossoverEngine : public virtual CrossoverEngine
         /**
          * @brief Standard configuration of a random number generator
          */
-        std::mt19937 rng;
+        std::mt19937* rng;
 };
 
 }

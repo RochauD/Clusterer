@@ -45,6 +45,11 @@ class UniformCrossoverEngine : public virtual CrossoverEngine
          */
         void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
                        ClusterEncoding& child);
+        /**
+         * @brief Uniform Crossover constructor
+         * @param gen An mt19937 random generator
+         */
+        UniformCrossoverEngine(std::mt19937* gen = NULL);
 
         /**
          * @brief standard destructor
@@ -64,7 +69,7 @@ class UniformCrossoverEngine : public virtual CrossoverEngine
         /**
          * @brief Standard configuration of a random number generator
          */
-        std::mt19937 rng;
+        std::mt19937* rng;
 };
 
 }

@@ -21,10 +21,18 @@ namespace clusterer
 */
 namespace backend
 {
+    UniformCrossoverEngine::UniformCrossoverEngine(std::mt19937* gen)
+    {
+        if (gen == NULL)
+        {
+            gen = new std::mt19937();
+        }
+        rng = gen;
+    }
 
     bool UniformCrossoverEngine::getTrueOrFalse()
     {
-        return dist(rng) == 1;
+        return dist((*rng));
     }
 
     void UniformCrossoverEngine::crossover(const ClusterEncoding& parent1, 
