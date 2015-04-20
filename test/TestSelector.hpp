@@ -2,7 +2,6 @@
 #define TEST_BASIC_CONF_HPP
 
 #include <iostream>
-#include <random>
 #include <fstream>
 
 #include <cppunit/TestCase.h>
@@ -16,19 +15,20 @@
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
-#include "../include/UniformCrossoverEngine.hpp"
-#include "../include/Graph.hpp"
+#include <vector>
+#include <utility>
 
+#include "../include/Selector.hpp"
 
 using namespace CppUnit;
 using namespace std;
 using namespace clb;
 
-class TestUniformCrossoverEngine : public CppUnit::TestFixture
+class TestSelector : public CppUnit::TestFixture
 {
-        CPPUNIT_TEST_SUITE(TestUniformCrossoverEngine);
+        CPPUNIT_TEST_SUITE(TestSelector);
 
-        CPPUNIT_TEST(testCrossover);
+        CPPUNIT_TEST(testSelect);
 
         CPPUNIT_TEST_SUITE_END();
 
@@ -37,12 +37,12 @@ class TestUniformCrossoverEngine : public CppUnit::TestFixture
         void tearDown(void);
 
     protected:
-        void testCrossover(void);
+        void testSelect(void);
 
     private:
         std::mt19937* rng;
-        UniformCrossoverEngine *testObj;
-        Graph* g;
+        std::vector<std::pair<int, double>>* data;
+        Selector<std::vector<std::pair<int, double>>> *testObj;
 };
 
 #endif

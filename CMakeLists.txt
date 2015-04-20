@@ -165,6 +165,9 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/CrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/UniformCrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/ClusterwiseCrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/ExplorationJoin.cpp
+        ${CLUSTER_SOURCE_DIR}/ExplorationSplit.cpp
+        ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp       
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -202,6 +205,10 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/PopulationMutatorEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/PopulationCrossoverEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/Selector.hpp
+        ${CLUSTER_INCLUDE_DIR}/ExplorationJoin.hpp
+        ${CLUSTER_INCLUDE_DIR}/ExplorationSplit.hpp
+        ${CLUSTER_INCLUDE_DIR}/CombinedMutation.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
@@ -279,6 +286,7 @@ set(CLUSTER_TEST_FILENAMES
         UniformCrossoverEngine
         ClusterwiseCrossoverEngine
         ClusteringPopulationAnalyzer
+        Selector
     )
 
 #############

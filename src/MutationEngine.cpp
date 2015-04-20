@@ -1,6 +1,6 @@
 /**
  * @file ExplorationMutation.cpp
- * @brief implementation of MutationEngine.cpp 
+ * @brief implementation of MutationEngine.cpp
  */
 
 // local header
@@ -11,9 +11,14 @@ namespace clusterer
 namespace backend
 {
 
+MutationEngine::MutationEngine()
+{
+    //ctor
+}
+
 MutationEngine::~MutationEngine()
 {
-	//dtor
+    //dtor
 }
 
 } //namespace backend

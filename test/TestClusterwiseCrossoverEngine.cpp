@@ -1,7 +1,6 @@
 #include "TestClusterwiseCrossoverEngine.hpp"
 #include "../include/ClusterwiseCrossoverEngine.hpp"
 #include "../include/IntegerVectorEncoding.hpp"
-#include <iostream>
 CPPUNIT_TEST_SUITE_REGISTRATION(TestClusterwiseCrossoverEngine);
 
 /**
@@ -23,7 +22,9 @@ void TestClusterwiseCrossoverEngine::setUp(void)
     g->addVertex(v3);
     g->addVertex(v4);
     g->addVertex(v5);
-    testObj = new ClusterwiseCrossoverEngine();
+
+    rng = new std::mt19937();
+    testObj = new ClusterwiseCrossoverEngine(rng);
 }
 
 /**
@@ -32,6 +33,7 @@ void TestClusterwiseCrossoverEngine::setUp(void)
 void TestClusterwiseCrossoverEngine::tearDown(void)
 {
     delete g;
+    delete rng;
     delete testObj;
 }
 

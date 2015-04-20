@@ -1,18 +1,20 @@
 /**
- * @file ClusterwiseCrossoverEngine.hpp
- * @brief Interface of Clusterwise crossover
+ * @file CombinedCrossoverEngine.hpp
+ * @brief random crossover interface
  */
-#ifndef CLUSTERER_BACKEND_UNIFROM_CROSSOVER_ENGINE_HPP
-#define CLUSTERER_BACKEND_UNIFROM_CROSSOVER_ENGINE_HPP
+#ifndef CLUSTERER_BACKEND_COMBINED_CROSSOVER_ENGINE_HPP
+#define CLUSTERER_BACKEND_COMBINED_CROSSOVER_ENGINE_HPP
 
 // standard headers
 #include <stdint.h>
 #include <random>
-
 // external headers
 
 // internal headers
-#include "CrossoverEngine.hpp"
+#include "ClusterEncoding.hpp"
+#include "UniformCrossoverEngine.hpp"
+#include "ClusterwiseCrossoverEngine.hpp"
+
 
 /**
 * @namespace clusterer
@@ -30,12 +32,19 @@ namespace backend
 {
 
 /**
- * @class ClusterwiseCrossoverEngine
- * @brief Interface for the Clusterwise crossover method
+ * @class CombinedCrossoverEngine
+ * @brief interface for objects that allow encoding crossovers
  */
-class ClusterwiseCrossoverEngine : public virtual CrossoverEngine
+class CombinedCrossoverEngine : public virtual CrossoverEngine
 {
     public:
+
+        /**
+         * @brief Combined Crossover constructor
+         * @param gen An mt19937 random generator
+         */
+        CombinedCrossoverEngine(std::mt19937* gen);
+
         /**
          * @brief crossover 2 encodings to create two new ones
          * @param parent1 the first parent contributing to the crossover
@@ -43,25 +52,27 @@ class ClusterwiseCrossoverEngine : public virtual CrossoverEngine
          * @param child1 The encoding object that will hold the first child
          * @param child2 The encoding object to hold the second child
          */
-        void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
+        void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2, 
                        ClusterEncoding& child1, ClusterEncoding& child2);
-
-        /**
-         * @brief Clusterwise Crossover constructor
-         * @param gen An mt19937 random generator
-         */
-        ClusterwiseCrossoverEngine(std::mt19937* gen);
 
         /**
          * @brief standard destructor
          */
-        ~ClusterwiseCrossoverEngine();
-
+        ~CombinedCrossoverEngine() {}
     private:
         /**
-         * @brief Standard configuration of a random number generator
+         * @brief Returns true or false with probability 50%
+         * @return A random boolean
          */
         std::mt19937* rng;
+        /**
+         * @brief A [0, 1] integer distribution
+         */
+        std::bernoulli_distribution dist;
+
+        UniformCrossoverEngine uniformCrossover;
+        ClusterwiseCrossoverEngine clusterwiseCrossover;
+
 };
 
 }

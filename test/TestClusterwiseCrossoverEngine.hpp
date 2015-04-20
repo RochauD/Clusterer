@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <fstream>
-
+#include <random>
 #include <cppunit/TestCase.h>
 #include <cppunit/TestResult.h>
 #include <cppunit/TestRunner.h>
@@ -39,6 +39,7 @@ class TestClusterwiseCrossoverEngine : public CppUnit::TestFixture
         void testCrossover(void);
 
     private:
+        std::mt19937* rng;
         ClusterwiseCrossoverEngine *testObj;
         Graph* g;
 };
