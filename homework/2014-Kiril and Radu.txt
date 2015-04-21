@@ -7,8 +7,9 @@ branches:
 Radu Homorozan:
 branches: 
 feature_clusterwise_crossover
-develop-s2
 
+CPP unit tests for ClusterwiseCrossover
+Improvement of unit test for UniformCrossover
 
 
 
