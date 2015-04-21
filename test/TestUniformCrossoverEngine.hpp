@@ -44,6 +44,7 @@ class TestUniformCrossoverEngine : public CppUnit::TestFixture
         UniformCrossoverEngine *testObj;
         Graph* g1;
         Graph* g2;
+
 };
 
 #endif

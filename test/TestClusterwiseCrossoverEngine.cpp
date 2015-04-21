@@ -159,6 +159,11 @@ void TestClusterwiseCrossoverEngine::testCrossover(void)
             foundOther = true;
             break;
         }
+        CPPUNIT_ASSERT(6 == child1.getEncoding().size());
+        CPPUNIT_ASSERT(6 >= child1.getClusterCount());
+
+        CPPUNIT_ASSERT(6 == child2.getEncoding().size());
+        CPPUNIT_ASSERT(6 >= child2.getClusterCount());
 
     }
     CPPUNIT_ASSERT(found1);
@@ -166,41 +171,6 @@ void TestClusterwiseCrossoverEngine::testCrossover(void)
     CPPUNIT_ASSERT(found3);
     CPPUNIT_ASSERT(!foundOther);
 
-    CPPUNIT_ASSERT(6 == child1.getEncoding().size());
-    CPPUNIT_ASSERT(6 >= child1.getClusterCount());
-
-    CPPUNIT_ASSERT(6 == child2.getEncoding().size());
-    CPPUNIT_ASSERT(6 >= child2.getClusterCount());
-
-
-
-    for (int i = 0; i < 1000; i++)
-    {
-        testObj->crossover(p1, p2, child3, child4);
-
-        CPPUNIT_ASSERT(6 == child3.getEncoding().size());
-        CPPUNIT_ASSERT(6 >= child3.getClusterCount());
-
-        CPPUNIT_ASSERT(6 == child4.getEncoding().size());
-        CPPUNIT_ASSERT(6 >= child4.getClusterCount());
-        
-    // Assert all clusters come either from one or the other parent
-        int possibleClusters = std::min(child3.getClusterCount(), child4.getClusterCount());
-
-        for (int j = 0; j < possibleClusters; j++)
-        {
-            bool oneOrTheOther1 =
-                ((child3.getClusterOfVertex(j) == p1.getClusterOfVertex(j)) || 
-                (child3.getClusterOfVertex(j) == p2.getClusterOfVertex(j)));
-
-            bool oneOrTheOther2 =
-                ((child4.getClusterOfVertex(j) == p1.getClusterOfVertex(j)) || 
-                (child4.getClusterOfVertex(j) == p2.getClusterOfVertex(j)));
-
-            CPPUNIT_ASSERT(oneOrTheOther1);
-            CPPUNIT_ASSERT(oneOrTheOther2);
-        }
-    }
 
 }
 
