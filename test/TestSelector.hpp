@@ -28,7 +28,9 @@ class TestSelector : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(TestSelector);
 
-        CPPUNIT_TEST(testSelect);
+        CPPUNIT_TEST(testSelectTwo);
+        CPPUNIT_TEST(testSelectUnique);
+
 
         CPPUNIT_TEST_SUITE_END();
 
@@ -37,10 +39,11 @@ class TestSelector : public CppUnit::TestFixture
         void tearDown(void);
 
     protected:
-        void testSelect(void);
+        void testSelectTwo(void);
+        void testSelectUnique(void);
 
     private:
-        std::mt19937* rng;
+        std::mt19937 rng;
         std::vector<std::pair<int, double>>* data;
         Selector<std::vector<std::pair<int, double>>> *testObj;
 };
