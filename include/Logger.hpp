@@ -1,13 +1,9 @@
 /**
  * @file Logger.hpp
-<<<<<<< HEAD
- * @brief File in which the Singleton Logger is defined
-=======
- * @brief File in which the Logger is defined
->>>>>>> hotfix_logger
+ * @brief File in which the Singleton Logger is defined.
  */
-#ifndef _LOGGER_HPP
-#define _LOGGER_HPP
+#ifndef CLUSTERER_COMMON_LOGGER_HPP
+#define CLUSTERER_COMMON_LOGGER_HPP
 
 // standard headers
 #include <sstream>
@@ -24,6 +20,20 @@
 #include "LoggerBufferEntry.hpp"
 #include "LoggerSeverityType.hpp"
 #include "LoggerSeverityLevel.hpp"
+
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
+{
+
+/**
+* @namespace common
+* @brief The namespace common is the namespace for all common components of the project.
+*/
+namespace common
+{
 
 /**
  * @class Logger
@@ -49,10 +59,11 @@ class Logger
     public:
         /**
         * @brief Constructor for the Logger.
-        * @param std::unique_ptr<LoggingPolicyType> A unique pointer to the LoggingPolicyType which is used for logging.
-        * @param SeverityLevel The severity level that decides whether or not a message is going to be logged.
+        * @param loggingPolicy A unique pointer to the LoggingPolicyType which is used for logging.
+        * @param severityLevel The severity level that decides whether or not a message is going to be logged.
         */
         Logger(std::unique_ptr<LoggingPolicyType> loggingPolicy, SeverityLevel severityLevel = SeverityLevel::ALL);
+
         /**
         * @brief Destructor for the Logger.
         */
@@ -60,21 +71,23 @@ class Logger
 
         /**
         * @brief Logs a log message.
-        * @param SeverityType The severity type of the message.
-        * @tparam Types A number of arguments of any type that can be converted to a string
+        * @param severityType The severity type of the message.
+        * @tparam arguments A number of arguments of any type that can be converted to a string
         * via an overloaded operator<< .
         * @return void
         */
         template<typename... Types>
         void log(SeverityType severityType, Types... arguments);
+
         /**
         * @brief Sets the severity level of a log message.
         * @details The method sets the severity level of a log message. The severity level is used to only log
         * certain messages.
-        * @param SeverityLevel The severity level of the logger.
+        * @param severityLevel The severity level of the logger.
         * @return void
         */
         void setSeverityLevel(SeverityLevel severityLevel);
+
         /**
         * @brief Gets the severity level of a log message.
         * @details The method gets the severity level of a log message. The severity level is used to only log
@@ -88,6 +101,7 @@ class Logger
         * @brief Copy constructor for the Logger class is deleted.
         */
         Logger(const Logger&) = delete;
+
         /**
         * @brief Assignment constructor for the Logger class is deleted.
         */
@@ -102,7 +116,6 @@ class Logger
         std::unique_ptr<LoggingPolicyType> loggingPolicy;
         ConcurrentLockingQueue<LoggerBufferEntry> loggingQueue;
         SeverityLevel severityLevel;
-
         std::unique_ptr<std::thread> workerThread;
 
         // class variable with no state
@@ -172,5 +185,14 @@ void Logger<LoggingPolicyType>::logHelper(FirstArg firstArg, RemainingArgs... re
     this->logBufferStream << firstArg;
     this->logHelper(remainingArgs...);
 }
+
+}
+}
+
+/**
+* @namespace clc
+* @brief The namespace clc is a namespace alias for the namespace clusterer::common.
+*/
+namespace clc = clusterer::common;
 
 #endif

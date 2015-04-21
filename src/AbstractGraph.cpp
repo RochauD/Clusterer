@@ -1,13 +1,12 @@
 /**
-  * @brief implementation of Graph interface
-  * @file AbstractGraph.cpp
-  *
-  */
+ * @file AbstractGraph.cpp
+ * @brief implementation of Graph interface
+ */
 #include "../include/AbstractGraph.hpp"
 
-namespace common
+namespace clusterer
 {
-namespace types
+namespace backend
 {
 
 AbstractGraph::AbstractGraph()
@@ -15,10 +14,10 @@ AbstractGraph::AbstractGraph()
     //ctor
 }
 
-AbstractGraph::~AbstractGraph(){
+AbstractGraph::~AbstractGraph()
+{
     //dtor
 }
 
-
-}  // namespace types
-}  // namespace common
+}
+}

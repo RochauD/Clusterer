@@ -19,18 +19,20 @@
 
 using namespace CppUnit;
 using namespace std;
+using namespace clf;
 
-class TestGeneticGui : public CppUnit::TestFixture {
-    CPPUNIT_TEST_SUITE(TestGeneticGui);
-    CPPUNIT_TEST(testFail);
-    CPPUNIT_TEST_SUITE_END();
-    
-public:
-    void setUp(void);
-    void tearDown(void);
-  
-protected:
-    void testFail(void);
+class TestGeneticGui : public CppUnit::TestFixture
+{
+        CPPUNIT_TEST_SUITE(TestGeneticGui);
+        CPPUNIT_TEST(testFail);
+        CPPUNIT_TEST_SUITE_END();
+
+    public:
+        void setUp(void);
+        void tearDown(void);
+
+    protected:
+        void testFail(void);
 };
 
 #endif

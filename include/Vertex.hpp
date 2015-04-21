@@ -1,11 +1,36 @@
-#ifndef _VERTEX_CLASS_H
-#define _VERTEX_CLASS_H
+/**
+* @file Vertex.hpp
+* @brief
+*/
+#ifndef CLUSTERER_BACKEND_VERTEX_CLASS_H
+#define CLUSTERER_BACKEND_VERTEX_CLASS_H
 
-//standard headers
+// standard headers
 #include <string>
 #include <vector>
 #include <cstdint>
+// external headers
 
+// internal headers
+
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
+{
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
+{
+
+/**
+* @struct info
+*/
 typedef struct info
 {
     std::string name;
@@ -16,26 +41,37 @@ typedef struct info
 typedef uint64_t VertexId;
 typedef uint64_t ClusterId;
 
+/**
+* @class Vertex
+*/
 class Vertex
 {
-private:
-    int number;
-    bool numberFlag = true;
-    info v_info;
-    std::vector<Vertex> neighbors;
-public:
-    Vertex();
-    Vertex(int);
-    Vertex(const Vertex&);
-    ~Vertex();
-    int getVNumber() const;
-    info getVInfo();
-    bool getVNumberFlag();
-    void setVNumber(int);
-    void setVInfo(const info&);
-    void addNeighbor(const Vertex&);
-    bool hasNeighbor(Vertex&);
-    bool operator==(Vertex&);
+    public:
+        Vertex();
+        Vertex(VertexId);
+        Vertex(const Vertex&);
+        ~Vertex();
+        VertexId getVNumber() const;
+        info getVInfo();
+        void setVNumber(VertexId);
+        void setVInfo(const info&);
+        void addNeighbor(const Vertex&);
+        bool hasNeighbor(Vertex&);
+        bool operator==(Vertex&);
+    protected:
+    private:
+        VertexId number;
+        info v_info;
+        std::vector<Vertex> neighbors;
 };
 
-#endif // _VERTEX_CLASS_H
+}
+}
+
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
+
+#endif

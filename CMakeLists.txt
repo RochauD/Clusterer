@@ -10,24 +10,37 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Project Specification #
 #########################
 
-project(BlueClusterer)
+project(Clusterer)
 
-# TODO CHANGE ENGINE TO PROJECT NAME
-# Set version
-set(ENGINE_VERSION_MAJOR "0")
-set(ENGINE_VERSION_MINOR "0")
-set(ENGINE_VERSION_PATCH "0")
-set(ENGINE_VERSION_EXTRA "")
-set(ENGINE_VERSION "${ENGINE_VERSION_MAJOR}.${ENGINE_VERSION_MINOR}")
-set(ENGINE_VERSION_FULL "${ENGINE_VERSION}.${ENGINE_VERSION_PATCH}${ENGINE_VERSION_EXTRA}")
+# set library version
+set(CLUSTERER_LIB_VERSION_MAJOR "0")
+set(CLUSTERER_LIB_VERSION_MINOR "1")
+set(CLUSTERER_LIB_VERSION_PATCH "0")
+set(CLUSTERER_LIB_VERSION_EXTRA "0")
+set(CLUSTERER_LIB_VERSION "${CLUSTERER_LIB_VERSION_MAJOR}.${CLUSTERER_LIB_VERSION_MINOR}")
+set(CLUSTERER_LIB_VERSION_FULL "${CLUSTERER_LIB_VERSION}.${CLUSTERER_LIB_VERSION_PATCH}.${CLUSTERER_LIB_VERSION_EXTRA}")
+# add library version macro definitions
+add_definitions(/DCLUSTERER_LIB_VERSION="${CLUSTERER_LIB_VERSION}")
+add_definitions(/DCLUSTERER_LIB_VERSION_FULL="${CLUSTERER_LIB_VERSION_FULL}")
+
+# set executable version
+set(CLUSTERER_VERSION_MAJOR "0")
+set(CLUSTERER_VERSION_MINOR "1")
+set(CLUSTERER_VERSION_PATCH "0")
+set(CLUSTERER_VERSION_EXTRA "0")
+set(CLUSTERER_VERSION "${CLUSTERER_VERSION_MAJOR}.${CLUSTERER_VERSION_MINOR}")
+set(CLUSTERER_VERSION_FULL "${CLUSTERER_VERSION}.${CLUSTERER_VERSION_PATCH}.${CLUSTERER_VERSION_EXTRA}")
+# add executable version macro definitions
+add_definitions(/DCLUSTERER_VERSION="${CLUSTERER_VERSION}")
+add_definitions(/DCLUSTERER_VERSION_FULL="${CLUSTERER_VERSION_FULL}")
 
 #################
 # Safety Checks #
 #################
 
 # Avoid in-source builds
-if (BlueClusterer_SOURCE_DIR STREQUAL BlueClusterer_BINARY_DIR)
-    message(FATAL_ERROR "Warning: In-source build! I am not going to let you be stupid!")
+if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
+    message(FATAL_ERROR "Warning: In-source build! Aborting. Call cmake .. from a build folder.")
 endif()
 
 #####################
@@ -46,25 +59,29 @@ else()
     # Enable all warnings
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
-    # Add pthread to allow c++11 threads
-    # set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpthread")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 endif()
-message ("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
+message("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
 message("-- Finished setting compiler settings.")
+message("\n")
+
+###################
+# Linker settings #
+###################
+
+message("Setting linker settings:")
+if( WIN32 )
+    message("-- Windows detected -- setting corresponding linker settings")
+else()
+    message("-- Linux/UNIX detected -- setting corresponding linker settings")
+endif()
+message("-- Finished setting linker settings.")
 message("\n")
 
 ################
 # Dependencies #
 ################
-
-# Boost
-set(Boost_USE_MULTITHREADED ON)
-FIND_PACKAGE(Boost REQUIRED)
-if(Boost_FOUND)
-    message("-- Boost include directories added")
-    include_directories(${INCLUDE_DIRECTORIES} ${Boost_INCLUDE_DIRS})
-endif()
 
 # CPP UNIT
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
@@ -87,37 +104,85 @@ set(CLUSTER_TEST_DIR ${PROJECT_SOURCE_DIR}/test)
 # Files #
 #########
 
-# source files
-set(CLUSTER_SOURCES_CPP 
+# common files
+# common source files
+set(CLUSTER_SOURCES_COMMON_CPP 
+        ${CLUSTER_SOURCE_DIR}/LoggerSeverityLevel.cpp
+        ${CLUSTER_SOURCE_DIR}/LoggerSeverityType.cpp
+        ${CLUSTER_SOURCE_DIR}/LoggingPolicy.cpp
+        ${CLUSTER_SOURCE_DIR}/LoggingPolicyFile.cpp
+        ${CLUSTER_SOURCE_DIR}/GlobalFileLogger.cpp
+        ${CLUSTER_SOURCE_DIR}/FlagParser.cpp
+    )
+# common header files
+set(CLUSTER_SOURCES_COMMON_H 
+        ${CLUSTER_INCLUDE_DIR}/ConcurrentLockingQueue.hpp
+        ${CLUSTER_INCLUDE_DIR}/Logger.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerSeverityLevel.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerSeverityType.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerException.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggerBufferEntry.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggingPolicy.hpp
+        ${CLUSTER_INCLUDE_DIR}/LoggingPolicyFile.hpp
+        ${CLUSTER_INCLUDE_DIR}/GlobalFileLogger.hpp
+        ${CLUSTER_INCLUDE_DIR}/FlagParser.hpp
+    )
+# common combined
+set(CLUSTER_SOURCES_COMMON
+        ${CLUSTER_SOURCES_COMMON_CPP}
+        ${CLUSTER_SOURCES_COMMON_H}
+    )
+# common filters
+source_group("Common\\Header Files" FILES ${CLUSTER_SOURCES_COMMON_H})
+source_group("Common\\Source Files" FILES ${CLUSTER_SOURCES_COMMON_CPP})
+
+
+# backend files
+# backend source files
+set(CLUSTER_SOURCES_BACKEND_CPP 
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
         ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
+        ${CLUSTER_SOURCE_DIR}/AbstractGraphReader.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusteringSolutionAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/FitnessAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/MQAnalyzer.cpp
+        ${CLUSTER_SOURCE_DIR}/PerformanceAnalyzer.cpp   
+        ${CLUSTER_SOURCE_DIR}/CoverageAnalyzer.cpp   
         ${CLUSTER_SOURCE_DIR}/ClusterEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Vertex.cpp
         ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Parcelable.cpp
         ${CLUSTER_SOURCE_DIR}/Person.cpp
-        ${CLUSTER_SOURCE_DIR}/GeneticStrategy.cpp
-        ${CLUSTER_SOURCE_DIR}/TwoPhaseStrategy.cpp
         ${CLUSTER_SOURCE_DIR}/JSONGraphReader.cpp
-        ${CLUSTER_SOURCE_DIR}/FlagParser.cpp
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
-        ${CLUSTER_SOURCE_DIR}/SocialClusteringService.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusteringService.cpp
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
-        ${CLUSTER_SOURCE_DIR}/LoggerSeverityLevel.cpp
-        ${CLUSTER_SOURCE_DIR}/LoggerSeverityType.cpp
-        ${CLUSTER_SOURCE_DIR}/LoggingPolicy.cpp
-        ${CLUSTER_SOURCE_DIR}/LoggingPolicyFile.cpp
+        ${CLUSTER_SOURCE_DIR}/GraphReader.cpp
+        ${CLUSTER_SOURCE_DIR}/IntegerEncodingInitializer.cpp
+        ${CLUSTER_SOURCE_DIR}/ExplorationMutation.cpp
+        ${CLUSTER_SOURCE_DIR}/MutationEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/CrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/UniformCrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusterwiseCrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/CombinedCrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/ExplorationJoin.cpp
+        ${CLUSTER_SOURCE_DIR}/ExplorationSplit.cpp
+        ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp       
     )
-
-# header files
-set(CLUSTER_SOURCES_H 
+# backend header files
+set(CLUSTER_SOURCES_BACKEND_H 
         ${CLUSTER_INCLUDE_DIR}/ClusteringParams.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationManager.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
         ${CLUSTER_INCLUDE_DIR}/AbstractGraph.hpp
+        ${CLUSTER_INCLUDE_DIR}/AbstractGraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusterEncoding.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringSolutionAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/FitnessAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/CoverageAnalyzer.hpp        
         ${CLUSTER_INCLUDE_DIR}/Vertex.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerVectorEncoding.hpp
         ${CLUSTER_INCLUDE_DIR}/CrossoverEngine.hpp
@@ -128,31 +193,72 @@ set(CLUSTER_SOURCES_H
         ${CLUSTER_INCLUDE_DIR}/ExplorationMutation.hpp
         ${CLUSTER_INCLUDE_DIR}/ExplorationCrossover.hpp
         ${CLUSTER_INCLUDE_DIR}/RefinementMutationEngine.hpp
-        ${CLUSTER_INCLUDE_DIR}/compiler_defs.hpp
         ${CLUSTER_INCLUDE_DIR}/GeneticStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
-        ${CLUSTER_INCLUDE_DIR}/FlagParser.hpp
-        ${CLUSTER_INCLUDE_DIR}/MQAnalyzer.hpp
-        ${CLUSTER_INCLUDE_DIR}/PerformanceAnalyzer.hpp
-        ${CLUSTER_INCLUDE_DIR}/GeneticGui.hpp
-        ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
-        ${CLUSTER_INCLUDE_DIR}/ConcurrentLockingQueue.hpp
-        ${CLUSTER_INCLUDE_DIR}/Logger.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggerSeverityLevel.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggerSeverityType.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggerException.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggerBufferEntry.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggingPolicy.hpp
-        ${CLUSTER_INCLUDE_DIR}/LoggingPolicyFile.hpp
+        ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
+        ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
+        ${CLUSTER_INCLUDE_DIR}/UniformCrossoverEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusterwiseCrossoverEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationMutatorEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationCrossoverEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/Selector.hpp
+        ${CLUSTER_INCLUDE_DIR}/ExplorationJoin.hpp
+        ${CLUSTER_INCLUDE_DIR}/ExplorationSplit.hpp
+        ${CLUSTER_INCLUDE_DIR}/CombinedMutation.hpp
+    )
+# backend combined
+set(CLUSTER_SOURCES_BACKEND
+        ${CLUSTER_SOURCES_BACKEND_CPP}
+        ${CLUSTER_SOURCES_BACKEND_H}
+    )
+# backend filters
+source_group("Backend\\Header Files" FILES ${CLUSTER_SOURCES_BACKEND_H})
+source_group("Backend\\Source Files" FILES ${CLUSTER_SOURCES_BACKEND_CPP})
+
+
+# frontend files
+# frontend source files
+set(CLUSTER_SOURCES_FRONTEND_CPP 
+        ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
+    )
+# frontend header files
+set(CLUSTER_SOURCES_FRONTEND_H 
+        ${CLUSTER_INCLUDE_DIR}/GeneticGui.hpp
+    )
+# frontend combined
+set(CLUSTER_SOURCES_FRONTEND
+        ${CLUSTER_SOURCES_FRONTEND_CPP}
+        ${CLUSTER_SOURCES_FRONTEND_H}
+    )
+# frontend filters
+source_group("Frontend\\Header Files" FILES ${CLUSTER_SOURCES_FRONTEND_H})
+source_group("Frontend\\Source Files" FILES ${CLUSTER_SOURCES_FRONTEND_CPP})
+
+
+# all files
+# source files
+set(CLUSTER_SOURCES_CPP 
+        ${CLUSTER_SOURCES_COMMON_CPP}
+        ${CLUSTER_SOURCES_BACKEND_CPP}
+        ${CLUSTER_SOURCES_FRONTEND_CPP}
+    )
+# header files
+set(CLUSTER_SOURCES_H 
+        ${CLUSTER_SOURCES_COMMON_H}
+        ${CLUSTER_SOURCES_BACKEND_H}
+        ${CLUSTER_SOURCES_FRONTEND_H}
     )
 # combined
 set(CLUSTER_SOURCES 
         ${CLUSTER_SOURCES_CPP}
         ${CLUSTER_SOURCES_H}   
     )
+
 
 # test files
 # give the base name of your test class. Assume the base name of your test class is foo.
@@ -162,41 +268,117 @@ set(CLUSTER_TEST_FILENAMES
         ConfigurationReaderWriter
         FlagParser
         GeneticGui
-        JSONGraphReader
+        GraphReader
         SocialClusteringService
         Vertex
         Graph
         IntegerVectorEncoding
+        Logger
+        LoggerBufferEntry
+        LoggerSeverityType
+        LoggerSeverityLevel
+        ConcurrentLockingQueue
+        CoverageAnalyzer
+        MQAnalyzer
+        PerformanceAnalyzer
+        FitnessAnalyzer
+        IntegerEncodingInitializer
+        ExplorationMutation
+        UniformCrossoverEngine
+        ClusterwiseCrossoverEngine
+        ClusteringPopulationAnalyzer
+        Selector
     )
-
-######################
-# Output Directories #
-######################
-
-set(COMMON_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-set(COMMON_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/libs")
 
 #############
 # Libraries #
 #############
 
-add_library(backend ${CLUSTER_SOURCES})
+###########################
+# Boost shared dependency #
+###########################
+set(Boost_USE_STATIC_LIBS OFF) 
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF) 
+FIND_PACKAGE(Boost COMPONENTS filesystem system REQUIRED)
+if(Boost_FOUND)
+    message("-- Boost include directories added")
+    include_directories(${INCLUDE_DIRECTORIES} ${Boost_INCLUDE_DIRS})
+endif()
 link_directories(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
- 
+
+# add shared library
+
+add_library(clusterer-shared SHARED ${CLUSTER_SOURCES})
+# link boost library
+target_link_libraries(clusterer-shared ${Boost_LIBRARIES})
+# set library name
+set_target_properties(clusterer-shared PROPERTIES OUTPUT_NAME "clusterer")
+if(WIN32)
+    set_target_properties(clusterer-shared PROPERTIES DEBUG_POSTFIX -d)
+endif()
+# output directories
+# for non dll systems
+set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/shared)
+set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared)
+set_target_properties(clusterer-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared)
+# for dll systems
+set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/shared/lib)
+set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared)
+set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared)
+set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/shared/lib)
+set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared)
+set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared) 
+
+###########################
+# Boost static dependency #
+###########################
+set(Boost_USE_STATIC_LIBS ON) 
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF) 
+FIND_PACKAGE(Boost COMPONENTS filesystem system REQUIRED)
+if(Boost_FOUND)
+    message("--Reload boost include directories")
+    include_directories(${INCLUDE_DIRECTORIES} ${Boost_INCLUDE_DIRS})
+endif()
+link_directories(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
+
+# add static library
+
+add_library(clusterer-static STATIC ${CLUSTER_SOURCES})
+# link boost library
+target_link_libraries(clusterer-static ${Boost_LIBRARIES})
+# set library name
+set_target_properties(clusterer-static PROPERTIES OUTPUT_NAME "clusterer")
+if(WIN32)
+    set_target_properties(clusterer-static PROPERTIES DEBUG_POSTFIX -d)
+endif()
+# output directories 
+set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/static)
+set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/static)
+set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/static) 
+
 ##############
 # Executable #
 ##############
 
-add_executable(BlueClusterer main.cpp)
+add_executable(Clusterer main.cpp)
 
+# link clusterer library
 if( WIN32 )
-    target_link_libraries(BlueClusterer debug backend)    
-    target_link_libraries(BlueClusterer optimized backend)   
+    target_link_libraries(Clusterer debug clusterer-static)
+    target_link_libraries(Clusterer optimized clusterer-static)
 else()
-    target_link_libraries(BlueClusterer backend)
-    target_link_libraries(BlueClusterer pthread)
+    target_link_libraries(Clusterer clusterer-static)
+    target_link_libraries(Clusterer pthread)
 endif()
+# link boost library
+target_link_libraries(Clusterer ${Boost_LIBRARIES})
 
+# output directories
+set_target_properties(Clusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set_target_properties(Clusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin/debug)
+set_target_properties(Clusterer PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/release)
 
 ###########
 # Testing #
@@ -216,16 +398,28 @@ FOREACH(test ${CLUSTER_TEST_FILENAMES})
         )
 
     # add test executable
-    include_directories(${INCLUDE_DIRECTORIES} ${CLUSTER_SOURCES_H})
     add_executable(${TEST_NAME} ${CLUSTER_TEST_DRIVER} ${CLUSTER_TEST_SOURCES})
-    target_link_libraries(${TEST_NAME} backend)
-    # add library
+    # link clusterer library
+    if( WIN32 )
+        target_link_libraries(${TEST_NAME} debug clusterer-static)
+        target_link_libraries(${TEST_NAME} optimized clusterer-static)
+    else()
+        target_link_libraries(${TEST_NAME} clusterer-static)
+        target_link_libraries(${TEST_NAME} pthread)
+    endif()
+    # link cpp unit library
     target_link_libraries(${TEST_NAME} debug ${CPPUNIT_DEBUG_LIBRARY})
     target_link_libraries(${TEST_NAME} optimized ${CPPUNIT_LIBRARY})
+    # link boost library
+    target_link_libraries(${TEST_NAME} ${Boost_LIBRARIES})
 
     # add tests to test solution folder for IDEs
     set_target_properties(${TEST_NAME} PROPERTIES FOLDER testing)
 
-    ADD_TEST(${TEST_NAME} ${TEST_NAME} ${TEST_NAME})
+    # output directories
+    set_target_properties(${TEST_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/testing)
+    set_target_properties(${TEST_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/testing/debug)
+    set_target_properties(${TEST_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/testing/release)
+    add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME} --config $<CONFIGURATION> --exe $<TARGET_FILE:${TEST_NAME}>)
 ENDFOREACH(test)
 
