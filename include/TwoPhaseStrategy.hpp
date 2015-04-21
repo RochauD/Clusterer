@@ -76,7 +76,6 @@ class TwoPhaseStrategy
         uint64_t iterationCount;
         double currentMaxFitness;
         bool currentPhase;
-
     private:
         void initalizePopulation();
         bool checkRunningConditions();
@@ -113,6 +112,12 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm run started");
     // set up
 
+    // @todo add parameter to parameters
+    size_t crossoverCount = this->clusteringParameters.minPopulationSize/2;
+    double mutationChance = 0.05;
+    this->clusteringParameters.phaseSwitchFitnessValue = 1.6;
+    size_t logFrequency = 10;
+
     ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<Encoding, double>>> populationFitnessAnalyzer(
         this->graph,
         this->population,
@@ -120,12 +125,12 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     PopulationMutatorEngine<std::vector<std::pair<Encoding, double>>, CombinedMutation> populationExplorationMutatorEngine(
                 this->graph,
                 this->population,
-                this->clusteringParameters.explorationMutationChance,
+                mutationChance,
                 this->clusteringParameters.threadCount);
     PopulationCrossoverEngine<std::vector<std::pair<Encoding, double>>, Encoding, CombinedCrossoverEngine, Selector<std::vector<std::pair<Encoding, double>>>> populationCrossoverEngine(
                 this->graph,
                 this->population,
-                this->clusteringParameters.crossoverIterationCount,
+                crossoverCount,
                 this->clusteringParameters.threadCount);
 
     // @todo check for valid parameters!
@@ -173,7 +178,7 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         }
 
         // log our progress
-        if (iterationCount % this->clusteringParameters.logFrequency == 0)
+        if (iterationCount % logFrequency == 0)
         {
             clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Iteration: ",
                                                    this->iterationCount,

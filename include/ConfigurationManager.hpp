@@ -58,34 +58,6 @@ class ConfigurationManager
         void setClusteringParams(const ClusteringParams& clusteringParams);
 
         /**
-        * @brief Sets the log frequency.
-        * @param logFrequency The log frequency.
-        * @return void
-        */
-        void setLogFrequency(uint64_t logFrequency);
-
-        /**
-        * @brief Sets the exploration mutation chance.
-        * @param explorationMutationChance The exploration mutation chance.
-        * @return void
-        */
-        void setExplorationMutationChance(double explorationMutationChance);
-
-        /**
-        * @brief Sets the refinement mutation chance.
-        * @param refinementMutationChance The refinement mutation chance.
-        * @return void
-        */
-        void setRefinementMutationChance(double refinementMutationChance);
-
-        /**
-        * @brief Sets the crossover iteration count.
-        * @param crossoverIterationCount The crossover iteration count.
-        * @return void
-        */
-        void setCrossoverIterationCount(uint64_t crossoverIterationCount);
-
-        /**
         * @brief Sets the minimum iteration population size.
         * @param minPopulationSize The value minimum population size.
         * @return void
@@ -158,30 +130,6 @@ class ConfigurationManager
         * @return The current clustering parameters.
         */
         ClusteringParams getClusteringParams();
-
-        /**
-        * @brief Gets the log frequency.
-        * @param The log frequency.
-        */
-        uint64_t getLogFrequency();
-
-        /**
-        * @brief Gets the exploration mutation chance.
-        * @param The exploration mutation chance.
-        */
-        double getExplorationMutationChance();
-
-        /**
-        * @brief Gets the refinement mutation chance.
-        * @param The refinement mutation chance.
-        */
-        double getRefinementMutationChance();
-
-        /**
-        * @brief Gets the crossover iteration count.
-        * @return The crossover iteration count.
-        */
-        uint64_t getCrossoverIterationCount();
 
         /**
         * @brief Returns the minimum population size.
