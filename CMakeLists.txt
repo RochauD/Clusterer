@@ -39,9 +39,9 @@ add_definitions(/DCLUSTERER_VERSION_FULL="${CLUSTERER_VERSION_FULL}")
 #################
 
 # Avoid in-source builds
-if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
-    message(FATAL_ERROR "Warning: In-source build! Aborting. Call cmake .. from a build folder.")
-endif()
+#if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
+#    message(FATAL_ERROR "Warning: In-source build! Aborting. Call cmake .. from a build folder.")
+#endif()
 
 #####################
 # Compiler Settings #
