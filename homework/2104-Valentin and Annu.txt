@@ -1,0 +1,11 @@
+Valentin Valisiu
+Annu Thapa
+
+branches worked on the past week : develop-s2, feature_Mutation,
+feature_cluster_refining
+
+Completed Mutation classes: ExplorationMutation, ExplorationJoin, 
+			    ExplorationSplit, CombinedMutation; 
+			    Test cases for these classes; fixing 
+			    of general bugs.
+
