@@ -16,7 +16,8 @@ void TestSelector::setUp(void)
     data->push_back(std::make_pair(2, 0.5));
     data->push_back(std::make_pair(3, 1.7));
 
-    testObj = new Selector<std::vector<std::pair<int, double>>>(data, &rng);
+    rng = new std::mt19937();
+    testObj = new Selector<std::vector<std::pair<int, double>>>(data, rng);
 }
 
 /**
@@ -26,20 +27,21 @@ void TestSelector::tearDown(void)
 {
     delete data;
     delete testObj;
+    delete rng;
 }
 
 
 /**
  * @brief Test if selecting two parents works
  */
-void TestSelector::testSelectTwo(void)
+void TestSelector::testSelect(void)
 {
     bool selected[4];
     memset(selected, 0, sizeof(selected));
 
     for (int i = 0; i < 1000; i++)
     {
-        std::pair<uint64_t, uint64_t> result = testObj->selectTwoIndividuals();
+        std::pair<uint64_t, uint64_t> result = testObj->selectTwoClusters();
         selected[result.first] = selected[result.second] = true;
     }
 
@@ -48,16 +50,4 @@ void TestSelector::testSelectTwo(void)
     CPPUNIT_ASSERT(selected[2]);
     CPPUNIT_ASSERT(selected[3]);
 }
-
-void TestSelector::testSelectUnique(void)
-{
-    for (int i = 0; i < 1000; i++)
-    {
-        std::vector<size_t> picked = testObj->selectIndividuals(3, true);
-        CPPUNIT_ASSERT(picked[0] != picked[1]);
-        CPPUNIT_ASSERT(picked[1] != picked[2]);
-        CPPUNIT_ASSERT(picked[2] != picked[0]);
-    }
-}
-
 
