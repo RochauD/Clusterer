@@ -36,6 +36,34 @@ namespace backend
 struct ClusteringParams
 {
     /**
+    * @var logFrequency
+    * @brief The log frequency used during the algorithm.
+    */
+    uint64_t logFrequency;
+
+    /**
+    * @var explorationMutationChance
+    * @brief The chance of mutating a member of the population in the
+    * exploration phase. A value between 0 and 1.
+    */
+    double explorationMutationChance;
+
+    /**
+    * @var refinementMutationChance
+    * @brief The chance of mutating a member of the population in the
+    * refinement phase. A value between 0 and 1.
+    */
+    double refinementMutationChance;
+
+    /**
+    * @var crossoverIterationCount
+    * @brief Crossover iteration count determines how often the crossover iteration
+    * runs and it thereby determines by how much the population grows the next time.
+    * @details Each iteration increases the population by two.
+    */
+    uint64_t crossoverIterationCount;
+
+    /**
     * @var minPopulationSize
     * @brief Minimum size of the population.
     */
