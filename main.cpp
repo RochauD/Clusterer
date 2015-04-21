@@ -28,7 +28,7 @@ int main()
 
 
     ConfigurationManager cfg;
-    cfg.saveClusteringParams("config.cfg");
+    //cfg.saveClusteringParams("config.cfg");
     cfg.loadClusteringParams("config.cfg");
 
     ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>> outQueue;

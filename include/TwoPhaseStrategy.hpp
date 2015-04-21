@@ -158,7 +158,7 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
             // exploration phase
             populationCrossoverEngine.crossoverPopulation();
             populationExplorationMutatorEngine.mutatePopulation();
-            if (this->checkForPhaseSwitch())
+            if (false)//this->checkForPhaseSwitch())
             {
                 clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Switched to refinement phase.");
                 this->currentPhase = true;
