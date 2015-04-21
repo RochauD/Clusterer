@@ -163,7 +163,7 @@ class ConfigurationManager
         * @return The current clustering parameters.
         */
         ClusteringParams getClusteringParams();
-
+	
         bool getUniquePopulationSelection();
         double getMaxMinDensityClusterProbability();
         uint64_t getIterationUntilMissingImprovementCausesInterruption();

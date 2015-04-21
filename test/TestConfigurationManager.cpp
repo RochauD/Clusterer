@@ -18,6 +18,10 @@ void TestConfigurationManager::setUp(void)
     CPPUNIT_ASSERT((testConfManager->getPhaseSwitchFitnessValue())==1.4);
     CPPUNIT_ASSERT((testConfManager->getPhaseSwitchIterationValue())==5000);
     CPPUNIT_ASSERT((testConfManager->getThreadCount())==4);
+    CPPUNIT_ASSERT((testConfManager->getUniquePopulationSelection())==true);
+    CPPUNIT_ASSERT((testConfManager->getMaxMinDensityClusterProbability())==4);
+    CPPUNIT_ASSERT((testConfManager->getIterationUntilMissingImprovementCausesInterruption())==4);
+    CPPUNIT_ASSERT((testConfManager->getEnqueueFrequency())==4);
 }
 
 void TestConfigurationManager::tearDown(void)
@@ -43,6 +47,10 @@ void TestConfigurationManager::testLoadClusteringParams(void)
     file << "phaseSwitchIterationValue"<<" = "<<"16" << endl;
     file << "predictedClusterCount"<<" = "<<"100" << endl;
     file << "threadCount"<<" = "<<"12" << endl;
+    file << "uniquePopulationSelection"<<" = "<<"true" << endl;
+    file << "maxMinDensityClusterProbability"<<" = "<<"0.11231" << endl;
+    file << "enqueueFrequency"<<" = "<<"980089" << endl;
+    file << "iterationUntilMissingImprovementCausesInterruption"<<" = "<<"12562" << endl;
 
     testConfManager->loadClusteringParams("TestFile1.txt");
     //check if the parameters were loaded correctly.
@@ -58,7 +66,11 @@ void TestConfigurationManager::testLoadClusteringParams(void)
     CPPUNIT_ASSERT((testConfManager->getMaxFitness())==100.9);
     CPPUNIT_ASSERT((testConfManager->getPhaseSwitchFitnessValue())==13);
     CPPUNIT_ASSERT((testConfManager->getPhaseSwitchIterationValue())==16);
-    CPPUNIT_ASSERT((testConfManager->getThreadCount())==12);;
+    CPPUNIT_ASSERT((testConfManager->getThreadCount())==12);
+    CPPUNIT_ASSERT((testConfManager->getUniquePopulationSelection())==true);
+    CPPUNIT_ASSERT((testConfManager->getMaxMinDensityClusterProbability())==0.11231);
+    CPPUNIT_ASSERT((testConfManager->getIterationUntilMissingImprovementCausesInterruption())==12562);
+    CPPUNIT_ASSERT((testConfManager->getEnqueueFrequency())==980089);
     file.close();
 }
 
@@ -85,6 +97,18 @@ void TestConfigurationManager::testSaveClusteringParams(void)
     CPPUNIT_ASSERT(parameterMap["phaseSwitchFitnessValue"]==(to_string(testConfManager->getPhaseSwitchFitnessValue())));
     CPPUNIT_ASSERT(parameterMap["phaseSwitchIterationValue"]==(to_string(testConfManager->getPhaseSwitchIterationValue())));
     CPPUNIT_ASSERT(parameterMap["threadCount"]==(to_string(testConfManager->getThreadCount())));
+    CPPUNIT_ASSERT(parameterMap["uniquePopulationSelection"]==(to_string(testConfManager->getUniquePopulationSelection())));
+    CPPUNIT_ASSERT(parameterMap["maxMinDensityClusterProbability"]==(to_string(testConfManager->getMaxMinDensityClusterProbability())));
+    CPPUNIT_ASSERT(parameterMap["iterationUntilMissingImprovementCausesInterruption"]==(to_string(testConfManager->getIterationUntilMissingImprovementCausesInterruption())));
+    
+    std::string testBool;
+    if(testConfManager->getEnqueueFrequency()==true){
+	testBool="true";
+    } else {
+	testBool="false";
+    }
+    CPPUNIT_ASSERT(parameterMap["enqueueFrequency"]=="true");
+    
 }
 
 void TestConfigurationManager::testGetSetMethods(void)
@@ -127,4 +151,17 @@ void TestConfigurationManager::testGetSetMethods(void)
 
     testConfManager->setThreadCount(20);
     CPPUNIT_ASSERT(20==(testConfManager->getThreadCount()));
+    
+    testConfManager->setUniquePopulationSelection(true);
+    CPPUNIT_ASSERT(true==(testConfManager->getUniquePopulationSelection()));
+    
+    testConfManager->setMaxMinDensityClusterProbability(1.1234);
+    CPPUNIT_ASSERT(1.1234==(testConfManager->getMaxMinDensityClusterProbability()));
+    
+    testConfManager->setIterationUntilMissingImprovementCausesInterruption(323121464);
+    CPPUNIT_ASSERT(323121464==(testConfManager->getIterationUntilMissingImprovementCausesInterruption()));
+    
+    testConfManager->setEnqueueFrequency(108923);
+    CPPUNIT_ASSERT(108923==(testConfManager->getEnqueueFrequency()));
+    
 }
