@@ -46,21 +46,36 @@ template<class Encoding, class EncodingInitalizer>
 class TwoPhaseStrategy
 {
     public:
+
         /**
-         * @brief Create a TwoPhaseStrategy based on a graph and parameters
+        * @brief Standard Construtcutr for a TwoPhaseStrategy which can cluster a graph.
+        */
+        TwoPhaseStrategy();
+
+        /**
+         * @brief Create a TwoPhaseStrategy which can cluster a graph.
          * @param graph The graph on which the strategy is based
          * @param clusteringParams The clustering parameters
+         * @param population A pointer to a population
+         * @param outQueue A pointer to an output queue.
          */
         TwoPhaseStrategy(const AbstractGraph* graph,
-                         const ClusteringParams clusteringParameters,
+                         ClusteringParams clusteringParameters,
                          std::vector<std::pair<Encoding, double>>* population,
                          clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue);
+
+
+        void setGraph(const AbstractGraph* graph);
+        void setClusteringParameters(ClusteringParams clusteringParameters);
+        void setPopulation(std::vector<std::pair<Encoding, double>>* population);
+        void setOutQueue(clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue);
+
 
         /**
          * @brief obtain the next generation of the clustering solution
          * @return void
          */
-        void runAlgorithm(bool restart = true);
+        bool runAlgorithm(bool restart = true);
 
         void stopAlgorithm();
         void resumeAlgorithm();
@@ -85,9 +100,22 @@ class TwoPhaseStrategy
 
 };
 
+
+template<class Encoding, class EncodingInitalizer>
+TwoPhaseStrategy<Encoding, EncodingInitalizer>::TwoPhaseStrategy()
+{
+    this->graph = nullptr;
+    this->population = nullptr;
+    this->outQueue = nullptr;
+    this->stopFlag = false;
+    this->iterationCount = 0;
+    this->currentMaxFitness = 0.0;
+    this->currentPhase = false;
+}
+
 template<class Encoding, class EncodingInitalizer>
 TwoPhaseStrategy<Encoding, EncodingInitalizer>::TwoPhaseStrategy(const AbstractGraph* graph,
-        const ClusteringParams clusteringParameters,
+        ClusteringParams clusteringParameters,
         std::vector<std::pair<Encoding, double>>* population,
         clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue)
 {
@@ -108,11 +136,60 @@ TwoPhaseStrategy<Encoding, EncodingInitalizer>::~TwoPhaseStrategy()
 }
 
 template<class Encoding, class EncodingInitalizer>
-void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
+void TwoPhaseStrategy<Encoding, EncodingInitalizer>::setGraph(const AbstractGraph* graph)
+{
+    this->graph = graph;
+}
+
+template<class Encoding, class EncodingInitalizer>
+void TwoPhaseStrategy<Encoding, EncodingInitalizer>::setClusteringParameters(ClusteringParams clusteringParameters)
+{
+    this->clusteringParameters = clusteringParameters;
+}
+
+template<class Encoding, class EncodingInitalizer>
+void TwoPhaseStrategy<Encoding, EncodingInitalizer>::setPopulation(std::vector<std::pair<Encoding, double>>* population)
+{
+    this->population = population;
+}
+
+template<class Encoding, class EncodingInitalizer>
+void TwoPhaseStrategy<Encoding, EncodingInitalizer>::setOutQueue(clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue)
+{
+    this->outQueue = outQueue;
+}
+
+template<class Encoding, class EncodingInitalizer>
+bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
 {
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm run started");
-    // set up
 
+    // check conditions
+    if (this->graph == nullptr)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Graph is not initalized");
+        return false;
+    }
+    if (this->population == nullptr)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Population is not initalized");
+        return false;
+    }
+    if (this->outQueue == nullptr)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Output Queue is not initalized");
+        return false;
+    }
+    if (this->graph->getEdgesAndWeights().size() == 0)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Empty graph");
+        return false;
+    }
+
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm parameters are valid");
+    // @todo check for valid parameters!
+
+    // set up
     ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<Encoding, double>>> populationFitnessAnalyzer(
         this->graph,
         this->population,
@@ -128,21 +205,20 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
                 this->clusteringParameters.crossoverIterationCount,
                 this->clusteringParameters.threadCount);
 
-    // @todo check for valid parameters!
-    // if not restart then make usre populaion exists
-
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initalized helper classes");
     // reset if needed
-    if (restart)
+    if (restart || this->population->size() < 2)
     {
         clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Resetting Population");
         this->initalizePopulation();
         this->iterationCount = 0;
         this->currentMaxFitness = 0.0;
     }
+
     populationFitnessAnalyzer.evaluatePopulation();
     this->sortPopulation();
     this->currentMaxFitness = (*this->population)[0].second;
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initial Evaluation completed. Current Maximum Fitness: ", this->currentMaxFitness);
 
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Starting in exploration phase");
     // main algorithmic loop
@@ -203,6 +279,8 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         file << "\n";
     }
     file.close();
+
+    return true;
 }
 
 template<class Encoding, class EncodingInitalizer>
