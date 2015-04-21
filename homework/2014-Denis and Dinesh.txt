@@ -1,0 +1,14 @@
+Denis Rochau
+branches: 
+develop-s2
+
+all other branches were merged into this one;
+
+Two phase strategy, clustering service, threaded mutation, population, fitness, general bugs;
+
+Dinesh Acharya
+branches:
+develop-s2
+feature-movielens
+
+first version of reader, test for threaded population
