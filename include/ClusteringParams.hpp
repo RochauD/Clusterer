@@ -35,6 +35,12 @@ namespace backend
 */
 struct ClusteringParams
 {
+
+    bool uniquePopulationSelection;
+    double maxMinDensityClusterProbability;
+    uint64_t iterationUntilMissingImprovementCausesInterruption;
+    uint64_t enqueueFrequency;
+
     /**
     * @var logFrequency
     * @brief The log frequency used during the algorithm.

@@ -93,9 +93,7 @@ bool ClusteringService::runAlgorithm(bool restart)
         this->algorithmService.setPopulation(&this->population);
         this->algorithmService.setOutQueue(&this->outQueue);
     }
-
-    auto f = std::async(&TwoPhaseStrategy<IntegerVectorEncoding, IntegerEncodingInitializer>::runAlgorithm, &algorithmService, restart);
-    return f.get();
+    return this->algorithmService.runAlgorithm();
 }
 
 void ClusteringService::stopAlgorithm()

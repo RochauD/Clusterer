@@ -19,6 +19,8 @@ int main()
 
     ClusteringService service;
     bool running = true;
+    bool flag = true;
+    clc::ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>>* queue;
     int option;
     while (running)
     {
@@ -28,9 +30,7 @@ int main()
         std::cout << "4) Load Zachary data set.\n";
         std::cout << "5) Run Algorithm.\n";
         std::cout << "6) Run Algorithm(reset population).\n";
-        std::cout << "7) Stop Algorithm.\n";
-        std::cout << "8) Resume Algorithm.\n";
-        std::cout << "9) Exit.\n";
+        std::cout << "7) Exit.\n";
         std::cout << std::flush;
         std::cin >> option;
         std::cin.get();
@@ -47,7 +47,7 @@ int main()
                     }
                     else
                     {
-                        std::cout << "\Loading configuration parameters failed." << std::endl;
+                        std::cout << "\tLoading configuration parameters failed." << std::endl;
                     }
                 }
                 break;
@@ -96,44 +96,55 @@ int main()
                 break;
             case 5:
                 {
+                    queue = service.getOutQueue();
+                    std::thread t([=]
+                    {
+                        while (flag)
+                        {
+                            auto res = queue->pop();
+                            std::cout << "Current fitness: " << res.second << std::endl;
+                            std::cout << "Encoding: " << std::endl;
+                            for (auto& e : res.first.getEncoding())
+                            {
+                                std::cout << e << " ";
+                            }
+                            std::cout << std::endl;
+                        }
+                    });
                     if (service.runAlgorithm(false))
                     {
-                        std::cout << "\Algorithm run was succesful." << std::endl;
+                        std::cout << "\tAlgorithm run was succesful." << std::endl;
+                        flag = false;
+                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
                     }
                     else
                     {
-                        std::cout << "\Algorithm run failed." << std::endl;
+                        std::cout << "\tAlgorithm run failed." << std::endl;
+                        flag = false;
+                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
                     }
+                    t.join();
                 }
                 break;
             case 6:
                 {
                     if (service.runAlgorithm(true))
                     {
-                        std::cout << "\Algorithm run was succesful." << std::endl;
+                        std::cout << "\tAlgorithm run was succesful." << std::endl;
                     }
                     else
                     {
-                        std::cout << "\Algorithm run failed." << std::endl;
+                        std::cout << "\tAlgorithm run failed." << std::endl;
                     }
                 }
                 break;
             case 7:
                 {
-                    service.stopAlgorithm();
-                }
-                break;
-            case 8:
-                {
-                    service.resumeAlgorithm();
-                }
-                break;
-            case 9:
-                {
                     running = false;
                 }
                 break;
             default:
+                std::cout << "Please use a valid option, between 1 and 7!" << std::endl;
                 break;
         }
         std::cout << "\n\n";

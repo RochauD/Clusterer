@@ -89,13 +89,14 @@ class TwoPhaseStrategy
         std::vector<std::pair<Encoding, double>>* population;
         clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue;
         uint64_t iterationCount;
-        double currentMaxFitness;
+        std::pair<Encoding, double> currentBest;
         bool currentPhase;
 
     private:
         void initalizePopulation();
         bool checkRunningConditions();
         bool checkForPhaseSwitch();
+        bool checkInitalizationCondition();
         void sortPopulation();
 
 };
@@ -109,7 +110,6 @@ TwoPhaseStrategy<Encoding, EncodingInitalizer>::TwoPhaseStrategy()
     this->outQueue = nullptr;
     this->stopFlag = false;
     this->iterationCount = 0;
-    this->currentMaxFitness = 0.0;
     this->currentPhase = false;
 }
 
@@ -125,7 +125,6 @@ TwoPhaseStrategy<Encoding, EncodingInitalizer>::TwoPhaseStrategy(const AbstractG
     this->outQueue = outQueue;
     this->stopFlag = false;
     this->iterationCount = 0;
-    this->currentMaxFitness = 0.0;
     this->currentPhase = false;
 }
 
@@ -165,29 +164,12 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm run started");
 
     // check conditions
-    if (this->graph == nullptr)
+    if (this->checkInitalizationCondition() == false)
     {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Graph is not initalized");
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm run stopped. Parameters are invalid");
         return false;
     }
-    if (this->population == nullptr)
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Population is not initalized");
-        return false;
-    }
-    if (this->outQueue == nullptr)
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Output Queue is not initalized");
-        return false;
-    }
-    if (this->graph->getEdgesAndWeights().size() == 0)
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Empty graph");
-        return false;
-    }
-
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm parameters are valid");
-    // @todo check for valid parameters!
 
     // set up
     ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<Encoding, double>>> populationFitnessAnalyzer(
@@ -212,13 +194,12 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Resetting Population");
         this->initalizePopulation();
         this->iterationCount = 0;
-        this->currentMaxFitness = 0.0;
     }
 
     populationFitnessAnalyzer.evaluatePopulation();
     this->sortPopulation();
-    this->currentMaxFitness = (*this->population)[0].second;
-    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initial Evaluation completed. Current Maximum Fitness: ", this->currentMaxFitness);
+    this->currentBest = (*this->population)[0];
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initial Evaluation completed. Current Maximum Fitness: ", this->currentBest.second);
 
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Starting in exploration phase");
     // main algorithmic loop
@@ -242,19 +223,24 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         }
         populationFitnessAnalyzer.evaluatePopulation();
         this->sortPopulation();
-        this->currentMaxFitness = (*this->population)[0].second;
+        this->currentBest = (*this->population)[0];
         if (this->population->size() > this->clusteringParameters.maxPopulationSize)
         {
             this->population->resize(this->clusteringParameters.maxPopulationSize);
         }
 
+        // send our progress into queue
+        if (iterationCount % this->clusteringParameters.enqueueFrequency == 0)
+        {
+            this->outQueue->push((*this->population)[0]);
+        }
         // log our progress
         if (iterationCount % this->clusteringParameters.logFrequency == 0)
         {
             clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Iteration: ",
                                                    this->iterationCount,
                                                    " Current maximal fitness: ",
-                                                   this->currentMaxFitness);
+                                                   this->currentBest.second);
         }
         this->iterationCount++;
     }
@@ -265,7 +251,7 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     }
     else
     {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished. The maximal fitness is: ", this->currentMaxFitness);
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished. The maximal fitness is: ", this->currentBest.second);
     }
 
     // print output
@@ -318,16 +304,43 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::checkRunningConditions()
 {
     return (!this->stopFlag &&
             this->iterationCount <= this->clusteringParameters.maxIterations &&
-            this->currentMaxFitness <= this->clusteringParameters.maxFitness &&
+            this->currentBest.second <= this->clusteringParameters.maxFitness &&
             (this->iterationCount <= this->clusteringParameters.minIterations ||
-             this->currentMaxFitness <= this->clusteringParameters.minFitness));
+             this->currentBest.second <= this->clusteringParameters.minFitness));
 }
 
 template<class Encoding, class EncodingInitalizer>
 bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::checkForPhaseSwitch()
 {
     return (this->iterationCount >= this->clusteringParameters.phaseSwitchIterationValue ||
-            this->currentMaxFitness >= this->clusteringParameters.phaseSwitchFitnessValue);
+            this->currentBest.second >= this->clusteringParameters.phaseSwitchFitnessValue);
+}
+
+template<class Encoding, class EncodingInitalizer>
+bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::checkInitalizationCondition()
+{
+    if (this->graph == nullptr)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Graph is not initalized");
+        return false;
+    }
+    if (this->population == nullptr)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Population is not initalized");
+        return false;
+    }
+    if (this->outQueue == nullptr)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Output Queue is not initalized");
+        return false;
+    }
+    if (this->graph->getEdgesAndWeights().size() == 0)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[ALG] Empty graph");
+        return false;
+    }
+
+    return true;
 }
 
 template<class Encoding, class EncodingInitalizer>
