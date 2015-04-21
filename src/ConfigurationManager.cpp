@@ -14,6 +14,10 @@ namespace backend
 
 ConfigurationManager::ConfigurationManager()
 {
+    this->clusteringParams.logFrequency = 100;
+    this->clusteringParams.explorationMutationChance = 0.05;
+    this->clusteringParams.refinementMutationChance = 0.20;
+    this->clusteringParams.crossoverIterationCount = 250;
     this->clusteringParams.minPopulationSize = 100;
     this->clusteringParams.maxPopulationSize = 500;
     this->clusteringParams.minIterations = 10000;
@@ -33,6 +37,26 @@ ConfigurationManager::~ConfigurationManager()
 ClusteringParams ConfigurationManager::getClusteringParams()
 {
     return this->clusteringParams;
+}
+
+uint64_t ConfigurationManager::getLogFrequency()
+{
+    return this->clusteringParams.logFrequency;
+}
+
+double ConfigurationManager::getExplorationMutationChance()
+{
+    return this->clusteringParams.explorationMutationChance;
+}
+
+double ConfigurationManager::getRefinementMutationChance()
+{
+    return this->clusteringParams.refinementMutationChance;
+}
+
+uint64_t ConfigurationManager::getCrossoverIterationCount()
+{
+    return this->clusteringParams.crossoverIterationCount;
 }
 
 uint64_t ConfigurationManager::getMinPopulationSize()
@@ -84,6 +108,26 @@ uint32_t ConfigurationManager::getThreadCount()
 void ConfigurationManager::setClusteringParams(const ClusteringParams& clusteringParams)
 {
     this->clusteringParams = clusteringParams;
+}
+
+void ConfigurationManager::setLogFrequency(uint64_t logFrequency)
+{
+    this->clusteringParams.logFrequency = logFrequency;
+}
+
+void ConfigurationManager::setExplorationMutationChance(double explorationMutationChance)
+{
+    this->clusteringParams.explorationMutationChance = explorationMutationChance;
+}
+
+void ConfigurationManager::setRefinementMutationChance(double refinementMutationChance)
+{
+    this->clusteringParams.refinementMutationChance = refinementMutationChance;
+}
+
+void ConfigurationManager::setCrossoverIterationCount(uint64_t crossoverIterationCount)
+{
+    this->clusteringParams.crossoverIterationCount = crossoverIterationCount;
 }
 
 void ConfigurationManager::setMinPopulationSize(uint64_t minPopulationSize)
@@ -139,6 +183,50 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
 
     // go through the map and assign our parameters
     std::unordered_map<std::string, std::string>::iterator iter;
+
+    iter = parameterMap.find("logFrequency");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.logFrequency = std::stoull(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find logFrequency value in configuration file.");
+        throw std::runtime_error("Error! Could not find logFrequency value in configuration file.");
+    }
+
+    iter = parameterMap.find("explorationMutationChance");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.explorationMutationChance = std::stod(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find explorationMutationChance value in configuration file.");
+        throw std::runtime_error("Error! Could not find explorationMutationChance value in configuration file.");
+    }
+
+    iter = parameterMap.find("refinementMutationChance");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.refinementMutationChance = std::stod(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find refinementMutationChance value in configuration file.");
+        throw std::runtime_error("Error! Could not find refinementMutationChance value in configuration file.");
+    }
+
+    iter = parameterMap.find("crossoverIterationCount");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.crossoverIterationCount = std::stoull(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find crossoverIterationCount value in configuration file.");
+        throw std::runtime_error("Error! Could not find crossoverIterationCount value in configuration file.");
+    }
 
     iter = parameterMap.find("minPopulationSize");
     if (iter != parameterMap.end())
@@ -244,6 +332,10 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
 void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
 {
     std::unordered_map<std::string, std::string> parameterMap;
+    parameterMap["logFrequency"] = std::to_string(this->clusteringParams.logFrequency);
+    parameterMap["explorationMutationChance"] = std::to_string(this->clusteringParams.explorationMutationChance);
+    parameterMap["refinementMutationChance"] = std::to_string(this->clusteringParams.refinementMutationChance);
+    parameterMap["crossoverIterationCount"] = std::to_string(this->clusteringParams.crossoverIterationCount);
     parameterMap["minPopulationSize"] = std::to_string(this->clusteringParams.minPopulationSize);
     parameterMap["maxPopulationSize"] = std::to_string(this->clusteringParams.maxPopulationSize);
     parameterMap["minIterations"] = std::to_string(this->clusteringParams.minIterations);

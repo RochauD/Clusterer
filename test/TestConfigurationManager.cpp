@@ -5,6 +5,10 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestConfigurationManager);
 void TestConfigurationManager::setUp(void)
 {
     testConfManager=new ConfigurationManager();
+    CPPUNIT_ASSERT(testConfManager->getLogFrequency() == 100);
+    CPPUNIT_ASSERT(testConfManager->getExplorationMutationChance() == 0.05);
+    CPPUNIT_ASSERT(testConfManager->getRefinementMutationChance() == 0.20);
+    CPPUNIT_ASSERT(testConfManager->getCrossoverIterationCount() == 250);
     CPPUNIT_ASSERT(testConfManager->getMinPopulationSize() == 100);
     CPPUNIT_ASSERT(testConfManager->getMaxPopulationSize() == 500);
     CPPUNIT_ASSERT((testConfManager->getMinIterationsCount())==10000);
@@ -25,19 +29,27 @@ void TestConfigurationManager::testLoadClusteringParams(void)
 {
     //write to a file
     std::ofstream file("TestFile1.txt");
+    file << "logFrequency = 1000" << endl;
+    file << "explorationMutationChance = 0.15" << endl;
+    file << "refinementMutationChance = 0.25" << endl;
+    file << "crossoverIterationCount = 2500" << endl;
     file << "minPopulationSize" << " = " << "100" << endl;
     file << "maxPopulationSize" << " = " << "500" << endl;
-    file<<"minIterations"<<" = "<<"1"<<endl;
-    file<<"maxIterations"<<" = "<<"1000"<<endl;
-    file<<"minFitness"<<" = "<<"10.9"<<endl;
-    file<<"maxFitness"<<" = "<<"100.9"<<endl;
-    file<<"phaseSwitchFitnessValue"<<" = "<<"13"<<endl;
-    file<<"phaseSwitchIterationValue"<<" = "<<"16"<<endl;
-    file<<"predictedClusterCount"<<" = "<<"100"<<endl;
-    file<<"threadCount"<<" = "<<"12"<<endl;
+    file << "minIterations"<<" = "<<"1" << endl;
+    file << "maxIterations"<<" = "<<"1000" << endl;
+    file << "minFitness"<<" = "<<"10.9" << endl;
+    file << "maxFitness"<<" = "<<"100.9" << endl;
+    file << "phaseSwitchFitnessValue"<<" = "<<"13" << endl;
+    file << "phaseSwitchIterationValue"<<" = "<<"16" << endl;
+    file << "predictedClusterCount"<<" = "<<"100" << endl;
+    file << "threadCount"<<" = "<<"12" << endl;
 
     testConfManager->loadClusteringParams("TestFile1.txt");
     //check if the parameters were loaded correctly.
+    CPPUNIT_ASSERT(testConfManager->getLogFrequency() == 1000);
+    CPPUNIT_ASSERT(testConfManager->getExplorationMutationChance() == 0.15);
+    CPPUNIT_ASSERT(testConfManager->getRefinementMutationChance() == 0.25);
+    CPPUNIT_ASSERT(testConfManager->getCrossoverIterationCount() == 2500);
     CPPUNIT_ASSERT(testConfManager->getMinPopulationSize() == 100);
     CPPUNIT_ASSERT(testConfManager->getMaxPopulationSize() == 500);
     CPPUNIT_ASSERT((testConfManager->getMinIterationsCount())==1);
@@ -59,6 +71,11 @@ void TestConfigurationManager::testSaveClusteringParams(void)
     ConfigurationReaderWriter configReaderWriter("TestFile2.txt");
     std::unordered_map<std::string, std::string> parameterMap = configReaderWriter.readConfiguration();
     file.close();
+
+    CPPUNIT_ASSERT(parameterMap["logFrequency"] == (to_string(testConfManager->getLogFrequency())));
+    CPPUNIT_ASSERT(parameterMap["explorationMutationChance"] == (to_string(testConfManager->getExplorationMutationChance())));
+    CPPUNIT_ASSERT(parameterMap["refinementMutationChance"] == (to_string(testConfManager->getRefinementMutationChance())));
+    CPPUNIT_ASSERT(parameterMap["crossoverIterationCount"] == (to_string(testConfManager->getCrossoverIterationCount())));
     CPPUNIT_ASSERT(parameterMap["minPopulationSize"] == (to_string(testConfManager->getMinPopulationSize())));
     CPPUNIT_ASSERT(parameterMap["maxPopulationSize"] == (to_string(testConfManager->getMaxPopulationSize())));
     CPPUNIT_ASSERT(parameterMap["maxIterations"]==(to_string(testConfManager->getMaxIterationsCount())));
@@ -72,6 +89,18 @@ void TestConfigurationManager::testSaveClusteringParams(void)
 
 void TestConfigurationManager::testGetSetMethods(void)
 {
+    testConfManager->setLogFrequency(100);
+    CPPUNIT_ASSERT(100 == (testConfManager->getLogFrequency()));
+
+    testConfManager->setExplorationMutationChance(0.1);
+    CPPUNIT_ASSERT(0.1 == (testConfManager->getExplorationMutationChance()));
+
+    testConfManager->setRefinementMutationChance(0.25);
+    CPPUNIT_ASSERT(0.25 == (testConfManager->getRefinementMutationChance()));
+
+    testConfManager->setCrossoverIterationCount(250);
+    CPPUNIT_ASSERT(250 == (testConfManager->getCrossoverIterationCount()));
+
     testConfManager->setMinPopulationSize(150);
     CPPUNIT_ASSERT(150 == (testConfManager->getMinPopulationSize()));
 
