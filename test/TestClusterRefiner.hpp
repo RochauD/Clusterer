@@ -28,7 +28,7 @@ using namespace clb;
 
 class TestClusterRefiner : public CppUnit::TestFixture
 {
-        CPPUNIT_TEST_SUITE(TestExplorationMutation);
+        CPPUNIT_TEST_SUITE(TestClusterRefiner);
         CPPUNIT_TEST(testRefineFunction);
         CPPUNIT_TEST_SUITE_END();
 

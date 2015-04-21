@@ -55,10 +55,12 @@ void ClusterRefiner::refine(ClusterEncoding& clusterSol, const AbstractGraph& gr
     	}
     }
 
+    std::cout<<"max_den_cl: "<<max_cluster_id<<"; min_den_cl: "<<min_cluster_den<<"\n";
     ClusterId cluster_to_refine;
     if(bd((*gen))) cluster_to_refine = max_cluster_id;
     else cluster_to_refine = min_cluster_id;
  
+    std::cout<<"cluster_to_refine: "<<cluster_to_refine<<"\n";
     IntegerVectorEncoding option1(&graph);
     IntegerVectorEncoding option2(&graph);
 

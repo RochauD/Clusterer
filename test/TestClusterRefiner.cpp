@@ -2,24 +2,24 @@
 #include <iostream>
 CPPUNIT_TEST_SUITE_REGISTRATION(TestClusterRefiner);
 
-void TestExplorationMutation::setUp(void)
+void TestClusterRefiner::setUp(void)
 {
 
 }
 
-void TestExplorationMutation::tearDown(void)
+void TestClusterRefiner::tearDown(void)
 {
 
 }
 
-void TestExplorationMutation::printSol(const ClusterEncoding& clusterSol,int n){
+void TestClusterRefiner::printSol(const ClusterEncoding& clusterSol,int n){
     for(int i = 0; i < n; i++){
         std::cout<<clusterSol.getClusterOfVertex(i)<<" ";
     }
     std::cout<<"\n";
 }
 
-void TestExplorationMutation::testMutateFunction(void){
+void TestClusterRefiner::testRefineFunction(void){
     clb::Graph graph;
 
 	graph.addVertex(Vertex(0));
@@ -59,19 +59,19 @@ void TestExplorationMutation::testMutateFunction(void){
     
     std::cout<<"before mutate--test\n";
     clb::IntegerVectorEncoding result1 = solution;
-    mutator.refine(result1,&graph);
+    mutator.refine(result1,graph);
 
     clb::IntegerVectorEncoding result2 = solution;
-    mutator.mutate(result2,&graph);
+    mutator.refine(result2,graph);
 
     clb::IntegerVectorEncoding result3 = solution;
-    mutator.mutate(result3,&graph);
+    mutator.refine(result3,graph);
 
     clb::IntegerVectorEncoding result4 = solution;
-    mutator.mutate(result4,&graph);
+    mutator.refine(result4,graph);
 
     clb::IntegerVectorEncoding result5 = solution;
-    mutator.mutate(result5,&graph);
+    mutator.refine(result5,graph);
 
     //int checker1,checker2,checker3,checker4,checker5;
     //checker1 = checker2 = checker3 = checker4 = checker5 = 0;
@@ -102,12 +102,12 @@ void TestExplorationMutation::testMutateFunction(void){
     	if(solution.getClusterOfVertex(i) != result4.getClusterOfVertex(i)) checker4++;
     	if(solution.getClusterOfVertex(i) != result5.getClusterOfVertex(i)) checker5++;
     }*/
-    int solClusterCount = solution.getClusterCount();
-    int result1CC = result1.getClusterCount();
-    int result2CC = result2.getClusterCount();
-    int result3CC = result3.getClusterCount();
-    int result4CC = result4.getClusterCount();
-    int result5CC = result5.getClusterCount();
+    //int solClusterCount = solution.getClusterCount();
+    //int result1CC = result1.getClusterCount();
+    //int result2CC = result2.getClusterCount();
+    //int result3CC = result3.getClusterCount();
+    //int result4CC = result4.getClusterCount();
+    //int result5CC = result5.getClusterCount();
 
 
     /*
