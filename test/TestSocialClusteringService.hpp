@@ -15,7 +15,7 @@
 #include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
-#include "../include/SocialClusteringService.hpp"
+#include "../include/ClusteringService.hpp"
 
 using namespace CppUnit;
 using namespace std;
