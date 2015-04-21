@@ -1,21 +1,34 @@
 /**
-  * @file ClusterEncoding.cpp
-  * @implementation of ClusterEncoding.hpp
-  */
+ * @file ClusterEncoding.cpp
+ * @implementation of ClusterEncoding.hpp
+ */
 
 #include "../include/ClusterEncoding.hpp"
 
+namespace clusterer
+{
 namespace backend
 {
-namespace genetic
-{
 
-ClusterEncoding::ClusterEncoding(common::types::AbstractGraph& g) : graph(g)
+ClusterEncoding::ClusterEncoding()
 {
 
 }
 
-ClusterEncoding::~ClusterEncoding() {}
+ClusterEncoding::ClusterEncoding(const AbstractGraph* g)
+{
 
-}  // namespace genetic
-}  // namespace backend
+}
+
+ClusterEncoding::~ClusterEncoding()
+{
+
+}
+
+int32_t ClusterEncoding::normalize()
+{
+    return 0;
+}
+
+}
+}

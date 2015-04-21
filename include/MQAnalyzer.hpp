@@ -1,37 +1,55 @@
 /**
-  * @file MQAnalyzer.hpp
-  * @brief fitness function interface implementation
-  */
-#ifndef _BACKEND_GENETIC_MQANALYZER_HPP
-#define _BACKEND_GENETIC_MQANALYZER_HPP
+ * @file MQAnalyzer.hpp
+ * @brief fitness function interface implementation
+ */
+#ifndef CLUSTERER_BACKEND_MQ_ANALYZER_HPP
+#define CLUSTERER_BACKEND_MQ_ANALYZER_HPP
 
-//Standard libraries
-#include <stdint.h>
+// standard headers
 
-//Own libraries
-#include "ClusterEncoding.hpp"
+// external headers
 
+// internal headers
+#include "ClusteringSolutionAnalyzer.hpp"
+
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
+{
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
 namespace backend
 {
-namespace genetic
+
+class MQAnalyzer : public ClusteringSolutionAnalyzer
 {
+    public:
+        /**
+         * @brief report a score for a clustering solution
+         * @param clusteringSolution a clustering solution
+         * @param graph The graph.
+         * @return the modularization quality of the solution
+         * @pre The graph needs to have atleast on edge. In other words the graph is not allowed
+         * totally disconnected.
+         */
+        double analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph);
 
-
-class MQAnalyzer : public FitnessAnalyzer
-{
-public:
-    typedef Score double;
-    /**
-     * @brief report a score for a clustering solution
-     * @param clusteringSolution a clustering solution
-     * @return a score corresponding to the clustering solution
-     */
-    virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution);
-
-    virtual ~MQAnalyzer();
+        ~MQAnalyzer();
 };
 
-}  // namespace genetic
-}  // namespace backend
+}
+}
 
-#endif  // _BACKEND_GENETIC_MQANALYZER_HPP
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
+
+#endif

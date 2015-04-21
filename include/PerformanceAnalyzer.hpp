@@ -1,38 +1,59 @@
 /**
-  * @file PerformanceAnalyzer.hpp
-  * @brief fitness function interface implementation
-  */
-#ifndef _BACKEND_GENETIC_PERFORMANCEANALYZER_HPP
-#define _BACKEND_GENETIC_PERFORMANCEANALYZER_HPP
+ * @file PerformanceAnalyzer.hpp
+ * @brief fitness function interface implementation
+ */
+#ifndef CLUSTERER_BACKEND_PERFORMANCE_ANALYZER_HPP
+#define CLUSTERER_BACKEND_PERFORMANCE_ANALYZER_HPP
 
-//Standard libraries
-#include <stdint.h>
+// standard headers
 
-//Own libraries
-#include "ClusterEncoding.hpp"
+// external headers
 
+// internal headers
+#include "ClusteringSolutionAnalyzer.hpp"
+#include "CoverageAnalyzer.hpp"
+
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
+{
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
 namespace backend
 {
-namespace genetic
+
+class PerformanceAnalyzer : public ClusteringSolutionAnalyzer
 {
+    public:
+        /**
+         * @brief report a score for a clustering solution
+         * @param clusteringSolution a clustering solution
+         * @param graph The graph.
+         * @return a score corresponding to the clustering solution
+         * @pre The graph needs to have atleast on edge. In other words the graph is not allowed
+         * totally disconnected.
+         */
+        double analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph);
 
-
-class PerformanceAnalyzer : public FitnessAnalyzer
-{
-public:
-    typedef Score double;
-    /**
-     * @brief report a score for a clustering solution
-     * @param clusteringSolution a clustering solution
-     * @return a score corresponding to the clustering solution
-     */
-    virtual Score analyze(const ClusterEncoding::Encoding& clusteringSolution);
-
-    virtual ~PerformanceAnalyzer();
+        ~PerformanceAnalyzer();
+    protected:
+    private:
+        CoverageAnalyzer coverageAnalyzer;
 };
 
-}  // namespace genetic
-}  // namespace backend
+}
+}
 
-#endif  // _BACKEND_GENETIC_PERFORMANCEANALYZER_HPP
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
+#endif

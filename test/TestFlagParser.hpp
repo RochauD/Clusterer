@@ -19,21 +19,23 @@
 
 using namespace CppUnit;
 using namespace std;
+using namespace clc;
 
-class TestFlagParser : public CppUnit::TestFixture {
-    CPPUNIT_TEST_SUITE(TestFlagParser);
-    CPPUNIT_TEST(testFail);
-    CPPUNIT_TEST_SUITE_END();
-    
-public:
-    void setUp(void);
-    void tearDown(void);
-  
-protected:
-    void testFail(void);
-  
-private:
-    common::utils::FlagParser* testObj;
+class TestFlagParser : public CppUnit::TestFixture
+{
+        CPPUNIT_TEST_SUITE(TestFlagParser);
+        CPPUNIT_TEST(testFail);
+        CPPUNIT_TEST_SUITE_END();
+
+    public:
+        void setUp(void);
+        void tearDown(void);
+
+    protected:
+        void testFail(void);
+
+    private:
+        FlagParser* testObj;
 };
 
 #endif

@@ -19,23 +19,25 @@
 
 using namespace CppUnit;
 using namespace std;
+using namespace clb;
 
-class TestConfigurationReaderWriter:public CppUnit::TestFixture{
-    CPPUNIT_TEST_SUITE(TestConfigurationReaderWriter);
-    CPPUNIT_TEST(testReadConfiguration);
-    CPPUNIT_TEST(testWriteConfiguration);
-    CPPUNIT_TEST_SUITE_END();
-    
-public:
-    void setUp(void);
-    void tearDown(void);
-  
-protected:
-    void testReadConfiguration(void);
-    void testWriteConfiguration(void);
-  
-private:
-    ConfigurationReaderWriter *cTestObj;
+class TestConfigurationReaderWriter:public CppUnit::TestFixture
+{
+        CPPUNIT_TEST_SUITE(TestConfigurationReaderWriter);
+        CPPUNIT_TEST(testReadConfiguration);
+        CPPUNIT_TEST(testWriteConfiguration);
+        CPPUNIT_TEST_SUITE_END();
+
+    public:
+        void setUp(void);
+        void tearDown(void);
+
+    protected:
+        void testReadConfiguration(void);
+        void testWriteConfiguration(void);
+
+    private:
+        ConfigurationReaderWriter* cTestObj;
 };
 
 #endif

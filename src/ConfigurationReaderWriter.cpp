@@ -4,6 +4,14 @@
  */
 #include "../include/ConfigurationReaderWriter.hpp"
 
+// internal headers
+#include "../include/GlobalFileLogger.hpp"
+
+namespace clusterer
+{
+namespace backend
+{
+
 ConfigurationReaderWriter::ConfigurationReaderWriter(const std::string& fullPathName, char commentCharacter, std::string separatorString)
 {
     this->fullPathName = fullPathName;
@@ -37,12 +45,13 @@ std::unordered_map<std::string, std::string> ConfigurationReaderWriter::readConf
             else
             {
                 file.close();
+                clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Invalid formatting of configuration file.");
                 throw std::runtime_error("Error! Invalid formatting of configuration file.");
             }
         }
     }
     file.close();
-
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Read configuration file succesfully. File: ", this->fullPathName);
     return configMap;
 }
 
@@ -53,11 +62,17 @@ void ConfigurationReaderWriter::writeConfiguration(const std::unordered_map<std:
     {
         if (!(file << e.first << this->separatorString << e.second << '\n'))
         {
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Failed writing configuration file due to invalid output configuration.");
             throw std::runtime_error("Error! Writing output file.");
         }
     }
     if (file.bad() || file.fail())
     {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Failed writing configuration file.");
         throw std::runtime_error("Error! Failed writing configuration file.");
     }
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Wrote configuration file succesfully. File: ", this->fullPathName);
+}
+
+}
 }

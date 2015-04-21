@@ -9,3 +9,31 @@ We changed the AbstractGraph class to be a non-template class and added a separa
 
 Change 4:
 Renamed the "Encoder" classes to "Encoding" classes as it makes sense for them to be internally hoding a solution encoding and performing utility operations on it instead of just the latter. In fact, the design by group two seems to have this exact idea in mind, however no private/protected containers were specified.
+
+Change 5:
+Removed file compiler_defs.hpp as define macros for C++ class setup like no copy constructor etc. is unnecessary. Additionally the constructors created by the macros are not part of the documentation in the end. Therefore we removed this file and replace the macros with the correct code.
+
+Change 6:
+Simplified the convoluted namespace to a simpler model. In our model now we have the following namespaces:
+The main namespace clusterer, which is the main namespace for the project.
+Then we have three sub namespaces and three aliases to the clusterer::subnamespace :
+1) common - all modules and classes with common functionality - alias namespace: clc
+2) backend - all modules and classes with backend functionality - alias namespace: clb
+3) frontend - all modules and classes with frontend functionality - alias namespace: clf
+
+Change 7:
+Replaced the simple and incomplete logger by a better and nicer engineered one. Firstly this new logger replaces the multiple log function with a single veradiac one. Also logging is now on a seperate thread and thread safe. This is really useful as logging to a file for example might be quite costly. Lastly the design is policy based and so we can exchange and extend the logger easily. To keep with the old design we nevertheless provide a singleton threadsafe access to out logger class so we combine the best of both worlds.
+
+Change 8:
+Created a new base class for all analyzer called ClusteringSolutionAnalyzer as FitnessAnalyzer cannot be the base class as we need also a FitnessAnalyzer which takes the other analyzers to compute the fitness.
+Added a new parameter to the analyze function of all analyzer classes, as we need to pass the graph to them in order to do anything meaningful and the designers forgot that. Also changed the first parameter from the encoding representation to the class representing the encoding as that makes more sense, as the class around the encoding is the one that actually provides the needed functions. Also removed the score typedef as the classes are not always reporting a score of a solution but sometimes just certain measures i.e. coverage. Therefore leaving it as a double and documenting it accordingly is the better option.
+
+Change 9:
+Changed returnValue from readFile of GraphReader form int to bool to adhere to a more C++ way of doing things. Also renamed GraphReader to AbstractGraphReader and implemented a normal GraphReader.
+Added test_files folder to simulate reading the data from files and store it into a graph. 
+
+Change 10:
+Changed the signature of CrossoverEngine::crossover to be using the ClusterEncoding class instead of the underlying data structure ClusterEncoding::Encoding. Moreover changed the method to void that has a parameter child because it is impossible to instantiate the ClusterEncoding class because it is virtual and thus we cannot create an object to return.
+
+Changed 11: Redesigned SocialClusteringService completley as it is incoherent with there design and our changes. Also renamed it to ClusteringService as we are not necessarily clustering a social network.
+

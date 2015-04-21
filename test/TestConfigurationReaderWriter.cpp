@@ -1,28 +1,24 @@
 #include "TestConfigurationReaderWriter.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION( TestConfigurationReaderWriter );
+CPPUNIT_TEST_SUITE_REGISTRATION(TestConfigurationReaderWriter);
 
-void TestConfigurationReaderWriter::setUp(void){
+void TestConfigurationReaderWriter::setUp(void)
+{
     cTestObj=new ConfigurationReaderWriter("TestFile.txt",'%'," = ");
-    /*
-     * CPPUNIT_ASSERT_EQUAL(cTestObj->fullPathName,"TestFile.txt");
-     * CPPUNIT_ASSERT_EQUAL(cTestObj->commentCharacter,'%');
-     * CPPUNIT_ASSERT_EQUAL(cTestObj->seperatorString," = ");
-    */
-  
 }
 
-void TestConfigurationReaderWriter::tearDown(void){
+void TestConfigurationReaderWriter::tearDown(void)
+{
     delete cTestObj;
 }
 
-void TestConfigurationReaderWriter::testReadConfiguration(void){
-    
+void TestConfigurationReaderWriter::testReadConfiguration(void)
+{
     //create a dummy parameter map
     std::unordered_map<std::string, std::string> testParm;
     testParm["minIteration"]="10";
     testParm["maxIteration"]="100";
-    
+
     //write to a file
     std::ofstream file("TestFile.txt");
     file<<"minIteration"<<" = "<<"10"<<'\n';
@@ -31,7 +27,8 @@ void TestConfigurationReaderWriter::testReadConfiguration(void){
     CPPUNIT_ASSERT(testParm == cTestObj->readConfiguration());
 }
 
-void TestConfigurationReaderWriter::testWriteConfiguration(void){
+void TestConfigurationReaderWriter::testWriteConfiguration(void)
+{
     //create dummy parameter map
     unordered_map<string, string> testParm1;
     unordered_map<string, string> testParm2;
@@ -40,7 +37,7 @@ void TestConfigurationReaderWriter::testWriteConfiguration(void){
     string seperatorWord;
     testParm1["minIteration"]="10";
     testParm1["maxIteration"]="100";
-    
+
     cTestObj->writeConfiguration(testParm1);
     //write dummy parameter to file
     std::ifstream file("TestFile.txt");

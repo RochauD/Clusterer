@@ -1,8 +1,14 @@
+/**
+* @file GeneticGui.cpp
+* @brief
+*/
+
 #include "../include/GeneticGui.hpp"
 
+namespace clusterer
+{
 namespace frontend
 {
-
 
 void GeneticGui::setConfigParams(const Config& config)
 {
@@ -29,6 +35,5 @@ GeneticGui::GeneticGui(const GeneticGui& cpy)
 
 }
 
-}  // namespace frontend
-
-
+}
+}

@@ -1,21 +1,31 @@
 /**
-  * @file CrossoverEngine.hpp
-  * @brief crossover interface
-  */
-#ifndef _BACKEND_GENETIC_CROSSOVERENGINE_HPP
-#define _BACKEND_GENETIC_CROSSOVERENGINE_HPP
+ * @file CrossoverEngine.hpp
+ * @brief crossover interface
+ */
+#ifndef CLUSTERER_BACKEND_CROSSOVER_ENGINE_HPP
+#define CLUSTERER_BACKEND_CROSSOVER_ENGINE_HPP
 
-//Standard libraries
+// standard headers
 #include <stdint.h>
+// external headers
 
-//Own libraries
+// internal headers
 #include "ClusterEncoding.hpp"
 
-namespace backend
-{
-namespace genetic
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
 {
 
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
+{
 
 /**
  * @class CrossoverEngine
@@ -23,25 +33,34 @@ namespace genetic
  */
 class CrossoverEngine
 {
-public:
-    /**
-     * @brief crossover 2 encodings to create a new one
-     * @param parent1 the first parent contributing to the crossover
-     * @param parent2 the second parent contributing to the crossover
-     * @return the new clustering encoding
-     */
-    virtual ClusterEncoding::Encoding
-    crossover(const ClusterEncoding::Encoding& parent1,
-              const ClusterEncoding::Encoding& parent2) = 0;
+    public:
+        CrossoverEngine() {}
 
-    /**
-     * @brief standard destructor
-     */
-    virtual ~CrossoverEngine();
+        /**
+         * @brief crossover 2 encodings to create two new ones
+         * @param parent1 the first parent contributing to the crossover
+         * @param parent2 the second parent contributing to the crossover
+         * @param child1 The encoding object that will hold the first child
+         * @param child2 The encoding object to hold the second child
+         */
+        virtual void crossover(const ClusterEncoding& parent1,
+                               const ClusterEncoding& parent2,
+                               ClusterEncoding& child1,
+                               ClusterEncoding& child2) = 0;
+
+        /**
+         * @brief standard destructor
+         */
+        virtual ~CrossoverEngine() {}
 };
 
-}  // namespace genetic
-}  // namespace backend
+}
+}
 
-#endif  // _BACKEND_GENETIC_CROSSOVERENGINE_HPP
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
+#endif

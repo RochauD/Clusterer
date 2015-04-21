@@ -2,8 +2,8 @@
 * @file ClusteringParams.hpp
 * @brief File in which the ClusteringParams structure is defined.
 */
-#ifndef CLUSTERING_PARAMS_HPP
-#define CLUSTERING_PARAMS_HPP
+#ifndef CLUSTERER_BACKEND_CLUSTERING_PARAMS_HPP
+#define CLUSTERER_BACKEND_CLUSTERING_PARAMS_HPP
 
 // standard headers
 #include <cstdint>
@@ -13,6 +13,21 @@
 
 
 /**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
+namespace clusterer
+{
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
+namespace backend
+{
+
+/**
 * @struct ClusteringParams
 * @brief Clustering parameters for the social clustering algorithm.
 * @details The struct ClusteringParams specifies the algorithm parameters for
@@ -20,6 +35,52 @@
 */
 struct ClusteringParams
 {
+
+    bool uniquePopulationSelection;
+    double maxMinDensityClusterProbability;
+    uint64_t iterationUntilMissingImprovementCausesInterruption;
+    uint64_t enqueueFrequency;
+
+    /**
+    * @var logFrequency
+    * @brief The log frequency used during the algorithm.
+    */
+    uint64_t logFrequency;
+
+    /**
+    * @var explorationMutationChance
+    * @brief The chance of mutating a member of the population in the
+    * exploration phase. A value between 0 and 1.
+    */
+    double explorationMutationChance;
+
+    /**
+    * @var refinementMutationChance
+    * @brief The chance of mutating a member of the population in the
+    * refinement phase. A value between 0 and 1.
+    */
+    double refinementMutationChance;
+
+    /**
+    * @var crossoverIterationCount
+    * @brief Crossover iteration count determines how often the crossover iteration
+    * runs and it thereby determines by how much the population grows the next time.
+    * @details Each iteration increases the population by two.
+    */
+    uint64_t crossoverIterationCount;
+
+    /**
+    * @var minPopulationSize
+    * @brief Minimum size of the population.
+    */
+    uint64_t minPopulationSize;
+
+    /**
+    * @var maxPopulationSize
+    * @brief Maximum size of the population.
+    */
+    uint64_t maxPopulationSize;
+
     /**
     * @var minIterations
     * @brief Minimum algorithm iteration count.
@@ -88,5 +149,14 @@ struct ClusteringParams
     uint32_t threadCount;
 
 };
+
+}
+}
+
+/**
+* @namespace clb
+* @brief The namespace clb is a namespace alias for the namespace clusterer::backend.
+*/
+namespace clb = clusterer::backend;
 
 #endif

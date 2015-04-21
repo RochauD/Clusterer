@@ -2,9 +2,15 @@
 #include <string>
 #include "../include/Parcelable.hpp"
 
-namespace common {
-namespace types {
+namespace clusterer
+{
+namespace backend
+{
 
+Parcelable::~Parcelable()
+{
+
+}
 
 ParcelAllocator::ParcelAllocator()
 {
@@ -65,10 +71,10 @@ ParcelEncoder::ParcelEncoder(const ParcelEncoder&)
 {
 
 }
-   
+
 const ParcelEncoder& ParcelEncoder::operator=(const ParcelEncoder& x)
 {
-    return *this;   
+    return *this;
 }
 
 
@@ -88,8 +94,5 @@ void ParcelDecoder::decode(std::string* str)
 
 }
 
-
-}  // namespace types
-}  // namespace common
-
-
+}
+}

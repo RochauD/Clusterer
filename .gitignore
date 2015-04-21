@@ -1,5 +1,7 @@
 todo.txt~
 *.log
 .DS_Store
-!build/README
 build/*
+lib/*
+testing/*
+bin/*
