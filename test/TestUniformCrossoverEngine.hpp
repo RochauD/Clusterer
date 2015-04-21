@@ -42,7 +42,8 @@ class TestUniformCrossoverEngine : public CppUnit::TestFixture
     private:
         std::mt19937* rng;
         UniformCrossoverEngine *testObj;
-        Graph* g;
+        Graph* g1;
+        Graph* g2;
 };
 
 #endif

@@ -9,16 +9,27 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestUniformCrossoverEngine);
  */
 void TestUniformCrossoverEngine::setUp(void)
 {
-    g= new Graph();
+    g1= new Graph();
     Vertex v0(0);
     Vertex v1(1);
     Vertex v2(2);
     Vertex v3(3);
 
-    g->addVertex(v0);
-    g->addVertex(v1);
-    g->addVertex(v2);
-    g->addVertex(v3);
+    g1->addVertex(v0);
+    g1->addVertex(v1);
+    g1->addVertex(v2);
+    g1->addVertex(v3);
+
+    g2= new Graph();
+    Vertex v4(5);
+    Vertex v5(6);
+    Vertex v6(7);
+    Vertex v7(8);
+
+    g2->addVertex(v4);
+    g2->addVertex(v5);
+    g2->addVertex(v6);
+    g2->addVertex(v7);
 
     rng = new std::mt19937();
     testObj = new UniformCrossoverEngine(rng);
@@ -29,7 +40,8 @@ void TestUniformCrossoverEngine::setUp(void)
  */
 void TestUniformCrossoverEngine::tearDown(void)
 {
-    delete g;
+    delete g1;
+    delete g2;
     delete testObj;
 }
 
@@ -38,9 +50,10 @@ void TestUniformCrossoverEngine::tearDown(void)
  */
 void TestUniformCrossoverEngine::testCrossover(void)
 {
-    IntegerVectorEncoding p1(g);
-    IntegerVectorEncoding p2(g);
-    IntegerVectorEncoding child(g);
+
+    IntegerVectorEncoding p1(g1);
+    IntegerVectorEncoding p2(g2);
+    IntegerVectorEncoding child(g1);
 
     // Initialize first parent
     p1.addToCluster(0, 0);
@@ -52,6 +65,7 @@ void TestUniformCrossoverEngine::testCrossover(void)
     p2.addToCluster(1, 5);
     p2.addToCluster(2, 6);
     p2.addToCluster(3, 7);
+
 
     for (int i = 0; i < 10; i++)
     {
