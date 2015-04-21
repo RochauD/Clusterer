@@ -93,7 +93,7 @@ bool ClusteringService::runAlgorithm(bool restart)
         this->algorithmService.setPopulation(&this->population);
         this->algorithmService.setOutQueue(&this->outQueue);
     }
-    return this->algorithmService.runAlgorithm();
+    return this->algorithmService.runAlgorithm(restart);
 }
 
 void ClusteringService::stopAlgorithm()

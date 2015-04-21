@@ -1,4 +1,5 @@
 #include <iostream>
+#include <atomic>
 #include "include/ClusteringService.hpp"
 #include "include/GlobalFileLogger.hpp"
 #include "include/ConcurrentLockingQueue.hpp"
@@ -19,7 +20,8 @@ int main()
 
     ClusteringService service;
     bool running = true;
-    bool flag = true;
+    static std::atomic<bool> flag;
+    flag = true;
     clc::ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>>* queue;
     int option;
     while (running)
@@ -99,7 +101,7 @@ int main()
                     queue = service.getOutQueue();
                     std::thread t([=]
                     {
-                        while (flag)
+                        while (flag.load())
                         {
                             auto res = queue->pop();
                             std::cout << "Current fitness: " << res.second << std::endl;
@@ -115,27 +117,53 @@ int main()
                     {
                         std::cout << "\tAlgorithm run was succesful." << std::endl;
                         flag = false;
+                        std::cout << "Dummy encoding for this demo only" << std::endl;
                         queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
                     }
                     else
                     {
                         std::cout << "\tAlgorithm run failed." << std::endl;
                         flag = false;
+                        std::cout << "Dummy encoding for this demo only" << std::endl;
                         queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
                     }
                     t.join();
+                    flag = true;
                 }
                 break;
             case 6:
                 {
+                    queue = service.getOutQueue();
+                    std::thread t([=]
+                    {
+                        while (flag.load())
+                        {
+                            auto res = queue->pop();
+                            std::cout << "Current fitness: " << res.second << std::endl;
+                            std::cout << "Encoding: " << std::endl;
+                            for (auto& e : res.first.getEncoding())
+                            {
+                                std::cout << e << " ";
+                            }
+                            std::cout << std::endl;
+                        }
+                    });
                     if (service.runAlgorithm(true))
                     {
                         std::cout << "\tAlgorithm run was succesful." << std::endl;
+                        flag = false;
+                        std::cout << "Dummy encoding for this demo only" << std::endl;
+                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
                     }
                     else
                     {
                         std::cout << "\tAlgorithm run failed." << std::endl;
+                        flag = false;
+                        std::cout << "Dummy encoding for this demo only" << std::endl;
+                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
                     }
+                    t.join();
+                    flag = true;
                 }
                 break;
             case 7:
