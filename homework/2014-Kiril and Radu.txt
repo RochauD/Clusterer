@@ -1,8 +1,16 @@
 Kiril Kafadarov
 
 branches:
+feature_selector
+feature_uniform_crossover
+feature_integer_encoding
+feature_clusterwise_crossover
+feature_combined_crossover
+feature_selector
+develop-s2
 
-
+Finished crossover classes, wrote a TournamentSelector,
+fixed bugs, helped get the whole algorithm together
 
 Radu Homorozan:
 branches: 
