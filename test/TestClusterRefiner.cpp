@@ -41,13 +41,11 @@ void TestClusterRefiner::testRefineFunction(void){
     graph.addEdge(Vertex(2), Vertex(3), 0.5);
 
     graph.addEdge(Vertex(3), Vertex(0), 0.75);
-    graph.addEdge(Vertex(3), Vertex(1), 0.75);
-    graph.addEdge(Vertex(3), Vertex(2), 0.75);
 
-    graph.addEdge(Vertex(4), Vertex(0), 0.55);
-    graph.addEdge(Vertex(4), Vertex(1), 0.55);
+    graph.addEdge(Vertex(4), Vertex(0), 0.5);
+    graph.addEdge(Vertex(4), Vertex(1), 0.5);
 
-    clb::ClusterRefiner mutator(&mt,0.5);
+    clb::ClusterRefiner refiner(&mt,0.5);
 
     clb::IntegerVectorEncoding solution(&graph);
 
@@ -59,19 +57,29 @@ void TestClusterRefiner::testRefineFunction(void){
     
     std::cout<<"before mutate--test\n";
     clb::IntegerVectorEncoding result1 = solution;
-    mutator.refine(result1,graph);
+    refiner.refine(result1,graph);
+    double o1 = refiner.getOriginalClusterRefineDensity();
+    double a1 = refiner.getAfterClusterRefineDensity();
 
     clb::IntegerVectorEncoding result2 = solution;
-    mutator.refine(result2,graph);
+    refiner.refine(result2,graph);
+    double o2 = refiner.getOriginalClusterRefineDensity();
+    double a2 = refiner.getAfterClusterRefineDensity();
 
     clb::IntegerVectorEncoding result3 = solution;
-    mutator.refine(result3,graph);
+    refiner.refine(result3,graph);
+    double o3 = refiner.getOriginalClusterRefineDensity();
+    double a3 = refiner.getAfterClusterRefineDensity();
 
     clb::IntegerVectorEncoding result4 = solution;
-    mutator.refine(result4,graph);
+    refiner.refine(result4,graph);
+    double o4 = refiner.getOriginalClusterRefineDensity();
+    double a4 = refiner.getAfterClusterRefineDensity();
 
     clb::IntegerVectorEncoding result5 = solution;
-    mutator.refine(result5,graph);
+    refiner.refine(result5,graph);
+    double o5 = refiner.getOriginalClusterRefineDensity();
+    double a5 = refiner.getAfterClusterRefineDensity();
 
     //int checker1,checker2,checker3,checker4,checker5;
     //checker1 = checker2 = checker3 = checker4 = checker5 = 0;
@@ -94,34 +102,5 @@ void TestClusterRefiner::testRefineFunction(void){
     std::cout<<"mutated: ";
     printSol(result5,5);
 
-    /*
-    for(int i = 0; i < 5; i++){
-    	if(solution.getClusterOfVertex(i) != result1.getClusterOfVertex(i)) checker1++;
-    	if(solution.getClusterOfVertex(i) != result2.getClusterOfVertex(i)) checker2++;
-    	if(solution.getClusterOfVertex(i) != result3.getClusterOfVertex(i)) checker3++;
-    	if(solution.getClusterOfVertex(i) != result4.getClusterOfVertex(i)) checker4++;
-    	if(solution.getClusterOfVertex(i) != result5.getClusterOfVertex(i)) checker5++;
-    }*/
-    //int solClusterCount = solution.getClusterCount();
-    //int result1CC = result1.getClusterCount();
-    //int result2CC = result2.getClusterCount();
-    //int result3CC = result3.getClusterCount();
-    //int result4CC = result4.getClusterCount();
-    //int result5CC = result5.getClusterCount();
-
-
-    /*
-    std::cout<<"checker1: "<<checker1<<"\n";
-    std::cout<<"checker2: "<<checker2<<"\n";
-    std::cout<<"checker3: "<<checker3<<"\n";
-    std::cout<<"checker4: "<<checker4<<"\n";
-    std::cout<<"checker5: "<<checker5<<"\n";*/
-
-
-    //CPPUNIT_ASSERT(std::abs(solClusterCount-result1CC) <= 2 &&
-      //  std::abs(solClusterCount-result2CC) <= 2 &&
-        //std::abs(solClusterCount-result3CC) <= 2 &&
-        //std::abs(solClusterCount-result4CC) <= 2 &&
-        //std::abs(solClusterCount-result5CC) <= 2);
-    
+    CPPUNIT_ASSERT(a1 >= o1 && a2 >= o2 && a3 >= o3 && a4 >= o4 && a5 >= o5);
 }

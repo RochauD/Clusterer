@@ -13,7 +13,6 @@
 // internal headers
 #include "ClusterEncoding.hpp"
 #include "IntegerVectorEncoding.hpp"
-#include "MutationEngine.hpp"
 #include "AbstractGraph.hpp"
 #include "Graph.hpp"
 
@@ -43,25 +42,58 @@ class ClusterRefiner{
 
         /**
         * @brief cluster refiner implementation
-        * @param a cluster solution
+        * @param an encoding solution
         * @param graph reference
         */
         void refine(ClusterEncoding& clusterSol, const AbstractGraph& g);
+
+        // the following 3 functions are useful for the testing units
+        /**
+        * @brief get the original's solution chosen cluster's density
+        * @return the value
+        */
+        double getOriginalClusterRefineDensity();
+
+        /**
+        * @brief get option1 cluster's density
+        * @return the value
+        */
+        double getAfterClusterRefineDensity();
         
         /**
         * @brief empty destructor
         */        
         ~ClusterRefiner();
     private:
-
+        /**
+        * @brief compute the clusters density and store it in clusters_density
+        * @param an encoding solution
+        * @param graph reference
+        */
         void computeClustersDensity(ClusterEncoding& clusterSol,
             const AbstractGraph& g);
+        /**
+        * @brief compute a specific cluster's density
+        * @param a cluster id
+        * @param an encoding solution
+        * @param graph reference
+        */
         double getClusterDensity(ClusterId cid,ClusterEncoding& clusterSol,
             const AbstractGraph& g);
+        /**
+        * @brief for debugging purposes if needed
+        * @param an encoding solution
+        */
+        void printSol(const ClusterEncoding& clusterSol);
 
         std::mt19937 *gen;
         std::bernoulli_distribution bd;
         std::vector<double> clusters_density;
+        /**
+        * @brief for testing purposes
+        */
+        double original_density;
+        double after_density;
 
 };
 
