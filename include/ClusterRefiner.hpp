@@ -36,7 +36,10 @@ class ClusterRefiner{
 
     public:
         /**
-        * @brief empty constructor
+        * @brief constructor to initialize the local gen pointer and
+        * the necessary probability for the bernoulli distribution
+        * @param pointer to an std::mt19937 object
+        * @param probability, if not passed is set to 0.5
         */
         ClusterRefiner(std::mt19937 *rand_gen, double prob = 0.5);
 
