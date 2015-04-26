@@ -423,7 +423,7 @@ void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
     parameterMap["uniquePopulationSelection"] = std::to_string(this->clusteringParams.uniquePopulationSelection ? 1 : 0);
     parameterMap["maxMinDensityClusterProbability"] = std::to_string(this->clusteringParams.maxMinDensityClusterProbability);
     parameterMap["iterationUntilMissingImprovementCausesInterruption"] = std::to_string(this->clusteringParams.iterationUntilMissingImprovementCausesInterruption);
-    parameterMap["iterationUntilMissingImprovementCausesInterruption"] = std::to_string(this->clusteringParams.iterationUntilMissingImprovementCausesInterruption);
+    parameterMap["enqueueFrequency"] = std::to_string(this->clusteringParams.enqueueFrequency);
     parameterMap["logFrequency"] = std::to_string(this->clusteringParams.logFrequency);
     parameterMap["explorationMutationChance"] = std::to_string(this->clusteringParams.explorationMutationChance);
     parameterMap["refinementMutationChance"] = std::to_string(this->clusteringParams.refinementMutationChance);

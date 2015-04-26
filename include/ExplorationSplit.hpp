@@ -47,7 +47,7 @@ class ExplorationSplit: public MutationEngine
         /**
          * @brief standard destructor
          */
-        virtual ~ExplorationSplit();
+        ~ExplorationSplit();
 
     private:
         std::mt19937* gen;
