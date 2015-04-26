@@ -19,9 +19,9 @@ void TestConfigurationManager::setUp(void)
     CPPUNIT_ASSERT((testConfManager->getPhaseSwitchIterationValue())==5000);
     CPPUNIT_ASSERT((testConfManager->getThreadCount())==4);
     CPPUNIT_ASSERT((testConfManager->getUniquePopulationSelection())==true);
-    CPPUNIT_ASSERT((testConfManager->getMaxMinDensityClusterProbability())==4);
-    CPPUNIT_ASSERT((testConfManager->getIterationUntilMissingImprovementCausesInterruption())==4);
-    CPPUNIT_ASSERT((testConfManager->getEnqueueFrequency())==4);
+    CPPUNIT_ASSERT((testConfManager->getMaxMinDensityClusterProbability())==2.11);
+    CPPUNIT_ASSERT((testConfManager->getIterationUntilMissingImprovementCausesInterruption())==2222);
+    CPPUNIT_ASSERT((testConfManager->getEnqueueFrequency())==1231);
 }
 
 void TestConfigurationManager::tearDown(void)
