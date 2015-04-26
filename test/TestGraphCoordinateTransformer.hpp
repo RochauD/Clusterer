@@ -40,7 +40,7 @@ class TestGraphCoordinateTransformer : public CppUnit::TestFixture
         void testObtainedCoordinates(void);
 
     private:
-        void printSol(const ClusterEncoding&);
+        void printMap(const std::map<VertexId,std::pair<double,double>>&);
 };
 
 #endif

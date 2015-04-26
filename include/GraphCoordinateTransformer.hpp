@@ -10,6 +10,8 @@
 #include <stdint.h>
 #include <map>
 #include <vector>
+#include <Eigen/Dense>
+#include <Eigen/Eigenvalues>
 
 // internal headers
 #include "ClusterEncoding.hpp"
@@ -37,25 +39,35 @@ namespace frontend
 class GraphCoordinateTransformer{
 
     public:
-    	/**
-    	* @brief constructor which applies the MDS algorithm
-    	* @param takes a graph reference to which the algorithm is applied
-    	*/
-	    GraphCoordinateTransformer(const backend::AbstractGraph& g);
+        /**
+        * @brief constructor which applies the MDS algorithm
+        * @param takes a graph reference to which the algorithm is applied
+        */
+        GraphCoordinateTransformer(const backend::AbstractGraph& g);
 
-	    /**
-	    * @brief getter to obtain the constructed map
-	    * @return map of the type <vertex id, pair of coordinates>
-	    */
-	    std::map<backend::VertexId,std::pair<double,double>> getCoordinateMap();
+        /**
+        * @brief getter to obtain the constructed map
+        * @return map of the type <vertex id, pair of coordinates>
+        */
+        std::map<backend::VertexId,std::pair<double,double>> getCoordinateMap();
 
-	    /**
-	    * @brief empty destructor
-	    */
-	    ~GraphCoordinateTransformer();
+        /**
+        * @brief empty destructor
+        */
+        ~GraphCoordinateTransformer();
 
     private:
+        
         std::map<backend::VertexId,std::pair<double,double>> map_coord;
+
+        /**
+        * @brief function to compare in descending order 2 pairs
+        * @param first pair object
+        * @param second pair object
+        * @return boolean
+        */
+        static bool pairCompare(const std::pair<double, uint64_t>&,
+ const std::pair<double, uint64_t>&);
 
 };
 
