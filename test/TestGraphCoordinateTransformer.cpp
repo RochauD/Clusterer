@@ -82,6 +82,10 @@ void TestGraphCoordinateTransformer::testObtainedCoordinates(void)
     map = tr.getCoordinateMap();
     printMap(map);
 
+    map = tr.getNormalizedMap(400,500);
+    printMap(map);
+
+
     // the coordinates look as they should, jugding from the picture
     // provided
     // a bit difficult to come up with a concrete test, for now...

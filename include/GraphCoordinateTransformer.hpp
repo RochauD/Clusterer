@@ -50,6 +50,15 @@ class GraphCoordinateTransformer{
         * @return map of the type <vertex id, pair of coordinates>
         */
         std::map<backend::VertexId,std::pair<double,double>> getCoordinateMap();
+        
+        /**
+        * @brief normalizes the already obtained coordinates from the MSD algorithm
+        * @param height 
+        * @param width
+        * @return the normalized map 
+        */
+        std::map<backend::VertexId,std::pair<double,double>> 
+        getNormalizedMap(uint64_t height, uint64_t width);
 
         /**
         * @brief empty destructor
