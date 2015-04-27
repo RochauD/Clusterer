@@ -22,6 +22,8 @@
 #include "PopulationCrossoverEngine.hpp"
 #include "CombinedCrossoverEngine.hpp"
 #include "CombinedMutation.hpp"
+#include "ClusteringPopulationRefiner.hpp"
+#include "ClusterRefiner.hpp"
 #include "Selector.hpp"
 #include "GlobalFileLogger.hpp"
 
@@ -89,6 +91,7 @@ class TwoPhaseStrategy
         std::vector<std::pair<Encoding, double>>* population;
         clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue;
         uint64_t iterationCount;
+        uint64_t lastIterationWithChangedFitness;
         std::pair<Encoding, double> currentBest;
         bool currentPhase;
 
@@ -111,6 +114,7 @@ TwoPhaseStrategy<Encoding, EncodingInitalizer>::TwoPhaseStrategy()
     this->stopFlag = false;
     this->iterationCount = 0;
     this->currentPhase = false;
+    this->lastIterationWithChangedFitness = 0;
 }
 
 template<class Encoding, class EncodingInitalizer>
@@ -126,6 +130,7 @@ TwoPhaseStrategy<Encoding, EncodingInitalizer>::TwoPhaseStrategy(const AbstractG
     this->stopFlag = false;
     this->iterationCount = 0;
     this->currentPhase = false;
+    this->lastIterationWithChangedFitness = 0;
 }
 
 template<class Encoding, class EncodingInitalizer>
@@ -176,6 +181,12 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         this->graph,
         this->population,
         this->clusteringParameters.threadCount);
+    ClusteringPopulationRefiner<ClusterRefiner, std::vector<std::pair<Encoding, double>>> populationRefiner(
+        this->graph,
+        this->population,
+        this->clusteringParameters.refinementMutationChance,
+        this->clusteringParameters.maxMinDensityClusterProbability,
+        this->clusteringParameters.threadCount);
     PopulationMutatorEngine<std::vector<std::pair<Encoding, double>>, CombinedMutation> populationExplorationMutatorEngine(
                 this->graph,
                 this->population,
@@ -186,6 +197,7 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
                 this->population,
                 this->clusteringParameters.crossoverIterationCount,
                 this->clusteringParameters.threadCount);
+
 
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initalized helper classes");
     // reset if needed
@@ -205,17 +217,18 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     // main algorithmic loop
     while (this->checkRunningConditions())
     {
-        if (false)//this->currentPhase)
+        if (this->currentPhase)
         {
             // refinement phase
-            populationExplorationMutatorEngine.mutatePopulation();
+            populationRefiner.refinePopulation();
+            populationCrossoverEngine.crossoverPopulation();
         }
         else
         {
             // exploration phase
             populationCrossoverEngine.crossoverPopulation();
             populationExplorationMutatorEngine.mutatePopulation();
-            if (false)//this->checkForPhaseSwitch())
+            if (this->checkForPhaseSwitch())
             {
                 clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Switched to refinement phase.");
                 this->currentPhase = true;
@@ -223,6 +236,10 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         }
         populationFitnessAnalyzer.evaluatePopulation();
         this->sortPopulation();
+        if (this->currentBest.second != (*this->population)[0].second)
+        {
+            this->lastIterationWithChangedFitness = this->iterationCount;
+        }
         this->currentBest = (*this->population)[0];
         if (this->population->size() > this->clusteringParameters.maxPopulationSize)
         {
@@ -243,15 +260,6 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
                                                    this->currentBest.second);
         }
         this->iterationCount++;
-    }
-    // log end of algorithm
-    if (this->stopFlag)
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm was stopped.");
-    }
-    else
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished. The maximal fitness is: ", this->currentBest.second);
     }
 
     // print output
@@ -302,11 +310,26 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::initalizePopulation()
 template<class Encoding, class EncodingInitalizer>
 bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::checkRunningConditions()
 {
-    return (!this->stopFlag &&
-            this->iterationCount <= this->clusteringParameters.maxIterations &&
-            this->currentBest.second <= this->clusteringParameters.maxFitness &&
-            (this->iterationCount <= this->clusteringParameters.minIterations ||
-             this->currentBest.second <= this->clusteringParameters.minFitness));
+    // log end of algorithm
+    if (this->stopFlag)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm was stopped.");
+        return false;
+    }
+    else if (this->iterationCount > this->clusteringParameters.maxIterations ||
+             this->currentBest.second > this->clusteringParameters.maxFitness ||
+             (this->iterationCount > this->clusteringParameters.minIterations &&
+              this->currentBest.second > this->clusteringParameters.minFitness))
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished. The maximal fitness is: ", this->currentBest.second);
+        return false;
+    }
+    else if ((this->iterationCount - this->lastIterationWithChangedFitness) > this->clusteringParameters.iterationUntilMissingImprovementCausesInterruption)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished as the solution is not getting better. The maximal fitness is: ", this->currentBest.second);
+        return false;
+    }
+    return true;
 }
 
 template<class Encoding, class EncodingInitalizer>
