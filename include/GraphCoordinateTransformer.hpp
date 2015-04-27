@@ -58,7 +58,7 @@ class GraphCoordinateTransformer{
         * @return the normalized map 
         */
         std::map<backend::VertexId,std::pair<double,double>> 
-        getNormalizedMap(uint64_t height, uint64_t width);
+        getNormalizedMap(uint64_t height, uint64_t width, uint64_t offset = 5);
 
         /**
         * @brief empty destructor

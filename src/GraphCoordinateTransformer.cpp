@@ -96,11 +96,9 @@ GraphCoordinateTransformer::GraphCoordinateTransformer(const backend::AbstractGr
 }
 
 std::map<backend::VertexId,std::pair<double,double>> 
-GraphCoordinateTransformer::getNormalizedMap(uint64_t height, uint64_t width)
+GraphCoordinateTransformer::getNormalizedMap(uint64_t height, uint64_t width, uint64_t offset)
 {
     if(map_coord.empty()) return map_coord;
-    
-    uint64_t offset = 5;
 
     double min_x,max_x,min_y,max_y;
     min_x = max_x = (map_coord.begin()->second).first;
@@ -115,10 +113,10 @@ GraphCoordinateTransformer::getNormalizedMap(uint64_t height, uint64_t width)
     for(auto& elem:map_coord){
         // x coordinate
         elem.second.first = 
-        (elem.second.first - min_x + offset)*(width-offset)/(max_x - min_x + offset);
+        (elem.second.first - min_x)*(width-2*offset)/(max_x - min_x)+offset;
         // y coordinate
         elem.second.second = 
-        (elem.second.second - min_y + offset)*(height-offset)/(max_y - min_y + offset);
+        (elem.second.second - min_y)*(height-2*offset)/(max_y - min_y) + offset;
     }
 
     return map_coord;

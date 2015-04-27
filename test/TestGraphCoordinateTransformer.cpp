@@ -81,7 +81,8 @@ void TestGraphCoordinateTransformer::testObtainedCoordinates(void)
     std::map<VertexId,std::pair<double,double>> map;
     map = tr.getCoordinateMap();
     printMap(map);
-
+    
+    // default offset is 5
     map = tr.getNormalizedMap(400,500);
     printMap(map);
 
