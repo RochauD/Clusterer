@@ -92,15 +92,6 @@ if(CPPUNIT_FOUND)
 endif()
 message("\n")
 
-# Eigen
-FIND_PACKAGE(Eigen3 REQUIRED)
-if(EIGEN3_FOUND)
-    message("-- Eigen found and include directories added")
-    include_directories(${Eigen_INCLUDE_DIRS})
-else()
-    message(FATAL_ERROR "Could not find Eigen3")
-endif()
-
 ###############
 # Directories #
 ###############
@@ -344,6 +335,17 @@ set_target_properties(clusterer-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEA
 set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/shared/lib)
 set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/lib/shared)
 set_target_properties(clusterer-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/lib/shared) 
+
+
+#Eigen
+FIND_PACKAGE(cmake_modules REQUIRED)
+FIND_PACKAGE(Eigen REQUIRED)
+if(Eigen_FOUND)
+    message("-- Eigen found and include directories added")
+    include_directories(${Eigen_INCLUDE_DIRS})
+else()
+    message(FATAL_ERROR "Could not find Eigen3")
+endif()
 
 ###########################
 # Boost static dependency #
