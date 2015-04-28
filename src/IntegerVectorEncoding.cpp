@@ -89,9 +89,9 @@ uint32_t IntegerVectorEncoding::getClusterCount() const
     return map.size();
 }
 
-ClusterEncoding::Encoding IntegerVectorEncoding::getEncoding()
+ClusterEncoding::Encoding IntegerVectorEncoding::getEncoding() const
 {
-    return  this->encoding;
+    return this->encoding;
 }
 
 unsigned IntegerVectorEncoding::size() const
@@ -127,15 +127,15 @@ int IntegerVectorEncoding::normalize()
     std::vector<std::pair<ClusterId, VertexId>> pairs;
     for (auto it = minVertex.begin(); it != minVertex.end(); it++)
     { pairs.push_back(*it); }
-    std::sort(pairs.begin(), pairs.end(), 
-        [=](std::pair<ClusterId, VertexId>& a, std::pair<ClusterId, VertexId>& b)
-        {
-            return a.second < b.second;
-        }
-    );
+    std::sort(pairs.begin(), pairs.end(),
+              [=](std::pair<ClusterId, VertexId>& a, std::pair<ClusterId, VertexId>& b)
+    {
+        return a.second < b.second;
+    }
+             );
     // Change the labels to be in [0, clusterCount)
     for (int j = 0; j < pairs.size(); j++)
-    { 
+    {
         minVertex[pairs[j].first] = j;
     }
 
