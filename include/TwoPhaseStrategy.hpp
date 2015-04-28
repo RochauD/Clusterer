@@ -221,7 +221,7 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     }
 
     // evaluate fitness metric
-    switch (1)
+    switch (this->clusteringParameters.fitnessFunction)
     {
         case 0:
             populationFitnessAnalyzer.evaluatePopulation();
@@ -262,13 +262,8 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
             }
         }
 
-        if (this->clusteringParameters.uniquePopulationSelection)
-        {
-            populationSelector.selectPopulation();
-        }
-
         // evaluate fitness metric
-        switch (1)
+        switch (this->clusteringParameters.fitnessFunction)
         {
             case 0:
                 populationFitnessAnalyzer.evaluatePopulation();
@@ -284,6 +279,31 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
                 break;
         }
         this->sortPopulation();
+        // remove non unique ones
+        if (this->clusteringParameters.uniquePopulationSelection)
+        {
+            populationSelector.selectPopulation();
+            if (this->clusteringParameters.reevaluateUniquePopulation)
+            {
+                switch (this->clusteringParameters.fitnessFunction)
+                {
+                    case 0:
+                        populationFitnessAnalyzer.evaluatePopulation();
+                        break;
+                    case 1:
+                        populationMQAnalyzer.evaluatePopulation();
+                        break;
+                    case 2:
+                        populationPerformanceAnalyzer.evaluatePopulation();
+                        break;
+                    default:
+                        populationFitnessAnalyzer.evaluatePopulation();
+                        break;
+                }
+                this->sortPopulation();
+            }
+        }
+
         if (this->currentBest.second != (*this->population)[0].second)
         {
             this->lastIterationWithChangedFitness = this->iterationCount;

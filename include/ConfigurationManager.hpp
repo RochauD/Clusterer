@@ -57,6 +57,7 @@ class ConfigurationManager
         */
         void setClusteringParams(const ClusteringParams& clusteringParams);
 
+        void setReevaluateUniquePopulation(bool reevaluateUniquePopulation);
         void setUniquePopulationSelection(bool uniquePopulationSelection);
         void setMaxMinDensityClusterProbability(double maxMinDensityClusterProbability);
         void setIterationUntilMissingImprovementCausesInterruption(uint64_t iterationUntilMissingImprovementCausesInterruption);
@@ -156,20 +157,21 @@ class ConfigurationManager
         * @return void
         */
         void setThreadCount(uint32_t threadCount);
-	
-	/**
-        * @brief Selects the parameter for optimization.
-        * @param fitnessFunction Choose 0 for fitness, 1 for MQ and 2 for Performance.
-        * @return void
-        */
+
+        /**
+            * @brief Selects the parameter for optimization.
+            * @param fitnessFunction Choose 0 for fitness, 1 for MQ and 2 for Performance.
+            * @return void
+            */
         void setFitnessFunction(uint32_t fitnessFunction);
-	
+
         /**
         * @brief Returns the clustering parameters.
         * @return The current clustering parameters.
         */
         ClusteringParams getClusteringParams();
-	
+
+        bool getReevaluateUniquePopulation();
         bool getUniquePopulationSelection();
         double getMaxMinDensityClusterProbability();
         uint64_t getIterationUntilMissingImprovementCausesInterruption();
@@ -257,13 +259,13 @@ class ConfigurationManager
         * @return The number of threads.
         */
         uint32_t getThreadCount();
-	
-	/**
-        * @brief Selects the optimization method.
-        * @return 0 for Fitness, 1 for MQ and 2 for Performance.
-        */
+
+        /**
+            * @brief Selects the optimization method.
+            * @return 0 for Fitness, 1 for MQ and 2 for Performance.
+            */
         uint32_t getFitnessFunction();
-	
+
 
         /**
         * @brief Loads clustering parameters from the specified file.
@@ -284,7 +286,7 @@ class ConfigurationManager
         * @throws std::runtime_error
         */
         void saveClusteringParams(const std::string& fullPathName);
-	
+
 
     protected:
     private:
