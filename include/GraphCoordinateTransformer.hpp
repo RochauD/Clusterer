@@ -10,8 +10,8 @@
 #include <stdint.h>
 #include <map>
 #include <vector>
-#include <Eigen/Dense>
-#include <Eigen/Eigenvalues>
+#include <eigen3/Eigen/Dense>
+#include <eigen3/Eigen/Eigenvalues>
 
 // internal headers
 #include "ClusterEncoding.hpp"

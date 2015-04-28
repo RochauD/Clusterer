@@ -93,12 +93,14 @@ endif()
 message("\n")
 
 # Eigen
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 FIND_PACKAGE(Eigen3 REQUIRED)
 if(EIGEN3_FOUND)
-    message("-- Eigen found and include directories added")
-    include_directories(${Eigen_INCLUDE_DIRS})
+     message("-- Eigen found and include directories added")
+    include_directories(${EIGEN3_INCLUDE_DIRS})
 else()
-    message(FATAL_ERROR "Could not find Eigen3")
+    message(FATAL_ERROR "Could not find Eigen")
 endif()
 
 ###############
