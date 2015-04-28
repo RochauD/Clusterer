@@ -5,6 +5,7 @@
 
 // standard headers
 #include <unordered_map>
+#include <algorithm>
 #include <map>
 // external headers
 
@@ -122,42 +123,28 @@ int IntegerVectorEncoding::normalize()
         }
     }
 
+    // Sort the map by values
+    std::vector<std::pair<ClusterId, VertexId>> pairs;
+    for (auto it = minVertex.begin(); it != minVertex.end(); it++)
+    { pairs.push_back(*it); }
+    std::sort(pairs.begin(), pairs.end(), 
+        [=](std::pair<ClusterId, VertexId>& a, std::pair<ClusterId, VertexId>& b)
+        {
+            return a.second < b.second;
+        }
+    );
+    // Change the labels to be in [0, clusterCount)
+    for (int j = 0; j < pairs.size(); j++)
+    { 
+        minVertex[pairs[j].first] = j;
+    }
+
     // Rename all clusters
     for (i = 0; i < this->encoding.size(); i++)
     {
         this->encoding[i] = minVertex[this->encoding[i]];
     }
 
-    // Change the labels to be in [0, clusterCount)
-    bool changed = true;
-    int newId = 1, min, last = 0;
-    int invalidClusterId = this->encoding.size() + 1;
-    while (changed)
-    {
-        changed = false;
-        min = invalidClusterId;
-        for (i = 0; i < this->encoding.size(); i++)
-        {
-            if (this->encoding[i] > last && this->encoding[i] < min)
-            {
-                min = this->encoding[i];
-            }
-        }
-
-        if (min != invalidClusterId)
-        {
-            changed = true;
-            for (i = 0; i < this->encoding.size(); i++)
-            {
-                if (this->encoding[i] == min)
-                {
-                    this->encoding[i] = newId;
-                }
-            }
-            last = min;
-            newId++;
-        }
-    }
     // Keep internal track of normalization state
     isNormalized = true;
     return 0;
