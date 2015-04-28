@@ -9,6 +9,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestUniformCrossoverEngine);
  */
 void TestUniformCrossoverEngine::setUp(void)
 {
+
+    //initializing graph
     g= new Graph();
     Vertex v0(0);
     Vertex v1(1);
@@ -53,6 +55,9 @@ void TestUniformCrossoverEngine::testCrossover(void)
     p2.addToCluster(2, 6);
     p2.addToCluster(3, 7);
 
+
+    //checking that all children have the same size as the parents
+    //checking that max no. of clusters is 4 or less
     for (int i = 0; i < 10; i++)
     {
         testObj->crossover(p1, p2, child);
