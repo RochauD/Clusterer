@@ -92,6 +92,16 @@ if(CPPUNIT_FOUND)
 endif()
 message("\n")
 
+# Eigen
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
+FIND_PACKAGE(Eigen3 REQUIRED)
+if(EIGEN3_FOUND)
+     message("-- Eigen found and include directories added")
+    include_directories(${EIGEN3_INCLUDE_DIRS})
+else()
+    message(FATAL_ERROR "Could not find Eigen")
+endif()
+
 ###############
 # Directories #
 ###############
@@ -169,7 +179,8 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/ExplorationJoin.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationSplit.cpp
         ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp
-        ${CLUSTER_SOURCE_DIR}/ClusterRefiner.cpp       
+        ${CLUSTER_SOURCE_DIR}/ClusterRefiner.cpp 
+        ${CLUSTER_SOURCE_DIR}/GraphCoordinateTransformer.cpp      
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -213,6 +224,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/CombinedMutation.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusterRefiner.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationRefiner.hpp
+        ${CLUSTER_INCLUDE_DIR}/GraphCoordinateTransformer.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
@@ -292,6 +304,7 @@ set(CLUSTER_TEST_FILENAMES
         ClusteringPopulationAnalyzer
         Selector
         ClusterRefiner
+        GraphCoordinateTransformer
     )
 
 #############
