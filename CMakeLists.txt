@@ -51,8 +51,16 @@ message("Setting compiler settings:")
 if( WIN32 )
     message("-- Windows detected")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+elseif( APPLE )
+    message("-- OSX detected")
+    # Set C++11
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+    # Enable all warnings
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+
 else()
-    message("-- Linux/UNIX detected")
+    message("-- Linux detected")
     # Set C++11
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
@@ -73,8 +81,10 @@ message("\n")
 message("Setting linker settings:")
 if( WIN32 )
     message("-- Windows detected -- setting corresponding linker settings")
+elseif( APPLE )
+    message("-- OSX detected -- setting corresponding linker settings")
 else()
-    message("-- Linux/UNIX detected -- setting corresponding linker settings")
+    message("-- Linux detected -- setting corresponding linker settings")
 endif()
 message("-- Finished setting linker settings.")
 message("\n")
@@ -96,10 +106,20 @@ message("\n")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 FIND_PACKAGE(Eigen3 REQUIRED)
 if(EIGEN3_FOUND)
-     message("-- Eigen found and include directories added")
+    message("-- Eigen found and include directories added")
     include_directories(${EIGEN3_INCLUDE_DIRS})
 else()
     message(FATAL_ERROR "Could not find Eigen")
+endif()
+
+# Qt
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+FIND_PACKAGE(Qt4 REQUIRED)
+if (Qt4_FOUND)
+    message("-- Qt found and include directories added")
+else()
+    message(FATAL_ERROR "Could not find Qt4")
 endif()
 
 ###############
@@ -238,8 +258,9 @@ source_group("Backend\\Source Files" FILES ${CLUSTER_SOURCES_BACKEND_CPP})
 
 # frontend files
 # frontend source files
-set(CLUSTER_SOURCES_FRONTEND_CPP 
+set(CLUSTER_SOURCES_FRONTEND_CPP
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
+        main.cpp
     )
 # frontend header files
 set(CLUSTER_SOURCES_FRONTEND_H 
@@ -250,6 +271,9 @@ set(CLUSTER_SOURCES_FRONTEND
         ${CLUSTER_SOURCES_FRONTEND_CPP}
         ${CLUSTER_SOURCES_FRONTEND_H}
     )
+
+
+
 # frontend filters
 source_group("Frontend\\Header Files" FILES ${CLUSTER_SOURCES_FRONTEND_H})
 source_group("Frontend\\Source Files" FILES ${CLUSTER_SOURCES_FRONTEND_CPP})
@@ -260,13 +284,13 @@ source_group("Frontend\\Source Files" FILES ${CLUSTER_SOURCES_FRONTEND_CPP})
 set(CLUSTER_SOURCES_CPP 
         ${CLUSTER_SOURCES_COMMON_CPP}
         ${CLUSTER_SOURCES_BACKEND_CPP}
-        ${CLUSTER_SOURCES_FRONTEND_CPP}
+        #${CLUSTER_SOURCES_FRONTEND_CPP}
     )
 # header files
 set(CLUSTER_SOURCES_H 
         ${CLUSTER_SOURCES_COMMON_H}
         ${CLUSTER_SOURCES_BACKEND_H}
-        ${CLUSTER_SOURCES_FRONTEND_H}
+        #${CLUSTER_SOURCES_FRONTEND_H}
     )
 # combined
 set(CLUSTER_SOURCES 
@@ -379,7 +403,9 @@ set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEA
 # Executable #
 ##############
 
-add_executable(Clusterer main.cpp)
+add_executable(Clusterer ${CLUSTER_SOURCES_FRONTEND})
+
+target_link_libraries(Clusterer ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
 
 # link clusterer library
 if( WIN32 )
