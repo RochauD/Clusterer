@@ -23,6 +23,7 @@
 #include "CombinedCrossoverEngine.hpp"
 #include "CombinedMutation.hpp"
 #include "ClusteringPopulationRefiner.hpp"
+#include "ClusteringPopulationSelector.hpp"
 #include "ClusterRefiner.hpp"
 #include "Selector.hpp"
 #include "GlobalFileLogger.hpp"
@@ -50,7 +51,7 @@ class TwoPhaseStrategy
     public:
 
         /**
-        * @brief Standard Construtcutr for a TwoPhaseStrategy which can cluster a graph.
+        * @brief Standard Constructor for a TwoPhaseStrategy which can cluster a graph.
         */
         TwoPhaseStrategy();
 
@@ -181,11 +182,23 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         this->graph,
         this->population,
         this->clusteringParameters.threadCount);
+    ClusteringPopulationAnalyzer<MQAnalyzer, std::vector<std::pair<Encoding, double>>> populationMQAnalyzer(
+        this->graph,
+        this->population,
+        this->clusteringParameters.threadCount);
+    ClusteringPopulationAnalyzer<PerformanceAnalyzer, std::vector<std::pair<Encoding, double>>> populationPerformanceAnalyzer(
+        this->graph,
+        this->population,
+        this->clusteringParameters.threadCount);
     ClusteringPopulationRefiner<ClusterRefiner, std::vector<std::pair<Encoding, double>>> populationRefiner(
         this->graph,
         this->population,
         this->clusteringParameters.refinementMutationChance,
         this->clusteringParameters.maxMinDensityClusterProbability,
+        this->clusteringParameters.threadCount);
+    ClusteringPopulationSelector<std::vector<std::pair<Encoding, double>>> populationSelector(
+        this->graph,
+        this->population,
         this->clusteringParameters.threadCount);
     PopulationMutatorEngine<std::vector<std::pair<Encoding, double>>, CombinedMutation> populationExplorationMutatorEngine(
                 this->graph,
@@ -198,8 +211,7 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
                 this->clusteringParameters.crossoverIterationCount,
                 this->clusteringParameters.threadCount);
 
-
-    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initalized helper classes");
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initialized helper classes");
     // reset if needed
     if (restart || this->population->size() < 2)
     {
@@ -208,7 +220,18 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         this->iterationCount = 0;
     }
 
-    populationFitnessAnalyzer.evaluatePopulation();
+    // evaluate fitness metric
+    switch (1)
+    {
+        case 0:
+            populationFitnessAnalyzer.evaluatePopulation();
+        case 1:
+            populationMQAnalyzer.evaluatePopulation();
+        case 2:
+            populationPerformanceAnalyzer.evaluatePopulation();
+        default:
+            populationFitnessAnalyzer.evaluatePopulation();
+    }
     this->sortPopulation();
     this->currentBest = (*this->population)[0];
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initial Evaluation completed. Current Maximum Fitness: ", this->currentBest.second);
@@ -234,7 +257,24 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
                 this->currentPhase = true;
             }
         }
-        populationFitnessAnalyzer.evaluatePopulation();
+
+        if (this->clusteringParameters.uniquePopulationSelection)
+        {
+            populationSelector.selectPopulation();
+        }
+
+        // evaluate fitness metric
+        switch (1)
+        {
+            case 0:
+                populationFitnessAnalyzer.evaluatePopulation();
+            case 1:
+                populationMQAnalyzer.evaluatePopulation();
+            case 2:
+                populationPerformanceAnalyzer.evaluatePopulation();
+            default:
+                populationFitnessAnalyzer.evaluatePopulation();
+        }
         this->sortPopulation();
         if (this->currentBest.second != (*this->population)[0].second)
         {
@@ -372,6 +412,10 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::sortPopulation()
     std::sort(this->population->begin(), this->population->end(),
               [=](const std::pair<Encoding, double>& v1, const std::pair<Encoding, double>& v2)->bool
     {
+        if (v1.second == v2.second)
+        {
+            return v1.first.getEncoding() > v2.first.getEncoding();
+        }
         return v1.second > v2.second;
     });
 }
