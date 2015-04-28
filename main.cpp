@@ -1,14 +1,9 @@
 #include <iostream>
-#include <thread>
-#include <random>
-#include <memory>
-#include "include/Graph.hpp"
-#include "include/GraphReader.hpp"
-#include "include/ConfigurationManager.hpp"
+#include <atomic>
+#include "include/ClusteringService.hpp"
 #include "include/GlobalFileLogger.hpp"
-#include "include/TwoPhaseStrategy.hpp"
 #include "include/ConcurrentLockingQueue.hpp"
-#include "include/IntegerEncodingInitializer.hpp"
+
 
 using namespace clc;
 using namespace clb;
@@ -22,78 +17,166 @@ int main()
     GlobalFileLogger::instance()->log(SeverityType::INFO, "Definition Lib Version: ", CLUSTERER_LIB_VERSION);
     GlobalFileLogger::instance()->log(SeverityType::INFO, "Definition Lib Version FUll: ", CLUSTERER_LIB_VERSION_FULL);
 
-    Graph graph;
-    GraphReader graphReader(&graph);
-    graphReader.readFile("../test_files/out.ucidata-zachary");
 
-
-    ConfigurationManager cfg;
-    cfg.saveClusteringParams("config.cfg");
-    cfg.loadClusteringParams("config.cfg");
-
-    ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>> outQueue;
-    std::vector<std::pair<IntegerVectorEncoding, double>> population;
-    TwoPhaseStrategy<IntegerVectorEncoding, IntegerEncodingInitializer> algorithmService(&graph, cfg.getClusteringParams(), &population, &outQueue);
-    algorithmService.runAlgorithm();
-
-
-
-    /*
-    // Initialize graph 2
-    graph.addVertex(Vertex(0));
-    graph.addVertex(Vertex(1));
-    graph.addVertex(Vertex(2));
-    graph.addVertex(Vertex(3));
-    graph.addVertex(Vertex(4));
-    graph.addVertex(Vertex(5));
-    graph.addVertex(Vertex(6));
-    graph.addVertex(Vertex(7));
-
-    graph.addEdge(Vertex(0), Vertex(1), 0.2);
-    graph.addEdge(Vertex(1), Vertex(2), 0.3);
-    graph.addEdge(Vertex(1), Vertex(3), 0.5);
-    graph.addEdge(Vertex(2), Vertex(3), 0.4);
-    graph.addEdge(Vertex(3), Vertex(4), 0.2);
-    graph.addEdge(Vertex(4), Vertex(5), 0.5);
-    graph.addEdge(Vertex(4), Vertex(6), 0.6);
-    graph.addEdge(Vertex(5), Vertex(6), 0.7);
-    graph.addEdge(Vertex(6), Vertex(7), 0.1);
-    // can be replaced with "test_files/out.ucidata-zachary"
-
-    std::cout << "number of edges: " << g.getNoEdges() << "\n";
-    std::cout << "number of vertices: " << g.getNoVertices() << "\n";
-
-    std::vector<std::pair<VertexId, VertexId>> edges = g.getEdges();
-
-    std::cout << "edges: \n";
-    std::vector<std::pair<VertexId, VertexId>>::iterator it;
-    for (it = edges.begin(); it != edges.end(); ++it)
+    ClusteringService service;
+    bool running = true;
+    static std::atomic<bool> flag;
+    flag = true;
+    clc::ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>>* queue;
+    int option;
+    while (running)
     {
-        std::cout << (*it).first << " " << (*it).second << "\n";
+        std::cout << "1) Load Configuration from file.\n";
+        std::cout << "2) Save Configuration to file.\n";
+        std::cout << "3) Load Graph from file.\n";
+        std::cout << "4) Load Zachary data set.\n";
+        std::cout << "5) Run Algorithm.\n";
+        std::cout << "6) Run Algorithm(reset population).\n";
+        std::cout << "7) Exit.\n";
+        std::cout << std::flush;
+        std::cin >> option;
+        std::cin.get();
+        switch (option)
+        {
+            case 1:
+                {
+                    std::string filename;
+                    std::cout << "Provide a a filename: ";
+                    std::getline(std::cin, filename);
+                    if (service.loadConfiguration(filename))
+                    {
+                        std::cout << "\tLoaded configuration parameters succesfully." << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "\tLoading configuration parameters failed." << std::endl;
+                    }
+                }
+                break;
+            case 2:
+                {
+                    std::string filename;
+                    std::cout << "Provide a a filename: ";
+                    std::getline(std::cin, filename);
+                    if (service.saveConfiguration(filename))
+                    {
+                        std::cout << "\tSaved configuration parameters succesfully." << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "\tSaving configuration parameters failed." << std::endl;
+                    }
+                }
+                break;
+            case 3:
+                {
+                    std::string filename;
+                    std::cout << "Provide a a filename: ";
+                    std::getline(std::cin, filename);
+                    if (service.loadGraphTypeVertexPairWeight(filename))
+                    {
+                        std::cout << "\tLoaded graph succesfully." << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "\tLoading graph failed." << std::endl;
+                    }
+                }
+                break;
+            case 4:
+                {
+                    std::string filename = "../test_files/out.ucidata-zachary";
+                    if (service.loadGraphTypeVertexPairWeight(filename))
+                    {
+                        std::cout << "\tLoaded zachary graph succesfully." << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "\tLoading zachary graph failed." << std::endl;
+                    }
+                }
+                break;
+            case 5:
+                {
+                    queue = service.getOutQueue();
+                    std::thread t([=]
+                    {
+                        while (flag.load())
+                        {
+                            auto res = queue->pop();
+                            std::cout << "Current fitness: " << res.second << std::endl;
+                            std::cout << "Encoding: " << std::endl;
+                            for (auto& e : res.first.getEncoding())
+                            {
+                                std::cout << e << " ";
+                            }
+                            std::cout << std::endl;
+                        }
+                    });
+                    if (service.runAlgorithm(false))
+                    {
+                        std::cout << "\tAlgorithm run was succesful." << std::endl;
+                        flag = false;
+                        std::cout << "Dummy encoding for this demo only" << std::endl;
+                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
+                    }
+                    else
+                    {
+                        std::cout << "\tAlgorithm run failed." << std::endl;
+                        flag = false;
+                        std::cout << "Dummy encoding for this demo only" << std::endl;
+                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
+                    }
+                    t.join();
+                    flag = true;
+                }
+                break;
+            case 6:
+                {
+                    queue = service.getOutQueue();
+                    std::thread t([=]
+                    {
+                        while (flag.load())
+                        {
+                            auto res = queue->pop();
+                            std::cout << "Current fitness: " << res.second << std::endl;
+                            std::cout << "Encoding: " << std::endl;
+                            for (auto& e : res.first.getEncoding())
+                            {
+                                std::cout << e << " ";
+                            }
+                            std::cout << std::endl;
+                        }
+                    });
+                    if (service.runAlgorithm(true))
+                    {
+                        std::cout << "\tAlgorithm run was succesful." << std::endl;
+                        flag = false;
+                        std::cout << "Dummy encoding for this demo only" << std::endl;
+                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
+                    }
+                    else
+                    {
+                        std::cout << "\tAlgorithm run failed." << std::endl;
+                        flag = false;
+                        std::cout << "Dummy encoding for this demo only" << std::endl;
+                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
+                    }
+                    t.join();
+                    flag = true;
+                }
+                break;
+            case 7:
+                {
+                    running = false;
+                }
+                break;
+            default:
+                std::cout << "Please use a valid option, between 1 and 7!" << std::endl;
+                break;
+        }
+        std::cout << "\n\n";
     }
-
-    std::cout << "vertices: \n";
-    std::vector<VertexId> vec = g.getVertices();
-
-    std::vector<VertexId>::iterator it2;
-    for (auto t : vec)
-    {
-        std::cout << t << " ";
-    }
-    std::cout << "\n";
-
-    std::vector<std::pair<std::pair<VertexId, VertexId>, double>> wedges = g.getEdgesAndWeights();
-
-    std::cout << "edges: \n";
-    std::vector<std::pair<std::pair<VertexId, VertexId>, double>>::iterator wit;
-    for (wit = wedges.begin(); wit != wedges.end(); ++wit)
-    {
-        std::cout << (*wit).first.first << " " << (*wit).first.second;
-        std::cout << " with weight: " << (*wit).second << "\n";
-    }
-    */
-
 
     return 0;
 }
-

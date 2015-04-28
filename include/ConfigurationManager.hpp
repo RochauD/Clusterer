@@ -57,6 +57,11 @@ class ConfigurationManager
         */
         void setClusteringParams(const ClusteringParams& clusteringParams);
 
+        void setUniquePopulationSelection(bool uniquePopulationSelection);
+        void setMaxMinDensityClusterProbability(double maxMinDensityClusterProbability);
+        void setIterationUntilMissingImprovementCausesInterruption(uint64_t iterationUntilMissingImprovementCausesInterruption);
+        void setEnqueueFrequency(uint64_t enqueueFrequency);
+
         /**
         * @brief Sets the log frequency.
         * @param logFrequency The log frequency.
@@ -158,6 +163,11 @@ class ConfigurationManager
         * @return The current clustering parameters.
         */
         ClusteringParams getClusteringParams();
+
+        bool getUniquePopulationSelection();
+        double getMaxMinDensityClusterProbability();
+        uint64_t getIterationUntilMissingImprovementCausesInterruption();
+        uint64_t getEnqueueFrequency();
 
         /**
         * @brief Gets the log frequency.

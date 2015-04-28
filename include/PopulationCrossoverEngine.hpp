@@ -93,7 +93,7 @@ void PopulationCrossoverEngine<EncodingFitnessDataStructure, Encoding, Crossover
 crossoverPopulation()
 {
     std::vector<std::future<EncodingFitnessDataStructure>> futurePool;
-    futurePool.reserve(threadCount);
+    futurePool.reserve(this->threadCount);
 
     // compute slice size
     size_t normalIterationSliceSize = this->iterationCount / this->threadCount;

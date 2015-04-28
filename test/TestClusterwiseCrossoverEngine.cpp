@@ -94,12 +94,13 @@ void TestClusterwiseCrossoverEngine::testCrossover(void)
     p1.normalize();
     p2.normalize();
 
-    // Crossover 1000 times, make sure all cases appear
+
     IntegerVectorEncoding case1_1(g), case2_1(g), case3_1(g);
     IntegerVectorEncoding case1_2(g), case2_2(g), case3_2(g);
     bool found1, found2, found3, foundOther;
     found1 = found2 = found3 = foundOther = false;
 
+    //create all possible cases
     case1_1.addToCluster(0, 0);
     case1_1.addToCluster(1, 1);
     case1_1.addToCluster(2, 2);
@@ -139,6 +140,7 @@ void TestClusterwiseCrossoverEngine::testCrossover(void)
     case3_2.addToCluster(4, 1);
     case3_2.addToCluster(5, 0);
 
+    // Crossover 1000 times, make sure all cases appear
     for (int i = 0; i < 1000; i++)
     {
         testObj->crossover(p1, p2, child1, child2);
@@ -166,6 +168,7 @@ void TestClusterwiseCrossoverEngine::testCrossover(void)
         CPPUNIT_ASSERT(6 >= child2.getClusterCount());
 
     }
+    //test makes sure that every case appeared at least once
     CPPUNIT_ASSERT(found1);
     CPPUNIT_ASSERT(found2);
     CPPUNIT_ASSERT(found3);

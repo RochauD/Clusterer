@@ -14,6 +14,10 @@ namespace backend
 
 ConfigurationManager::ConfigurationManager()
 {
+    this->clusteringParams.uniquePopulationSelection = true;
+    this->clusteringParams.maxMinDensityClusterProbability = 0.5;
+    this->clusteringParams.iterationUntilMissingImprovementCausesInterruption = 1000;
+    this->clusteringParams.enqueueFrequency = 100;
     this->clusteringParams.logFrequency = 100;
     this->clusteringParams.explorationMutationChance = 0.05;
     this->clusteringParams.refinementMutationChance = 0.20;
@@ -37,6 +41,26 @@ ConfigurationManager::~ConfigurationManager()
 ClusteringParams ConfigurationManager::getClusteringParams()
 {
     return this->clusteringParams;
+}
+
+bool ConfigurationManager::getUniquePopulationSelection()
+{
+    return this->clusteringParams.uniquePopulationSelection;
+}
+
+double ConfigurationManager::getMaxMinDensityClusterProbability()
+{
+    return this->clusteringParams.maxMinDensityClusterProbability;
+}
+
+uint64_t ConfigurationManager::getIterationUntilMissingImprovementCausesInterruption()
+{
+    return this->clusteringParams.iterationUntilMissingImprovementCausesInterruption;
+}
+
+uint64_t ConfigurationManager::getEnqueueFrequency()
+{
+    return this->clusteringParams.enqueueFrequency;
 }
 
 uint64_t ConfigurationManager::getLogFrequency()
@@ -108,6 +132,26 @@ uint32_t ConfigurationManager::getThreadCount()
 void ConfigurationManager::setClusteringParams(const ClusteringParams& clusteringParams)
 {
     this->clusteringParams = clusteringParams;
+}
+
+void ConfigurationManager::setUniquePopulationSelection(bool uniquePopulationSelection)
+{
+    this->clusteringParams.uniquePopulationSelection = uniquePopulationSelection;
+}
+
+void ConfigurationManager::setMaxMinDensityClusterProbability(double maxMinDensityClusterProbability)
+{
+    this->clusteringParams.maxMinDensityClusterProbability = maxMinDensityClusterProbability;
+}
+
+void ConfigurationManager::setIterationUntilMissingImprovementCausesInterruption(uint64_t iterationUntilMissingImprovementCausesInterruption)
+{
+    this->clusteringParams.iterationUntilMissingImprovementCausesInterruption = iterationUntilMissingImprovementCausesInterruption;
+}
+
+void ConfigurationManager::setEnqueueFrequency(uint64_t enqueueFrequency)
+{
+    this->clusteringParams.enqueueFrequency = enqueueFrequency;
 }
 
 void ConfigurationManager::setLogFrequency(uint64_t logFrequency)
@@ -183,6 +227,50 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
 
     // go through the map and assign our parameters
     std::unordered_map<std::string, std::string>::iterator iter;
+
+    iter = parameterMap.find("uniquePopulationSelection");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.uniquePopulationSelection = std::stoull(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find uniquePopulationSelection value in configuration file.");
+        throw std::runtime_error("Error! Could not find uniquePopulationSelection value in configuration file.");
+    }
+
+    iter = parameterMap.find("maxMinDensityClusterProbability");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.maxMinDensityClusterProbability = std::stod(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find maxMinDensityClusterProbability value in configuration file.");
+        throw std::runtime_error("Error! Could not find maxMinDensityClusterProbability value in configuration file.");
+    }
+
+    iter = parameterMap.find("iterationUntilMissingImprovementCausesInterruption");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.iterationUntilMissingImprovementCausesInterruption = std::stoull(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find iterationUntilMissingImprovementCausesInterruption value in configuration file.");
+        throw std::runtime_error("Error! Could not find iterationUntilMissingImprovementCausesInterruption value in configuration file.");
+    }
+
+    iter = parameterMap.find("enqueueFrequency");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.enqueueFrequency = std::stoull(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find enqueueFrequency value in configuration file.");
+        throw std::runtime_error("Error! Could not find enqueueFrequency value in configuration file.");
+    }
 
     iter = parameterMap.find("logFrequency");
     if (iter != parameterMap.end())
@@ -332,6 +420,10 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
 void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
 {
     std::unordered_map<std::string, std::string> parameterMap;
+    parameterMap["uniquePopulationSelection"] = std::to_string(this->clusteringParams.uniquePopulationSelection ? 1 : 0);
+    parameterMap["maxMinDensityClusterProbability"] = std::to_string(this->clusteringParams.maxMinDensityClusterProbability);
+    parameterMap["iterationUntilMissingImprovementCausesInterruption"] = std::to_string(this->clusteringParams.iterationUntilMissingImprovementCausesInterruption);
+    parameterMap["enqueueFrequency"] = std::to_string(this->clusteringParams.enqueueFrequency);
     parameterMap["logFrequency"] = std::to_string(this->clusteringParams.logFrequency);
     parameterMap["explorationMutationChance"] = std::to_string(this->clusteringParams.explorationMutationChance);
     parameterMap["refinementMutationChance"] = std::to_string(this->clusteringParams.refinementMutationChance);

@@ -156,7 +156,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/Person.cpp
         ${CLUSTER_SOURCE_DIR}/JSONGraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
-        ${CLUSTER_SOURCE_DIR}/SocialClusteringService.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusteringService.cpp
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
         ${CLUSTER_SOURCE_DIR}/GraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/IntegerEncodingInitializer.cpp
@@ -168,7 +168,8 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/CombinedCrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationJoin.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationSplit.cpp
-        ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp       
+        ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusterRefiner.cpp       
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -197,7 +198,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
-        ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
@@ -210,6 +211,8 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ExplorationJoin.hpp
         ${CLUSTER_INCLUDE_DIR}/ExplorationSplit.hpp
         ${CLUSTER_INCLUDE_DIR}/CombinedMutation.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusterRefiner.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationRefiner.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
@@ -288,6 +291,7 @@ set(CLUSTER_TEST_FILENAMES
         ClusterwiseCrossoverEngine
         ClusteringPopulationAnalyzer
         Selector
+        ClusterRefiner
     )
 
 #############

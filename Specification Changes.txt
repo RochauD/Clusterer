@@ -35,3 +35,5 @@ Added test_files folder to simulate reading the data from files and store it int
 Change 10:
 Changed the signature of CrossoverEngine::crossover to be using the ClusterEncoding class instead of the underlying data structure ClusterEncoding::Encoding. Moreover changed the method to void that has a parameter child because it is impossible to instantiate the ClusterEncoding class because it is virtual and thus we cannot create an object to return.
 
+Changed 11: Redesigned SocialClusteringService completley as it is incoherent with there design and our changes. Also renamed it to ClusteringService as we are not necessarily clustering a social network.
+
