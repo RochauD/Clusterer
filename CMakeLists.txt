@@ -212,6 +212,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ExplorationSplit.hpp
         ${CLUSTER_INCLUDE_DIR}/CombinedMutation.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusterRefiner.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationRefiner.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
