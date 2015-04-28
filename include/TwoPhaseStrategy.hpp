@@ -28,8 +28,6 @@
 #include "Selector.hpp"
 #include "GlobalFileLogger.hpp"
 
-#include <fstream>
-
 /**
 * @namespace clusterer
 * @brief The namespace clusterer is the main namespace of the clusterer project.
@@ -279,36 +277,36 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
                 break;
         }
         this->sortPopulation();
-        // remove non unique ones
+        // reduce the population to a relativley unique one if flag is set
         if (this->clusteringParameters.uniquePopulationSelection)
         {
             populationSelector.selectPopulation();
-            if (this->clusteringParameters.reevaluateUniquePopulation)
+            // evaluate fitness metric once more as we changed things
+            switch (this->clusteringParameters.fitnessFunction)
             {
-                switch (this->clusteringParameters.fitnessFunction)
-                {
-                    case 0:
-                        populationFitnessAnalyzer.evaluatePopulation();
-                        break;
-                    case 1:
-                        populationMQAnalyzer.evaluatePopulation();
-                        break;
-                    case 2:
-                        populationPerformanceAnalyzer.evaluatePopulation();
-                        break;
-                    default:
-                        populationFitnessAnalyzer.evaluatePopulation();
-                        break;
-                }
-                this->sortPopulation();
+                case 0:
+                    populationFitnessAnalyzer.evaluatePopulation();
+                    break;
+                case 1:
+                    populationMQAnalyzer.evaluatePopulation();
+                    break;
+                case 2:
+                    populationPerformanceAnalyzer.evaluatePopulation();
+                    break;
+                default:
+                    populationFitnessAnalyzer.evaluatePopulation();
+                    break;
             }
+            this->sortPopulation();
         }
 
+        // set new best
         if (this->currentBest.second != (*this->population)[0].second)
         {
             this->lastIterationWithChangedFitness = this->iterationCount;
         }
         this->currentBest = (*this->population)[0];
+        // remove worst members
         if (this->population->size() > this->clusteringParameters.maxPopulationSize)
         {
             this->population->resize(this->clusteringParameters.maxPopulationSize);
@@ -329,19 +327,6 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         }
         this->iterationCount++;
     }
-
-    // print output
-    std::ofstream file("file.txt");
-    for (auto& e : (*this->population))
-    {
-        for (auto& p : e.first.getEncoding())
-        {
-            file << p << " ";
-        }
-        file << "\n";
-    }
-    file.close();
-
     return true;
 }
 

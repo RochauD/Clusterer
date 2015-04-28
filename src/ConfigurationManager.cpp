@@ -15,7 +15,6 @@ namespace backend
 ConfigurationManager::ConfigurationManager()
 {
     this->clusteringParams.uniquePopulationSelection = true;
-    this->clusteringParams.reevaluateUniquePopulation = true;
     this->clusteringParams.maxMinDensityClusterProbability = 0.5;
     this->clusteringParams.iterationUntilMissingImprovementCausesInterruption = 1000;
     this->clusteringParams.enqueueFrequency = 100;
@@ -43,11 +42,6 @@ ConfigurationManager::~ConfigurationManager()
 ClusteringParams ConfigurationManager::getClusteringParams()
 {
     return this->clusteringParams;
-}
-
-bool ConfigurationManager::getReevaluateUniquePopulation()
-{
-    return this->clusteringParams.reevaluateUniquePopulation;
 }
 
 bool ConfigurationManager::getUniquePopulationSelection()
@@ -143,11 +137,6 @@ uint32_t ConfigurationManager::getFitnessFunction()
 void ConfigurationManager::setClusteringParams(const ClusteringParams& clusteringParams)
 {
     this->clusteringParams = clusteringParams;
-}
-
-void ConfigurationManager::setReevaluateUniquePopulation(bool reevaluateUniquePopulation)
-{
-    this->clusteringParams.reevaluateUniquePopulation = reevaluateUniquePopulation;
 }
 
 void ConfigurationManager::setUniquePopulationSelection(bool uniquePopulationSelection)
@@ -247,17 +236,6 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
 
     // go through the map and assign our parameters
     std::unordered_map<std::string, std::string>::iterator iter;
-
-    iter = parameterMap.find("reevaluateUniquePopulation");
-    if (iter != parameterMap.end())
-    {
-        this->clusteringParams.reevaluateUniquePopulation = std::stoull(iter->second);
-    }
-    else
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find reevaluateUniquePopulation value in configuration file.");
-        throw std::runtime_error("Error! Could not find reevaluateUniquePopulation value in configuration file.");
-    }
 
     iter = parameterMap.find("uniquePopulationSelection");
     if (iter != parameterMap.end())
@@ -446,7 +424,7 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
         throw std::runtime_error("Error! Could not find threadCount value in configuration file.");
     }
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Loaded Clustering Params succesfully from the following file. File: ", fullPathName);
-
+    
     iter = parameterMap.find("fitnessFunction");
     if (iter != parameterMap.end())
     {
@@ -464,7 +442,6 @@ void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
 {
     std::unordered_map<std::string, std::string> parameterMap;
     parameterMap["uniquePopulationSelection"] = std::to_string(this->clusteringParams.uniquePopulationSelection ? 1 : 0);
-    parameterMap["reevaluateUniquePopulation"] = std::to_string(this->clusteringParams.reevaluateUniquePopulation ? 1 : 0);
     parameterMap["maxMinDensityClusterProbability"] = std::to_string(this->clusteringParams.maxMinDensityClusterProbability);
     parameterMap["iterationUntilMissingImprovementCausesInterruption"] = std::to_string(this->clusteringParams.iterationUntilMissingImprovementCausesInterruption);
     parameterMap["enqueueFrequency"] = std::to_string(this->clusteringParams.enqueueFrequency);
@@ -486,6 +463,8 @@ void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
     ConfigurationReaderWriter configWriter(fullPathName);
     configWriter.writeConfiguration(parameterMap);
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Saved Clustering Params succesfully to the following file. File: ", fullPathName);
+    
+    
 }
 
 }

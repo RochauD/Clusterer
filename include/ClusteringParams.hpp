@@ -36,7 +36,6 @@ namespace backend
 struct ClusteringParams
 {
 
-    bool reevaluateUniquePopulation;
     bool uniquePopulationSelection;
     double maxMinDensityClusterProbability;
     uint64_t iterationUntilMissingImprovementCausesInterruption;
@@ -148,7 +147,7 @@ struct ClusteringParams
     * threads used in the computation of the clustering solution.
     */
     uint32_t threadCount;
-
+    
     /**
     * @var fitnessFunction
     * @brief Selects the paramater for optimization.
