@@ -31,6 +31,7 @@ ConfigurationManager::ConfigurationManager()
     this->clusteringParams.phaseSwitchFitnessValue = 1.4;
     this->clusteringParams.phaseSwitchIterationValue = 5000;
     this->clusteringParams.threadCount = 4;
+    this->clusteringParams.fitnessFunction = 0;
 }
 
 ConfigurationManager::~ConfigurationManager()
@@ -128,6 +129,10 @@ uint32_t ConfigurationManager::getThreadCount()
     return this->clusteringParams.threadCount;
 }
 
+uint32_t ConfigurationManager::getFitnessFunction()
+{
+    return this->clusteringParams.fitnessFunction;
+}
 
 void ConfigurationManager::setClusteringParams(const ClusteringParams& clusteringParams)
 {
@@ -219,6 +224,10 @@ void ConfigurationManager::setThreadCount(uint32_t threadCount)
     this->clusteringParams.threadCount = threadCount;
 }
 
+void ConfigurationManager::setFitnessFunction(uint32_t fitnessFunction)
+{
+    this->clusteringParams.fitnessFunction = fitnessFunction;
+}
 
 void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
 {
@@ -415,6 +424,18 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
         throw std::runtime_error("Error! Could not find threadCount value in configuration file.");
     }
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Loaded Clustering Params succesfully from the following file. File: ", fullPathName);
+    
+    iter = parameterMap.find("fitnessFunction");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.fitnessFunction = std::stoul(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find fitnessFunction value in configuration file.");
+        throw std::runtime_error("Error! Could not find fitnessFunction value in configuration file.");
+    }
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Loaded Clustering Params succesfully from the following file. File: ", fullPathName);
 }
 
 void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
@@ -437,10 +458,13 @@ void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
     parameterMap["phaseSwitchFitnessValue"] = std::to_string(this->clusteringParams.phaseSwitchFitnessValue);
     parameterMap["phaseSwitchIterationValue"] = std::to_string(this->clusteringParams.phaseSwitchIterationValue);
     parameterMap["threadCount"] = std::to_string(this->clusteringParams.threadCount);
+    parameterMap["fitnessFunction"] = std::to_string(this->clusteringParams.fitnessFunction);
 
     ConfigurationReaderWriter configWriter(fullPathName);
     configWriter.writeConfiguration(parameterMap);
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Saved Clustering Params succesfully to the following file. File: ", fullPathName);
+    
+    
 }
 
 }

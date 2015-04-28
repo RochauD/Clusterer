@@ -147,6 +147,13 @@ struct ClusteringParams
     * threads used in the computation of the clustering solution.
     */
     uint32_t threadCount;
+    
+    /**
+    * @var fitnessFunction
+    * @brief Selects the paramater for optimization.
+    * @details If its 0 its fitness, 1 its MQ, 2 Performance.
+    */
+    uint32_t fitnessFunction;
 
 };
 
