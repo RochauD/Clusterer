@@ -225,12 +225,16 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     {
         case 0:
             populationFitnessAnalyzer.evaluatePopulation();
+            break;
         case 1:
             populationMQAnalyzer.evaluatePopulation();
+            break;
         case 2:
             populationPerformanceAnalyzer.evaluatePopulation();
+            break;
         default:
             populationFitnessAnalyzer.evaluatePopulation();
+            break;
     }
     this->sortPopulation();
     this->currentBest = (*this->population)[0];
@@ -268,12 +272,16 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         {
             case 0:
                 populationFitnessAnalyzer.evaluatePopulation();
+                break;
             case 1:
                 populationMQAnalyzer.evaluatePopulation();
+                break;
             case 2:
                 populationPerformanceAnalyzer.evaluatePopulation();
+                break;
             default:
                 populationFitnessAnalyzer.evaluatePopulation();
+                break;
         }
         this->sortPopulation();
         if (this->currentBest.second != (*this->population)[0].second)
