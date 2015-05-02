@@ -20,9 +20,9 @@ bool GraphExporter::WriteGraphToFile(AbstractGraph* g,std::string fullPathName)
 {
     std::ofstream file(fullPathName);
     std::vector<std::pair<std::pair<VertexId,VertexId>,double>> edgesAndWeights=g->getEdgesAndWeights();
-    for (auto& i:edgesAndWeights)
+    for (auto& e:edgesAndWeights)
     {
-	if(!(file<<(i.first).first<<" "<<(i.first).second<<" "<<i.second<<'\n'))
+	if(!(file<<(e.first).first<<" "<<(e.first).second<<" "<<e.second<<'\n'))
 	{
 	    clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Failed exporting edge.");
 	    return false;
