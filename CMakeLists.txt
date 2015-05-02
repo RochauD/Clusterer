@@ -140,6 +140,7 @@ source_group("Common\\Source Files" FILES ${CLUSTER_SOURCES_COMMON_CPP})
 # backend files
 # backend source files
 set(CLUSTER_SOURCES_BACKEND_CPP 
+	${CLUSTER_SOURCE_DIR}/GraphExporter.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
         ${CLUSTER_SOURCE_DIR}/AbstractGraph.cpp
@@ -169,10 +170,11 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/ExplorationJoin.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationSplit.cpp
         ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp
-        ${CLUSTER_SOURCE_DIR}/ClusterRefiner.cpp       
+        ${CLUSTER_SOURCE_DIR}/ClusterRefiner.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
+	${CLUSTER_INCLUDE_DIR}/GraphExporter.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringParams.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationManager.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationReaderWriter.hpp
