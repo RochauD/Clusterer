@@ -140,6 +140,7 @@ source_group("Common\\Source Files" FILES ${CLUSTER_SOURCES_COMMON_CPP})
 # backend files
 # backend source files
 set(CLUSTER_SOURCES_BACKEND_CPP 
+	${CLUSTER_INCLUDE_DIR}/PopulationExporter.cpp
 	${CLUSTER_SOURCE_DIR}/GraphExporter.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationManager.cpp
         ${CLUSTER_SOURCE_DIR}/ConfigurationReaderWriter.cpp
@@ -174,6 +175,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
+	${CLUSTER_INCLUDE_DIR}/PopulationExporter.hpp
 	${CLUSTER_INCLUDE_DIR}/GraphExporter.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringParams.hpp
         ${CLUSTER_INCLUDE_DIR}/ConfigurationManager.hpp
