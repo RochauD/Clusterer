@@ -35,6 +35,52 @@ namespace backend
 */
 struct ClusteringParams
 {
+
+    bool uniquePopulationSelection;
+    double maxMinDensityClusterProbability;
+    uint64_t iterationUntilMissingImprovementCausesInterruption;
+    uint64_t enqueueFrequency;
+
+    /**
+    * @var logFrequency
+    * @brief The log frequency used during the algorithm.
+    */
+    uint64_t logFrequency;
+
+    /**
+    * @var explorationMutationChance
+    * @brief The chance of mutating a member of the population in the
+    * exploration phase. A value between 0 and 1.
+    */
+    double explorationMutationChance;
+
+    /**
+    * @var refinementMutationChance
+    * @brief The chance of mutating a member of the population in the
+    * refinement phase. A value between 0 and 1.
+    */
+    double refinementMutationChance;
+
+    /**
+    * @var crossoverIterationCount
+    * @brief Crossover iteration count determines how often the crossover iteration
+    * runs and it thereby determines by how much the population grows the next time.
+    * @details Each iteration increases the population by two.
+    */
+    uint64_t crossoverIterationCount;
+
+    /**
+    * @var minPopulationSize
+    * @brief Minimum size of the population.
+    */
+    uint64_t minPopulationSize;
+
+    /**
+    * @var maxPopulationSize
+    * @brief Maximum size of the population.
+    */
+    uint64_t maxPopulationSize;
+
     /**
     * @var minIterations
     * @brief Minimum algorithm iteration count.
@@ -101,6 +147,13 @@ struct ClusteringParams
     * threads used in the computation of the clustering solution.
     */
     uint32_t threadCount;
+    
+    /**
+    * @var fitnessFunction
+    * @brief Selects the paramater for optimization.
+    * @details If its 0 its fitness, 1 its MQ, 2 Performance.
+    */
+    uint32_t fitnessFunction;
 
 };
 

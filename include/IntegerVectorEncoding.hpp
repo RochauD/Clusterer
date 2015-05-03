@@ -12,7 +12,7 @@
 // external headers
 
 // internal headers
-#include "Graph.hpp"
+#include "AbstractGraph.hpp"
 #include "ClusterEncoding.hpp"
 
 /**
@@ -34,11 +34,16 @@ class IntegerVectorEncoding : public ClusterEncoding
 {
     public:
         /**
+        * @brief default constructor
+        */
+        IntegerVectorEncoding();
+
+        /**
          * @brief create a default clustering scheme from graph g
          * @param g the graph to cluster
          */
-        IntegerVectorEncoding(const Graph* g);
-         
+        IntegerVectorEncoding(const AbstractGraph* g);
+
         /**
          * @brief move a vertex to a specific cluster
          * @param vertexId the id of the vertex to be moved
@@ -86,13 +91,19 @@ class IntegerVectorEncoding : public ClusterEncoding
          * @brief get the current encoding
          * @return the current encoding of a solution
          */
-        ClusterEncoding::Encoding getEncoding();
+        ClusterEncoding::Encoding getEncoding() const;
+
+        /**
+         * @brief get the size of the current encoding
+         * @return the number of vertices
+         */
+        uint32_t size() const;
 
         /**
          * @brief does a renumbering procedure to ensure unique representation of a solution
          * @return 0 on success -1 on failiure
          */
-        int normalize();
+        int32_t normalize();
 
         /**
          * @brief standard destructor
@@ -100,8 +111,9 @@ class IntegerVectorEncoding : public ClusterEncoding
         ~IntegerVectorEncoding();
 
     private:
+        bool isNormalized = false;
         ClusterEncoding::Encoding encoding;
-        const Graph* graph;
+        const AbstractGraph* graph;
 };
 
 }

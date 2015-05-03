@@ -21,21 +21,22 @@ namespace clusterer
 */
 namespace backend
 {
-
-    std::mt19937 UniformCrossoverEngine::rng;
-    std::uniform_int_distribution<unsigned> UniformCrossoverEngine::uni_dist(0, 1);
+    UniformCrossoverEngine::UniformCrossoverEngine(std::mt19937* gen)
+    {
+        rng = gen;
+    }
 
     bool UniformCrossoverEngine::getTrueOrFalse()
     {
-        return uni_dist(rng) == 1;
+        return dist((*rng));
     }
 
-    void UniformCrossoverEngine::crossover(ClusterEncoding& parent1, 
-                                           ClusterEncoding& parent2,
+    void UniformCrossoverEngine::crossover(const ClusterEncoding& parent1, 
+                                           const ClusterEncoding& parent2,
                                            ClusterEncoding& child)
     {
         unsigned i;
-        unsigned n = parent1.getEncoding().size();
+        unsigned n = parent1.size();
         for (i = 0; i < n; i++)
         {
             // Put vertex i in the cluster it is in one of the parents
@@ -49,6 +50,33 @@ namespace backend
                 child.addToCluster(i, parent2.getClusterOfVertex(i));
             }
         }
+        child.normalize();
+    }
+
+    void UniformCrossoverEngine::crossover(const ClusterEncoding& parent1, 
+                                           const ClusterEncoding& parent2,
+                                           ClusterEncoding& child1,
+                                           ClusterEncoding& child2)
+    {
+        unsigned i;
+        unsigned n = parent1.size();
+        for (i = 0; i < n; i++)
+        {
+            // Put vertex i in the cluster it is in one of the parents
+            // With probability 50% for picking each parent
+            if (getTrueOrFalse() == true)
+            {
+                child1.addToCluster(i, parent1.getClusterOfVertex(i));
+                child2.addToCluster(i, parent2.getClusterOfVertex(i));
+            } 
+            else
+            {
+                child1.addToCluster(i, parent2.getClusterOfVertex(i));
+                child2.addToCluster(i, parent1.getClusterOfVertex(i));
+            }
+        }
+        child1.normalize();
+        child2.normalize();
     }
 
     UniformCrossoverEngine::~UniformCrossoverEngine() {}

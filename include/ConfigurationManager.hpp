@@ -57,6 +57,53 @@ class ConfigurationManager
         */
         void setClusteringParams(const ClusteringParams& clusteringParams);
 
+        void setUniquePopulationSelection(bool uniquePopulationSelection);
+        void setMaxMinDensityClusterProbability(double maxMinDensityClusterProbability);
+        void setIterationUntilMissingImprovementCausesInterruption(uint64_t iterationUntilMissingImprovementCausesInterruption);
+        void setEnqueueFrequency(uint64_t enqueueFrequency);
+
+        /**
+        * @brief Sets the log frequency.
+        * @param logFrequency The log frequency.
+        * @return void
+        */
+        void setLogFrequency(uint64_t logFrequency);
+
+        /**
+        * @brief Sets the exploration mutation chance.
+        * @param explorationMutationChance The exploration mutation chance.
+        * @return void
+        */
+        void setExplorationMutationChance(double explorationMutationChance);
+
+        /**
+        * @brief Sets the refinement mutation chance.
+        * @param refinementMutationChance The refinement mutation chance.
+        * @return void
+        */
+        void setRefinementMutationChance(double refinementMutationChance);
+
+        /**
+        * @brief Sets the crossover iteration count.
+        * @param crossoverIterationCount The crossover iteration count.
+        * @return void
+        */
+        void setCrossoverIterationCount(uint64_t crossoverIterationCount);
+
+        /**
+        * @brief Sets the minimum iteration population size.
+        * @param minPopulationSize The value minimum population size.
+        * @return void
+        */
+        void setMinPopulationSize(uint64_t minPopulationSize);
+
+        /**
+        * @brief Sets the maximum population size.
+        * @param maxPopulationSize The maximum population size.
+        * @return void
+        */
+        void setMaxPopulationSize(uint64_t maxPopulationSize);
+
         /**
         * @brief Sets the minimum iteration count.
         * @param minIterations The value of the minimum iteration count.
@@ -104,25 +151,65 @@ class ConfigurationManager
         void setPhaseSwitchIterationValue(uint64_t phaseSwitchIterationValue);
 
         /**
-        * @brief Sets the number of clusters one suspects.
-        * @param predictedClusterCount The number of clusters.
-        * @return void
-        */
-        void setPredictedClusterCount(uint64_t predictedClusterCount);
-
-        /**
         * @brief Sets the number of threads used in the computation.
         * @param threadCount The number of threads.
         * @return void
         */
         void setThreadCount(uint32_t threadCount);
-
-
+	
+	/**
+        * @brief Selects the parameter for optimization.
+        * @param fitnessFunction Choose 0 for fitness, 1 for MQ and 2 for Performance.
+        * @return void
+        */
+        void setFitnessFunction(uint32_t fitnessFunction);
+	
         /**
         * @brief Returns the clustering parameters.
         * @return The current clustering parameters.
         */
         ClusteringParams getClusteringParams();
+	
+        bool getUniquePopulationSelection();
+        double getMaxMinDensityClusterProbability();
+        uint64_t getIterationUntilMissingImprovementCausesInterruption();
+        uint64_t getEnqueueFrequency();
+
+        /**
+        * @brief Gets the log frequency.
+        * @param The log frequency.
+        */
+        uint64_t getLogFrequency();
+
+        /**
+        * @brief Gets the exploration mutation chance.
+        * @param The exploration mutation chance.
+        */
+        double getExplorationMutationChance();
+
+        /**
+        * @brief Gets the refinement mutation chance.
+        * @param The refinement mutation chance.
+        */
+        double getRefinementMutationChance();
+
+        /**
+        * @brief Gets the crossover iteration count.
+        * @return The crossover iteration count.
+        */
+        uint64_t getCrossoverIterationCount();
+
+        /**
+        * @brief Returns the minimum population size.
+        * @return The minimum population size
+        */
+        uint64_t getMinPopulationSize();
+
+        /**
+        * @brief Returns the maximum population size.
+        * @return The maximum population size
+        */
+        uint64_t getMaxPopulationSize();
 
         /**
         * @brief Returns the minimum iteration count.
@@ -165,17 +252,18 @@ class ConfigurationManager
         uint64_t getPhaseSwitchIterationValue();
 
         /**
-        * @brief Returns the predicted cluster count.
-        * @return The predicted cluster count.
-        */
-        uint64_t getPredictedClusterCount();
-
-        /**
         * @brief Returns the number of threads that should be used in the
         * computation of the algorithm.
         * @return The number of threads.
         */
         uint32_t getThreadCount();
+	
+	/**
+        * @brief Selects the optimization method.
+        * @return 0 for Fitness, 1 for MQ and 2 for Performance.
+        */
+        uint32_t getFitnessFunction();
+	
 
         /**
         * @brief Loads clustering parameters from the specified file.
@@ -196,6 +284,7 @@ class ConfigurationManager
         * @throws std::runtime_error
         */
         void saveClusteringParams(const std::string& fullPathName);
+	
 
     protected:
     private:

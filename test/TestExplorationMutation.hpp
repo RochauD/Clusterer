@@ -2,6 +2,7 @@
 #define TEST_BACKEND_MUTATION_HPP
 
 // standard headers
+#include <random>
 #include <typeinfo>
 // external headers
 #include <cppunit/TestCase.h>
@@ -18,7 +19,11 @@
 //internal headers
 #include "../include/Graph.hpp"
 #include "../include/IntegerVectorEncoding.hpp"
+#include "../include/ClusterEncoding.hpp"
 #include "../include/ExplorationMutation.hpp"
+#include "../include/ExplorationSplit.hpp"
+#include "../include/ExplorationJoin.hpp"
+#include "../include/CombinedMutation.hpp"
 
 using namespace CppUnit;
 using namespace std;
@@ -39,7 +44,8 @@ class TestExplorationMutation : public CppUnit::TestFixture
         void testMutateFunction(void);
 
     private:
-        clb::ExplorationMutation mutator;
+        std::mt19937 mt;
+        void printSol(const ClusterEncoding&,int);
 };
 
 #endif

@@ -33,16 +33,35 @@ namespace backend
  * @class UniformCrossoverEngine
  * @brief Interface for the uniform crossover method
  */
-class UniformCrossoverEngine : public virtual CrossoverEngine
+class UniformCrossoverEngine : public CrossoverEngine
 {
     public:
         /**
-         * @brief Performs a Crossover on 2 encodings and creates a new one
-         * @param parent1 The first parent contributing to the crossover
-         * @param parent2 The second parent contributing to the crossover
+         * @brief Performs a Crossover on 2 encodings and creates a new one.
+         *  It is necessary to call normalize on the parents if using integer encoding
+         * @param parent1 The first NORMALIZED parent contributing to the crossover
+         * @param parent2 The second NORMALIZED parent contributing to the crossover
          * @param child The encoding object that will hold the child
          */
-        void crossover(ClusterEncoding& parent1, ClusterEncoding& parent2, ClusterEncoding& child);
+        void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
+                       ClusterEncoding& child);
+
+        /**
+         * @brief Performs a Crossover on 2 encodings and creates two ones.
+         *  It is necessary to call normalize on the parents if using integer encoding
+         * @param parent1 The first NORMALIZED parent contributing to the crossover
+         * @param parent2 The second NORMALIZED parent contributing to the crossover
+         * @param child1 The encoding object that will hold the first child
+         * @param child2 The encoding object that will hold the second child
+         */
+        void crossover(const ClusterEncoding& parent1, const ClusterEncoding& parent2,
+                       ClusterEncoding& child1, ClusterEncoding& child2);
+
+        /**
+         * @brief Uniform Crossover constructor
+         * @param gen An mt19937 random generator
+         */
+        UniformCrossoverEngine(std::mt19937* gen);
 
         /**
          * @brief standard destructor
@@ -52,17 +71,17 @@ class UniformCrossoverEngine : public virtual CrossoverEngine
     private:
         /**
          * @brief Returns true or false with probability 50%
-         * @return The returned random boolean
+         * @return A random boolean
          */
         bool getTrueOrFalse();
         /**
          * @brief A [0, 1] integer distribution
          */
-        static std::uniform_int_distribution<unsigned> uni_dist;
+        std::bernoulli_distribution dist;
         /**
          * @brief Standard configuration of a random number generator
          */
-        static std::mt19937 rng;
+        std::mt19937* rng;
 };
 
 }

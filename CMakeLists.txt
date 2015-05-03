@@ -154,18 +154,26 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Parcelable.cpp
         ${CLUSTER_SOURCE_DIR}/Person.cpp
-        ${CLUSTER_SOURCE_DIR}/GeneticStrategy.cpp
-        ${CLUSTER_SOURCE_DIR}/TwoPhaseStrategy.cpp
         ${CLUSTER_SOURCE_DIR}/JSONGraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
-        ${CLUSTER_SOURCE_DIR}/SocialClusteringService.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusteringService.cpp
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
         ${CLUSTER_SOURCE_DIR}/GraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/IntegerEncodingInitializer.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationMutation.cpp
         ${CLUSTER_SOURCE_DIR}/MutationEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/CrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/UniformCrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/MovieLensGraphReader.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusterwiseCrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/CombinedCrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/ExplorationJoin.cpp
+        ${CLUSTER_SOURCE_DIR}/ExplorationSplit.cpp
+        ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp
+        ${CLUSTER_SOURCE_DIR}/ClusterRefiner.cpp
+        ${CLUSTER_SOURCE_DIR}/PopulationExporter.cpp
+        ${CLUSTER_SOURCE_DIR}/GraphExporter.cpp
+        ${CLUSTER_SOURCE_DIR}/PopulationImporter.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -194,13 +202,26 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
-        ${CLUSTER_INCLUDE_DIR}/SocialClusteringService.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
         ${CLUSTER_INCLUDE_DIR}/UniformCrossoverEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusterwiseCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/MovieLensGraphReader.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationMutatorEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationCrossoverEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/Selector.hpp
+        ${CLUSTER_INCLUDE_DIR}/ExplorationJoin.hpp
+        ${CLUSTER_INCLUDE_DIR}/ExplorationSplit.hpp
+        ${CLUSTER_INCLUDE_DIR}/CombinedMutation.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusterRefiner.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationRefiner.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationSelector.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationExporter.hpp
+        ${CLUSTER_INCLUDE_DIR}/GraphExporter.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationImporter.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
@@ -276,7 +297,10 @@ set(CLUSTER_TEST_FILENAMES
         IntegerEncodingInitializer
         ExplorationMutation
         UniformCrossoverEngine
+        ClusterwiseCrossoverEngine
         ClusteringPopulationAnalyzer
+        Selector
+        ClusterRefiner
     )
 
 #############

@@ -7,7 +7,8 @@
 
 // standard headers
 #include <stdint.h>
-// external headers
+#include <random>
+
 
 // internal headers
 #include "ClusterEncoding.hpp"
@@ -34,29 +35,23 @@ class ExplorationMutation: public MutationEngine
         /**
         * @brief empty constructor
         */
-        ExplorationMutation();
+        ExplorationMutation(std::mt19937* rand_gen);
+
         /**
          * @brief mutate a clustering solution
          * @param cluster the clustering solution to mutate
-         * @param probability the probability with which the mutation will occur
-         * @return the new clustering solution if a mutation occurred, or the old
-         * one otherwise
          */
         // chooses a new ClusterId based on the maximum ClusterId in the cluster
-        void mutate(ClusterEncoding& cluster, double probability, ClusterEncoding& result);
-        /**
-         * @brief mutate a clustering solution
-         * @param cluster the clustering solution to mutate
-         * @param probability the probability with which the mutation will occur
-         * @return the new clustering solution if a mutation occurred, or the old
-         * one otherwise
-         */
-        //chooses a new ClusterId based on the number of vertices
-        void mutate2(ClusterEncoding& cluster, double probability, ClusterEncoding& result);
+        void mutate(ClusterEncoding& clusterSol);
+
         /**
          * @brief standard destructor
          */
-        virtual ~ExplorationMutation();
+        ~ExplorationMutation();
+
+    private:
+        std::mt19937* gen;
+
 };
 
 }
