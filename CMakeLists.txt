@@ -169,7 +169,9 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/ExplorationJoin.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationSplit.cpp
         ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp
-        ${CLUSTER_SOURCE_DIR}/ClusterRefiner.cpp       
+        ${CLUSTER_SOURCE_DIR}/ClusterRefiner.cpp
+        ${CLUSTER_SOURCE_DIR}/PopulationExporter.cpp
+        ${CLUSTER_SOURCE_DIR}/GraphExporter.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -214,6 +216,8 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ClusterRefiner.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationRefiner.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationSelector.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationExporter.hpp
+        ${CLUSTER_INCLUDE_DIR}/GraphExporter.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
