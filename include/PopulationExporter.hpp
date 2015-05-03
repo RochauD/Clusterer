@@ -2,8 +2,8 @@
  * @file PopulationExporter.hpp
  * @brief Export population to files.
  */
-#ifndef CLUSTERER_BACKEND_POPULATION_EXPORTER
-#define CLUSTERER_BACKEND_POPULATION_EXPORTER
+#ifndef CLUSTERER_BACKEND_POPULATION_EXPORTER_HPP
+#define CLUSTERER_BACKEND_POPULATION_EXPORTER_HPP
 
 // standard headers
 #include <string>
@@ -15,18 +15,16 @@
 // external headers
 
 // internal headers
-#include "Graph.hpp"
-#include "AbstractGraph.hpp"
 #include "Vertex.hpp"
+#include "IntegerVectorEncoding.hpp"
+
 /**
 * @namespace clusterer
 * @brief The namespace clusterer is the main namespace of the clusterer project.
 */
 namespace clusterer
 {
-// just for reference 
-// typedef std::vector<ClusterId> Encoding;
-// typedef uint64_t ClusterId;
+
 /**
 * @namespace backend
 * @brief The namespace backend is the namespace for all backend components of the
@@ -34,30 +32,37 @@ namespace clusterer
 */
 namespace backend
 {
-class GraphExporter{
-public:
-    /**
-     * @brief default constructor
-     */
-    PopulationExporter () = default;
-    /**
-    * @brief default constructor
-    * @return bool value. true is writing was successful
-    * @param AbstractGraph* pointer to an Abstract Graph
-    */
-    bool WritePopulationToFile (Population*, std::string);
-    /**
-     * @brief standard destructor
-     */
-    ~PopulationExporter () = default;
-    
-protected:
-private:
-    
+
+/*
+* @class GraphExporter
+*/
+class PopulationExporter
+{
+    public:
+        /**
+         * @brief default constructor
+         */
+        PopulationExporter();
+
+        /**
+        * @brief standard destructor
+        */
+        ~PopulationExporter();
+
+        /**
+        * @brief default constructor
+        * @return bool value. true is writing was successful
+        * @param population pointer to the population
+        * @param fullPathName the full filename
+        */
+        bool WritePopulationToFile(std::vector<std::pair<IntegerVectorEncoding, double>>* population, std::string fullPathName);
+
+    protected:
+    private:
+
 };
 
 }
-
 }
 
 /**

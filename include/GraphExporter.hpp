@@ -2,8 +2,8 @@
  * @file GraphExporter.hpp
  * @brief Export graph to files.
  */
-#ifndef CLUSTERER_BACKEND_GRAPH_EXPORTER
-#define CLUSTERER_BACKEND_GRAPH_EXPORTER
+#ifndef CLUSTERER_BACKEND_GRAPH_EXPORTER_HPP
+#define CLUSTERER_BACKEND_GRAPH_EXPORTER_HPP
 
 // standard headers
 #include <string>
@@ -32,26 +32,30 @@ namespace clusterer
 */
 namespace backend
 {
-class GraphExporter{
-public:
-    /**
-     * @brief default constructor
-     */
-    GraphExporter () = default;
-    /**
-    * @brief default constructor
-    * @return bool value. true is writing was successful
-    * @param AbstractGraph* pointer to an Abstract Graph
-    */
-    bool WriteGraphToFile (AbstractGraph*, std::string);
-    /**
-     * @brief standard destructor
-     */
-    ~GraphExporter () = delete;
-    
-protected:
-private:
-    
+class GraphExporter
+{
+    public:
+        /**
+         * @brief default constructor
+         */
+        GraphExporter() = default;
+
+        /**
+        * @brief standard destructor
+        */
+        ~GraphExporter() = delete;
+
+        /**
+        * @brief default constructor
+        * @return bool value. true is writing was successful
+        * @param g pointer to an Abstract Graph
+        * @param fullPathName the fullpathname
+        */
+        bool WriteGraphToFile(AbstractGraph* g, std::string fullPathName);
+
+    protected:
+    private:
+
 };
 
 }

@@ -4,50 +4,62 @@
  */
 
 #include "../include/PopulationExporter.hpp"
-#include "../include/GlobalFileLogger.hpp"
+
 // standard headers
+
 // external headers
 
 // internal headers
+#include "../include/GlobalFileLogger.hpp"
 
 namespace clusterer
 {
 
 namespace backend
 {
-bool PopulationExporter::WritePopulationToFile(std::vector<std::pair<Encoding, double>>* p, std::string fullPathName)
+
+PopulationExporter::PopulationExporter()
+{
+
+}
+
+PopulationExporter::~PopulationExporter()
+{
+
+}
+
+bool PopulationExporter::WritePopulationToFile(std::vector<std::pair<IntegerVectorEncoding, double>>* population, std::string fullPathName)
 {
     std::ofstream file(fullPathName);
-    //
-    for (auto& e: *p)
+    for (auto& ele : *population)
     {
-	// print structure to be formatted:
-	if(!(file<<'\n'<<e.second<<'\n'))
-	{
-	    clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Failed exporting endocoding information.");
-	    return false;
-	}
-	
-	for (auto& f: e.first)
-	{
-	    if(!(file<<f<<" "))
-	    {
-		clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Failed exporting endocoding information.");
-		return false;
-	    }
-	}
-	
-	file<<'\n';	
+        // print structure to be formatted:
+        if (!(file << ele.second << '\n'))
+        {
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Failed exporting population information. Tried to write into file: ", fullPathName);
+            return false;
+        }
+
+        for (auto& f : ele.first.getEncoding())
+        {
+            if (!(file << f << " "))
+            {
+                clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Failed exporting population information. Tried to write into file: ", fullPathName);
+                return false;
+            }
+        }
+        file << '\n';
     }
-    
+
     if (file.bad() || file.fail())
     {
-	clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Failed exporting population.");
-	return false;
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Failed exporting population information. Tried to write into file: ", fullPathName);
+        return false;
     }
+    file.close();
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Succesfully exported population into file: ", fullPathName);
     return true;
 }
 
-}    
-
+}
 }
