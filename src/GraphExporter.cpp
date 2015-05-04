@@ -17,7 +17,7 @@ namespace clusterer
 namespace backend
 {
 
-bool GraphExporter::WriteGraphToFile(AbstractGraph* g,std::string fullPathName)
+bool GraphExporter::writeGraphToFile(AbstractGraph* g,std::string fullPathName)
 {
     std::ofstream file(fullPathName);
     std::vector<std::pair<std::pair<VertexId,VertexId>,double>> edgesAndWeights=g->getEdgesAndWeights();

@@ -51,7 +51,7 @@ class GraphExporter
         * @param g pointer to an Abstract Graph
         * @param fullPathName the fullpathname
         */
-        bool WriteGraphToFile(AbstractGraph* g, std::string fullPathName);
+        bool writeGraphToFile(AbstractGraph* g, std::string fullPathName);
 
     protected:
     private:
