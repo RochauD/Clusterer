@@ -19,7 +19,17 @@ namespace clusterer
 namespace backend
 {
 
-bool PopulationImporter::LoadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<std::pair<IntegerVectorEncoding, double>>* population)
+PopulationImporter::PopulationImporter()
+{
+
+}
+
+PopulationImporter::~PopulationImporter()
+{
+
+}
+
+bool PopulationImporter::loadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<std::pair<IntegerVectorEncoding, double>>* population)
 {
     if (population == nullptr || graph == nullptr)
     {

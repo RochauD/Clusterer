@@ -23,9 +23,9 @@ namespace clusterer
 namespace backend
 {
 
-size_t findRating(size_t userID, size_t movieID, std::unordered_map<size_t, std::set<std::pair<size_t, size_t>>>* dataMap)
+size_t findRating(size_t userID, size_t movieID, std::unordered_map<size_t, std::set<std::pair<size_t, size_t>>>& dataMap)
 {
-    for (auto& e : (*dataMap)[userID])
+    for (auto& e : dataMap[userID])
     {
         if (e.first == movieID)
         {
@@ -41,12 +41,12 @@ size_t findRating(size_t userID, size_t movieID, std::unordered_map<size_t, std:
 * @param B One of the two vertices of the edge whose weight will be computed.
 * @return Weight of the edge.
 */
-float computeWeight(int A, int B, std::unordered_map<size_t, std::set<std::pair<size_t, size_t>>>* dataMap)
+float computeWeight(size_t A, size_t B, std::unordered_map<size_t, std::set<std::pair<size_t, size_t>>>& dataMap)
 {
-    std::set<int> intersectionofAandB;
+    std::vector<std::pair<size_t, size_t>> intersectionofAandB;
 
     // find set of movies rated by both A and B
-    std::set_intersection(*dataMap[A].begin(), *dataMap[A].end(), *dataMap[B].begin(), *dataMap[B].end(), intersectionofAandB.begin(),
+    std::set_intersection(dataMap[A].begin(), dataMap[A].end(), dataMap[B].begin(), dataMap[B].end(), std::back_inserter(intersectionofAandB),
                           [=](const std::pair<size_t, size_t>& a, const std::pair<size_t, size_t>& b)->bool
     {
         return a.first < b.first;
@@ -59,9 +59,9 @@ float computeWeight(int A, int B, std::unordered_map<size_t, std::set<std::pair<
 
     // Read each line, check if it is intersection, then compute the similarity.
     unsigned long long sumofsquaredrating = 0;
-    for (std::set<int>::iterator i = intersectionofAandB.begin(); i != intersectionofAandB.end(); i++)
+    for (auto iter = intersectionofAandB.begin(); iter != intersectionofAandB.end(); iter++)
     {
-        auto result = findRating(A, *i, dataMap) - findRating(B, *i, dataMap);
+        auto result = findRating(A, iter->first, dataMap) - findRating(B, iter->first, dataMap);
         sumofsquaredrating += result*result;
     }
 
@@ -133,7 +133,7 @@ bool MovieLensGraphReader::readFile(std::string fullPathName)
             }
             else
             {
-                auto weight = computeWeight(userVec[i], userVec[j], &dataMap);
+                auto weight = computeWeight(userVec[i], userVec[j], dataMap);
                 if (weight > 0.0001)
                 {
                     this->graph->addEdge(Vertex(userVec[i]), Vertex(userVec[j]), weight);

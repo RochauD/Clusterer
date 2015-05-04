@@ -28,7 +28,7 @@ PopulationExporter::~PopulationExporter()
 
 }
 
-bool PopulationExporter::WritePopulationToFile(std::vector<std::pair<IntegerVectorEncoding, double>>* population, std::string fullPathName)
+bool PopulationExporter::writePopulationToFile(std::vector<std::pair<IntegerVectorEncoding, double>>* population, std::string fullPathName)
 {
     std::ofstream file(fullPathName);
     for (auto& ele : *population)

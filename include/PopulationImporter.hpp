@@ -42,12 +42,12 @@ class PopulationImporter
         /**
         * @brief default constructor
         */
-        PopulationImporter() = default;
+        PopulationImporter();
 
         /**
         * @brief standard destructor
         */
-        ~PopulationImporter() = default;
+        ~PopulationImporter();
 
         /**
         * @brief Loads a population from the given file
@@ -56,7 +56,7 @@ class PopulationImporter
         * @param the underlying graph
         * @param population pointer to a population
         */
-        bool LoadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<std::pair<IntegerVectorEncoding, double>>* population);
+        bool loadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<std::pair<IntegerVectorEncoding, double>>* population);
 
     protected:
     private:
