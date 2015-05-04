@@ -17,6 +17,17 @@ namespace clusterer
 namespace backend
 {
 
+GraphExporter::GraphExporter()
+{
+
+}
+
+
+GraphExporter::~GraphExporter()
+{
+
+}
+
 bool GraphExporter::writeGraphToFile(AbstractGraph* g,std::string fullPathName)
 {
     std::ofstream file(fullPathName);

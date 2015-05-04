@@ -38,12 +38,12 @@ class GraphExporter
         /**
          * @brief default constructor
          */
-        GraphExporter() = default;
+        GraphExporter();
 
         /**
         * @brief standard destructor
         */
-        ~GraphExporter() = delete;
+        ~GraphExporter();
 
         /**
         * @brief default constructor
