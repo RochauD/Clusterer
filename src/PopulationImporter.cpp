@@ -19,7 +19,17 @@ namespace clusterer
 namespace backend
 {
 
-bool PopulationImporter::LoadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<std::pair<IntegerVectorEncoding, double>>* population)
+PopulationImporter::PopulationImporter()
+{
+
+}
+
+PopulationImporter::~PopulationImporter()
+{
+
+}
+
+bool PopulationImporter::loadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<std::pair<IntegerVectorEncoding, double>>* population)
 {
     if (population == nullptr || graph == nullptr)
     {
@@ -66,6 +76,11 @@ bool PopulationImporter::LoadPopulationFromFile(std::string fullPathName, Abstra
             else
             {
                 clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Invalid formatting of population file: ", fullPathName);
+                return false;
+            }
+            if (encoding.normalize() == -1)
+            {
+                clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not normalize population member. Population file: ", fullPathName);
                 return false;
             }
             population->push_back(std::make_pair(encoding, fitness));

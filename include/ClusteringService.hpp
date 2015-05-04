@@ -47,9 +47,14 @@ class ClusteringService
 
         // graph related functions
         bool loadGraphTypeVertexPairWeight(std::string fullPathName);
+        bool loadGraphTypeMovieLens(std::string fullPathName);
+        bool saveGraphToFile(std::string fullPathName);
+
+        // population related functions
+        bool loadPopulation(std::string fullPathName);
+        bool savePopulation(std::string fullPathName);
 
         // algorithm related functions
-
         bool runAlgorithm(bool restart = false);
 
         void stopAlgorithm();

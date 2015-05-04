@@ -222,15 +222,19 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     switch (this->clusteringParameters.fitnessFunction)
     {
         case 0:
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Using fitness function: Fitness");
             populationFitnessAnalyzer.evaluatePopulation();
             break;
         case 1:
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Using fitness function: MQ");
             populationMQAnalyzer.evaluatePopulation();
             break;
         case 2:
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Using fitness function: Performance");
             populationPerformanceAnalyzer.evaluatePopulation();
             break;
         default:
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Using default fitness function.");
             populationFitnessAnalyzer.evaluatePopulation();
             break;
     }

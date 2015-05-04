@@ -55,7 +55,7 @@ class PopulationExporter
         * @param population pointer to the population
         * @param fullPathName the full filename
         */
-        bool WritePopulationToFile(std::vector<std::pair<IntegerVectorEncoding, double>>* population, std::string fullPathName);
+        bool writePopulationToFile(std::vector<std::pair<IntegerVectorEncoding, double>>* population, std::string fullPathName);
 
     protected:
     private:
