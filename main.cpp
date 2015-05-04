@@ -32,7 +32,15 @@ myWindow::~myWindow(){
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    myWindow mainWin;
+    QPushButton *quitButton = new QPushButton("&Quit");
+    QObject::connect(quitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
+    QVBoxLayout *layout = new QVBoxLayout;
+   // layout->addWidget(mainWin);
+    layout->addWidget(quitButton);
+
+    QWidget window;
+    window.setLayout(layout);
+    window.show();
   //  mainWin.show();
     return app.exec();
 }
