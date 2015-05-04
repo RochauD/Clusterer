@@ -78,6 +78,11 @@ bool PopulationImporter::loadPopulationFromFile(std::string fullPathName, Abstra
                 clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Invalid formatting of population file: ", fullPathName);
                 return false;
             }
+            if (encoding.normalize() == -1)
+            {
+                clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not normalize population member. Population file: ", fullPathName);
+                return false;
+            }
             population->push_back(std::make_pair(encoding, fitness));
         }
         file.close();
