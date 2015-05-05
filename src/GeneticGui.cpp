@@ -38,7 +38,6 @@ GeneticGui::GeneticGui()
 
   // Blank items for the drawing widgets
   QDockWidget* fitnessGraph = new QDockWidget("Fitness Graph");
-  fitnessGraph->setFloating(false);
   QLabel* visualization = new QLabel("visualization");
   visualization->setMargin(300);
 
