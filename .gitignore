@@ -5,3 +5,5 @@ build/*
 lib/*
 testing/*
 bin/*
+include/GUINodePlotter.hpp
+src/ClustererMenuBar.cpp
