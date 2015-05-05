@@ -416,9 +416,7 @@ set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEA
 # Executable #
 ##############
 
-QT4_WRAP_CPP(MOCScrs ${CLUSTER_SOURCES_MOC_H})
-
-add_executable(Clusterer ${MOCSrcs} ${CLUSTER_SOURCES_FRONTEND})
+add_executable(Clusterer ${CLUSTER_SOURCES_FRONTEND})
 
 target_link_libraries(Clusterer ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
 

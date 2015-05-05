@@ -1,18 +1,21 @@
 #include <QApplication>
 
 
-#include "include/GeneticGui.hpp"
+#include "include/mainwindow.h"
 
-using namespace clusterer::frontend;
+//using namespace clusterer::frontend;
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    MainWindow w;
+    w.show();
+   /* QApplication app(argc, argv);
 
     GeneticGui& gui = GeneticGui::getApp();
     gui.startGui();
 
-/*    QPushButton *importButton = new QPushButton("&Read Graph");
+    QPushButton *importButton = new QPushButton("&Read Graph");
     QPushButton *settingsButton = new QPushButton("&Settings");
     QPushButton *quitButton = new QPushButton("&Quit");
     
