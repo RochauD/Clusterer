@@ -174,6 +174,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/PopulationExporter.cpp
         ${CLUSTER_SOURCE_DIR}/GraphExporter.cpp
         ${CLUSTER_SOURCE_DIR}/PopulationImporter.cpp
+        ${CLUSTER_SOURCE_DIR}/GlobalBackendController.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -222,6 +223,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/PopulationExporter.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphExporter.hpp
         ${CLUSTER_INCLUDE_DIR}/PopulationImporter.hpp
+        ${CLUSTER_INCLUDE_DIR}/GlobalBackendController.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
