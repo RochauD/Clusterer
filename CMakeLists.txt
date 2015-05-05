@@ -266,8 +266,7 @@ set(CLUSTER_SOURCES_FRONTEND_CPP
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
         ${CLUSTER_SOURCE_DIR}/ClustererMenuBar.cpp
         ${CLUSTER_SOURCE_DIR}/mainwindow.cpp
-
-        main.cpp
+        ${CLUSTER_SOURCE_DIR}/main.cpp
     )
 # frontend header files
 set(CLUSTER_SOURCES_FRONTEND_H 
