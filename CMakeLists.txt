@@ -262,11 +262,15 @@ source_group("Backend\\Source Files" FILES ${CLUSTER_SOURCES_BACKEND_CPP})
 # frontend source files
 set(CLUSTER_SOURCES_FRONTEND_CPP
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
+        ${CLUSTER_SOURCE_DIR}/ClustererMenuBar.cpp
+
         main.cpp
     )
 # frontend header files
 set(CLUSTER_SOURCES_FRONTEND_H 
         ${CLUSTER_INCLUDE_DIR}/GeneticGui.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClustererMenuBar.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClustererWindow.hpp
     )
 # frontend combined
 set(CLUSTER_SOURCES_FRONTEND

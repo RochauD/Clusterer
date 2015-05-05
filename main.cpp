@@ -3,37 +3,19 @@
 #include <QHBoxLayout>
 #include <QWidget>
 #include <QtGui>
-//#include "ui_myWindow.h"
 
+#include "include/GeneticGui.hpp"
 
-class myWindow : public QMainWindow
-{
-	//Q_OBJECT
-private:
-	QWidget m_window;
-
-public: 
-	myWindow();
-	~myWindow();
-	
-};
-
-
-myWindow::myWindow(){
-	m_window.show();
-}
-
-	
-myWindow::~myWindow(){
-}
-
+using namespace clusterer::frontend;
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    GeneticGui& gui = GeneticGui::getApp();
+    gui.startGui();
 
-    QPushButton *importButton = new QPushButton("&Read Graph");
+/*    QPushButton *importButton = new QPushButton("&Read Graph");
     QPushButton *settingsButton = new QPushButton("&Settings");
     QPushButton *quitButton = new QPushButton("&Quit");
     
@@ -48,9 +30,9 @@ int main(int argc, char *argv[])
     layout->addWidget(quitButton);
 
 
-    QWidget window;
+    myWindow window;
     window.setLayout(layout);
-    window.show();
+    window.show();*/
     //uncomment the code below to have a separate main window; 
     //the code above create an entire layout with a quit button
 
