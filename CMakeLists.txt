@@ -187,7 +187,6 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/Parcelable.cpp
         ${CLUSTER_SOURCE_DIR}/Person.cpp
         ${CLUSTER_SOURCE_DIR}/JSONGraphReader.cpp
-        ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
         ${CLUSTER_SOURCE_DIR}/ClusteringService.cpp
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
         ${CLUSTER_SOURCE_DIR}/GraphReader.cpp
@@ -312,7 +311,6 @@ set(CLUSTER_TEST_FILENAMES
         ConfigurationManager
         ConfigurationReaderWriter
         FlagParser
-        GeneticGui
         GraphReader
         SocialClusteringService
         Vertex

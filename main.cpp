@@ -1,8 +1,5 @@
-#include <QMainWindow>
 #include <QApplication>
-#include <QHBoxLayout>
-#include <QWidget>
-#include <QtGui>
+
 
 #include "include/GeneticGui.hpp"
 
