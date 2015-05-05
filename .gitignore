@@ -5,3 +5,4 @@ build/*
 lib/*
 testing/*
 bin/*
+Qt_project/build*
