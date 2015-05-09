@@ -17,6 +17,7 @@
 // internal headers
 #include "Vertex.hpp"
 #include "IntegerVectorEncoding.hpp"
+#include "PopulationMember.hpp"
 
 /**
 * @namespace clusterer
@@ -55,7 +56,7 @@ class PopulationExporter
         * @param population pointer to the population
         * @param fullPathName the full filename
         */
-        bool writePopulationToFile(std::vector<std::pair<IntegerVectorEncoding, double>>* population, std::string fullPathName);
+        bool writePopulationToFile(std::vector<PopulationMember<IntegerVectorEncoding, double>>* population, std::string fullPathName);
 
     protected:
     private:

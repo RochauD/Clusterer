@@ -28,19 +28,19 @@ PopulationExporter::~PopulationExporter()
 
 }
 
-bool PopulationExporter::writePopulationToFile(std::vector<std::pair<IntegerVectorEncoding, double>>* population, std::string fullPathName)
+bool PopulationExporter::writePopulationToFile(std::vector<PopulationMember<IntegerVectorEncoding, double>>* population, std::string fullPathName)
 {
     std::ofstream file(fullPathName);
     for (auto& ele : *population)
     {
         // print structure to be formatted:
-        if (!(file << ele.second << '\n'))
+        if (!(file << ele.fitnessValue << '\n'))
         {
             clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Failed exporting population information. Tried to write into file: ", fullPathName);
             return false;
         }
 
-        for (auto& f : ele.first.getEncoding())
+        for (auto& f : ele.populationEncoding.getEncoding())
         {
             if (!(file << f << " "))
             {

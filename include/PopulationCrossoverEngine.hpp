@@ -143,9 +143,18 @@ crossoverSubPopulation(size_t iterationCount, size_t threadID)
     for (size_t i = 0; i < iterationCount; i++)
     {
         auto indices = selector.selectTwoClusters();
-        crossover.crossover((*this->populationPtr)[indices.first].first, (*this->populationPtr)[indices.second].first, firstChild, secondChild);
-        result.push_back(std::make_pair(firstChild, 0.0));
-        result.push_back(std::make_pair(secondChild, 0.0));
+        crossover.crossover((*this->populationPtr)[indices.first].populationEncoding, (*this->populationPtr)[indices.second].populationEncoding, firstChild, secondChild);
+        PopulationMember<Encoding, double> member1;
+        member1.fitnessValue = 0.0;
+        member1.modified = true;
+        member1.populationEncoding = firstChild;
+        PopulationMember<Encoding, double> member2;
+        member2.fitnessValue = 0.0;
+        member2.modified = true;
+        member2.populationEncoding = secondChild;
+
+        result.push_back(member1);
+        result.push_back(member2);
     }
 
     return result;

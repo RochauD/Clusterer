@@ -19,6 +19,7 @@
 #include <utility>
 
 #include "../include/Selector.hpp"
+#include "../include/PopulationMember.hpp"
 
 using namespace CppUnit;
 using namespace std;
@@ -41,8 +42,8 @@ class TestSelector : public CppUnit::TestFixture
 
     private:
         std::mt19937* rng;
-        std::vector<std::pair<int, double>>* data;
-        Selector<std::vector<std::pair<int, double>>> *testObj;
+        std::vector<PopulationMember<int, double>>* data;
+        Selector<std::vector<PopulationMember<int, double>>>* testObj;
 };
 
 #endif

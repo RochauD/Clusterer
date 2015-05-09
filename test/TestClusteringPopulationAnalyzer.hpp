@@ -21,6 +21,7 @@
 #include "../include/IntegerEncodingInitializer.hpp"
 #include "../include/FitnessAnalyzer.hpp"
 #include "../include/ClusteringPopulationAnalyzer.hpp"
+#include "../include/PopulationMember.hpp"
 
 using namespace CppUnit;
 using namespace std;

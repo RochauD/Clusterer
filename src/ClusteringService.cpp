@@ -172,7 +172,7 @@ void ClusteringService::resumeAlgorithm()
     this->algorithmService.resumeAlgorithm();
 }
 
-clc::ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>>* ClusteringService::getOutQueue()
+clc::ConcurrentLockingQueue<std::pair<PopulationMember<IntegerVectorEncoding, double>, uint64_t>>* ClusteringService::getOutQueue()
 {
     return &this->outQueue;
 }

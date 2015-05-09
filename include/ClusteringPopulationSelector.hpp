@@ -132,9 +132,10 @@ void ClusteringPopulationSelector<EncodingFitnessDataStructure>::selectSubPopula
     IntegerEncodingInitializer initializer(this->graph);
     for (size_t i = populationIndexBegin; i < populationIndexEnd - 1; i++)
     {
-        if ((*this->populationPtr)[i].first.getEncoding() == (*this->populationPtr)[i + 1].first.getEncoding())
+        if ((*this->populationPtr)[i].populationEncoding.getEncoding() == (*this->populationPtr)[i + 1].populationEncoding.getEncoding())
         {
-            (*this->populationPtr)[i].first = initializer.getRandomSolution();
+            (*this->populationPtr)[i].populationEncoding = initializer.getRandomSolution();
+            (*this->populationPtr)[i].modified = true;
         }
     }
 }

@@ -17,6 +17,7 @@
 // internal headers
 #include "Vertex.hpp"
 #include "IntegerVectorEncoding.hpp"
+#include "PopulationMember.hpp"
 
 /**
 * @namespace clusterer
@@ -56,7 +57,7 @@ class PopulationImporter
         * @param the underlying graph
         * @param population pointer to a population
         */
-        bool loadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<std::pair<IntegerVectorEncoding, double>>* population);
+        bool loadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<PopulationMember<IntegerVectorEncoding, double>>* population);
 
     protected:
     private:

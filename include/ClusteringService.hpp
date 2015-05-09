@@ -15,6 +15,7 @@
 #include "Graph.hpp"
 #include "IntegerEncodingInitializer.hpp"
 #include "TwoPhaseStrategy.hpp"
+#include "PopulationMember.hpp"
 /**
 * @namespace clusterer
 * @brief The namespace clusterer is the main namespace of the clusterer project.
@@ -61,13 +62,13 @@ class ClusteringService
         void resumeAlgorithm();
 
         // output related
-        clc::ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>>* getOutQueue();
+        clc::ConcurrentLockingQueue<std::pair<PopulationMember<IntegerVectorEncoding, double>, uint64_t>>* getOutQueue();
 
     protected:
     private:
         TwoPhaseStrategy<IntegerVectorEncoding, IntegerEncodingInitializer> algorithmService;
-        clc::ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>> outQueue;
-        std::vector<std::pair<IntegerVectorEncoding, double>> population;
+        clc::ConcurrentLockingQueue<std::pair<PopulationMember<IntegerVectorEncoding, double>, uint64_t>> outQueue;
+        std::vector<PopulationMember<IntegerVectorEncoding, double>> population;
         ConfigurationManager configurationManager;
         Graph graph;
 

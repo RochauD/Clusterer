@@ -128,7 +128,7 @@ void Selector<EncodingFitnessDataStructure>::generateRollingSum(std::vector<doub
             continue;
         }
 
-        sum += (*population)[i].second;
+        sum += (*population)[i].fitnessValue;
         probSum[ind] = sum;
         ind++;
     }

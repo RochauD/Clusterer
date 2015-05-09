@@ -23,7 +23,7 @@ int main()
     bool running = true;
     static std::atomic<bool> flag;
     flag = true;
-    clc::ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>>* queue;
+    clc::ConcurrentLockingQueue<std::pair<PopulationMember<IntegerVectorEncoding, double>, uint64_t>>* queue;
     int option;
     while (running)
     {
@@ -183,13 +183,16 @@ int main()
                         while (flag.load())
                         {
                             auto res = queue->pop();
-                            std::cout << "Current fitness: " << res.second << std::endl;
+                            std::string buffer;
+                            std::cout << "Current fitness: " << res.first.fitnessValue << std::endl;
                             std::cout << "Encoding: " << std::endl;
-                            for (auto& e : res.first.getEncoding())
+                            for (auto& e : res.first.populationEncoding.getEncoding())
                             {
                                 std::cout << e << " ";
+                                buffer.append(std::to_string(e) + " ");
                             }
                             std::cout << std::endl;
+                            GlobalFileLogger::instance()->log(SeverityType::INFO, "Current population: \n",buffer);
                         }
                     });
                     if (service.runAlgorithm(false))
@@ -197,14 +200,14 @@ int main()
                         std::cout << "\tAlgorithm run was succesful." << std::endl;
                         flag = false;
                         std::cout << "Dummy encoding for this demo only" << std::endl;
-                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
+                        queue->push(std::make_pair(PopulationMember<IntegerVectorEncoding, double>(), 0));
                     }
                     else
                     {
                         std::cout << "\tAlgorithm run failed." << std::endl;
                         flag = false;
                         std::cout << "Dummy encoding for this demo only" << std::endl;
-                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
+                        queue->push(std::make_pair(PopulationMember<IntegerVectorEncoding, double>(), 0));
                     }
                     t.join();
                     flag = true;
@@ -218,9 +221,9 @@ int main()
                         while (flag.load())
                         {
                             auto res = queue->pop();
-                            std::cout << "Current fitness: " << res.second << std::endl;
+                            std::cout << "Current fitness: " << res.first.fitnessValue << std::endl;
                             std::cout << "Encoding: " << std::endl;
-                            for (auto& e : res.first.getEncoding())
+                            for (auto& e : res.first.populationEncoding.getEncoding())
                             {
                                 std::cout << e << " ";
                             }
@@ -232,14 +235,14 @@ int main()
                         std::cout << "\tAlgorithm run was succesful." << std::endl;
                         flag = false;
                         std::cout << "Dummy encoding for this demo only" << std::endl;
-                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
+                        queue->push(std::make_pair(PopulationMember<IntegerVectorEncoding, double>(), 0));
                     }
                     else
                     {
                         std::cout << "\tAlgorithm run failed." << std::endl;
                         flag = false;
                         std::cout << "Dummy encoding for this demo only" << std::endl;
-                        queue->push(std::make_pair(IntegerVectorEncoding(), 0.0));
+                        queue->push(std::make_pair(PopulationMember<IntegerVectorEncoding, double>(), 0));
                     }
                     t.join();
                     flag = true;

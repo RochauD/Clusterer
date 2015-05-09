@@ -224,6 +224,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/GraphExporter.hpp
         ${CLUSTER_INCLUDE_DIR}/PopulationImporter.hpp
         ${CLUSTER_INCLUDE_DIR}/GlobalBackendController.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationMember.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND

@@ -145,7 +145,8 @@ void ClusteringPopulationRefiner<ClusteringSolutionRefinerFunction, EncodingFitn
     {
         if (dis(this->randomDeviceVec[threadID]) < this->mutationProbability)
         {
-            refiner.refine(((*this->populationPtr)[i].first), *this->graph);
+            refiner.refine(((*this->populationPtr)[i].populationEncoding), *this->graph);
+            (*this->populationPtr)[i].modified = true;
         }
     }
 }

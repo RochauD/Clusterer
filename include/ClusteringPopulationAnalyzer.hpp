@@ -119,7 +119,11 @@ void ClusteringPopulationAnalyzer<ClusteringSolutionAnalyzerFunction, EncodingFi
     ClusteringSolutionAnalyzerFunction analyzer;
     for (size_t i = populationIndexBegin; i < populationIndexEnd; i++)
     {
-        (*this->populationPtr)[i].second = analyzer.analyze(&((*this->populationPtr)[i].first), this->graph);
+        if ((*this->populationPtr)[i].modified)
+        {
+            (*this->populationPtr)[i].fitnessValue = analyzer.analyze(&((*this->populationPtr)[i].populationEncoding), this->graph);
+            (*this->populationPtr)[i].modified = false;
+        }
     }
 }
 

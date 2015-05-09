@@ -29,7 +29,7 @@ PopulationImporter::~PopulationImporter()
 
 }
 
-bool PopulationImporter::loadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<std::pair<IntegerVectorEncoding, double>>* population)
+bool PopulationImporter::loadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<PopulationMember<IntegerVectorEncoding, double>>* population)
 {
     if (population == nullptr || graph == nullptr)
     {
@@ -50,13 +50,15 @@ bool PopulationImporter::loadPopulationFromFile(std::string fullPathName, Abstra
 
         while (std::getline(file, line))
         {
+            PopulationMember<IntegerVectorEncoding, double> member;
+            member.modified = true;
             IntegerVectorEncoding encoding(graph);
             double fitness;
             std::string buffer;
 
             // read in fitness
             std::istringstream iss(line);
-            iss >> fitness;
+            iss >> member.fitnessValue;
             // read in cluster encoding
             if (std::getline(file, buffer))
             {
@@ -83,7 +85,8 @@ bool PopulationImporter::loadPopulationFromFile(std::string fullPathName, Abstra
                 clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not normalize population member. Population file: ", fullPathName);
                 return false;
             }
-            population->push_back(std::make_pair(encoding, fitness));
+            member.populationEncoding = encoding;
+            population->push_back(member);
         }
         file.close();
     }
