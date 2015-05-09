@@ -200,7 +200,6 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ExplorationMutation.hpp
         ${CLUSTER_INCLUDE_DIR}/ExplorationCrossover.hpp
         ${CLUSTER_INCLUDE_DIR}/RefinementMutationEngine.hpp
-        ${CLUSTER_INCLUDE_DIR}/GeneticStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp

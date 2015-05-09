@@ -13,7 +13,6 @@
 // internal headers
 #include "ClusterEncoding.hpp"
 #include "AbstractGraph.hpp"
-#include "GeneticStrategy.hpp"
 #include "ClusteringParams.hpp"
 #include "ConcurrentLockingQueue.hpp"
 #include "FitnessAnalyzer.hpp"
