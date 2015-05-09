@@ -57,9 +57,32 @@ class ConfigurationManager
         */
         void setClusteringParams(const ClusteringParams& clusteringParams);
 
+        /**
+        * @brief Sets the unqiue population parameter flag.
+        * @param uniquePopulationSelection The value to set the flag to.
+        * @return void
+        */
         void setUniquePopulationSelection(bool uniquePopulationSelection);
+
+        /**
+        * @brief Sets the max min density cluster probability.
+        * @param maxMinDensityClusterProbability The probability.
+        * @return void
+        */
         void setMaxMinDensityClusterProbability(double maxMinDensityClusterProbability);
+
+        /**
+        * @brief Sets the iteration count, which determines after how many iteration with no change we are stopping the algorithm.
+        * @param iterationUntilMissingImprovementCausesInterruption The iteration count.
+        * @return void
+        */
         void setIterationUntilMissingImprovementCausesInterruption(uint64_t iterationUntilMissingImprovementCausesInterruption);
+
+        /**
+        * @brief Sets the enqueue frequency for the algorithm.
+        * @param enqueueFrequency The enqueue frequency.
+        * @return void
+        */
         void setEnqueueFrequency(uint64_t enqueueFrequency);
 
         /**
@@ -156,40 +179,80 @@ class ConfigurationManager
         * @return void
         */
         void setThreadCount(uint32_t threadCount);
-	
-	/**
+
+        /**
         * @brief Selects the parameter for optimization.
         * @param fitnessFunction Choose 0 for fitness, 1 for MQ and 2 for Performance.
         * @return void
         */
         void setFitnessFunction(uint32_t fitnessFunction);
-	
+
+        /**
+        * @brief Sets the predicted cluster count.
+        * @param predictedClusterCount The predicted cluster count.
+        * @return void
+        */
+        void setPredictedClusterCount(uint64_t predictedClusterCount);
+
+        /**
+        * @brief Sets the autosave frequency
+        * @param autoSavePopulationFrequency The auto save frequency.
+        * @return void
+        */
+        void setAutoSavePopulationFrequency(uint64_t autoSavePopulationFrequency);
+
+        /**
+        * @brief Sets the cluster gneration function
+        * @param clusterGenerationFunction The cluster generation function key
+        * @return void
+        */
+        void setClusterGenerationFunction(uint32_t clusterGenerationFunction);
+
         /**
         * @brief Returns the clustering parameters.
         * @return The current clustering parameters.
         */
         ClusteringParams getClusteringParams();
-	
+
+        /**
+        * @brief Gets unique population selection flag.
+        * @return The value of the unique population selection.
+        */
         bool getUniquePopulationSelection();
+
+        /**
+        * @brief Gets the max min density cluster probability.
+        * @return The max min density cluster probability.
+        */
         double getMaxMinDensityClusterProbability();
+
+        /**
+        * @brief Gets the iteration count until a missing improvement causes and interruption.
+        * @return The max min density cluster probability.
+        */
         uint64_t getIterationUntilMissingImprovementCausesInterruption();
+
+        /**
+        * @brief Gets the enqueue frequency.
+        * @return The enqueue frequency.
+        */
         uint64_t getEnqueueFrequency();
 
         /**
         * @brief Gets the log frequency.
-        * @param The log frequency.
+        * @return The log frequency.
         */
         uint64_t getLogFrequency();
 
         /**
         * @brief Gets the exploration mutation chance.
-        * @param The exploration mutation chance.
+        * @return double The exploration mutation chance.
         */
         double getExplorationMutationChance();
 
         /**
         * @brief Gets the refinement mutation chance.
-        * @param The refinement mutation chance.
+        * @return The refinement mutation chance.
         */
         double getRefinementMutationChance();
 
@@ -257,13 +320,30 @@ class ConfigurationManager
         * @return The number of threads.
         */
         uint32_t getThreadCount();
-	
-	/**
+
+        /**
         * @brief Selects the optimization method.
         * @return 0 for Fitness, 1 for MQ and 2 for Performance.
         */
         uint32_t getFitnessFunction();
-	
+
+        /**
+        * @brief The predicted cluster count.
+        * @return The predicted cluster count.
+        */
+        uint64_t getPredictedClusterCount();
+
+        /**
+        * @brief The auto save population frequency.
+        * @return The auto save population frequency.
+        */
+        uint64_t getAutoSavePopulationFrequency();
+
+        /**
+        * @brief The cluster generation function flag.
+        * @return The cluster generation function flag.
+        */
+        uint32_t getClusterGenerationFunction();
 
         /**
         * @brief Loads clustering parameters from the specified file.
@@ -284,7 +364,7 @@ class ConfigurationManager
         * @throws std::runtime_error
         */
         void saveClusteringParams(const std::string& fullPathName);
-	
+
 
     protected:
     private:

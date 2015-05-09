@@ -32,12 +32,125 @@ ConfigurationManager::ConfigurationManager()
     this->clusteringParams.phaseSwitchIterationValue = 5000;
     this->clusteringParams.threadCount = 4;
     this->clusteringParams.fitnessFunction = 0;
+    this->clusteringParams.predictedClusterCount = 0;
+    this->clusteringParams.autoSavePopulationFrequency = 100;
+    this->clusteringParams.clusterGenerationFunction = 0;
 }
 
 ConfigurationManager::~ConfigurationManager()
 {
+
 }
 
+void ConfigurationManager::setClusteringParams(const ClusteringParams& clusteringParams)
+{
+    this->clusteringParams = clusteringParams;
+}
+
+void ConfigurationManager::setUniquePopulationSelection(bool uniquePopulationSelection)
+{
+    this->clusteringParams.uniquePopulationSelection = uniquePopulationSelection;
+}
+
+void ConfigurationManager::setMaxMinDensityClusterProbability(double maxMinDensityClusterProbability)
+{
+    this->clusteringParams.maxMinDensityClusterProbability = maxMinDensityClusterProbability;
+}
+
+void ConfigurationManager::setIterationUntilMissingImprovementCausesInterruption(uint64_t iterationUntilMissingImprovementCausesInterruption)
+{
+    this->clusteringParams.iterationUntilMissingImprovementCausesInterruption = iterationUntilMissingImprovementCausesInterruption;
+}
+
+void ConfigurationManager::setEnqueueFrequency(uint64_t enqueueFrequency)
+{
+    this->clusteringParams.enqueueFrequency = enqueueFrequency;
+}
+
+void ConfigurationManager::setLogFrequency(uint64_t logFrequency)
+{
+    this->clusteringParams.logFrequency = logFrequency;
+}
+
+void ConfigurationManager::setExplorationMutationChance(double explorationMutationChance)
+{
+    this->clusteringParams.explorationMutationChance = explorationMutationChance;
+}
+
+void ConfigurationManager::setRefinementMutationChance(double refinementMutationChance)
+{
+    this->clusteringParams.refinementMutationChance = refinementMutationChance;
+}
+
+void ConfigurationManager::setCrossoverIterationCount(uint64_t crossoverIterationCount)
+{
+    this->clusteringParams.crossoverIterationCount = crossoverIterationCount;
+}
+
+void ConfigurationManager::setMinPopulationSize(uint64_t minPopulationSize)
+{
+    this->clusteringParams.minPopulationSize = minPopulationSize;
+}
+
+void ConfigurationManager::setMaxPopulationSize(uint64_t maxPopulationSize)
+{
+    this->clusteringParams.maxPopulationSize = maxPopulationSize;
+}
+
+void ConfigurationManager::setMinIterationsCount(uint64_t minIterations)
+{
+    this->clusteringParams.minIterations = minIterations;
+}
+
+void ConfigurationManager::setMaxIterationsCount(uint64_t maxIterations)
+{
+    this->clusteringParams.maxIterations = maxIterations;
+}
+
+void ConfigurationManager::setMinFitness(double minFitness)
+{
+    this->clusteringParams.minFitness = minFitness;
+}
+
+void ConfigurationManager::setMaxFitness(double maxFitness)
+{
+    this->clusteringParams.maxFitness = maxFitness;
+}
+
+void ConfigurationManager::setPhaseSwitchFitnessValue(double phaseSwitchFitnessValue)
+{
+    this->clusteringParams.phaseSwitchFitnessValue = phaseSwitchFitnessValue;
+}
+
+void ConfigurationManager::setPhaseSwitchIterationValue(uint64_t phaseSwitchIterationValue)
+{
+    this->clusteringParams.phaseSwitchIterationValue = phaseSwitchIterationValue;
+}
+
+void ConfigurationManager::setThreadCount(uint32_t threadCount)
+{
+    this->clusteringParams.threadCount = threadCount;
+}
+
+void ConfigurationManager::setFitnessFunction(uint32_t fitnessFunction)
+{
+    this->clusteringParams.fitnessFunction = fitnessFunction;
+}
+
+void ConfigurationManager::setPredictedClusterCount(uint64_t predictedClusterCount)
+{
+    this->clusteringParams.predictedClusterCount = predictedClusterCount;
+}
+
+void ConfigurationManager::setAutoSavePopulationFrequency(uint64_t autoSavePopulationFrequency)
+{
+    this->clusteringParams.autoSavePopulationFrequency = autoSavePopulationFrequency;
+}
+
+void ConfigurationManager::setClusterGenerationFunction(uint32_t clusterGenerationFunction)
+{
+    this->clusteringParams.clusterGenerationFunction = clusterGenerationFunction;
+}
 
 ClusteringParams ConfigurationManager::getClusteringParams()
 {
@@ -134,99 +247,19 @@ uint32_t ConfigurationManager::getFitnessFunction()
     return this->clusteringParams.fitnessFunction;
 }
 
-void ConfigurationManager::setClusteringParams(const ClusteringParams& clusteringParams)
+uint64_t ConfigurationManager::getPredictedClusterCount()
 {
-    this->clusteringParams = clusteringParams;
+    return this->clusteringParams.predictedClusterCount;
 }
 
-void ConfigurationManager::setUniquePopulationSelection(bool uniquePopulationSelection)
+uint64_t ConfigurationManager::getAutoSavePopulationFrequency()
 {
-    this->clusteringParams.uniquePopulationSelection = uniquePopulationSelection;
+    return this->clusteringParams.autoSavePopulationFrequency;
 }
 
-void ConfigurationManager::setMaxMinDensityClusterProbability(double maxMinDensityClusterProbability)
+uint32_t ConfigurationManager::getClusterGenerationFunction()
 {
-    this->clusteringParams.maxMinDensityClusterProbability = maxMinDensityClusterProbability;
-}
-
-void ConfigurationManager::setIterationUntilMissingImprovementCausesInterruption(uint64_t iterationUntilMissingImprovementCausesInterruption)
-{
-    this->clusteringParams.iterationUntilMissingImprovementCausesInterruption = iterationUntilMissingImprovementCausesInterruption;
-}
-
-void ConfigurationManager::setEnqueueFrequency(uint64_t enqueueFrequency)
-{
-    this->clusteringParams.enqueueFrequency = enqueueFrequency;
-}
-
-void ConfigurationManager::setLogFrequency(uint64_t logFrequency)
-{
-    this->clusteringParams.logFrequency = logFrequency;
-}
-
-void ConfigurationManager::setExplorationMutationChance(double explorationMutationChance)
-{
-    this->clusteringParams.explorationMutationChance = explorationMutationChance;
-}
-
-void ConfigurationManager::setRefinementMutationChance(double refinementMutationChance)
-{
-    this->clusteringParams.refinementMutationChance = refinementMutationChance;
-}
-
-void ConfigurationManager::setCrossoverIterationCount(uint64_t crossoverIterationCount)
-{
-    this->clusteringParams.crossoverIterationCount = crossoverIterationCount;
-}
-
-void ConfigurationManager::setMinPopulationSize(uint64_t minPopulationSize)
-{
-    this->clusteringParams.minPopulationSize = minPopulationSize;
-}
-
-void ConfigurationManager::setMaxPopulationSize(uint64_t maxPopulationSize)
-{
-    this->clusteringParams.maxPopulationSize = maxPopulationSize;
-}
-
-void ConfigurationManager::setMinIterationsCount(uint64_t minIterations)
-{
-    this->clusteringParams.minIterations = minIterations;
-}
-
-void ConfigurationManager::setMaxIterationsCount(uint64_t maxIterations)
-{
-    this->clusteringParams.maxIterations = maxIterations;
-}
-
-void ConfigurationManager::setMinFitness(double minFitness)
-{
-    this->clusteringParams.minFitness = minFitness;
-}
-
-void ConfigurationManager::setMaxFitness(double maxFitness)
-{
-    this->clusteringParams.maxFitness = maxFitness;
-}
-
-void ConfigurationManager::setPhaseSwitchFitnessValue(double phaseSwitchFitnessValue)
-{
-    this->clusteringParams.phaseSwitchFitnessValue = phaseSwitchFitnessValue;
-}
-
-void ConfigurationManager::setPhaseSwitchIterationValue(uint64_t phaseSwitchIterationValue)
-{
-    this->clusteringParams.phaseSwitchIterationValue = phaseSwitchIterationValue;
-}
-
-void ConfigurationManager::setThreadCount(uint32_t threadCount)
-{
-    this->clusteringParams.threadCount = threadCount;
-}
-
-void ConfigurationManager::setFitnessFunction(uint32_t fitnessFunction)
-{
-    this->clusteringParams.fitnessFunction = fitnessFunction;
+    return this->clusteringParams.clusterGenerationFunction;
 }
 
 void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
@@ -423,8 +456,7 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
         clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find threadCount value in configuration file.");
         throw std::runtime_error("Error! Could not find threadCount value in configuration file.");
     }
-    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Loaded Clustering Params succesfully from the following file. File: ", fullPathName);
-    
+
     iter = parameterMap.find("fitnessFunction");
     if (iter != parameterMap.end())
     {
@@ -435,6 +467,40 @@ void ConfigurationManager::loadClusteringParams(const std::string& fullPathName)
         clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find fitnessFunction value in configuration file.");
         throw std::runtime_error("Error! Could not find fitnessFunction value in configuration file.");
     }
+
+    iter = parameterMap.find("predictedClusterCount");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.predictedClusterCount = std::stoull(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find predictedClusterCount value in configuration file.");
+        throw std::runtime_error("Error! Could not find predictedClusterCount value in configuration file.");
+    }
+
+    iter = parameterMap.find("autoSavePopulationFrequency");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.autoSavePopulationFrequency = std::stoull(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find autoSavePopulationFrequency value in configuration file.");
+        throw std::runtime_error("Error! Could not find autoSavePopulationFrequency value in configuration file.");
+    }
+
+    iter = parameterMap.find("clusterGenerationFunction");
+    if (iter != parameterMap.end())
+    {
+        this->clusteringParams.clusterGenerationFunction = std::stoul(iter->second);
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not find clusterGenerationFunction value in configuration file.");
+        throw std::runtime_error("Error! Could not find clusterGenerationFunction value in configuration file.");
+    }
+
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Loaded Clustering Params succesfully from the following file. File: ", fullPathName);
 }
 
@@ -459,12 +525,13 @@ void ConfigurationManager::saveClusteringParams(const std::string& fullPathName)
     parameterMap["phaseSwitchIterationValue"] = std::to_string(this->clusteringParams.phaseSwitchIterationValue);
     parameterMap["threadCount"] = std::to_string(this->clusteringParams.threadCount);
     parameterMap["fitnessFunction"] = std::to_string(this->clusteringParams.fitnessFunction);
+    parameterMap["predictedClusterCount"] = std::to_string(this->clusteringParams.predictedClusterCount);
+    parameterMap["autoSavePopulationFrequency"] = std::to_string(this->clusteringParams.autoSavePopulationFrequency);
+    parameterMap["clusterGenerationFunction"] = std::to_string(this->clusteringParams.clusterGenerationFunction);
 
     ConfigurationReaderWriter configWriter(fullPathName);
     configWriter.writeConfiguration(parameterMap);
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "Saved Clustering Params succesfully to the following file. File: ", fullPathName);
-    
-    
 }
 
 }
