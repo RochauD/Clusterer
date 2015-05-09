@@ -51,6 +51,7 @@ message("Setting compiler settings:")
 if( WIN32 )
     message("-- Windows detected")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /O2")
 else()
     message("-- Linux/UNIX detected")
     # Set C++11
@@ -60,6 +61,8 @@ else()
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 endif()
 message("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
