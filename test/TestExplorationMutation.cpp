@@ -12,24 +12,27 @@ void TestExplorationMutation::tearDown(void)
 
 }
 
-void TestExplorationMutation::printSol(const ClusterEncoding& clusterSol,int n){
-    for(int i = 0; i < n; i++){
+void TestExplorationMutation::printSol(const ClusterEncoding& clusterSol,int n)
+{
+    for (int i = 0; i < n; i++)
+    {
         std::cout<<clusterSol.getClusterOfVertex(i)<<" ";
     }
     std::cout<<"\n";
 }
 
-void TestExplorationMutation::testMutateFunction(void){
+void TestExplorationMutation::testMutateFunction(void)
+{
     clb::CombinedMutation mutator(&mt);
     clb::Graph graph;
 
-	graph.addVertex(Vertex(0));
-	graph.addVertex(Vertex(1));
-	graph.addVertex(Vertex(2));
-	graph.addVertex(Vertex(3));
-	graph.addVertex(Vertex(4));
+    graph.addVertex(Vertex(0));
+    graph.addVertex(Vertex(1));
+    graph.addVertex(Vertex(2));
+    graph.addVertex(Vertex(3));
+    graph.addVertex(Vertex(4));
 
-	graph.addEdge(Vertex(0), Vertex(1), 0.125);
+    graph.addEdge(Vertex(0), Vertex(1), 0.125);
     graph.addEdge(Vertex(0), Vertex(2), 0.125);
     graph.addEdge(Vertex(0), Vertex(3), 0.125);
 
@@ -55,7 +58,7 @@ void TestExplorationMutation::testMutateFunction(void){
     solution.addToCluster(2,2);
     solution.addToCluster(3,1);
     solution.addToCluster(4,3);
-    
+
     std::cout<<"before mutate--test\n";
     clb::IntegerVectorEncoding result1 = solution;
     mutator.mutate(result1);
@@ -74,33 +77,7 @@ void TestExplorationMutation::testMutateFunction(void){
 
     //int checker1,checker2,checker3,checker4,checker5;
     //checker1 = checker2 = checker3 = checker4 = checker5 = 0;
-    
-    std::cout<<"\noriginal: ";
-    printSol(solution,5);
 
-    std::cout<<"mutated: ";
-    printSol(result1,5);
-
-    std::cout<<"mutated: ";
-    printSol(result2,5);
-
-    std::cout<<"mutated: ";
-    printSol(result3,5);
-
-    std::cout<<"mutated: ";
-    printSol(result4,5);
-
-    std::cout<<"mutated: ";
-    printSol(result5,5);
-
-    /*
-    for(int i = 0; i < 5; i++){
-    	if(solution.getClusterOfVertex(i) != result1.getClusterOfVertex(i)) checker1++;
-    	if(solution.getClusterOfVertex(i) != result2.getClusterOfVertex(i)) checker2++;
-    	if(solution.getClusterOfVertex(i) != result3.getClusterOfVertex(i)) checker3++;
-    	if(solution.getClusterOfVertex(i) != result4.getClusterOfVertex(i)) checker4++;
-    	if(solution.getClusterOfVertex(i) != result5.getClusterOfVertex(i)) checker5++;
-    }*/
     int solClusterCount = solution.getClusterCount();
     int result1CC = result1.getClusterCount();
     int result2CC = result2.getClusterCount();
@@ -108,50 +85,9 @@ void TestExplorationMutation::testMutateFunction(void){
     int result4CC = result4.getClusterCount();
     int result5CC = result5.getClusterCount();
 
-
-    /*
-    std::cout<<"checker1: "<<checker1<<"\n";
-    std::cout<<"checker2: "<<checker2<<"\n";
-    std::cout<<"checker3: "<<checker3<<"\n";
-    std::cout<<"checker4: "<<checker4<<"\n";
-    std::cout<<"checker5: "<<checker5<<"\n";*/
-
-
     CPPUNIT_ASSERT(std::abs(solClusterCount-result1CC) <= 2 &&
-        std::abs(solClusterCount-result2CC) <= 2 &&
-        std::abs(solClusterCount-result3CC) <= 2 &&
-        std::abs(solClusterCount-result4CC) <= 2 &&
-        std::abs(solClusterCount-result5CC) <= 2);
-    /*
-    CPPUNIT_ASSERT(checker1 <= 1 && checker2 <= 1 && checker3 <= 1
-    	&& checker4 <= 1 && checker5 <= 1);
-    */
-
-    /*
-    clb::IntegerVectorEncoding split1 = solution;
-    this->mutator.split(split1);    
-
-    clb::IntegerVectorEncoding split2 = solution;
-    this->mutator.split(split2);   
-
-    clb::IntegerVectorEncoding split3 = solution;
-    this->mutator.split(split3);
-
-    std::cout<<"original: ";
-    printSol(solution,5);
-    std::cout<<"splitted: ";
-    printSol(split1,5);
-    std::cout<<"splitted: ";
-    printSol(split2,5);
-    std::cout<<"splitted: ";
-    printSol(split3,5);
-
-    int solClusterCount = solution.getClusterCount();
-    int split1CC = solution.getClusterCount();
-    int split2CC = solution.getClusterCount();
-    int split3CC = solution.getClusterCount();
-
-    CPPUNIT_ASSERT(std::abs(solClusterCount-split1CC) <= 2 &&
-        std::abs(solClusterCount-split2CC) <= 2 &&
-        std::abs(solClusterCount-split3CC) <= 2);*/
+                   std::abs(solClusterCount-result2CC) <= 2 &&
+                   std::abs(solClusterCount-result3CC) <= 2 &&
+                   std::abs(solClusterCount-result4CC) <= 2 &&
+                   std::abs(solClusterCount-result5CC) <= 2);
 }
