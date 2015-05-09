@@ -112,7 +112,6 @@ set(CLUSTER_SOURCES_COMMON_CPP
         ${CLUSTER_SOURCE_DIR}/LoggingPolicy.cpp
         ${CLUSTER_SOURCE_DIR}/LoggingPolicyFile.cpp
         ${CLUSTER_SOURCE_DIR}/GlobalFileLogger.cpp
-        ${CLUSTER_SOURCE_DIR}/FlagParser.cpp
     )
 # common header files
 set(CLUSTER_SOURCES_COMMON_H 
@@ -125,7 +124,6 @@ set(CLUSTER_SOURCES_COMMON_H
         ${CLUSTER_INCLUDE_DIR}/LoggingPolicy.hpp
         ${CLUSTER_INCLUDE_DIR}/LoggingPolicyFile.hpp
         ${CLUSTER_INCLUDE_DIR}/GlobalFileLogger.hpp
-        ${CLUSTER_INCLUDE_DIR}/FlagParser.hpp
     )
 # common combined
 set(CLUSTER_SOURCES_COMMON
@@ -280,8 +278,6 @@ set(CLUSTER_SOURCES
 set(CLUSTER_TEST_FILENAMES
         ConfigurationManager
         ConfigurationReaderWriter
-        FlagParser
-        GeneticGui
         GraphReader
         SocialClusteringService
         Vertex
