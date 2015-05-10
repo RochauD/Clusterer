@@ -30,9 +30,8 @@ namespace backend
 
 /**
  * @class AbstractGraph
- * @brief Wrapper for Boost Graph Lib
+ * @brief An abstract graph interface which allows many different formats to be used internally in its child classes.
  */
-
 class AbstractGraph
 {
     public:

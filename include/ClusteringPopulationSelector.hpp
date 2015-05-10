@@ -1,6 +1,7 @@
 /**
 * @file ClusteringPopulationSelector.hpp
-* @brief population selector selects non duplicate members of a population and removes duplicates
+* @brief In this file the class ClusteringPopulationSelector is defined. This class is used to
+* select members from a population so that the reuslting population is unique.
 */
 #ifndef CLUSTERER_BACKEND_CLUSTERING_POPULATION_SELECTOR_HPP
 #define CLUSTERER_BACKEND_CLUSTERING_POPULATION_SELECTOR_HPP
@@ -32,14 +33,20 @@ namespace backend
 
 /**
 * @class ClusteringPopulationSelector
-* @brief object which selects a population
+* @brief This class is used to select members from a population so that the reuslting population is unique.
+* @tparam EncodingFitnessDataStructure The data structure which represents a population.
 */
 template<class EncodingFitnessDataStructure>
 class ClusteringPopulationSelector
 {
     public:
         /**
-        * @brief standard constructor
+        * @brief Constructor that creates a ClusteringPopulationSelector object from the given parameters.
+        * @param graph A pointer to the underlying graph object.
+        * @param populationPtr A pointer to the underlying population.
+        * @param predictedClusterCount The predicted cluster count.
+        * @param clusterGenerationFunction The clusterGenerationFunction index.
+        * @param threadCount The threadCount.
         */
         ClusteringPopulationSelector(const AbstractGraph* graph,
                                      EncodingFitnessDataStructure* populationPtr,
@@ -65,10 +72,34 @@ class ClusteringPopulationSelector
         */
         void selectSubPopulation(size_t populationIndexBegin, size_t populationIndexEnd, size_t threadID);
 
+        /**
+        * @var graph
+        * @brief A pointer to the underlying graph object.
+        */
         const AbstractGraph* graph;
+
+        /**
+        * @var populationPtr
+        * @brief A pointer to the underlying population object.
+        */
         EncodingFitnessDataStructure* populationPtr;
+
+        /**
+        * @var threadCount
+        * @brief The number of threads used int the evaluation.s
+        */
         size_t threadCount;
+
+        /**
+        * @var predictedClusterCount
+        * @brief The predicted cluster count.
+        */
         uint64_t predictedClusterCount;
+
+        /**
+        * @var clusterGenerationFunction
+        * @brief The clusterGenerationFunction index.
+        */
         uint32_t clusterGenerationFunction;
 };
 

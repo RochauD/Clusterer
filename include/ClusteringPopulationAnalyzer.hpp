@@ -1,6 +1,7 @@
 /**
 * @file ClusteringPopulationAnalyzer.hpp
-* @brief fitness population analyzer analyzes the
+* @brief In this file the class ClusteringPopulationAnalyzer is defined. This class is used to
+* analyze the fitness of a clustering solution population.
 */
 #ifndef CLUSTERER_BACKEND_CLUSTERING_POPULATION_ANALYZER_HPP
 #define CLUSTERER_BACKEND_CLUSTERING_POPULATION_ANALYZER_HPP
@@ -11,9 +12,7 @@
 // external headers
 
 // internal headers
-#include "ClusterEncoding.hpp"
 #include "AbstractGraph.hpp"
-#include "ClusteringSolutionAnalyzer.hpp"
 
 /**
 * @namespace clusterer
@@ -32,7 +31,11 @@ namespace backend
 
 /**
 * @class ClusteringPopulationAnalyzer
-* @brief object which assess the quality of a population
+* @brief Class which assess the quality of a clustering solution population.
+* @tparam ClusteringSolutionAnalyzerFunction The function used to analyze a member of the population.
+* The ClusteringSolutionAnalyzerFunction type needs to have a function with the following prototype:
+* FitnessType analyze(EncodingType*, AbstractGraph*)
+* @tparam EncodingFitnessDataStructure The data structure which represents a population.
 */
 template<class ClusteringSolutionAnalyzerFunction, class EncodingFitnessDataStructure>
 class ClusteringPopulationAnalyzer
@@ -61,8 +64,22 @@ class ClusteringPopulationAnalyzer
         */
         void evaluateSubPopulation(size_t populationIndexBegin, size_t populationIndexEnd);
 
+        /**
+        * @var graph
+        * @brief A pointer to the underlying graph object.
+        */
         const AbstractGraph* graph;
+
+        /**
+        * @var populationPtr
+        * @brief A pointer to the underlying population object.
+        */
         EncodingFitnessDataStructure* populationPtr;
+
+        /**
+        * @var threadCount
+        * @brief The number of threads used int the evaluation.s
+        */
         size_t threadCount;
 };
 
