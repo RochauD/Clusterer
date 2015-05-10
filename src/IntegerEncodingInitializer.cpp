@@ -18,7 +18,7 @@ IntegerEncodingInitializer::IntegerEncodingInitializer(
 
     std::random_device rd;
     rng.seed(rd());
-    uni_dist = new std::uniform_int_distribution<unsigned>(0, maxClusters);
+    uni_dist = new std::uniform_int_distribution<unsigned>(0, this->maxClusters);
 }
 
 IntegerVectorEncoding IntegerEncodingInitializer::getRandomSolution()
@@ -67,7 +67,7 @@ IntegerVectorEncoding IntegerEncodingInitializer::getRandomSolution()
             break;
         default:
             {
-                for (int vert = 0; vert < graph->getNoVertices(); vert++)
+                for (uint64_t vert = 0; vert < graph->getNoVertices(); vert++)
                 {
                     result.addToCluster(vert, (*uni_dist)(rng));
                 }
