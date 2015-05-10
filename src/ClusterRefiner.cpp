@@ -3,26 +3,19 @@
 * @brief cluster refiner interface implementation
 */
 
-//external headers
-// uncomment if the prints are needed #include <iostream>
-//local headers
-#include "../include/ClusterRefiner.hpp"
+// standard headers
+#include <algorithm>
 
+// external headers
+
+// local headers
+#include "../include/ClusterRefiner.hpp"
+#include "../include/IntegerVectorEncoding.hpp"
 
 namespace clusterer
 {
 namespace backend
 {
-
-void ClusterRefiner::printSol(const ClusterEncoding& clusterSol)
-{
-    /*
-    for(unsigned int i = 0; i < clusterSol.size(); i++){
-        std::cout<<clusterSol.getClusterOfVertex(i)<<" ";
-    }
-    std::cout<<"\n";
-    */
-}
 
 ClusterRefiner::ClusterRefiner(std::mt19937* rand_gen, double prob)
     : gen(rand_gen), bd(prob)
@@ -57,8 +50,6 @@ void ClusterRefiner::refine(ClusterEncoding& clusterSol, const AbstractGraph& gr
         if (cluster_list_freq[i] != 0)
         {
             // check if needed the computed density values for the clusters
-            // std::cout<<i<<": "<<"--> "<<clusters_density[i]<<"\n";
-
             if (clusters_density[i] >= max_cluster_den)
             {
                 max_cluster_den = clusters_density[i];
@@ -76,8 +67,14 @@ void ClusterRefiner::refine(ClusterEncoding& clusterSol, const AbstractGraph& gr
     // p -- probability to refine max_cluster_id
     // (1-p) -- probability to refine min_cluster_id
     ClusterId cluster_to_refine;
-    if (bd((*gen))) { cluster_to_refine = max_cluster_id; }
-    else { cluster_to_refine = min_cluster_id; }
+    if (bd((*gen)))
+    {
+        cluster_to_refine = max_cluster_id;
+    }
+    else
+    {
+        cluster_to_refine = min_cluster_id;
+    }
 
     // create the 2 new possible encodings
     // option1: if an edge is in between clusters the node from the
@@ -96,8 +93,6 @@ void ClusterRefiner::refine(ClusterEncoding& clusterSol, const AbstractGraph& gr
         option2.addToCluster(i,temp);
     }
 
-    printSol(option1);
-
     for (auto& e: graph.getEdgesAndWeights())
     {
         ClusterId startNodeCluster = clusterSol.getClusterOfVertex(e.first.first);
@@ -105,7 +100,6 @@ void ClusterRefiner::refine(ClusterEncoding& clusterSol, const AbstractGraph& gr
         if (startNodeCluster == cluster_to_refine
                 && endNodeCluster != cluster_to_refine)
         {
-
             option1.addToCluster(e.first.first,endNodeCluster);
             option2.addToCluster(e.first.second,startNodeCluster);
         }
@@ -118,17 +112,6 @@ void ClusterRefiner::refine(ClusterEncoding& clusterSol, const AbstractGraph& gr
     this->original_density = clusters_density[cluster_to_refine];
     this->after_density = this->original_density;
 
-    /* in case future debugging is needed this would be helpful
-    std::cout<<"original: "; printSol(clusterSol);
-    std::cout<<cluster_to_refine<<": density -- "<<original<<"\n";
-
-    std::cout<<"option1: "; printSol(option1);
-    std::cout<<cluster_to_refine<<": density -- "<<option1_den<<"\n";
-
-    std::cout<<"option2: "; printSol(option2);
-    std::cout<<cluster_to_refine<<": density -- "<<option2_den<<"\n";
-    */
-
     // update the original version considering the bigger intra-cluster
     // density for the refined chosen cluster
     // or it can stay the same if better improvements are not made
@@ -139,7 +122,9 @@ void ClusterRefiner::refine(ClusterEncoding& clusterSol, const AbstractGraph& gr
         {
             ClusterId c = option1.getClusterOfVertex(i);
             if (c != clusterSol.getClusterOfVertex(i))
-            { clusterSol.addToCluster(i,c); }
+            {
+                clusterSol.addToCluster(i,c);
+            }
         }
     }
     else if (std::max(std::max(option1_den,option2_den),this->original_density) == option2_den)
@@ -149,7 +134,9 @@ void ClusterRefiner::refine(ClusterEncoding& clusterSol, const AbstractGraph& gr
         {
             ClusterId c = option2.getClusterOfVertex(i);
             if (c != clusterSol.getClusterOfVertex(i))
-            { clusterSol.addToCluster(i,c); }
+            {
+                clusterSol.addToCluster(i,c);
+            }
         }
 
     }
@@ -180,7 +167,9 @@ void ClusterRefiner::computeClustersDensity(ClusterEncoding& clusterSol,
     {
         double no_of_vertices = clusterSol.getVerticesInCluster(i).size();
         if (no_of_vertices != 0)
-        { clusters_density[i] = clusters_density[i]/(no_of_vertices*no_of_vertices); }
+        {
+            clusters_density[i] = clusters_density[i]/(no_of_vertices*no_of_vertices);
+        }
     }
 
 }
@@ -193,7 +182,10 @@ double ClusterRefiner::getClusterDensity(ClusterId cid, ClusterEncoding& cluster
     // the cluster cid was basically replaced by another clusterId
     // this can happen
     // no point in carrying on and compute its density
-    if (no_vertices == 0) { return 0; }
+    if (no_vertices == 0)
+    {
+        return 0;
+    }
 
     double weight = 0.0;
     for (auto& e : graph.getEdgesAndWeights())

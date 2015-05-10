@@ -1,7 +1,7 @@
 /**
- * @file ClusterRefiner.hpp
- * @brief cluster refining interface implementation
- */
+* @file ClusterRefiner.hpp
+* @brief cluster refining interface implementation
+*/
 #ifndef CLUSTERER_BACKEND_CLUSTER_REFINER_HPP
 #define CLUSTERER_BACKEND_CLUSTER_REFINER_HPP
 
@@ -12,10 +12,7 @@
 
 // internal headers
 #include "ClusterEncoding.hpp"
-#include "IntegerVectorEncoding.hpp"
 #include "AbstractGraph.hpp"
-#include "Graph.hpp"
-
 
 /**
 * @namespace clusterer
@@ -32,22 +29,25 @@ namespace clusterer
 namespace backend
 {
 
-class ClusterRefiner{
+class ClusterRefiner
+{
 
     public:
         /**
-        * @brief empty constructor
+        * @brief Constructor of the class.
+        * @param rand_gen The random number generator.
+        * @param prob The mutation probability.
         */
-        ClusterRefiner(std::mt19937 *rand_gen, double prob = 0.5);
+        ClusterRefiner(std::mt19937* rand_gen, double prob = 0.5);
 
         /**
         * @brief cluster refiner implementation
-        * @param an encoding solution
-        * @param graph reference
+        * @param clusterSol An encoding of a solution.
+        * @param g A reference to graph.
         */
         void refine(ClusterEncoding& clusterSol, const AbstractGraph& g);
 
-        // the following 3 functions are useful for the testing units
+        // the following 2 functions are useful for the testing units
         /**
         * @brief get the original's solution chosen cluster's density
         * @return the value
@@ -59,10 +59,10 @@ class ClusterRefiner{
         * @return the value
         */
         double getAfterClusterRefineDensity();
-        
+
         /**
         * @brief empty destructor
-        */        
+        */
         ~ClusterRefiner();
     private:
         /**
@@ -71,7 +71,7 @@ class ClusterRefiner{
         * @param graph reference
         */
         void computeClustersDensity(ClusterEncoding& clusterSol,
-            const AbstractGraph& g);
+                                    const AbstractGraph& g);
         /**
         * @brief compute a specific cluster's density
         * @param a cluster id
@@ -79,22 +79,31 @@ class ClusterRefiner{
         * @param graph reference
         */
         double getClusterDensity(ClusterId cid,ClusterEncoding& clusterSol,
-            const AbstractGraph& g);
-        /**
-        * @brief for debugging purposes if needed
-        * @param an encoding solution
-        */
-        void printSol(const ClusterEncoding& clusterSol);
+                                 const AbstractGraph& g);
 
-        std::mt19937 *gen;
+        /**
+        * @var gen
+        * @brief A pointer to random number engine.
+        */
+        std::mt19937* gen;
+
+        /**
+        * @var bd
+        * @brief A bernoulli distribution.
+        */
         std::bernoulli_distribution bd;
+
+        /**
+        * @var clusters_density
+        * @brief The cluster density vector.
+        */
         std::vector<double> clusters_density;
+
         /**
         * @brief for testing purposes
         */
         double original_density;
         double after_density;
-
 };
 
 }
