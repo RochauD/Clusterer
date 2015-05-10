@@ -32,7 +32,7 @@ namespace backend
 
 /**
 * @class ClusterEncoding
-* @interface for objects that allow a cluster to be encoded
+* @brief An interface for encodings.
 */
 class ClusterEncoding
 {

@@ -29,19 +29,24 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class ExplorationSplit
+* @brief The ExplorationSplit is a class that implements a splitting a mutation.
+*/
 class ExplorationSplit: public MutationEngine
 {
     public:
         /**
-        * @brief empty constructor
+        * @brief Constructor
+        * @param rand_gen The random engine.
         */
         ExplorationSplit(std::mt19937* rand_gen);
 
         /**
-         * @brief mutate a clustering solution
-         * @param cluster the clustering solution to mutate
+         * @brief Mutate a clustering solution by splitting a cluster into two clusters.
+         * @param clusterSol The clustering solution to mutate.
          */
-        // splits a cluster into 2 clusters
+        //
         void mutate(ClusterEncoding& clusterSol);
 
         /**
@@ -50,7 +55,16 @@ class ExplorationSplit: public MutationEngine
         ~ExplorationSplit();
 
     private:
+        /**
+        * @var gen
+        * @brief A pointer to random number engine.
+        */
         std::mt19937* gen;
+
+        /**
+        * @var bd
+        * @brief A bernoulli distribution.
+        */
         std::bernoulli_distribution bd;
 };
 

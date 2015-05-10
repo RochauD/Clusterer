@@ -29,6 +29,10 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class ClusterRefiner
+* @brief A cluster refiner.
+*/
 class ClusterRefiner
 {
 
