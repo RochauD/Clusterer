@@ -267,6 +267,8 @@ set(CLUSTER_SOURCES_FRONTEND_CPP
         ${CLUSTER_SOURCE_DIR}/ClustererMenuBar.cpp
         ${CLUSTER_SOURCE_DIR}/mainwindow.cpp
         ${CLUSTER_SOURCE_DIR}/main.cpp
+        ${CLUSTER_SOURCE_DIR}/settingsdialog.cpp
+        ${CLUSTER_SOURCE_DIR}/frontendconfig.cpp
     )
 # frontend header files
 set(CLUSTER_SOURCES_FRONTEND_H 
@@ -274,6 +276,9 @@ set(CLUSTER_SOURCES_FRONTEND_H
         ${CLUSTER_INCLUDE_DIR}/ClustererMenuBar.hpp
         ${CLUSTER_INCLUDE_DIR}/ClustererWindow.hpp
         ${CLUSTER_INCLUDE_DIR}/mainwindow.h
+        ${CLUSTER_INCLUDE_DIR}/settingsdialog.h
+        ${CLUSTER_INCLUDE_DIR}/frontendconfig.h
+
     )
 # moc header files
 set(CLUSTER_SOURCES_MOC_H
