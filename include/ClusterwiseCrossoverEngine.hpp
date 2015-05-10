@@ -59,8 +59,9 @@ class ClusterwiseCrossoverEngine : public CrossoverEngine
 
     private:
         /**
-         * @brief Standard configuration of a random number generator
-         */
+        * @var rng
+        * @brief Pointer to a random number generator.
+        */
         std::mt19937* rng;
 };
 

@@ -1,6 +1,6 @@
 /**
 * @file CoverageAnalyzer.hpp
-* @brief fitness function interface implementation
+* @brief The file contains the class definiton of the class CoverageAnalyzer.
 */
 #ifndef CLUSTERER_BACKEND_COVERAGE_ANALYZER_HPP
 #define CLUSTERER_BACKEND_COVERAGE_ANALYZER_HPP
@@ -27,6 +27,10 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class CoverageAnalyzer
+* @brief The CoverageAnalyzer is a class that computes the coverage of a solution.
+*/
 class CoverageAnalyzer : public ClusteringSolutionAnalyzer
 {
     public:
@@ -40,6 +44,9 @@ class CoverageAnalyzer : public ClusteringSolutionAnalyzer
         */
         double analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph);
 
+        /**
+        * @brief Standard Destructor.
+        */
         ~CoverageAnalyzer();
 };
 

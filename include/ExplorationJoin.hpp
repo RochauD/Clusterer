@@ -38,10 +38,9 @@ class ExplorationJoin: public MutationEngine
         ExplorationJoin(std::mt19937* rand_gen);
 
         /**
-         * @brief mutate a clustering solution
-         * @param cluster the clustering solution to mutate
-         */
-        // joins 2 clusters into 1 cluster
+        * @brief Mutates a clustering solution by joining two clusters into one cluster.
+        * @param clusterSol The clustering solution to mutate.
+        */
         void mutate(ClusterEncoding& clusterSol);
 
         /**

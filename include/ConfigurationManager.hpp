@@ -1,7 +1,7 @@
 /**
- * @file ConfigurationManager.hpp
- * @brief File in which the ConfigurationManager is defined.
- */
+* @file ConfigurationManager.hpp
+* @brief File in which the ConfigurationManager is defined.
+*/
 #ifndef CLUSTERER_BACKEND_CONFIGURATION_MANAGER_HPP
 #define CLUSTERER_BACKEND_CONFIGURATION_MANAGER_HPP
 

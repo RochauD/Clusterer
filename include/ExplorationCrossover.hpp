@@ -28,6 +28,10 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class ExplorationCrossover
+* @brief The ExplorationCrossover class performs crossovers on two population members.
+*/
 class ExplorationCrossover: public CrossoverEngine
 {
     public:
