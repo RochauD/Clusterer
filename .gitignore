@@ -5,3 +5,5 @@ doc/*
 lib/*
 testing/*
 bin/*
+Qt_project/build*
+*graph.pro.user*

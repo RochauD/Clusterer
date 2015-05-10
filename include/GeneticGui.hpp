@@ -8,9 +8,12 @@
 // standard headers
 
 // external headers
+#include <QWidget>
+#include <QStatusBar>
 
 // internal headers
-
+#include "ClustererMenuBar.hpp"
+#include "ClustererWindow.hpp"
 
 /**
 * @namespace clusterer
@@ -35,15 +38,6 @@ class GeneticGui
 {
     public:
         /**
-          * @brief configuration to decide how to display data
-          */
-        struct Config
-        {
-            char clusterDisplayMode;
-            bool displayFitnessPlot;
-        };
-
-        /**
          * @brief get the singleton instance
          */
         static GeneticGui& getApp()
@@ -52,25 +46,19 @@ class GeneticGui
             return app;
         }
 
-        /**
-         * @brief set configuration parameters
-         * @param config the configuration to be installed
-         */
-        void setConfigParams(const Config& config);
-        /**
-         * @brief get the configuration parameters
-         */
-        const Config getConfigParams();
-
         /*
          * @brief start the GUI instance in its own thread
          */
         void startGui(void);
 
+
+
     private:
+        ClustererWindow window;
+        ClustererMenuBar* menuBar;
+
         /**
-         * @brief constructor which registers a particular config
-         * @param config the configuration of this query handler
+         * @brief The default constructor sets up the main window
          */
         GeneticGui();
         /**
@@ -80,12 +68,11 @@ class GeneticGui
         /**
          * @brief copy constructor
          */
-        GeneticGui(const GeneticGui&);
-
+        GeneticGui(const GeneticGui&) = delete;
         /**
-         * @brief config used when displaying information
+         * @brief assignment operator
          */
-        Config _config;
+        void operator=(GeneticGui const&) = delete;
 };
 
 }

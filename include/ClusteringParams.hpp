@@ -6,7 +6,7 @@
 #define CLUSTERER_BACKEND_CLUSTERING_PARAMS_HPP
 
 // standard headers
-#include <cstdint>
+#include <stdint.h>
 // external headers
 
 // internal headers
