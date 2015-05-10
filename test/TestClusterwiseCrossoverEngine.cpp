@@ -46,7 +46,7 @@ bool compareClusters(IntegerVectorEncoding c1, IntegerVectorEncoding c2,
     if (c1.size() != e1.size() || c2.size() != e2.size())
         { return false; }
 
-    for (int i = 0; i < c1.size(); i++)
+    for (uint64_t i = 0; i < c1.size(); i++)
     {
         if (c1.getClusterOfVertex(i) != e1.getClusterOfVertex(i))
         {
@@ -54,7 +54,7 @@ bool compareClusters(IntegerVectorEncoding c1, IntegerVectorEncoding c2,
         }
     }
 
-    for (int i = 0; i < c2.size(); i++)
+    for (uint64_t i = 0; i < c2.size(); i++)
     {
         if (c2.getClusterOfVertex(i) != e2.getClusterOfVertex(i))
         {

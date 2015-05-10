@@ -50,9 +50,11 @@ bool compareClusters(IntegerVectorEncoding c,
                      IntegerVectorEncoding e)
 {
     if (c.size() != e.size())
-        { return false; }
+    { 
+        return false; 
+    }
 
-    for (int i = 0; i < c.size(); i++)
+    for (uint64_t i = 0; i < c.size(); i++)
     {
         if (c.getClusterOfVertex(i) != e.getClusterOfVertex(i))
         {

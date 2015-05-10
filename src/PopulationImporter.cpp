@@ -53,7 +53,6 @@ bool PopulationImporter::loadPopulationFromFile(std::string fullPathName, Abstra
             PopulationMember<IntegerVectorEncoding, double> member;
             member.modified = true;
             IntegerVectorEncoding encoding(graph);
-            double fitness;
             std::string buffer;
 
             // read in fitness

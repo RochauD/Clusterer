@@ -47,9 +47,9 @@ void ClusterwiseCrossoverEngine::crossover(const ClusterEncoding& parent1,
     child2.normalize();
 
     // Randomly get a cluster to exchange
-    int possibleClusters = std::min(child1.getClusterCount(), child2.getClusterCount());
+    uint64_t possibleClusters = std::min(child1.getClusterCount(), child2.getClusterCount());
     std::uniform_int_distribution<unsigned> uni_dist(0, possibleClusters - 1);
-    int exchangedCluster = uni_dist((*rng));
+    uint64_t exchangedCluster = uni_dist((*rng));
 
     for (i = 0; i < n; i++)
     {
@@ -57,7 +57,7 @@ void ClusterwiseCrossoverEngine::crossover(const ClusterEncoding& parent1,
                 child2.getClusterOfVertex(i) == exchangedCluster)
         {
             // Swap the clusterId for vertex i in the children
-            int tmp = child1.getClusterOfVertex(i);
+            uint64_t tmp = child1.getClusterOfVertex(i);
             child1.addToCluster(i, child2.getClusterOfVertex(i));
             child2.addToCluster(i, tmp);
         }

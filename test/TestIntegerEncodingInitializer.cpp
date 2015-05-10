@@ -47,7 +47,7 @@ void TestIntegerEncodingInitializer::testGetRandomSolution(void)
     IntegerVectorEncoding solution2 = testObj2->getRandomSolution();
     CPPUNIT_ASSERT(g->getNoVertices() >= solution2.getClusterCount());
 
-    for (int v = 0; v < g->getNoVertices(); v++)
+    for (uint64_t v = 0; v < g->getNoVertices(); v++)
     {
         CPPUNIT_ASSERT(solution1.getClusterOfVertex(v) >= 0);
         CPPUNIT_ASSERT(solution1.getClusterOfVertex(v) < 3);

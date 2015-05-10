@@ -14,6 +14,7 @@
 
 // internal headers
 #include "AbstractGraph.hpp"
+#include "PopulationMember.hpp"
 
 /**
 * @namespace clusterer

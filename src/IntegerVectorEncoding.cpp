@@ -108,7 +108,9 @@ int IntegerVectorEncoding::normalize()
 {
     // Don't run the algorithm if not necessary
     if (isNormalized)
-    { return 0; }
+    {
+     return 0;
+    }
 
     std::map<ClusterId, VertexId> minVertex;
     VertexId i;
@@ -131,15 +133,16 @@ int IntegerVectorEncoding::normalize()
     // Sort the map by values
     std::vector<std::pair<ClusterId, VertexId>> pairs;
     for (auto it = minVertex.begin(); it != minVertex.end(); it++)
-    { pairs.push_back(*it); }
+    {
+        pairs.push_back(*it);
+    }
     std::sort(pairs.begin(), pairs.end(),
-              [=](std::pair<ClusterId, VertexId>& a, std::pair<ClusterId, VertexId>& b)
+              [=](const std::pair<ClusterId, VertexId>& a,const std::pair<ClusterId, VertexId>& b)->bool
     {
         return a.second < b.second;
-    }
-             );
+    });
     // Change the labels to be in [0, clusterCount)
-    for (int j = 0; j < pairs.size(); j++)
+    for (size_t j = 0; j < pairs.size(); j++)
     {
         minVertex[pairs[j].first] = j;
     }
