@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "settingsdialog.h"
+
 #include <QMessageBox>
 #include <QFileDialog>
 
@@ -18,7 +20,7 @@ MainWindow::~MainWindow()
 void MainWindow::showAlert(const QString &title, const QString &text)
 {
     QMessageBox messageBox;
-    messageBox.information(0,title, text);
+    messageBox.information(0, title, text);
 }
 
 
@@ -148,5 +150,6 @@ This project was developped for the 2015 Software Engineering Lab course in Jaco
 
 void MainWindow::on_actionEdit_Settings_triggered()
 {
-    this->showAlert("Alert", "Settings Manual");
+    SettingsDialog dialog(this);
+    dialog.exec();
 }
