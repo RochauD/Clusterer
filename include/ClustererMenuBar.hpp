@@ -11,7 +11,7 @@
 
 // Exeternal Headers
 #include <QWidget>
-#include <QHboxLayout>
+#include <QHBoxLayout>
 
 /**
 * @namespace clusterer

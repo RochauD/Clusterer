@@ -35,5 +35,17 @@ Added test_files folder to simulate reading the data from files and store it int
 Change 10:
 Changed the signature of CrossoverEngine::crossover to be using the ClusterEncoding class instead of the underlying data structure ClusterEncoding::Encoding. Moreover changed the method to void that has a parameter child because it is impossible to instantiate the ClusterEncoding class because it is virtual and thus we cannot create an object to return.
 
-Changed 11: Redesigned SocialClusteringService completley as it is incoherent with there design and our changes. Also renamed it to ClusteringService as we are not necessarily clustering a social network.
+Change 11:
+Redesigned SocialClusteringService completley as it is incoherent with there design and our changes. Also renamed it to ClusteringService as we are not necessarily clustering a social network. Also created a singleton class as an access point for client applications around it.
 
+Change 12:
+Added new necessary classes to implement the algorithm, as the algorithm and its associated classes where incomplete in the design.
+
+Change 13:
+Removed the class FlagParser as it does not make sense in our design and in general as we will be developing a QT frontend and not a console based system.
+
+Change 14:
+Removed incomplete GeneticStrategy abstract class and just use a simple class TwoPhaseStrategy as our genetic startegy. As we are not going to implement different startegies and if we would do so they would look mostly different from the current one and we would have a complete different set of functions the inheritance from GeneticStrategy does not make sense.
+
+Change 15:
+Removed the Person related classes as they make no real sense and also the idea of storing stuff in a database was an extra feature.

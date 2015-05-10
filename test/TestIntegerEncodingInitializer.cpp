@@ -47,7 +47,7 @@ void TestIntegerEncodingInitializer::testGetRandomSolution(void)
     IntegerVectorEncoding solution2 = testObj2->getRandomSolution();
     CPPUNIT_ASSERT(g->getNoVertices() >= solution2.getClusterCount());
 
-    for (int v = 0; v < g->getNoVertices(); v++)
+    for (uint64_t v = 0; v < g->getNoVertices(); v++)
     {
         CPPUNIT_ASSERT(solution1.getClusterOfVertex(v) >= 0);
         CPPUNIT_ASSERT(solution1.getClusterOfVertex(v) < 3);
@@ -57,25 +57,5 @@ void TestIntegerEncodingInitializer::testGetRandomSolution(void)
 
     }
 
-
-}
-
-/**
- * @brief Test the normalization procedure and getEncoding
- */
-void TestIntegerEncodingInitializer::testGetInitialPopulation(void)
-{
-    std::vector<IntegerVectorEncoding> population = testObj1->getInitialPopulation(5);
-    CPPUNIT_ASSERT(5 == population.size());
-
-    for (int i = 0; i < 5; i++)
-    {
-        for (int v = 0; v < g->getNoVertices(); v++)
-        {
-        CPPUNIT_ASSERT(population[i].getClusterOfVertex(v) >= 0);
-        CPPUNIT_ASSERT(population[i].getClusterOfVertex(v) < g->getNoVertices());
-        }
-
-    }
 
 }

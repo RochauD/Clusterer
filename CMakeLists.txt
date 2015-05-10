@@ -13,8 +13,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 project(Clusterer)
 
 # set library version
-set(CLUSTERER_LIB_VERSION_MAJOR "0")
-set(CLUSTERER_LIB_VERSION_MINOR "1")
+set(CLUSTERER_LIB_VERSION_MAJOR "1")
+set(CLUSTERER_LIB_VERSION_MINOR "0")
 set(CLUSTERER_LIB_VERSION_PATCH "0")
 set(CLUSTERER_LIB_VERSION_EXTRA "0")
 set(CLUSTERER_LIB_VERSION "${CLUSTERER_LIB_VERSION_MAJOR}.${CLUSTERER_LIB_VERSION_MINOR}")
@@ -24,8 +24,8 @@ add_definitions(/DCLUSTERER_LIB_VERSION="${CLUSTERER_LIB_VERSION}")
 add_definitions(/DCLUSTERER_LIB_VERSION_FULL="${CLUSTERER_LIB_VERSION_FULL}")
 
 # set executable version
-set(CLUSTERER_VERSION_MAJOR "0")
-set(CLUSTERER_VERSION_MINOR "1")
+set(CLUSTERER_VERSION_MAJOR "1")
+set(CLUSTERER_VERSION_MINOR "0")
 set(CLUSTERER_VERSION_PATCH "0")
 set(CLUSTERER_VERSION_EXTRA "0")
 set(CLUSTERER_VERSION "${CLUSTERER_VERSION_MAJOR}.${CLUSTERER_VERSION_MINOR}")
@@ -43,6 +43,8 @@ if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
     message(FATAL_ERROR "Warning: In-source build! Aborting. Call cmake .. from a build folder.")
 endif()
 
+message(${CMAKE_CURRENT_BINARY_DIR})
+
 #####################
 # Compiler Settings #
 #####################
@@ -51,6 +53,8 @@ message("Setting compiler settings:")
 if( WIN32 )
     message("-- Windows detected")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /O2")
 elseif( APPLE )
     message("-- OSX detected")
     # Set C++11
@@ -59,6 +63,7 @@ elseif( APPLE )
     # Enable all warnings
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 else()
     message("-- Linux detected")
     # Set C++11
@@ -68,6 +73,8 @@ else()
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 endif()
 message("-- cxx Flags: " ${CMAKE_CXX_FLAGS})
@@ -115,7 +122,7 @@ endif()
 # Qt
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOUIC OFF)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 FIND_PACKAGE(Qt4 REQUIRED)
@@ -147,7 +154,6 @@ set(CLUSTER_SOURCES_COMMON_CPP
         ${CLUSTER_SOURCE_DIR}/LoggingPolicy.cpp
         ${CLUSTER_SOURCE_DIR}/LoggingPolicyFile.cpp
         ${CLUSTER_SOURCE_DIR}/GlobalFileLogger.cpp
-        ${CLUSTER_SOURCE_DIR}/FlagParser.cpp
     )
 # common header files
 set(CLUSTER_SOURCES_COMMON_H 
@@ -160,7 +166,6 @@ set(CLUSTER_SOURCES_COMMON_H
         ${CLUSTER_INCLUDE_DIR}/LoggingPolicy.hpp
         ${CLUSTER_INCLUDE_DIR}/LoggingPolicyFile.hpp
         ${CLUSTER_INCLUDE_DIR}/GlobalFileLogger.hpp
-        ${CLUSTER_INCLUDE_DIR}/FlagParser.hpp
     )
 # common combined
 set(CLUSTER_SOURCES_COMMON
@@ -187,9 +192,6 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/ClusterEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Vertex.cpp
         ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoding.cpp
-        ${CLUSTER_SOURCE_DIR}/Parcelable.cpp
-        ${CLUSTER_SOURCE_DIR}/Person.cpp
-        ${CLUSTER_SOURCE_DIR}/JSONGraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/ClusteringService.cpp
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
         ${CLUSTER_SOURCE_DIR}/GraphReader.cpp
@@ -198,13 +200,19 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/MutationEngine.cpp
         ${CLUSTER_SOURCE_DIR}/CrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/UniformCrossoverEngine.cpp
+        ${CLUSTER_SOURCE_DIR}/MovieLensGraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/ClusterwiseCrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/CombinedCrossoverEngine.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationJoin.cpp
         ${CLUSTER_SOURCE_DIR}/ExplorationSplit.cpp
         ${CLUSTER_SOURCE_DIR}/CombinedMutation.cpp
-        ${CLUSTER_SOURCE_DIR}/ClusterRefiner.cpp 
         ${CLUSTER_SOURCE_DIR}/GraphCoordinateTransformer.cpp      
+        ${CLUSTER_SOURCE_DIR}/ClusterRefiner.cpp
+        ${CLUSTER_SOURCE_DIR}/PopulationExporter.cpp
+        ${CLUSTER_SOURCE_DIR}/GraphExporter.cpp
+        ${CLUSTER_SOURCE_DIR}/PopulationImporter.cpp
+        ${CLUSTER_SOURCE_DIR}/GlobalBackendController.cpp
+        ${CLUSTER_SOURCE_DIR}/CombinedCrossoverEngine.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -223,23 +231,19 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/IntegerVectorEncoding.hpp
         ${CLUSTER_INCLUDE_DIR}/CrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/MutationEngine.hpp
-        ${CLUSTER_INCLUDE_DIR}/Parcelable.hpp
-        ${CLUSTER_INCLUDE_DIR}/Person.hpp
-        ${CLUSTER_INCLUDE_DIR}/PersonDb.hpp
         ${CLUSTER_INCLUDE_DIR}/ExplorationMutation.hpp
-        ${CLUSTER_INCLUDE_DIR}/ExplorationCrossover.hpp
         ${CLUSTER_INCLUDE_DIR}/RefinementMutationEngine.hpp
-        ${CLUSTER_INCLUDE_DIR}/GeneticStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
-        ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
         ${CLUSTER_INCLUDE_DIR}/UniformCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusterwiseCrossoverEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/CombinedCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationAnalyzer.hpp
+        ${CLUSTER_INCLUDE_DIR}/MovieLensGraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/PopulationMutatorEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/PopulationCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/Selector.hpp
@@ -249,6 +253,13 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/ClusterRefiner.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationRefiner.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphCoordinateTransformer.hpp
+        ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationSelector.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationExporter.hpp
+        ${CLUSTER_INCLUDE_DIR}/GraphExporter.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationImporter.hpp
+        ${CLUSTER_INCLUDE_DIR}/GlobalBackendController.hpp
+        ${CLUSTER_INCLUDE_DIR}/PopulationMember.hpp
+        ${CLUSTER_INCLUDE_DIR}/CombinedCrossoverEngine.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
@@ -278,16 +289,22 @@ set(CLUSTER_SOURCES_FRONTEND_H
         ${CLUSTER_INCLUDE_DIR}/MainWindow.h
         ${CLUSTER_INCLUDE_DIR}/SettingsDialog.h
         ${CLUSTER_INCLUDE_DIR}/FrontendConfig.h
-
     )
 # moc header files
 set(CLUSTER_SOURCES_MOC_H
         ${CLUSTER_SOURCES_FRONTEND_H}
 )
+# ui header files
+qt4_wrap_ui(CLUSTER_SOURCES_UI_H
+    ${CLUSTER_SOURCE_DIR}/SettingsDialog.ui
+    ${CLUSTER_SOURCE_DIR}/MainWindow.ui
+)
+
 # frontend combined
 set(CLUSTER_SOURCES_FRONTEND
         ${CLUSTER_SOURCES_FRONTEND_CPP}
         ${CLUSTER_SOURCES_FRONTEND_H}
+        ${CLUSTER_SOURCES_UI_H}
     )
 
 
@@ -323,7 +340,6 @@ set(CLUSTER_SOURCES
 set(CLUSTER_TEST_FILENAMES
         ConfigurationManager
         ConfigurationReaderWriter
-        FlagParser
         GraphReader
         SocialClusteringService
         Vertex

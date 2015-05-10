@@ -1,7 +1,7 @@
 /**
- * @file ClusteringService.hpp
- * @brief Facade for backend items
- */
+* @file ClusteringService.hpp
+* @brief This file contains the class ClusteringService which is a Facade for backend items.
+*/
 #ifndef CLUSTERER_BACKEND_CLUSTERING_SERVICE_HPP
 #define CLUSTERER_BACKEND_CLUSTERING_SERVICE_HPP
 
@@ -15,6 +15,7 @@
 #include "Graph.hpp"
 #include "IntegerEncodingInitializer.hpp"
 #include "TwoPhaseStrategy.hpp"
+#include "PopulationMember.hpp"
 /**
 * @namespace clusterer
 * @brief The namespace clusterer is the main namespace of the clusterer project.
@@ -37,43 +38,133 @@ namespace backend
 class ClusteringService
 {
     public:
+        /**
+        * @brief Standard Constructor.
+        */
         ClusteringService();
+
+        /**
+        * @brief Standard Destructor.
+        */
         ~ClusteringService();
 
-        // config related functions
+        /**
+        * @brief This method loads a configuration.
+        * @param fullPathName The full path name to the configuration file.
+        * @return True if loading was succesful and False if it failed.
+        */
         bool loadConfiguration(std::string fullPathName);
+
+        /**
+        * @brief This method saves a configuration.
+        * @param fullPathName The full path name to the configuration file.
+        * @return True if saving was succesful and False if it failed.
+        */
         bool saveConfiguration(std::string fullPathName);
+
+        /**
+        * @brief This method returns the current ClusteringParams.
+        * @return The current ClusteringParams.
+        */
         ClusteringParams getConfigurationParameters();
 
-        // graph related functions
+        /**
+        * @brief This method loads a graph of type vertex pair weight.
+        * @param fullPathName The full path name to the graph file.
+        * @return True if loading was succesful and False if it failed.
+        */
         bool loadGraphTypeVertexPairWeight(std::string fullPathName);
 
-        // algorithm related functions
+        /**
+        * @brief This method loads a graph type of movie lens from a file.
+        * @param fullPathName The full path name to the graph file.
+        * @return True if loading was succesful and False if it failed.
+        */
+        bool loadGraphTypeMovieLens(std::string fullPathName);
 
+        /**
+        * @brief This method saves a graph to a file.
+        * @param fullPathName The full path name of the output graph file.
+        * @return True if saving was succesful and False if it failed.
+        */
+        bool saveGraphToFile(std::string fullPathName);
+
+        /**
+        * @brief This method loads a population from a file.
+        * @param fullPathName The full path name of the input population file.
+        * @return True if loading was succesful and False if it failed.
+        */
+        bool loadPopulation(std::string fullPathName);
+
+        /**
+        * @brief This method saves a population to a file.
+        * @param fullPathName The full path name of the output population file.
+        * @return True if saving was succesful and False if it failed.
+        */
+        bool savePopulation(std::string fullPathName);
+
+        /**
+        * @brief This method runs the algorithm.
+        * @param restart Boolean restart flag. If set to true we are restarting.
+        * @return True if run was succesful and False if it failed.
+        */
         bool runAlgorithm(bool restart = false);
 
+        /**
+        * @brief This method stops the algorithm.
+        * @return void
+        */
         void stopAlgorithm();
+
+        /**
+        * @brief This method resumes the algorithm.
+        * @return void
+        */
         void resumeAlgorithm();
 
-        // output related
-        clc::ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>>* getOutQueue();
+        /**
+        * @brief This method returns the current output queue.
+        * @return The current output queue.
+        */
+        clc::ConcurrentLockingQueue<std::pair<PopulationMember<IntegerVectorEncoding, double>, uint64_t>>* getOutQueue();
 
     protected:
     private:
+        /**
+        * @var algorithmService
+        * @brief The underlying algorithm service.
+        */
         TwoPhaseStrategy<IntegerVectorEncoding, IntegerEncodingInitializer> algorithmService;
-        clc::ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>> outQueue;
-        std::vector<std::pair<IntegerVectorEncoding, double>> population;
-        ConfigurationManager configurationManager;
-        Graph graph;
 
+        /**
+        * @var outQueue
+        * @brief The output concurrent queue that is used to send data to the connect frontend.
+        */
+        clc::ConcurrentLockingQueue<std::pair<PopulationMember<IntegerVectorEncoding, double>, uint64_t>> outQueue;
+
+        /**
+        * @var population
+        * @brief The population of the algorithm.
+        */
+        std::vector<PopulationMember<IntegerVectorEncoding, double>> population;
+
+        /**
+        * @var configurationManager
+        * @brief The ConfigurationManager object that stores the algorithm parameters.
+        */
+        ConfigurationManager configurationManager;
+
+        /**
+        * @var graph
+        * @brief The graph.
+        */
+        Graph graph;
 
         /**
         * @var serviceMutex
-        * @brief Mutex.
-        * @details Mutex will be used for mutual exclusion of thread ownership.
+        * @brief The Mutex.
         */
         std::mutex serviceMutex;
-
 };
 
 }

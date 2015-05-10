@@ -4,7 +4,7 @@
  */
  
 // Own headers
-#include "../include/Mainwindow.h"
+#include "../include/MainWindow.h"
 #include "../include/SettingsDialog.h"
 
 // External headers
@@ -12,7 +12,7 @@
 #include <QFileDialog>
 
 // Generated headers
-#include "ui_mainwindow.h"
+#include "ui_MainWindow.h"
 
 
 namespace clusterer

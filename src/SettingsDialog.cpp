@@ -12,7 +12,7 @@
 #include <QMessageBox>
 
 // Generated headers
-#include "ui_settingsdialog.h"
+#include "ui_SettingsDialog.h"
 
 
 namespace clusterer

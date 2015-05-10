@@ -1,7 +1,7 @@
 /**
- * @file ClusterEncoding.hpp
- * @brief cluster encoder interface
- */
+* @file ClusterEncoding.hpp
+* @brief cluster encoder interface
+*/
 #ifndef CLUSTERER_BACKEND_CLUSTER_ENCODING_HPP
 #define CLUSTERER_BACKEND_CLUSTER_ENCODING_HPP
 
@@ -31,9 +31,9 @@ namespace backend
 {
 
 /**
- * @class ClusterEncoding
- * @interface for objects that allow a cluster to be encoded
- */
+* @class ClusterEncoding
+* @brief An interface for encodings.
+*/
 class ClusterEncoding
 {
     public:
@@ -51,8 +51,8 @@ class ClusterEncoding
         ClusterEncoding(const AbstractGraph* g);
 
         /**
-         * @brief standard destructor
-         */
+        * @brief standard destructor
+        */
         virtual ~ClusterEncoding();
 
         /**
@@ -75,7 +75,7 @@ class ClusterEncoding
         * @param ClusterId the cluster for which we want to get the vertices
         * @return a vector containing all vertices in the cluster
         */
-        virtual std::vector< VertexId > getVerticesInCluster(ClusterId clusterId) const = 0;
+        virtual std::vector<VertexId> getVerticesInCluster(ClusterId clusterId) const = 0;
 
         /**
         * @brief Returns a map that maps ClusterIds to the corresponding vertices count.
@@ -96,22 +96,29 @@ class ClusterEncoding
         virtual uint32_t getClusterCount() const = 0;
 
         /**
-         * @brief get the current encoding
-         * @return the current encoding of a solution
-         */
-        virtual Encoding getEncoding() = 0;
+        * @brief get the current encoding
+        * @return the current encoding of a solution
+        */
+        virtual Encoding getEncoding() const = 0;
 
         /**
-         * @brief get the size of the current encoding
-         * @return the number of vertices
-         */
-         virtual uint32_t size() const = 0;
+        * @brief set the current encoding
+        * @param encoding The current encoding of a solution
+        * @return void
+        */
+        virtual void setEncoding(const Encoding& encoding) = 0;
 
-         /*
-          * @brief Normalizes the clustering solution
-          * @return 0 on success -1 on failiure
-          */
-         virtual int32_t normalize();
+        /**
+        * @brief get the size of the current encoding
+        * @return the number of vertices
+        */
+        virtual uint32_t size() const = 0;
+
+        /*
+        * @brief Normalizes the clustering solution
+        * @return 0 on success -1 on failiure
+        */
+        virtual int32_t normalize();
 
     protected:
 };
@@ -125,6 +132,4 @@ class ClusterEncoding
 */
 namespace clb = clusterer::backend;
 
-#endif  // _BACKEND_GENETIC_ClusterEncoding_HPP
-
-
+#endif

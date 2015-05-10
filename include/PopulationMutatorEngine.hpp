@@ -128,7 +128,8 @@ void PopulationMutatorEngine<EncodingFitnessDataStructure, MutatorFunction>::mut
     {
         if (dis(this->randomDeviceVec[threadID]) < this->mutationProbability)
         {
-            mutator.mutate((*this->populationPtr)[i].first);
+            mutator.mutate((*this->populationPtr)[i].populationEncoding);
+            (*this->populationPtr)[i].modified = true;
         }
     }
 }

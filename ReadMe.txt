@@ -1,3 +1,5 @@
+Clusterer
+
 Clustering Social Networks by using Genetic Algorithms, Software Project for the Course Software Engineering Lab 2015
 
 Folder structure:
@@ -32,6 +34,18 @@ Boost:
 		compile the libraries
 	Mac (with homebrew):
 		brew install boost
+QT:
+	Linux:
+	Windows:
+	- VS2012+:
+		Download QT 4.8.6 source version if you want to use Visual Studio with a version newer than VS2010
+		Adapt make files to reflect change
+		Compile it
+		Set QTDIR to the root of the qt folder
+	- VS2010:
+		Download the old installer and just install it normally.
+		Maybe set QTDIR to the root of the qt folder
+	Mac:
 
 Enviroment Variables:
 The following enviroment variables should be defined to ease compilation.

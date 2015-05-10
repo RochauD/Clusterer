@@ -12,23 +12,26 @@ void TestClusterRefiner::tearDown(void)
 
 }
 
-void TestClusterRefiner::printSol(const ClusterEncoding& clusterSol,int n){
-    for(int i = 0; i < n; i++){
+void TestClusterRefiner::printSol(const ClusterEncoding& clusterSol,int n)
+{
+    for (int i = 0; i < n; i++)
+    {
         std::cout<<clusterSol.getClusterOfVertex(i)<<" ";
     }
     std::cout<<"\n";
 }
 
-void TestClusterRefiner::testRefineFunction(void){
+void TestClusterRefiner::testRefineFunction(void)
+{
     clb::Graph graph;
 
-	graph.addVertex(Vertex(0));
-	graph.addVertex(Vertex(1));
-	graph.addVertex(Vertex(2));
-	graph.addVertex(Vertex(3));
-	graph.addVertex(Vertex(4));
+    graph.addVertex(Vertex(0));
+    graph.addVertex(Vertex(1));
+    graph.addVertex(Vertex(2));
+    graph.addVertex(Vertex(3));
+    graph.addVertex(Vertex(4));
 
-	graph.addEdge(Vertex(0), Vertex(1), 0.125);
+    graph.addEdge(Vertex(0), Vertex(1), 0.125);
     graph.addEdge(Vertex(0), Vertex(2), 0.125);
     graph.addEdge(Vertex(0), Vertex(3), 0.125);
 
@@ -54,8 +57,7 @@ void TestClusterRefiner::testRefineFunction(void){
     solution.addToCluster(2,2);
     solution.addToCluster(3,1);
     solution.addToCluster(4,3);
-    
-    std::cout<<"before mutate--test\n";
+
     clb::IntegerVectorEncoding result1 = solution;
     refiner.refine(result1,graph);
     double o1 = refiner.getOriginalClusterRefineDensity();
@@ -83,24 +85,6 @@ void TestClusterRefiner::testRefineFunction(void){
 
     //int checker1,checker2,checker3,checker4,checker5;
     //checker1 = checker2 = checker3 = checker4 = checker5 = 0;
-    
-    std::cout<<"\noriginal: ";
-    printSol(solution,5);
-
-    std::cout<<"mutated: ";
-    printSol(result1,5);
-
-    std::cout<<"mutated: ";
-    printSol(result2,5);
-
-    std::cout<<"mutated: ";
-    printSol(result3,5);
-
-    std::cout<<"mutated: ";
-    printSol(result4,5);
-
-    std::cout<<"mutated: ";
-    printSol(result5,5);
 
     CPPUNIT_ASSERT(a1 >= o1 && a2 >= o2 && a3 >= o3 && a4 >= o4 && a5 >= o5);
 }

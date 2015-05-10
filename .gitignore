@@ -1,7 +1,7 @@
-todo.txt~
 *.log
 .DS_Store
 build/*
+doc/*
 lib/*
 testing/*
 bin/*

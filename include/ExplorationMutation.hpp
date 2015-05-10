@@ -29,19 +29,23 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class ExplorationMutation
+* @brief The ExplorationMutation class is a class implements a simple mutation.
+*/
 class ExplorationMutation: public MutationEngine
 {
     public:
         /**
-        * @brief empty constructor
+        * @brief Constructor
+        * @param rand_gen The random engine.
         */
         ExplorationMutation(std::mt19937* rand_gen);
 
         /**
-         * @brief mutate a clustering solution
-         * @param cluster the clustering solution to mutate
+         * @brief Mutate a clustering solution by choosing a new ClusterId based on the maximum ClusterId in the cluster.
+         * @param clusterSol The clustering solution to mutate.
          */
-        // chooses a new ClusterId based on the maximum ClusterId in the cluster
         void mutate(ClusterEncoding& clusterSol);
 
         /**
@@ -50,8 +54,11 @@ class ExplorationMutation: public MutationEngine
         ~ExplorationMutation();
 
     private:
+        /**
+        * @var gen
+        * @brief A pointer to random number engine.
+        */
         std::mt19937* gen;
-
 };
 
 }

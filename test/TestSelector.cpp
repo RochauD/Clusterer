@@ -9,15 +9,23 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestSelector);
  */
 void TestSelector::setUp(void)
 {
-    data = new std::vector<std::pair<int, double>>();
-    
-    data->push_back(std::make_pair(0, 0.8));
-    data->push_back(std::make_pair(1, 1.2));
-    data->push_back(std::make_pair(2, 0.5));
-    data->push_back(std::make_pair(3, 1.7));
+    data = new std::vector<PopulationMember<int, double>>();
+    PopulationMember<int, double> member;
+    member.fitnessValue = 0.8;
+    member.populationEncoding = 0;
+    data->push_back(member);
+    member.fitnessValue = 1.2;
+    member.populationEncoding = 1;
+    data->push_back(member);
+    member.fitnessValue = 0.5;
+    member.populationEncoding = 2;
+    data->push_back(member);
+    member.fitnessValue = 1.7;
+    member.populationEncoding = 3;
+    data->push_back(member);
 
     rng = new std::mt19937();
-    testObj = new Selector<std::vector<std::pair<int, double>>>(data, rng);
+    testObj = new Selector<std::vector<PopulationMember<int, double>>>(data, rng);
 }
 
 /**

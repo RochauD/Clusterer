@@ -10,6 +10,10 @@
 
 // internal headers
 #include "../include/GraphReader.hpp"
+#include "../include/MovieLensGraphReader.hpp"
+#include "../include/PopulationExporter.hpp"
+#include "../include/GraphExporter.hpp"
+#include "../include/PopulationImporter.hpp"
 
 namespace clusterer
 {
@@ -79,7 +83,69 @@ bool ClusteringService::loadGraphTypeVertexPairWeight(std::string fullPathName)
     }
     else
     {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[CLS] Loading of graph type vertex pair weight was failed");
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[CLS] Loading of graph type vertex pair weight failed");
+        return false;
+    }
+}
+
+bool ClusteringService::loadGraphTypeMovieLens(std::string fullPathName)
+{
+    std::unique_lock<std::mutex> lock(this->serviceMutex);
+    MovieLensGraphReader graphReader(&this->graph);
+    if (graphReader.readFile(fullPathName))
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[CLS] Loading of graph type movie lens was successful");
+        return true;
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[CLS] Loading of graph type movie lens failed");
+        return false;
+    }
+}
+
+bool ClusteringService::saveGraphToFile(std::string fullPathName)
+{
+    std::unique_lock<std::mutex> lock(this->serviceMutex);
+    GraphExporter graphExporter;
+    if (graphExporter.writeGraphToFile(&this->graph, fullPathName))
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[CLS] Saving of graph was successful");
+        return true;
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[CLS] Saving of graph failed");
+        return false;
+    }
+}
+
+bool ClusteringService::loadPopulation(std::string fullPathName)
+{
+    PopulationImporter populationImporter;
+    if (populationImporter.loadPopulationFromFile(fullPathName, &this->graph, &this->population))
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[CLS] Loading of population was successful");
+        return true;
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[CLS] Loading of graph failed");
+        return false;
+    }
+}
+
+bool ClusteringService::savePopulation(std::string fullPathName)
+{
+    PopulationExporter populationExporter;
+    if (populationExporter.writePopulationToFile(&this->population, fullPathName))
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[CLS] Saving of population was successful");
+        return true;
+    }
+    else
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "[CLS] Saving of graph failed");
         return false;
     }
 }
@@ -106,7 +172,7 @@ void ClusteringService::resumeAlgorithm()
     this->algorithmService.resumeAlgorithm();
 }
 
-clc::ConcurrentLockingQueue<std::pair<IntegerVectorEncoding, double>>* ClusteringService::getOutQueue()
+clc::ConcurrentLockingQueue<std::pair<PopulationMember<IntegerVectorEncoding, double>, uint64_t>>* ClusteringService::getOutQueue()
 {
     return &this->outQueue;
 }
