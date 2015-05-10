@@ -6,12 +6,12 @@
 #ifndef CLUSTERER_FRONTEND_GRAPH_COORD_TRANS_HPP
 #define CLUSTERER_FRONTEND_GRAPH_COORD_TRANS_HPP
 
- // standard headers
+// standard headers
 #include <stdint.h>
 #include <map>
 #include <vector>
-#include <eigen3/Eigen/Dense>
-#include <eigen3/Eigen/Eigenvalues>
+#include <Eigen/Dense>
+#include <Eigen/Eigenvalues>
 
 // internal headers
 #include "ClusterEncoding.hpp"
@@ -36,7 +36,8 @@ namespace clusterer
 namespace frontend
 {
 
-class GraphCoordinateTransformer{
+class GraphCoordinateTransformer
+{
 
     public:
         /**
@@ -50,15 +51,15 @@ class GraphCoordinateTransformer{
         * @return map of the type <vertex id, pair of coordinates>
         */
         std::map<backend::VertexId,std::pair<double,double>> getCoordinateMap();
-        
+
         /**
         * @brief normalizes the already obtained coordinates from the MSD algorithm
-        * @param height 
+        * @param height
         * @param width
-        * @return the normalized map 
+        * @return the normalized map
         */
-        std::map<backend::VertexId,std::pair<double,double>> 
-        getNormalizedMap(uint64_t height, uint64_t width, uint64_t offset = 5);
+        std::map<backend::VertexId,std::pair<double,double>>
+                getNormalizedMap(uint64_t height, uint64_t width, uint64_t offset = 5);
 
         /**
         * @brief empty destructor
@@ -66,7 +67,7 @@ class GraphCoordinateTransformer{
         ~GraphCoordinateTransformer();
 
     private:
-        
+
         std::map<backend::VertexId,std::pair<double,double>> map_coord;
 
         /**
@@ -76,7 +77,7 @@ class GraphCoordinateTransformer{
         * @return boolean
         */
         static bool pairCompare(const std::pair<double, uint64_t>&,
- const std::pair<double, uint64_t>&);
+                                const std::pair<double, uint64_t>&);
 
 };
 

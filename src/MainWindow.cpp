@@ -2,7 +2,7 @@
  * @file MainWindow.h
  * @brief Main window for the Clusterer GUI
  */
- 
+
 // Own headers
 #include "../include/MainWindow.h"
 #include "../include/SettingsDialog.h"
@@ -13,6 +13,7 @@
 
 // Generated headers
 #include "ui_MainWindow.h"
+#include "../include/GlobalBackendController.hpp"
 
 
 namespace clusterer
@@ -22,7 +23,7 @@ namespace frontend
 {
 
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -34,16 +35,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::showAlert(const QString &title, const QString &text)
+void MainWindow::showAlert(const QString& title, const QString& text)
 {
     QMessageBox messageBox;
     messageBox.information(0, title, text);
 }
 
-
 void MainWindow::on_pushButton_clicked()
 {
     //Start button
+
+    clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight("../test_files/out.ucidata-zachary");
+    clb::GlobalBackendController::instance()->runAlgorithm();
     this->showAlert("Alert", "Start");
 }
 
@@ -69,9 +72,9 @@ void MainWindow::on_actionSave_Settings_2_triggered()
 {
     // Save settings
     QString path = QFileDialog::getSaveFileName(this,
-                                                tr("Save Settings"),
-                                                tr("."),
-                                                tr("Text Files (*.txt)"));
+                   tr("Save Settings"),
+                   tr("."),
+                   tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
         this->showAlert("Alert", "Path is " + path);
@@ -81,9 +84,9 @@ void MainWindow::on_actionSave_Settings_2_triggered()
 void MainWindow::on_actionLoad_Settings_2_triggered()
 {
     QString path = QFileDialog::getOpenFileName(this,
-                                                tr("Open Settings File"),
-                                                ".",
-                                                tr("Text Files (*.txt)"));
+                   tr("Open Settings File"),
+                   ".",
+                   tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
         this->showAlert("Alert", "Path is " + path);
@@ -93,9 +96,9 @@ void MainWindow::on_actionLoad_Settings_2_triggered()
 void MainWindow::on_actionSave_Graph_triggered()
 {
     QString path = QFileDialog::getSaveFileName(this,
-                                                tr("Save Graph"),
-                                                tr("."),
-                                                tr("Text Files (*.txt)"));
+                   tr("Save Graph"),
+                   tr("."),
+                   tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
         this->showAlert("Alert", "Path is " + path);
@@ -106,9 +109,9 @@ void MainWindow::on_actionZachary_format_triggered()
 {
     // Load Zachary Format
     QString path = QFileDialog::getOpenFileName(this,
-                                                tr("Open Zachary Karate Club Graph"),
-                                                ".",
-                                                tr("All Files (*)"));
+                   tr("Open Zachary Karate Club Graph"),
+                   ".",
+                   tr("All Files (*)"));
     if (!path.isNull() && !path.isEmpty())
     {
         this->showAlert("Alert", "Path is " + path);
@@ -119,9 +122,9 @@ void MainWindow::on_actionMovielens_format_triggered()
 {
     // Load Movielens Format
     QString path = QFileDialog::getOpenFileName(this,
-                                                tr("Open Movielens Graph"),
-                                                ".",
-                                                tr("All Files (*)"));
+                   tr("Open Movielens Graph"),
+                   ".",
+                   tr("All Files (*)"));
     if (!path.isNull() && !path.isEmpty())
     {
         this->showAlert("Alert", "Path is " + path);
@@ -132,9 +135,9 @@ void MainWindow::on_actionSave_Population_triggered()
 {
     // Save population
     QString path = QFileDialog::getSaveFileName(this,
-                                                tr("Save Population"),
-                                                tr("."),
-                                                tr("Text Files (*.txt)"));
+                   tr("Save Population"),
+                   tr("."),
+                   tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
         this->showAlert("Alert", "Path is " + path);
@@ -145,9 +148,9 @@ void MainWindow::on_actionLoad_Population_triggered()
 {
     // Load population
     QString path = QFileDialog::getOpenFileName(this,
-                                                tr("Load Population"),
-                                                ".",
-                                                tr("Text Files (*.txt)"));
+                   tr("Load Population"),
+                   ".",
+                   tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
         this->showAlert("Alert", "Path is " + path);
