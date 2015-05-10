@@ -265,19 +265,19 @@ source_group("Backend\\Source Files" FILES ${CLUSTER_SOURCES_BACKEND_CPP})
 set(CLUSTER_SOURCES_FRONTEND_CPP
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
         ${CLUSTER_SOURCE_DIR}/ClustererMenuBar.cpp
-        ${CLUSTER_SOURCE_DIR}/mainwindow.cpp
+        ${CLUSTER_SOURCE_DIR}/MainWindow.cpp
         ${CLUSTER_SOURCE_DIR}/main.cpp
-        ${CLUSTER_SOURCE_DIR}/settingsdialog.cpp
-        ${CLUSTER_SOURCE_DIR}/frontendconfig.cpp
+        ${CLUSTER_SOURCE_DIR}/SettingsDialog.cpp
+        ${CLUSTER_SOURCE_DIR}/FrontendConfig.cpp
     )
 # frontend header files
 set(CLUSTER_SOURCES_FRONTEND_H 
         ${CLUSTER_INCLUDE_DIR}/GeneticGui.hpp
         ${CLUSTER_INCLUDE_DIR}/ClustererMenuBar.hpp
         ${CLUSTER_INCLUDE_DIR}/ClustererWindow.hpp
-        ${CLUSTER_INCLUDE_DIR}/mainwindow.h
-        ${CLUSTER_INCLUDE_DIR}/settingsdialog.h
-        ${CLUSTER_INCLUDE_DIR}/frontendconfig.h
+        ${CLUSTER_INCLUDE_DIR}/MainWindow.h
+        ${CLUSTER_INCLUDE_DIR}/SettingsDialog.h
+        ${CLUSTER_INCLUDE_DIR}/FrontendConfig.h
 
     )
 # moc header files
