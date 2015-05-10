@@ -46,3 +46,6 @@ Removed the class FlagParser as it does not make sense in our design and in gene
 
 Change 14:
 Removed incomplete GeneticStrategy abstract class and just use a simple class TwoPhaseStrategy as our genetic startegy. As we are not going to implement different startegies and if we would do so they would look mostly different from the current one and we would have a complete different set of functions the inheritance from GeneticStrategy does not make sense.
+
+Change 15:
+Removed the Person related classes as they make no real sense and also the idea of storing stuff in a database was an extra feature.

@@ -153,9 +153,6 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/ClusterEncoding.cpp
         ${CLUSTER_SOURCE_DIR}/Vertex.cpp
         ${CLUSTER_SOURCE_DIR}/IntegerVectorEncoding.cpp
-        ${CLUSTER_SOURCE_DIR}/Parcelable.cpp
-        ${CLUSTER_SOURCE_DIR}/Person.cpp
-        ${CLUSTER_SOURCE_DIR}/JSONGraphReader.cpp
         ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
         ${CLUSTER_SOURCE_DIR}/ClusteringService.cpp
         ${CLUSTER_SOURCE_DIR}/Graph.cpp
@@ -176,6 +173,7 @@ set(CLUSTER_SOURCES_BACKEND_CPP
         ${CLUSTER_SOURCE_DIR}/GraphExporter.cpp
         ${CLUSTER_SOURCE_DIR}/PopulationImporter.cpp
         ${CLUSTER_SOURCE_DIR}/GlobalBackendController.cpp
+        ${CLUSTER_SOURCE_DIR}/CombinedCrossoverEngine.cpp
     )
 # backend header files
 set(CLUSTER_SOURCES_BACKEND_H 
@@ -194,21 +192,17 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/IntegerVectorEncoding.hpp
         ${CLUSTER_INCLUDE_DIR}/CrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/MutationEngine.hpp
-        ${CLUSTER_INCLUDE_DIR}/Parcelable.hpp
-        ${CLUSTER_INCLUDE_DIR}/Person.hpp
-        ${CLUSTER_INCLUDE_DIR}/PersonDb.hpp
         ${CLUSTER_INCLUDE_DIR}/ExplorationMutation.hpp
-        ${CLUSTER_INCLUDE_DIR}/ExplorationCrossover.hpp
         ${CLUSTER_INCLUDE_DIR}/RefinementMutationEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/TwoPhaseStrategy.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
-        ${CLUSTER_INCLUDE_DIR}/JSONGraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringService.hpp
         ${CLUSTER_INCLUDE_DIR}/Graph.hpp
         ${CLUSTER_INCLUDE_DIR}/GraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/IntegerEncodingInitializer.hpp
         ${CLUSTER_INCLUDE_DIR}/UniformCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusterwiseCrossoverEngine.hpp
+        ${CLUSTER_INCLUDE_DIR}/CombinedCrossoverEngine.hpp
         ${CLUSTER_INCLUDE_DIR}/ClusteringPopulationAnalyzer.hpp
         ${CLUSTER_INCLUDE_DIR}/MovieLensGraphReader.hpp
         ${CLUSTER_INCLUDE_DIR}/PopulationMutatorEngine.hpp
@@ -225,6 +219,7 @@ set(CLUSTER_SOURCES_BACKEND_H
         ${CLUSTER_INCLUDE_DIR}/PopulationImporter.hpp
         ${CLUSTER_INCLUDE_DIR}/GlobalBackendController.hpp
         ${CLUSTER_INCLUDE_DIR}/PopulationMember.hpp
+        ${CLUSTER_INCLUDE_DIR}/CombinedCrossoverEngine.hpp
     )
 # backend combined
 set(CLUSTER_SOURCES_BACKEND
