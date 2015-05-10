@@ -75,7 +75,7 @@ class ClusterEncoding
         * @param ClusterId the cluster for which we want to get the vertices
         * @return a vector containing all vertices in the cluster
         */
-        virtual std::vector< VertexId > getVerticesInCluster(ClusterId clusterId) const = 0;
+        virtual std::vector<VertexId> getVerticesInCluster(ClusterId clusterId) const = 0;
 
         /**
         * @brief Returns a map that maps ClusterIds to the corresponding vertices count.
@@ -100,6 +100,13 @@ class ClusterEncoding
          * @return the current encoding of a solution
          */
         virtual Encoding getEncoding() const = 0;
+
+        /**
+        * @brief set the current encoding
+        * @param encoding The current encoding of a solution
+        * @return void
+        */
+        virtual void setEncoding(const Encoding& encoding) = 0;
 
         /**
          * @brief get the size of the current encoding

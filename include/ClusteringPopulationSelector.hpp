@@ -43,6 +43,8 @@ class ClusteringPopulationSelector
         */
         ClusteringPopulationSelector(const AbstractGraph* graph,
                                      EncodingFitnessDataStructure* populationPtr,
+                                     uint64_t predictedClusterCount,
+                                     uint32_t clusterGenerationFunction,
                                      const size_t threadCount = 1);
 
         /**
@@ -66,16 +68,22 @@ class ClusteringPopulationSelector
         const AbstractGraph* graph;
         EncodingFitnessDataStructure* populationPtr;
         size_t threadCount;
+        uint64_t predictedClusterCount;
+        uint32_t clusterGenerationFunction;
 };
 
 template<class EncodingFitnessDataStructure>
 ClusteringPopulationSelector<EncodingFitnessDataStructure>::ClusteringPopulationSelector(
     const AbstractGraph* graph,
     EncodingFitnessDataStructure* populationPtr,
+    uint64_t predictedClusterCount,
+    uint32_t clusterGenerationFunction,
     const size_t threadCount)
 {
     this->graph = graph;
     this->populationPtr = populationPtr;
+    this->predictedClusterCount = predictedClusterCount;
+    this->clusterGenerationFunction = clusterGenerationFunction;
     this->threadCount = threadCount;
 }
 
@@ -129,7 +137,7 @@ void ClusteringPopulationSelector<EncodingFitnessDataStructure>::selectSubPopula
     size_t populationIndexEnd,
     size_t threadID)
 {
-    IntegerEncodingInitializer initializer(this->graph);
+    IntegerEncodingInitializer initializer(this->graph, this->predictedClusterCount, this->clusterGenerationFunction);
     for (size_t i = populationIndexBegin; i < populationIndexEnd - 1; i++)
     {
         if ((*this->populationPtr)[i].populationEncoding.getEncoding() == (*this->populationPtr)[i + 1].populationEncoding.getEncoding())

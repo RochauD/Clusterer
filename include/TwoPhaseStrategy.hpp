@@ -27,6 +27,7 @@
 #include "Selector.hpp"
 #include "GlobalFileLogger.hpp"
 #include "PopulationMember.hpp"
+#include "PopulationExporter.hpp"
 
 /**
 * @namespace clusterer
@@ -197,6 +198,8 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
     ClusteringPopulationSelector<std::vector<PopulationMember<Encoding, double>>> populationSelector(
         this->graph,
         this->population,
+        this->clusteringParameters.predictedClusterCount,
+        this->clusteringParameters.clusterGenerationFunction,
         this->clusteringParameters.threadCount);
     PopulationMutatorEngine<std::vector<PopulationMember<Encoding, double>>, CombinedMutation> populationExplorationMutatorEngine(
                 this->graph,
@@ -329,6 +332,15 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
                                                    " Current maximal fitness: ",
                                                    this->currentBest.fitnessValue);
         }
+
+        // autosave our progress
+        if (iterationCount % this->clusteringParameters.autoSavePopulationFrequency == 0)
+        {
+            PopulationExporter populationExporter;
+            populationExporter.writePopulationToFile(this->population, "autosave.data");
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Auto save population to file.");
+        }
+
         this->iterationCount++;
     }
     return true;
@@ -356,7 +368,7 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::initalizePopulation()
         this->population->reserve(this->clusteringParameters.maxPopulationSize);
         this->population->resize(this->clusteringParameters.minPopulationSize);
     }
-    EncodingInitalizer encodingInitalizer(this->graph);
+    EncodingInitalizer encodingInitalizer(this->graph, this->clusteringParameters.predictedClusterCount ,this->clusteringParameters.clusterGenerationFunction);
     for (auto& e : *this->population)
     {
         PopulationMember<Encoding,double> member;

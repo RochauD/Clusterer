@@ -94,6 +94,13 @@ class IntegerVectorEncoding : public ClusterEncoding
         ClusterEncoding::Encoding getEncoding() const;
 
         /**
+        * @brief set the current encoding
+        * @param encoding The current encoding of a solution
+        * @return void
+        */
+        void setEncoding(const ClusterEncoding::Encoding& encoding);
+
+        /**
          * @brief get the size of the current encoding
          * @return the number of vertices
          */

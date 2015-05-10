@@ -25,10 +25,7 @@ using namespace clb;
 class TestIntegerEncodingInitializer : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(TestIntegerEncodingInitializer);
-
         CPPUNIT_TEST(testGetRandomSolution);
-        CPPUNIT_TEST(testGetInitialPopulation);
-
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -37,7 +34,6 @@ class TestIntegerEncodingInitializer : public CppUnit::TestFixture
 
     protected:
         void testGetRandomSolution(void);
-        void testGetInitialPopulation(void);
 
     private:
         Graph* g;

@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <vector>
 #include <random>
+#include <algorithm>
 // external headers
 
 // internal headers
@@ -16,11 +17,20 @@
 #include "Vertex.hpp"
 #include "IntegerVectorEncoding.hpp"
 
+/**
+* @namespace clusterer
+* @brief The namespace clusterer is the main namespace of the clusterer project.
+*/
 namespace clusterer
 {
+
+/**
+* @namespace backend
+* @brief The namespace backend is the namespace for all backend components of the
+* project.
+*/
 namespace backend
 {
-
 
 /**
  * @class IntegerEncodingInitializer
@@ -34,7 +44,7 @@ class IntegerEncodingInitializer
          * @param The graph to be clustered
          * @param The maximum number of clusters in a solution (the number of vertices by default)
          */
-        IntegerEncodingInitializer(const AbstractGraph* g, unsigned maxClusters = 0);
+        IntegerEncodingInitializer(const AbstractGraph* g, unsigned maxClusters = 0, uint32_t functionFlag = 0);
 
         /**
          * @brief Returns one randomly initialized clustering solution
@@ -42,23 +52,15 @@ class IntegerEncodingInitializer
          */
         IntegerVectorEncoding getRandomSolution();
 
-        /**
-         * @brief Generates an initial population for the genetic algorithm
-         * @param The number of individuals in the initial population
-         * @return A vector of randomly generated solutions
-         */
-        std::vector<IntegerVectorEncoding> getInitialPopulation(int chromosomeCount);
-
     protected:
         unsigned maxClusters;
         const AbstractGraph* graph;
         std::mt19937 rng;
-        // TODO: Make this a smart pointer
+        uint32_t functionFlag;
         std::uniform_int_distribution<unsigned>* uni_dist;
 };
 
-}  // namespace genetic
-}  // namespace backend
+}
+}
 
-#endif  // _BACKEND_GENETIC_IntegerEncodingInitializer_HPP
-
+#endif

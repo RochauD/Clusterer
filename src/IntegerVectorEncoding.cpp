@@ -94,6 +94,11 @@ ClusterEncoding::Encoding IntegerVectorEncoding::getEncoding() const
     return this->encoding;
 }
 
+void IntegerVectorEncoding::setEncoding(const ClusterEncoding::Encoding& encoding)
+{
+    this->encoding = encoding;
+}
+
 unsigned IntegerVectorEncoding::size() const
 {
     return this->encoding.size();
