@@ -10,8 +10,14 @@
 #include <stdint.h>
 #include <map>
 #include <vector>
+
+#ifdef _WIN32
 #include <Eigen/Dense>
 #include <Eigen/Eigenvalues>
+#else
+#include <eigen3/Eigen/Dense>
+#include <eigen3/Eigen/Eigenvalues>
+#endif
 
 // internal headers
 #include "ClusterEncoding.hpp"
