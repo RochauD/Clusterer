@@ -1,14 +1,13 @@
 #include <QApplication>
 
 
-#include "include/mainwindow.h"
+#include "include/MainWindow.h"
 
-//using namespace clusterer::frontend;
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    MainWindow w;
+    clusterer::frontend::MainWindow w;
     w.show();
    /* QApplication app(argc, argv);
 

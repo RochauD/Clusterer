@@ -1,8 +1,26 @@
-#include "../include/settingsdialog.h"
-#include "ui_settingsdialog.h"
+/**
+ * @file SettingsDialog.cpp
+ * @brief The custom dialog for modifying the settings of the project
+ */
+
+// Own headers
+#include "../include/SettingsDialog.h"
 #include "../include/ClusteringParams.hpp"
-#include "../include/frontendconfig.h"
+#include "../include/FrontendConfig.h"
+
+// External headers
 #include <QMessageBox>
+
+// Generated headers
+#include "ui_settingsdialog.h"
+
+
+namespace clusterer
+{
+
+namespace frontend
+{
+
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent),
@@ -46,4 +64,7 @@ void SettingsDialog::on_buttonBox_accepted()
     // Send params to the backend controller
 
     FrontendConfig::setVisualizeGraph(ui->visualizeGraph->isChecked());
+}
+
+}
 }

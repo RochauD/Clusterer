@@ -1,9 +1,26 @@
-#include "../include/mainwindow.h"
-#include "ui_mainwindow.h"
-#include "../include/settingsdialog.h"
+/**
+ * @file MainWindow.h
+ * @brief Main window for the Clusterer GUI
+ */
+ 
+// Own headers
+#include "../include/Mainwindow.h"
+#include "../include/SettingsDialog.h"
 
+// External headers
 #include <QMessageBox>
 #include <QFileDialog>
+
+// Generated headers
+#include "ui_mainwindow.h"
+
+
+namespace clusterer
+{
+
+namespace frontend
+{
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -152,4 +169,7 @@ void MainWindow::on_actionEdit_Settings_triggered()
 {
     SettingsDialog dialog(this);
     dialog.exec();
+}
+
+}
 }
