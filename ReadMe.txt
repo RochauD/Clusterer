@@ -46,12 +46,24 @@ QT:
 		Download the old installer and just install it normally.
 		Maybe set QTDIR to the root of the qt folder
 	Mac:
+QWT:
+	Linux:
+	Windows:
+	Mac:
+Eigen:
+	Windows:
+		Just download Eigen 3 from their website and place it into a folder.
+		Create a new enviroment variable called EIGEN_ROOT and set its value to that path
+Armadillo:
+	Linux:
+	Mac:
 
 Enviroment Variables:
 The following enviroment variables should be defined to ease compilation.
 
 BOOST_ROOT - boost root directory
 CPPUNIT_ROOT - cpp unit root directory
+EIGEN_ROOT - eigen root directory (only need for windows)
 
 Naming for test files:
 As CMAKE automates the test compilation adhere to the following rules:
@@ -62,7 +74,7 @@ If you use an IDE than you should also get a project as TestFoo
 
 
 Building and testing commands:
-Go into the build directory(cd build) then:
+Go into the/a build directory(mkdir build & cd build) then:
 cmake ..
 cmake --build .
 ctest -C <config> -VV 
