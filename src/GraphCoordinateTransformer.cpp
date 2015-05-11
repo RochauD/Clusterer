@@ -106,18 +106,18 @@ GraphCoordinateTransformer::GraphCoordinateTransformer(const backend::AbstractGr
             map_coord[i] = std::make_pair(coord_x,coord_y);
         }
     #else
-        // initialize D to 5 matrix -- 5 would be a good number to show
+        // initialize D to 0 matrix
         // less connectivity
         arma::mat D = arma::zeros<arma::mat>(no_vertices,no_vertices);
-        for(unsigned int i = 0; i < no_vertices; i++)
-            for(unsigned int j = 0; j < no_vertices; j++)
-                D(i,j) = 5;
+        //for(unsigned int i = 0; i < no_vertices; i++)
+        //    for(unsigned int j = 0; j < no_vertices; j++)
+        //        D(i,j) = 0;
         
         // populate the matrix D
         for(auto& e : graph.getFullyConnected()){
-            std::cout<<"("<<e.first.first<<","<<e.first.second<<")";
-            std::cout<<"weight: "<<e.second<<"\n";
             D(e.first.first,e.first.second) = e.second;
+            //std::cout<<"("<<e.first.first<<","<<e.first.second<<")";
+            //std::cout<<"weight: "<<e.second<<"\n";
         }
 
         //centering matrix J
@@ -131,9 +131,13 @@ GraphCoordinateTransformer::GraphCoordinateTransformer(const backend::AbstractGr
         // converted back to matrix object
         S = D % D;
 
+        //S.print("S = ");
+
         arma::sp_mat Z = arma::sp_mat(no_vertices,no_vertices);
         Z = -0.5 * J *S * J;
         uint64_t dimensions = 2; // for a 2D representation
+
+        //Z.print("Z = ");
 
         arma::cx_vec eigval;
         arma::cx_mat eigvec;

@@ -263,9 +263,14 @@ std::vector<std::pair<std::pair<VertexId, VertexId>, double>> Graph::getFullyCon
                 wedges.push_back(std::make_pair(std::make_pair(name[u]-OFFSET,name[v]-OFFSET),w));
             } else {
                 if(u != v){
-                boost::dijkstra_shortest_paths(g, u, boost::distance_map(distanceMap).predecessor_map(predecessorMap));
-                double w = distanceMap[v];
-                wedges.push_back(std::make_pair(std::make_pair(name[u]-OFFSET,name[v]-OFFSET),w));                
+                    double w;
+                    boost::dijkstra_shortest_paths(g, u, boost::distance_map(distanceMap).predecessor_map(predecessorMap));
+                    if(distanceMap[v] > 100){
+                       w = 0;
+                    } else {
+                       w = distanceMap[v];
+                    } 
+                    wedges.push_back(std::make_pair(std::make_pair(name[u]-OFFSET,name[v]-OFFSET),w));                
                 }
             }
         }
