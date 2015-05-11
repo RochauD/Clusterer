@@ -170,20 +170,24 @@ bool ClusteringService::savePopulation(std::string fullPathName)
     }
 }
 
-bool ClusteringService::checkAlgorithmConditions()
-{
-    return this->algorithmService.checkInitalizationCondition();
-}
-
-void ClusteringService::runAlgorithm(bool restart)
+bool ClusteringService::runAlgorithm(bool restart)
 {
     std::unique_lock<std::mutex> lock(this->serviceMutex);
     this->algorithmService.setGraph(&this->graph);
     this->algorithmService.setClusteringParameters(this->configurationManager.getClusteringParams());
     this->algorithmService.setPopulation(&this->population);
     this->algorithmService.setOutQueue(&this->outQueue);
-    restart ? this->runningFlag = 1 : this->runningFlag = 2;
-    this->workerCV.notify_all();
+    bool res = this->algorithmService.checkInitalizationCondition();
+    if (res)
+    {
+        restart ? this->runningFlag = 1 : this->runningFlag = 2;
+        this->workerCV.notify_all();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void ClusteringService::stopAlgorithm()

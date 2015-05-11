@@ -1,7 +1,7 @@
 /**
-  * @file IntegerEncodingInitializer.hpp
-  * @brief Interface of initial population generator for IntegerVectorEncoding
-  */
+* @file IntegerEncodingInitializer.hpp
+* @brief Interface of initial population generator for IntegerVectorEncoding
+*/
 #ifndef BACKEND_GENETIC_INTEGER_ENCODING_INITALIZER_HPP
 #define BACKEND_GENETIC_INTEGER_ENCODING_INITALIZER_HPP
 
@@ -34,7 +34,7 @@ namespace backend
 
 /**
  * @class IntegerEncodingInitializer
- * @interface for objects that allow a cluster to be encoded
+ * @brief Interface for objects that allow a cluster to be encoded
  */
 class IntegerEncodingInitializer
 {
