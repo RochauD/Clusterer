@@ -214,6 +214,7 @@ void ClusteringService::executeAlgoService()
         {
             this->algorithmService.runAlgorithm(false);
         }
+        this->runningFlag = 0;
     }
 }
 

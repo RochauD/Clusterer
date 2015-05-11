@@ -40,7 +40,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::updateFrontend()
 {
-    // Do magic.   
+    // Do magic.
 }
 
 void MainWindow::showAlert(const QString& title, const QString& text)
@@ -51,10 +51,9 @@ void MainWindow::showAlert(const QString& title, const QString& text)
 void MainWindow::on_pushButton_clicked()
 {
     //Start button
-    clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight("../test_files/out.ucidata-zachary");
     clb::GlobalBackendController::instance()->runAlgorithm(true);
     timer.start(16);
-
+    this->showAlert("Info", "Started the algorithm");
 }
 
 void MainWindow::on_pushButton_4_clicked()
