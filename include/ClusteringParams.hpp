@@ -163,7 +163,7 @@ struct ClusteringParams
     /**
     * @var fitnessFunction
     * @brief Selects the paramater for optimization.
-    * @details If its 0 its fitness, 1 its MQ, 2 Performance.
+    * @details If it's 0 it's fitness, 1 it's MQ, 2 Performance.
     */
     uint32_t fitnessFunction;
 
@@ -184,6 +184,9 @@ struct ClusteringParams
     /**
     * @var clusterGenerationFunction
     * @brief The function used to generate a cluster.
+    * @details If it's 0 it is assign a new cluster id from 0 to predictedClusterCount with equal probability
+    * for each cluster. If it is set to 1 it is generating a cluster by creating predictedClusterCount number of 
+    * clusters where each cluster has nearly the same amount of members.
     */
     uint32_t clusterGenerationFunction;
 

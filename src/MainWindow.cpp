@@ -14,6 +14,8 @@
 // Generated headers
 #include "ui_MainWindow.h"
 #include "../include/GlobalBackendController.hpp"
+#include "../include/GlobalFileLogger.hpp"
+
 
 
 namespace clusterer
@@ -77,7 +79,15 @@ void MainWindow::on_actionSave_Settings_2_triggered()
                    tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->saveConfiguration(path.toLocal8Bit().constData());
+        if (result == false)
+        {
+            showAlert("Save Settings failed", "Failed saving settings.");
+        }
+    }
+    else
+    {
+        showAlert("Save Settings failed", "You didn't select a valid path");
     }
 }
 
@@ -89,7 +99,15 @@ void MainWindow::on_actionLoad_Settings_2_triggered()
                    tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->loadConfiguration(path.toLocal8Bit().constData());
+        if (result == false)
+        {
+            showAlert("Load Settings failed", "The file you selected is not a valid configuration file");
+        }
+    }
+    else
+    {
+        showAlert("Load Settings failed", "You didn't select a valid file");
     }
 }
 
