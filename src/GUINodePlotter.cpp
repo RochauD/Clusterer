@@ -187,7 +187,7 @@ void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol){
     printEncoding(clusterSol);
     for(unsigned int i = 0; i < no_vertices; i++){
         uint64_t cluster_id = clusterSol.getClusterOfVertex(i);
-        if(!(symbols->at(cluster_id) == *(markers.at(i)->symbol()))) {
+        if(!(symbols->at(cluster_id).brush() == (markers.at(i)->symbol())->brush())) {
             QwtPlotMarker *mark = new QwtPlotMarker();
             mark->setSymbol(&(symbols->at(cluster_id)));
             mark->setValue(markers.at(i)->value());
