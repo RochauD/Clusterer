@@ -44,8 +44,8 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
     this->resize(width,height);
 
     /*creating the necessary widgets*/
-    show_edges = new QPushButton(tr("&Show edges"));
-    closeViz = new QPushButton(tr("&Close"));
+    // show_edges = new QPushButton(tr("&Show edges"));
+    // closeViz = new QPushButton(tr("&Close"));
     plotWindow = new QWidget();
     
     /* setting the default background for the plot */
@@ -58,15 +58,15 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
 
     /*setting the layout of the main window*/
     QHBoxLayout *layout1 = new QHBoxLayout;
-    layout1->addWidget(show_edges);
-    layout1->addWidget(closeViz);
+    // layout1->addWidget(show_edges);
+    // layout1->addWidget(closeViz);
     QVBoxLayout *layout2 = new QVBoxLayout;
     layout2->addLayout(layout1);
     layout2->addWidget(plotWindow);
 
     /*add connects*/
-    connect(closeViz,SIGNAL(clicked()),this,SLOT(close()));
-    connect(show_edges,SIGNAL(clicked()),this,SLOT(draw_edges()));
+    // connect(closeViz,SIGNAL(clicked()),this,SLOT(close()));
+    // connect(show_edges,SIGNAL(clicked()),this,SLOT(draw_edges()));
 
     /*setting central widget*/
     //central_vis_window = new QWidget();
@@ -209,7 +209,7 @@ void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol){
 void GUINodePlotter::setPlotBackground(const uint64_t& width, const uint64_t& height){
 
     myPlot = new QwtPlot(plotWindow);
-    myPlot->setTitle(QwtText("Graph Visualization"));
+    // myPlot->setTitle(QwtText("Graph Visualization"));
 
     QFont serifFont("Times", 12, QFont::Bold);
 

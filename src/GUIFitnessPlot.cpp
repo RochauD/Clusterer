@@ -22,8 +22,8 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
     this->resize(width,height);
 
     /*creating the necessary widgets*/
-    closeFit = new QPushButton(tr("&Close"));
-    run_random = new QPushButton(tr("&Run random example"));
+    // closeFit = new QPushButton(tr("&Close"));
+    // run_random = new QPushButton(tr("&Run random example"));
     plotWindow = new QWidget();
     
     /* setting the default background for the plot */
@@ -47,16 +47,16 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
 
     /*setting the layout of the main window*/
     QHBoxLayout *layout1 = new QHBoxLayout;
-    layout1->addWidget(closeFit);
-    layout1->addWidget(run_random);
+    // layout1->addWidget(closeFit);
+    // layout1->addWidget(run_random);
     QVBoxLayout *layout2 = new QVBoxLayout;
     layout2->addLayout(layout1);
     layout2->addWidget(plotWindow);
 
     /*add connects*/
-    connect(closeFit,SIGNAL(clicked()),this,SLOT(close()));
+    //connect(closeFit,SIGNAL(clicked()),this,SLOT(close()));
     connect(this,SIGNAL(sendFitnessValue(double)),this,SLOT(replotFitness(double)));
-    connect(run_random,SIGNAL(clicked()),this,SLOT(runRandom()));
+    //connect(run_random,SIGNAL(clicked()),this,SLOT(runRandom()));
 
     /*setting central widget*/
     //central_vis_window = new QWidget();
@@ -117,7 +117,7 @@ void GUIFitnessPlot::replotFitness(double new_value){
 void GUIFitnessPlot::setPlotBackground(){
 
     myPlot = new QwtPlot(plotWindow);
-    myPlot->setTitle(QwtText("Fitness Analyzer"));
+    // myPlot->setTitle(QwtText("Fitness Analyzer"));
 
     QFont serifFont("Times", 12, QFont::Bold);
 

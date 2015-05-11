@@ -65,18 +65,18 @@ class GUIFitnessPlot: public QWidget
 
     public slots:
         void replotFitness(double);
-
-    private slots:
         void genRandomValues();
         void runRandom();
+
+    private slots:
 
     signals:
         void sendFitnessValue(double);
 
     private:
         /* general purpose buttons */
-        QPushButton *closeFit;
-        QPushButton *run_random;
+        // QPushButton *closeFit;
+        // QPushButton *run_random;
 
         /* central widget to rule them all */
         //QWidget *central_vis_window;

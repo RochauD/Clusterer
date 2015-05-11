@@ -108,8 +108,8 @@ class GUINodePlotter: public QWidget
 
     private:
         /* general purpose buttons */
-        QPushButton *show_edges;
-        QPushButton *closeViz;
+        // QPushButton *show_edges;
+        // QPushButton *closeViz;
 
         int width = 500;
         int height = 500;
