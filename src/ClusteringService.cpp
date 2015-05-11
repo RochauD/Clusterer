@@ -22,12 +22,22 @@ namespace backend
 
 ClusteringService::ClusteringService()
 {
-
+    this->workerFlag = true;
+    this->workerThread = std::unique_ptr<std::thread>(new std::thread(&ClusteringService::executeAlgoService, this));
+    this->runningFlag = 0;
 }
 
 ClusteringService::~ClusteringService()
 {
+    this->algorithmService.stopAlgorithm();
+    this->runningFlag = 1;
+    this->workerFlag = false;
+    this->workerCV.notify_all();
 
+    if (this->workerThread->joinable())
+    {
+        this->workerThread->join();
+    }
 }
 
 
@@ -155,21 +165,21 @@ bool ClusteringService::savePopulation(std::string fullPathName)
     }
 }
 
-bool ClusteringService::runAlgorithm(bool restart)
+void ClusteringService::runAlgorithm(bool restart)
 {
-    {
-        std::unique_lock<std::mutex> lock(this->serviceMutex);
-        this->algorithmService.setGraph(&this->graph);
-        this->algorithmService.setClusteringParameters(this->configurationManager.getClusteringParams());
-        this->algorithmService.setPopulation(&this->population);
-        this->algorithmService.setOutQueue(&this->outQueue);
-    }
-    return this->algorithmService.runAlgorithm(restart);
+    std::unique_lock<std::mutex> lock(this->serviceMutex);
+    this->algorithmService.setGraph(&this->graph);
+    this->algorithmService.setClusteringParameters(this->configurationManager.getClusteringParams());
+    this->algorithmService.setPopulation(&this->population);
+    this->algorithmService.setOutQueue(&this->outQueue);
+    restart ? this->runningFlag = 1 : this->runningFlag = 2;
+    this->workerCV.notify_all();
 }
 
 void ClusteringService::stopAlgorithm()
 {
     this->algorithmService.stopAlgorithm();
+    this->runningFlag = 0;
 }
 
 void ClusteringService::resumeAlgorithm()
@@ -182,6 +192,25 @@ clc::ConcurrentLockingQueue<std::pair<PopulationMember<IntegerVectorEncoding, do
     return &this->outQueue;
 }
 
+void ClusteringService::executeAlgoService()
+{
+    while (workerFlag)
+    {
+        std::unique_lock<std::mutex> lock(this->workerMutex);
+        while (runningFlag == 0)
+        {
+            this->workerCV.wait(lock);
+        }
+        if (this->runningFlag == 1)
+        {
+            this->algorithmService.runAlgorithm(true);
+        }
+        else
+        {
+            this->algorithmService.runAlgorithm(false);
+        }
+    }
+}
 
 }
 }

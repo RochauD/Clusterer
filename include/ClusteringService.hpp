@@ -113,9 +113,9 @@ class ClusteringService
         /**
         * @brief This method runs the algorithm.
         * @param restart Boolean restart flag. If set to true we are restarting.
-        * @return True if run was succesful and False if it failed.
+        * @return void
         */
-        bool runAlgorithm(bool restart = false);
+        void runAlgorithm(bool restart = false);
 
         /**
         * @brief This method stops the algorithm.
@@ -172,6 +172,16 @@ class ClusteringService
         * @brief The Mutex.
         */
         std::mutex serviceMutex;
+
+
+        std::mutex workerMutex;
+        std::condition_variable workerCV;
+        std::unique_ptr<std::thread> workerThread;
+        bool workerFlag;
+        int runningFlag;
+
+
+        void executeAlgoService();
 };
 
 }

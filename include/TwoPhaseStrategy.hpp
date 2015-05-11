@@ -44,6 +44,12 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class TwoPhaseStrategy
+* @brief The class that runs the algorithm itself.
+* @tparam Encoding The encoding used.
+* @tparam EncodingInitalizer The encoding initalizer class.
+*/
 template<class Encoding, class EncodingInitalizer>
 class TwoPhaseStrategy
 {
@@ -66,22 +72,62 @@ class TwoPhaseStrategy
                          std::vector<PopulationMember<Encoding, double>>* population,
                          clc::ConcurrentLockingQueue<std::pair<PopulationMember<Encoding, double>, uint64_t>>* outQueue);
 
-
+        /**
+        * @brief Sets the graph on which the algorithm operates on.
+        * @param graph A pointer to a graph.
+        * @return void
+        */
         void setGraph(const AbstractGraph* graph);
-        void setClusteringParameters(ClusteringParams clusteringParameters);
-        void setPopulation(std::vector<PopulationMember<Encoding, double>>* population);
-        void setOutQueue(clc::ConcurrentLockingQueue<std::pair<PopulationMember<Encoding, double>, uint64_t>>* outQueue);
 
+        /**
+        * @brief Sets the clustering parameters of the algorithm.
+        * @param clusteringParameters The clusteringParameters.
+        * @return void
+        */
+        void setClusteringParameters(ClusteringParams clusteringParameters);
+
+        /**
+        * @brief Sets the population.
+        * @param population A pointer to a population.
+        * @return void
+        */
+        void setPopulation(std::vector<PopulationMember<Encoding, double>>* population);
+
+        /**
+        * @brief Sets the output queue.
+        * @param outQueue A pointer to a output queue.
+        * @return void
+        */
+        void setOutQueue(clc::ConcurrentLockingQueue<std::pair<PopulationMember<Encoding, double>, uint64_t>>* outQueue);
 
         /**
          * @brief obtain the next generation of the clustering solution
+         * @pre Required objects are set and loaded and valid
          * @return void
          */
-        bool runAlgorithm(bool restart = true);
+        void runAlgorithm(bool restart = true);
 
+        /**
+        * @brief Checks the inital algorithm conditions.
+        * @return True if valid, false if invalid.
+        */
+        bool checkInitalizationCondition();
+
+        /**
+        * @brief Stops the current algorithm run.
+        * @return void
+        */
         void stopAlgorithm();
+
+        /**
+        * @brief Resumes the current algorithm run.
+        * @return void
+        */
         void resumeAlgorithm();
 
+        /**
+        * @brief Standard Destructor.
+        */
         ~TwoPhaseStrategy();
 
     protected:
@@ -99,7 +145,6 @@ class TwoPhaseStrategy
         void initalizePopulation();
         bool checkRunningConditions();
         bool checkForPhaseSwitch();
-        bool checkInitalizationCondition();
         void sortPopulation();
 
 };
@@ -164,17 +209,9 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::setOutQueue(clc::Concurrent
 }
 
 template<class Encoding, class EncodingInitalizer>
-bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
+void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
 {
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm run started");
-
-    // check conditions
-    if (this->checkInitalizationCondition() == false)
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm run stopped. Parameters are invalid");
-        return false;
-    }
-    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm parameters are valid");
 
     // set up
     ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<PopulationMember<Encoding, double>>> populationFitnessAnalyzer(
@@ -343,7 +380,6 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
 
         this->iterationCount++;
     }
-    return true;
 }
 
 template<class Encoding, class EncodingInitalizer>
@@ -435,6 +471,7 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::checkInitalizationCondition
         return false;
     }
 
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm parameters are valid");
     return true;
 }
 
