@@ -8,6 +8,7 @@
 // standard headers
 #include <stdint.h>
 #include <atomic>
+#include <limits>
 // external headers
 
 // internal headers
@@ -377,9 +378,16 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
             populationExporter.writePopulationToFile(this->population, "autosave.data");
             clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Auto save population to file.");
         }
-
         this->iterationCount++;
     }
+    // finished now clean up and send stuff out
+    PopulationExporter populationExporter;
+    populationExporter.writePopulationToFile(this->population, "autosave.data");
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Auto save population to file.");
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished.");
+    this->outQueue->push(std::make_pair((*this->population)[0], this->iterationCount));
+    // send end flag
+    this->outQueue->push(std::make_pair((*this->population)[0], std::numeric_limits<uint64_t>::max()));
 }
 
 template<class Encoding, class EncodingInitalizer>

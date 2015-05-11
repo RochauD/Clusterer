@@ -14,9 +14,9 @@ namespace clusterer
 namespace frontend
 {
 
-GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
+GUIFitnessPlot::GUIFitnessPlot(QWidget* parent, uint64_t width, uint64_t height)
     : QWidget(parent)
-{  
+{
 
     /* resizing window */
     this->resize(width,height);
@@ -25,12 +25,12 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
     // closeFit = new QPushButton(tr("&Close"));
     // run_random = new QPushButton(tr("&Run random example"));
     plotWindow = new QWidget();
-    
+
     /* setting the default background for the plot */
     setPlotBackground();
 
     /* add myPlot to plotWindow */
-    QVBoxLayout *layout_t = new QVBoxLayout();
+    QVBoxLayout* layout_t = new QVBoxLayout();
     layout_t->addWidget(myPlot);
 
     // myPlot->replot();
@@ -39,23 +39,23 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
     plotWindow->setLayout(layout_t);
     plotWindow->setWindowModality(Qt::ApplicationModal);
     plotWindow->show();
-    
+
     /* add zooming option */
     zoom = new QwtPlotZoomer(myPlot->canvas());
     zoom->setRubberBandPen(QPen(Qt::black, 2, Qt::DotLine));
     zoom->setTrackerPen(QPen(Qt::black));
 
     /*setting the layout of the main window*/
-    QHBoxLayout *layout1 = new QHBoxLayout;
+    QHBoxLayout* layout1 = new QHBoxLayout;
     // layout1->addWidget(closeFit);
     // layout1->addWidget(run_random);
-    QVBoxLayout *layout2 = new QVBoxLayout;
+    QVBoxLayout* layout2 = new QVBoxLayout;
     layout2->addLayout(layout1);
     layout2->addWidget(plotWindow);
 
     /*add connects*/
     //connect(closeFit,SIGNAL(clicked()),this,SLOT(close()));
-    connect(this,SIGNAL(sendFitnessValue(double)),this,SLOT(replotFitness(double)));
+    connect(this, SIGNAL(sendFitnessValue(double)), this, SLOT(replotFitness(double)));
     //connect(run_random,SIGNAL(clicked()),this,SLOT(runRandom()));
 
     /*setting central widget*/
@@ -74,7 +74,7 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
     curve->setStyle(QwtPlotCurve::Lines);
     fitness_data = new QwtPointSeriesData;
     samples = new QVector<QPointF>;
-    QwtSymbol *sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::blue),QPen(Qt::blue),QSize(4,4));
+    QwtSymbol* sym = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::blue), QPen(Qt::blue), QSize(4,4));
     curve->setSymbol(sym);
 
     fitness_data->setSamples(*samples);
@@ -83,38 +83,36 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
 
     myPlot->replot();
     myPlot->show();
-    
+
 }
 
-void GUIFitnessPlot::runRandom(){
+void GUIFitnessPlot::runRandom()
+{
     counter = 0;
     timer = new QTimer(this);
     timer->start(1000);
     connect(timer,SIGNAL(timeout()),this,SLOT(genRandomValues()));
 }
 
-void GUIFitnessPlot::genRandomValues(){
+void GUIFitnessPlot::genRandomValues()
+{
     emit sendFitnessValue(dist(*gen));
 }
 
-void GUIFitnessPlot::replotFitness(double new_value){
-    
-    if(counter > 10) {
-        timer->stop();
+void GUIFitnessPlot::replotFitness(std::vector<std::pair<uint64_t, double>> vector)
+{
+    for (auto& e : vector)
+    {
+        samples->push_back(QPointF(e.first, e.second));
     }
-
-    //std::cout<<"Fitness: "<<new_value<<", x: "<<this->counter<<"\n";
-    samples->push_back(QPointF(counter,new_value));
     fitness_data->setSamples(*samples);
     curve->setData(fitness_data);
-
     myPlot->replot();
     myPlot->show();
-
-    this->counter++;
 }
 
-void GUIFitnessPlot::setPlotBackground(){
+void GUIFitnessPlot::setPlotBackground()
+{
 
     myPlot = new QwtPlot(plotWindow);
     // myPlot->setTitle(QwtText("Fitness Analyzer"));
@@ -122,7 +120,7 @@ void GUIFitnessPlot::setPlotBackground(){
     QFont serifFont("Times", 12, QFont::Bold);
 
     /* legend */
-    QwtLegend *legend = new QwtLegend;
+    QwtLegend* legend = new QwtLegend;
     legend->setFrameStyle(QFrame::Box|QFrame::Sunken);
     myPlot->insertLegend(legend, QwtPlot::BottomLegend);
 
@@ -142,7 +140,8 @@ void GUIFitnessPlot::setPlotBackground(){
     myPlot->setAxisTitle(QwtPlot::yLeft, titleY);
 }
 
-GUIFitnessPlot::~GUIFitnessPlot(){
+GUIFitnessPlot::~GUIFitnessPlot()
+{
     //empty dtor
 }
 

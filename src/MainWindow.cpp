@@ -3,9 +3,14 @@
  * @brief Main window for the Clusterer GUI
  */
 
+// standard headers
+#include <limits>
+
 // Own headers
 #include "../include/MainWindow.h"
 #include "../include/SettingsDialog.h"
+#include "../include/PopulationMember.hpp"
+#include "../include/IntegerVectorEncoding.hpp"
 
 // External headers
 #include <QMessageBox>
@@ -40,7 +45,39 @@ MainWindow::~MainWindow()
 
 void MainWindow::updateFrontend()
 {
-    // Do magic.   
+    std::pair<clb::PopulationMember<clb::IntegerVectorEncoding, double>, uint64_t> output;
+    std::vector<std::pair<clb::PopulationMember<clb::IntegerVectorEncoding, double>, uint64_t>> vector;
+    while (clb::GlobalBackendController::instance()->getOutQueue()->popNonWaiting(output))
+    {
+        vector.push_back(output);
+    }
+
+    if (!vector.empty())
+    {
+        bool exitFlag = false;
+        std::vector<std::pair<uint64_t, double>> fitnessVec;
+        fitnessVec.reserve(vector.size());
+        for (auto& e : vector)
+        {
+            if (std::numeric_limits<uint64_t>::max() - std::numeric_limits<uint64_t>::epsilon() <= e.second)
+            {
+                // algo stopped
+                exitFlag = true;
+                continue;
+            }
+            fitnessVec.push_back(std::make_pair(e.second, e.first.fitnessValue));
+        }
+        ui->fitnessPlotter->replotFitness(fitnessVec);
+
+        if (exitFlag == true && vector.size() > 1)
+        {
+            ui->nodePlotter->replotSolution(vector[vector.size() - 2].first.populationEncoding);
+        }
+        else
+        {
+            ui->nodePlotter->replotSolution(vector[vector.size() - 1].first.populationEncoding);
+        }
+    }
 }
 
 void MainWindow::showAlert(const QString& title, const QString& text)
@@ -51,10 +88,11 @@ void MainWindow::showAlert(const QString& title, const QString& text)
 void MainWindow::on_pushButton_clicked()
 {
     //Start button
-    clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight("../test_files/out.ucidata-zachary");
+    // @todo put check condition function into controller and call it here and check
+
     clb::GlobalBackendController::instance()->runAlgorithm(true);
     timer.start(16);
-
+    this->showAlert("Info", "Started the algorithm");
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -162,6 +200,7 @@ void MainWindow::on_actionZachary_format_triggered()
         if (result == true)
         {
             showAlert("Load Graph Success", "Successfully loaded a vertex-pair-weight type graph.");
+            ui->nodePlotter->initGraph();
         }
         else
         {
@@ -187,6 +226,7 @@ void MainWindow::on_actionMovielens_format_triggered()
         if (result == true)
         {
             showAlert("Load Graph Success", "Successfully loaded a Movielens type graph.");
+            ui->nodePlotter->initGraph();
         }
         else
         {

@@ -13,6 +13,7 @@
 #include <mutex>
 #include <chrono>
 #include <random>
+#include <vector>
 #include <QTimer>
 #include <QtGui>
 #include <qwt_plot.h>
@@ -67,8 +68,10 @@ class GUIFitnessPlot: public QWidget
         */
         ~GUIFitnessPlot();
 
+        void replotFitness(std::vector<std::pair<uint64_t, double>> vector);
+
     public slots:
-        void replotFitness(double);
+
         void genRandomValues();
         void runRandom();
 
