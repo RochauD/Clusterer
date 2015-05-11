@@ -106,7 +106,7 @@ void MainWindow::on_actionLoad_Settings_2_triggered()
         bool result = clb::GlobalBackendController::instance()->loadConfiguration(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Load Settings Success", "Successfully loaded settings");   
+            showAlert("Load Settings Success", "Successfully loaded settings");
         }
         else
         {
@@ -130,7 +130,7 @@ void MainWindow::on_actionSave_Graph_triggered()
         bool result = clb::GlobalBackendController::instance()->saveGraphToFile(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Save Graph Success", "Successfully saved graph to file.");   
+            showAlert("Save Graph Success", "Successfully saved graph to file.");
         }
         else
         {
@@ -155,7 +155,7 @@ void MainWindow::on_actionZachary_format_triggered()
         bool result = clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Load Graph Success", "Successfully loaded a vertex-pair-weight type graph.");   
+            showAlert("Load Graph Success", "Successfully loaded a vertex-pair-weight type graph.");
         }
         else
         {
@@ -181,7 +181,7 @@ void MainWindow::on_actionMovielens_format_triggered()
         bool result = clb::GlobalBackendController::instance()->loadGraphTypeMovieLens(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Load Graph Success", "Successfully loaded a Movielens type graph.");   
+            showAlert("Load Graph Success", "Successfully loaded a Movielens type graph.");
         }
         else
         {
@@ -206,7 +206,7 @@ void MainWindow::on_actionSave_Population_triggered()
         bool result = clb::GlobalBackendController::instance()->savePopulation(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Save Population Success", "Successfully saved population to file.");   
+            showAlert("Save Population Success", "Successfully saved population to file.");
         }
         else
         {
@@ -231,7 +231,7 @@ void MainWindow::on_actionLoad_Population_triggered()
         bool result = clb::GlobalBackendController::instance()->loadPopulation(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Load Population Success", "Successfully loaded a population.");   
+            showAlert("Load Population Success", "Successfully loaded a population.");
         }
         else
         {
@@ -247,7 +247,9 @@ void MainWindow::on_actionLoad_Population_triggered()
 
 void MainWindow::on_actionAbout_2_triggered()
 {
-    QString info = "Clustering Social Networks by using Genetic Algorithms\n\nSoftware Project for the Course Software Engineering Lab 2015 at Jacobs University Bremen.\n\nAuthors: Denis Rochau, Dinesh Kannan, Annu Thapa, Valentin Vasiliu, Radu Homorozan, Kiril Kafadarov";
+    QString info = "Clustering Social Networks by using Genetic Algorithms\n\n"
+                   "Software Project for the Course Software Engineering Lab 2015 at Jacobs University Bremen.\n\n"
+                   "Authors: Denis Rochau, Dinesh Kannan, Annu Thapa, Valentin Vasiliu, Radu Homorozan, Kiril Kafadarov";
     QMessageBox::about(this, "About this project", info);
 }
 
