@@ -50,6 +50,17 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
     
     /* setting the default background for the plot */
     setPlotBackground(Width,Height);
+
+    /* add myPlot to plotWindow */
+    QVBoxLayout *layout_t = new QVBoxLayout();
+    layout_t->addWidget(myPlot);
+
+    // myPlot->replot();
+    // myPlot->show();
+
+    plotWindow->setLayout(layout_t);
+    plotWindow->setWindowModality(Qt::ApplicationModal);
+    plotWindow->show();
     
     /* add zooming option */
     zoom = new QwtPlotZoomer(myPlot->canvas());
@@ -107,18 +118,10 @@ void GUINodePlotter::initGraph(){
     mapy = gt.getNormalizedMap(this->width,this->height);
     //printMap(mapy);
 
-    /* add myPlot to plotWindow */
-    QVBoxLayout *layout_t = new QVBoxLayout();
-    layout_t->addWidget(myPlot);
-
     plotContent();
 
     myPlot->replot();
     myPlot->show();
-
-    plotWindow->setLayout(layout_t);
-    plotWindow->setWindowModality(Qt::ApplicationModal);
-    plotWindow->show();
 
     setSymbols(clb::GlobalBackendController::instance()->getGraph().getNoVertices());
 }
@@ -240,6 +243,7 @@ void GUINodePlotter::plotContent(){
     /* include the data into the graph */
     curve = new QwtPlotCurve("Cluster Visualization");
     curve->setStyle(QwtPlotCurve::Dots);
+    //curve->setRenderHint(QwtPlotItem::RenderAntialiased, true);
     mydata = new QwtPointSeriesData;
     samples = new QVector<QPointF>;
 

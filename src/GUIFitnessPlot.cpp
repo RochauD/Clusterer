@@ -76,6 +76,7 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget* parent, uint64_t width, uint64_t height)
     samples = new QVector<QPointF>;
     QwtSymbol* sym = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::blue), QPen(Qt::blue), QSize(4,4));
     curve->setSymbol(sym);
+    curve->setRenderHint(QwtPlotItem::RenderAntialiased, true);
 
     fitness_data->setSamples(*samples);
     curve->setData(fitness_data);
