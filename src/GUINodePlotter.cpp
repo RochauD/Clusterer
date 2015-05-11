@@ -36,20 +36,20 @@ void GUINodePlotter::printMap(const std::map<backend::VertexId,std::pair<double,
     }
 }
 
-GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
-    : QWidget(parent),width(width),height(height)
+GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
+    : QWidget(parent),width(Width),height(Height)
 {  
 
     /* resizing window */
-    this->resize(width,height);
-
+    this->resize(Width,Height);
+    this->adjustSize();
     /*creating the necessary widgets*/
     // show_edges = new QPushButton(tr("&Show edges"));
     // closeViz = new QPushButton(tr("&Close"));
     plotWindow = new QWidget();
     
     /* setting the default background for the plot */
-    setPlotBackground(width,height);
+    setPlotBackground(Width,Height);
     
     /* add zooming option */
     zoom = new QwtPlotZoomer(myPlot->canvas());
@@ -58,9 +58,9 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
 
     /*setting the layout of the main window*/
     QHBoxLayout *layout1 = new QHBoxLayout;
-    // layout1->addWidget(show_edges);
+    //layout1->addWidget(show_edges);
     // layout1->addWidget(closeViz);
-    QVBoxLayout *layout2 = new QVBoxLayout;
+    QHBoxLayout *layout2 = new QHBoxLayout;
     layout2->addLayout(layout1);
     layout2->addWidget(plotWindow);
 
@@ -71,6 +71,7 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
     /*setting central widget*/
     //central_vis_window = new QWidget();
     //central_vis_window->setLayout(layout2);
+    //this->setCentralWidget(central_vis_window);
     //this->addWidget(central_vis_window);
     this->setLayout(layout2);
 
@@ -103,7 +104,7 @@ void GUINodePlotter::initGraph(){
     /* testing input information */
     //std::cout<<"graph edges GUINodePlotter: "<<clb::GlobalBackendController::instance()->getGraph().getNoEdges()<<"\n";
     GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
-    mapy = gt.getNormalizedMap(width,height);
+    mapy = gt.getNormalizedMap(this->width,this->height);
     //printMap(mapy);
 
     /* add myPlot to plotWindow */
@@ -221,10 +222,10 @@ void GUINodePlotter::setPlotBackground(const uint64_t& width, const uint64_t& he
     /* axes manipulation*/
     myPlot->enableAxis(QwtPlot::xBottom);
     myPlot->enableAxis(QwtPlot::yLeft);
-    //myPlot->setAxisAutoScale(QwtPlot::xBottom,true);
-    //myPlot->setAxisAutoScale(QwtPlot::yLeft,true);
-    myPlot->setAxisScale(QwtPlot::xBottom,0,width);
-    myPlot->setAxisScale(QwtPlot::yLeft,0,height);
+    myPlot->setAxisAutoScale(QwtPlot::xBottom,true);
+    myPlot->setAxisAutoScale(QwtPlot::yLeft,true);
+    //myPlot->setAxisScale(QwtPlot::xBottom,0,width);
+    //myPlot->setAxisScale(QwtPlot::yLeft,0,height);
 
     QwtText titleX("X axis");
     titleX.setFont(serifFont);
@@ -264,6 +265,16 @@ void GUINodePlotter::plotContent(){
 
 GUINodePlotter::~GUINodePlotter(){
     //empty dtor
+    delete timer;
+    delete samples;
+    delete colors;
+    delete symbols;
+    delete mydata;
+    delete zoom;
+    delete curve;
+    delete myPlot;
+    delete plotWindow;
+    delete gen;
 }
 
 

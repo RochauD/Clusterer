@@ -166,8 +166,8 @@ class GUINodePlotter: public QWidget
         */
         void plotContent();
 
-        backend::IntegerVectorEncoding solution;
-        backend::ClusteringService* _service;
+        // backend::IntegerVectorEncoding solution;
+        // backend::ClusteringService* _service;
 
 };
 
