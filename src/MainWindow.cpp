@@ -30,10 +30,6 @@ MainWindow::MainWindow(QWidget* parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    window_vis = new QWidget();
-    add_vis_layout = new QHBoxLayout();
-    window_vis->setLayout(add_vis_layout);
-    window_vis->hide();
 }
 
 MainWindow::~MainWindow()
@@ -52,14 +48,6 @@ void MainWindow::on_pushButton_clicked()
 
     clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight("../test_files/out.ucidata-zachary");
     //clb::GlobalBackendController::instance()->runAlgorithm();
-    
-
-    gnp = new GUINodePlotter(this);
-    gnp->initGraph();
-    this->layout()->addWidget(gnp);
-    
-    fit_plot = new GUIFitnessPlot(this);
-    this->layout()->addWidget(fit_plot);
 
     this->showAlert("Alert", "Start");
 }

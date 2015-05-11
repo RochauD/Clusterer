@@ -63,12 +63,6 @@ public:
      */
     void showAlert(const QString& title, const QString& text);
 
-private:
-    GUINodePlotter *gnp;
-    GUIFitnessPlot *fit_plot;
-    QWidget *window_vis;
-    QHBoxLayout *add_vis_layout;
-
 private slots:
     /**
      * @brief Executed when the "Start" button is clicked
