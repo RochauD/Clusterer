@@ -1,8 +1,8 @@
 /**
- * @file GraphCoordinateTransformer.hpp
- * @brief implementation of a transformer to obtain coordinates for a graph's nodes
- * using the edge's weights
- */
+* @file GraphCoordinateTransformer.hpp
+* @brief implementation of a transformer to obtain coordinates for a graph's nodes
+* using the edge's weights
+*/
 #ifndef CLUSTERER_FRONTEND_GRAPH_COORD_TRANS_HPP
 #define CLUSTERER_FRONTEND_GRAPH_COORD_TRANS_HPP
 
@@ -11,6 +11,7 @@
 #include <map>
 #include <vector>
 
+// external headers
 #ifdef _WIN32
 #include <Eigen/Dense>
 #include <Eigen/Eigenvalues>
@@ -46,6 +47,10 @@ namespace clusterer
 namespace frontend
 {
 
+/**
+* @class GraphCoordinateTransformer
+* @brief Creates coordinates from graph.
+*/
 class GraphCoordinateTransformer
 {
 
