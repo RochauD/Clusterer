@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget* parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateFrontend()));
+    connect(&timer, SIGNAL(timeout()), this, SLOT(updateFrontend()));
 }
 
 MainWindow::~MainWindow()

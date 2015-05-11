@@ -89,7 +89,7 @@
        </widget>
       </item>
       <item row="1" column="1" rowspan="8" colspan="2">
-       <widget class="clusterer::frontend::GUINodePlotter" name="nodePlotter" native="true">
+       <widget class="clusterer::frontend::GUINodePlotter" name="GUINodePlotter" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
