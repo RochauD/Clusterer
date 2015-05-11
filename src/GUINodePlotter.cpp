@@ -42,10 +42,10 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
 {  
 
     /* testing input information */
-    std::cout<<"graph edges GUINodePlotter: "<<clb::GlobalBackendController::instance()->getGraph().getNoEdges()<<"\n";
+    //std::cout<<"graph edges GUINodePlotter: "<<clb::GlobalBackendController::instance()->getGraph().getNoEdges()<<"\n";
     GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
     mapy = gt.getNormalizedMap(width,height);
-    printMap(mapy);
+    //printMap(mapy);
 
     /* resizing window */
     this->resize(width,height);
@@ -160,8 +160,8 @@ void GUINodePlotter::draw_edges(){
         new_samples->push_back(QPointF(mapy[e.first.first].first,mapy[e.first.first].second));
         new_samples->push_back(QPointF(mapy[e.first.second].first,mapy[e.first.second].second));
         
-        std::cout<<"edge "<<i<<": ( "<<mapy[e.first.first].first<<", "<<mapy[e.first.first].second<<" )";
-        std::cout<<" --> "<<"( "<<mapy[e.first.second].first<<", "<<mapy[e.first.second].second<<")\n";
+        // std::cout<<"edge "<<i<<": ( "<<mapy[e.first.first].first<<", "<<mapy[e.first.first].second<<" )";
+        // std::cout<<" --> "<<"( "<<mapy[e.first.second].first<<", "<<mapy[e.first.second].second<<")\n";
 
         // maybe take a look later for changing line color using symbols
         /*if(*(markers.at(e.first.first)->symbol()) == *(markers.at(e.first.second)->symbol()))
@@ -240,7 +240,6 @@ void GUINodePlotter::plotContent(){
     curve->setSymbol(sym);
 
     std::map<backend::VertexId,std::pair<double,double>>::iterator it;
-    //std::cout<<"Values read: "<<"(size of file: "<<pairs.size()<<")\n";
     for(it = mapy.begin(); it != mapy.end(); it++){
         samples->push_back(QPointF((*it).second.first,(*it).second.second));
         QwtPlotMarker *mark = new QwtPlotMarker();
@@ -254,7 +253,7 @@ void GUINodePlotter::plotContent(){
     curve->attach(myPlot);
 
     myPlot->replot();
-    //myPlot->show();
+
 }
 
 GUINodePlotter::~GUINodePlotter(){

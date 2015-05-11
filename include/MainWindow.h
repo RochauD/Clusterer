@@ -10,6 +10,7 @@
 
 // Internal headers
 #include "GUINodePlotter.hpp"
+#include "GUIFitnessPlot.hpp"
 
 /**
  * @namespace Ui
@@ -64,6 +65,7 @@ public:
 
 private:
     GUINodePlotter *gnp;
+    GUIFitnessPlot *fit_plot;
     QWidget *window_vis;
     QHBoxLayout *add_vis_layout;
 

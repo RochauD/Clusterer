@@ -68,7 +68,9 @@ class GUINodePlotter: public QMainWindow
         /**
         * @brief constructor which takes the graph and gets the normalized coordinates from the MDS
         * implemented by GraphCoordinateTransformer class.
-        * @param takes a graph reference to which the MDS algorithm is applied
+        * @param parent widget if applicable
+        * @param width value
+        * @param height value
         */
         GUINodePlotter(QWidget *parent, uint64_t width = 500, uint64_t height = 500);
         

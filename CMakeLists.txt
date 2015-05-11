@@ -340,6 +340,7 @@ set(CLUSTER_SOURCES_FRONTEND_CPP
         ${CLUSTER_SOURCE_DIR}/SettingsDialog.cpp
         ${CLUSTER_SOURCE_DIR}/FrontendConfig.cpp
         ${CLUSTER_SOURCE_DIR}/GUINodePlotter.cpp
+        ${CLUSTER_SOURCE_DIR}/GUIFitnessPlot.cpp
     )
 # frontend header files
 set(CLUSTER_SOURCES_FRONTEND_H 
@@ -347,6 +348,7 @@ set(CLUSTER_SOURCES_FRONTEND_H
         ${CLUSTER_INCLUDE_DIR}/ClustererMenuBar.hpp
         ${CLUSTER_INCLUDE_DIR}/ClustererWindow.hpp
         ${CLUSTER_INCLUDE_DIR}/GUINodePlotter.hpp
+        ${CLUSTER_INCLUDE_DIR}/GUIFitnessPlot.hpp
         ${CLUSTER_INCLUDE_DIR}/MainWindow.h
         ${CLUSTER_INCLUDE_DIR}/SettingsDialog.h
         ${CLUSTER_INCLUDE_DIR}/FrontendConfig.h
