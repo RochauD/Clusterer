@@ -45,10 +45,10 @@ void MainWindow::showAlert(const QString& title, const QString& text)
 void MainWindow::on_pushButton_clicked()
 {
     //Start button
-
     clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight("../test_files/out.ucidata-zachary");
     clb::GlobalBackendController::instance()->runAlgorithm(true);
     this->showAlert("Info", "Started the algorithm");
+
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -175,7 +175,6 @@ void MainWindow::on_actionMovielens_format_triggered()
                    tr("Open Movielens Graph"),
                    ".",
                    tr("All Files (*)"));
-
     if (!path.isNull() && !path.isEmpty())
     {
         bool result = clb::GlobalBackendController::instance()->loadGraphTypeMovieLens(path.toLocal8Bit().constData());
@@ -247,7 +246,9 @@ void MainWindow::on_actionLoad_Population_triggered()
 
 void MainWindow::on_actionAbout_2_triggered()
 {
-    QString info = "Clustering Social Networks by using Genetic Algorithms\n\nSoftware Project for the Course Software Engineering Lab 2015 at Jacobs University Bremen.\n\nAuthors: Denis Rochau, Dinesh Kannan, Annu Thapa, Valentin Vasiliu, Radu Homorozan, Kiril Kafadarov";
+    QString info = "Clustering Social Networks by using Genetic Algorithms\n\n"
+                   "Software Project for the Course Software Engineering Lab 2015 at Jacobs University Bremen.\n\n"
+                   "Authors: Denis Rochau, Dinesh Kannan, Annu Thapa, Valentin Vasiliu, Radu Homorozan, Kiril Kafadarov";
     QMessageBox::about(this, "About this project", info);
 }
 

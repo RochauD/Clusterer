@@ -69,6 +69,12 @@ class ClusteringService
         ClusteringParams getConfigurationParameters();
 
         /**
+        * @brief this method returns a graph object
+        * @return the graph
+        */
+        Graph getGraph();
+
+        /**
         * @brief This method sets the current ClusteringParams.
         * @param clusteringParams The ClusteringParams.
         * @return void

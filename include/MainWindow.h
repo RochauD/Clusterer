@@ -8,6 +8,10 @@
 // External headers
 #include <QMainWindow>
 
+// Internal headers
+#include "GUINodePlotter.hpp"
+#include "GUIFitnessPlot.hpp"
+
 /**
  * @namespace Ui
  * @brief Auto-generated code from Qt goes in this namespace

@@ -60,6 +60,8 @@ elseif( APPLE )
     # Set C++11
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -larmadillo")
+
     # Enable all warnings
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
@@ -125,6 +127,24 @@ else()
     endif()
 endif()
 
+# Armadillo
+if(UNIX)
+    FIND_PACKAGE(Armadillo REQUIRED)
+    if(ARMADILLO_FOUND)
+       message("-- Armadillo found and include directories added")
+    else()
+       message(FATAL_ERROR "Could not find Armadillo")
+    endif()
+       include_directories(${ARMADILLO_INCLUDE_DIRS})
+
+    set(ARMADILLO_LIBS ${ARMADILLO_LIBRARIES})
+    if(NOT ARMADILLO_LIBS)
+       message(FATAL_ERROR "-- Could not find Armadillo libraries")
+    else()
+       message(STATUS "Armadillo lib: " ${ARMADILLO_LIBS})
+    endif()
+endif()
+
 # Qt
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -139,6 +159,47 @@ if (Qt4_FOUND)
 else()
     message(FATAL_ERROR "Could not find Qt4")
 endif()
+
+
+# Qwt
+FIND_PATH(QWT_INCLUDE_DIR NAMES qwt.h PATHS
+  /usr/include
+  /usr/local/include
+  /usr/local/lib/qwt.framework/Versions/Current
+  "$ENV{LIB_DIR}/include" 
+  "$ENV{INCLUDE}" 
+  "$ENV{QWT_ROOT}/src" 
+  "$ENV{QWT_ROOT}" 
+  PATH_SUFFIXES qwt-qt4 qwt
+  )
+
+FIND_LIBRARY(QWT_LIBRARY NAMES qwt qwt5 qwt-qt4 qwt5-qt4 PATHS 
+  /usr/lib
+  /usr/local/lib
+  /usr/local/lib/qwt.framework/Versions/Current
+  "$ENV{LIB_DIR}/lib" 
+  "$ENV{LIB}/lib" 
+  "$ENV{QWT_ROOT}/lib" 
+  "$ENV{QWT_ROOT}" 
+  )
+
+IF (QWT_INCLUDE_DIR AND QWT_LIBRARY)
+  SET(QWT_FOUND TRUE)
+ENDIF (QWT_INCLUDE_DIR AND QWT_LIBRARY)
+
+IF (QWT_FOUND)
+  IF (NOT QWT_FIND_QUIETLY)
+    MESSAGE(STATUS "Found QWT: ${QWT_LIBRARY}")
+  ENDIF (NOT QWT_FIND_QUIETLY)
+ELSE (QWT_FOUND)
+  IF (QWT_FIND_REQUIRED)
+    MESSAGE(FATAL_ERROR "Could not find QWT")
+  ENDIF (QWT_FIND_REQUIRED)
+ENDIF (QWT_FOUND)
+
+set ( QWT_INCLUDE_DIRS ${QWT_INCLUDE_DIR} )
+include_directories(${QWT_INCLUDE_DIRS})
+set ( QWT_LIBRARIES ${QWT_LIBRARY} )
 
 ###############
 # Directories #
@@ -286,12 +347,16 @@ set(CLUSTER_SOURCES_FRONTEND_CPP
         ${CLUSTER_SOURCE_DIR}/main.cpp
         ${CLUSTER_SOURCE_DIR}/SettingsDialog.cpp
         ${CLUSTER_SOURCE_DIR}/FrontendConfig.cpp
+        ${CLUSTER_SOURCE_DIR}/GUINodePlotter.cpp
+        ${CLUSTER_SOURCE_DIR}/GUIFitnessPlot.cpp
     )
 # frontend header files
 set(CLUSTER_SOURCES_FRONTEND_H 
         ${CLUSTER_INCLUDE_DIR}/GeneticGui.hpp
         ${CLUSTER_INCLUDE_DIR}/ClustererMenuBar.hpp
         ${CLUSTER_INCLUDE_DIR}/ClustererWindow.hpp
+        ${CLUSTER_INCLUDE_DIR}/GUINodePlotter.hpp
+        ${CLUSTER_INCLUDE_DIR}/GUIFitnessPlot.hpp
         ${CLUSTER_INCLUDE_DIR}/MainWindow.h
         ${CLUSTER_INCLUDE_DIR}/SettingsDialog.h
         ${CLUSTER_INCLUDE_DIR}/FrontendConfig.h
@@ -428,6 +493,12 @@ link_directories(${LINK_DIRECTORIES} ${Boost_LIBRARY_DIRS})
 add_library(clusterer-static STATIC ${CLUSTER_SOURCES})
 # link boost library
 target_link_libraries(clusterer-static ${Boost_LIBRARIES})
+
+# link armadillo
+if(UNIX)
+    target_link_libraries(clusterer-static ${ARMADILLO_LIBRARIES})
+endif()
+
 # set library name
 set_target_properties(clusterer-static PROPERTIES OUTPUT_NAME "clusterer")
 if(WIN32)
@@ -445,6 +516,8 @@ set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEA
 add_executable(Clusterer ${CLUSTER_SOURCES_FRONTEND})
 
 target_link_libraries(Clusterer ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
+
+target_link_libraries(Clusterer ${QWT_LIBRARIES})
 
 # link clusterer library
 if( WIN32 )

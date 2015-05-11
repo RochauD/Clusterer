@@ -9,8 +9,9 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     clusterer::frontend::MainWindow w;
     w.show();
-   /* QApplication app(argc, argv);
+    return app.exec();
 
+/*
     GeneticGui& gui = GeneticGui::getApp();
     gui.startGui();
 
@@ -37,5 +38,5 @@ int main(int argc, char *argv[])
 
   //  myWindow mainWin;
   //  mainWin.show();
-    return app.exec();
+
 }

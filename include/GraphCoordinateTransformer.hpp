@@ -19,6 +19,10 @@
 #include <eigen3/Eigen/Eigenvalues>
 #endif
 
+#if defined(__unix ) || defined(__APPLE__)
+#include <armadillo>
+#endif
+
 // internal headers
 #include "ClusterEncoding.hpp"
 #include "IntegerVectorEncoding.hpp"

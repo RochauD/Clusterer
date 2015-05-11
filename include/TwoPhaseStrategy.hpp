@@ -357,12 +357,12 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         }
 
         // send our progress into queue
-        if (iterationCount % this->clusteringParameters.enqueueFrequency == 0)
+        if (this->clusteringParameters.enqueueFrequency != 0 && iterationCount % this->clusteringParameters.enqueueFrequency == 0)
         {
             this->outQueue->push(std::make_pair((*this->population)[0],this->iterationCount));
         }
         // log our progress
-        if (iterationCount % this->clusteringParameters.logFrequency == 0)
+        if (this->clusteringParameters.logFrequency != 0 && iterationCount % this->clusteringParameters.logFrequency == 0)
         {
             clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Iteration: ",
                                                    this->iterationCount,
@@ -371,7 +371,7 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         }
 
         // autosave our progress
-        if (iterationCount % this->clusteringParameters.autoSavePopulationFrequency == 0)
+        if (this->clusteringParameters.autoSavePopulationFrequency != 0 && iterationCount % this->clusteringParameters.autoSavePopulationFrequency == 0)
         {
             PopulationExporter populationExporter;
             populationExporter.writePopulationToFile(this->population, "autosave.data");
