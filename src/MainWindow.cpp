@@ -178,11 +178,7 @@ void MainWindow::on_actionLoad_Population_triggered()
 
 void MainWindow::on_actionAbout_2_triggered()
 {
-    QString info = "Clustring of Social Network Graphs using Genetic Algotithms\n\n\
-This project was developped for the 2015 Software Engineering Lab course in Jacobs University Bremen.\
-\n\nAuthors: Denis Rochau, Dinesh Kannan, Annu Thapa,\
- Valentin Vasiliu, Radu Homorozan, Kiril Kafadarov";
-
+    QString info = "Clustering Social Networks by using Genetic Algorithms\n\nSoftware Project for the Course Software Engineering Lab 2015 at Jacobs University Bremen.\n\nAuthors: Denis Rochau, Dinesh Kannan, Annu Thapa, Valentin Vasiliu, Radu Homorozan, Kiril Kafadarov";
     QMessageBox::about(this, "About this project", info);
 }
 
