@@ -13,7 +13,6 @@
 #include <mutex>
 #include <chrono>
 #include <random>
-#include <QMainWindow>
 #include <QTimer>
 #include <QtGui>
 #include <qwt_plot.h>
@@ -30,9 +29,6 @@
 #include "GlobalBackendController.hpp"
 #include "ConcurrentLockingQueue.hpp"
 
-class QWindow;
-class QPushButton;
-class QMessageBox;
 
 /**
 * @namespace clusterer
@@ -49,7 +45,7 @@ namespace clusterer
 namespace frontend
 {
 
-class GUIFitnessPlot: public QMainWindow
+class GUIFitnessPlot: public QWidget
 {
     Q_OBJECT
 
@@ -71,6 +67,7 @@ class GUIFitnessPlot: public QMainWindow
 
     private slots:
         void genRandomValues();
+        void runRandom();
 
     signals:
         void sendFitnessValue(double);
@@ -78,9 +75,10 @@ class GUIFitnessPlot: public QMainWindow
     private:
         /* general purpose buttons */
         QPushButton *closeFit;
+        QPushButton *run_random;
 
         /* central widget to rule them all */
-        QWidget *central_vis_window;
+        //QWidget *central_vis_window;
         int counter;
         /* myPlot is put inside plotWindow*/
         QWidget *plotWindow;

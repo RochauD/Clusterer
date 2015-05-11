@@ -38,7 +38,7 @@ void GUINodePlotter::printMap(const std::map<backend::VertexId,std::pair<double,
 }
 
 GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
-    : QMainWindow(parent)
+    : QWidget(parent)
 {  
 
     /* testing input information */
@@ -89,9 +89,10 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
     plotContent();
 
     /*setting central widget*/
-    central_vis_window = new QWidget();
-    central_vis_window->setLayout(layout2);
-    this->setCentralWidget(central_vis_window);
+    //central_vis_window = new QWidget();
+    //central_vis_window->setLayout(layout2);
+    //this->addWidget(central_vis_window);
+    this->setLayout(layout2);
 
     /* generate symbols for the clusters */
     /* obtain a seed from the system clock: */

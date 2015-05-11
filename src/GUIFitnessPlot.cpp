@@ -15,7 +15,7 @@ namespace frontend
 {
 
 GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
-    : QMainWindow(parent)
+    : QWidget(parent)
 {  
 
     /* resizing window */
@@ -23,6 +23,7 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
 
     /*creating the necessary widgets*/
     closeFit = new QPushButton(tr("&Close"));
+    run_random = new QPushButton(tr("&Run random example"));
     plotWindow = new QWidget();
     
     /* setting the default background for the plot */
@@ -47,6 +48,7 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
     /*setting the layout of the main window*/
     QHBoxLayout *layout1 = new QHBoxLayout;
     layout1->addWidget(closeFit);
+    layout1->addWidget(run_random);
     QVBoxLayout *layout2 = new QVBoxLayout;
     layout2->addLayout(layout1);
     layout2->addWidget(plotWindow);
@@ -54,11 +56,13 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
     /*add connects*/
     connect(closeFit,SIGNAL(clicked()),this,SLOT(close()));
     connect(this,SIGNAL(sendFitnessValue(double)),this,SLOT(replotFitness(double)));
+    connect(run_random,SIGNAL(clicked()),this,SLOT(runRandom()));
 
     /*setting central widget*/
-    central_vis_window = new QWidget();
-    central_vis_window->setLayout(layout2);
-    this->setCentralWidget(central_vis_window);
+    //central_vis_window = new QWidget();
+    //central_vis_window->setLayout(layout2);
+    //this->setCentralWidget(central_vis_window);
+    this->setLayout(layout2);
 
     /* obtain a seed from the system clock: */
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -80,6 +84,9 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget *parent, uint64_t width, uint64_t height)
     myPlot->replot();
     myPlot->show();
     
+}
+
+void GUIFitnessPlot::runRandom(){
     counter = 0;
     timer = new QTimer(this);
     timer->start(1000);

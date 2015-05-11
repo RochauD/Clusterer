@@ -60,7 +60,7 @@ namespace clusterer
 namespace frontend
 {
 
-class GUINodePlotter: public QMainWindow
+class GUINodePlotter: public QWidget
 {
     Q_OBJECT
 
@@ -108,7 +108,7 @@ class GUINodePlotter: public QMainWindow
         QPushButton *closeViz;
 
         /* central widget to rule them all */
-        QWidget *central_vis_window;
+        //QWidget *central_vis_window;
         int counter;
         /* myPlot is put inside plotWindow*/
         QWidget *plotWindow;
