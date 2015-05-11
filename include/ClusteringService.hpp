@@ -69,6 +69,13 @@ class ClusteringService
         ClusteringParams getConfigurationParameters();
 
         /**
+        * @brief This method sets the current ClusteringParams.
+        * @param clusteringParams The ClusteringParams.
+        * @return void
+        */
+        void setConfigurationParameters(const ClusteringParams& clusteringParams);
+
+        /**
         * @brief This method loads a graph of type vertex pair weight.
         * @param fullPathName The full path name to the graph file.
         * @return True if loading was succesful and False if it failed.

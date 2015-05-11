@@ -72,6 +72,11 @@ ClusteringParams ClusteringService::getConfigurationParameters()
     return this->configurationManager.getClusteringParams();
 }
 
+void ClusteringService::setConfigurationParameters(const ClusteringParams& clusteringParams)
+{
+    this->configurationManager.setClusteringParams(clusteringParams);
+}
+
 bool ClusteringService::loadGraphTypeVertexPairWeight(std::string fullPathName)
 {
     std::unique_lock<std::mutex> lock(this->serviceMutex);
