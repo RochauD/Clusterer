@@ -55,6 +55,7 @@ void MainWindow::on_pushButton_clicked()
     
 
     gnp = new GUINodePlotter(this);
+    gnp->initGraph();
     this->layout()->addWidget(gnp);
     
     fit_plot = new GUIFitnessPlot(this);

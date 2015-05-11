@@ -75,6 +75,8 @@ class GUINodePlotter: public QWidget
         * @param height value
         */
         GUINodePlotter(QWidget *parent, uint64_t width = 500, uint64_t height = 500);
+
+        void initGraph();
         
         /**
         * @brief empty destructor
@@ -108,6 +110,9 @@ class GUINodePlotter: public QWidget
         /* general purpose buttons */
         QPushButton *show_edges;
         QPushButton *closeViz;
+
+        int width = 500;
+        int height = 500;
 
         /* central widget to rule them all */
         // QWidget *central_vis_window;

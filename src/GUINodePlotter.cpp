@@ -37,14 +37,8 @@ void GUINodePlotter::printMap(const std::map<backend::VertexId,std::pair<double,
 }
 
 GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
-    : QWidget(parent)
+    : QWidget(parent),width(width),height(height)
 {  
-
-    /* testing input information */
-    //std::cout<<"graph edges GUINodePlotter: "<<clb::GlobalBackendController::instance()->getGraph().getNoEdges()<<"\n";
-    GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
-    mapy = gt.getNormalizedMap(width,height);
-    //printMap(mapy);
 
     /* resizing window */
     this->resize(width,height);
@@ -56,17 +50,6 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
     
     /* setting the default background for the plot */
     setPlotBackground(width,height);
-
-    /* add myPlot to plotWindow */
-    QVBoxLayout *layout_t = new QVBoxLayout();
-    layout_t->addWidget(myPlot);
-
-    myPlot->replot();
-    myPlot->show();
-
-    plotWindow->setLayout(layout_t);
-    plotWindow->setWindowModality(Qt::ApplicationModal);
-    plotWindow->show();
     
     /* add zooming option */
     zoom = new QwtPlotZoomer(myPlot->canvas());
@@ -84,8 +67,6 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
     /*add connects*/
     connect(closeViz,SIGNAL(clicked()),this,SLOT(close()));
     connect(show_edges,SIGNAL(clicked()),this,SLOT(draw_edges()));
-    
-    plotContent();
 
     /*setting central widget*/
     //central_vis_window = new QWidget();
@@ -98,7 +79,6 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     gen = new std::mt19937(seed);
     dist = std::uniform_int_distribution<int>(0,255);
-    setSymbols(clb::GlobalBackendController::instance()->getGraph().getNoVertices());
 
     connect(this,SIGNAL(sendSol(backend::ClusterEncoding&)),
         this,SLOT(replotSolution(backend::ClusterEncoding&)),Qt::DirectConnection);
@@ -117,6 +97,29 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
     //timer = new QTimer(this);
     //timer->start(1000);
     //connect(timer,SIGNAL(timeout()),this,SLOT(genSol2()));
+}
+
+void GUINodePlotter::initGraph(){
+    /* testing input information */
+    //std::cout<<"graph edges GUINodePlotter: "<<clb::GlobalBackendController::instance()->getGraph().getNoEdges()<<"\n";
+    GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
+    mapy = gt.getNormalizedMap(width,height);
+    //printMap(mapy);
+
+    /* add myPlot to plotWindow */
+    QVBoxLayout *layout_t = new QVBoxLayout();
+    layout_t->addWidget(myPlot);
+
+    plotContent();
+
+    myPlot->replot();
+    myPlot->show();
+
+    plotWindow->setLayout(layout_t);
+    plotWindow->setWindowModality(Qt::ApplicationModal);
+    plotWindow->show();
+
+    setSymbols(clb::GlobalBackendController::instance()->getGraph().getNoVertices());
 }
 
 void GUINodePlotter::setSymbols(uint64_t no_vertices){
