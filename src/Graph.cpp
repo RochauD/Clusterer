@@ -228,6 +228,53 @@ std::vector<std::pair<std::pair<VertexId, VertexId>, double>> Graph::getEdgesAnd
     return wedges;
 }
 
+std::vector<std::pair<std::pair<VertexId, VertexId>, double>> Graph::getFullyConnected() const
+{
+    std::vector<std::pair<std::pair<VertexId,VertexId>, double>> wedges;
+
+    auto name = boost::get(boost::vertex_name, g);
+    auto edgeW = boost::get(boost::edge_weight, g);
+  
+    typedef double Weight;
+
+    typedef boost::property_map<DirectedGraph, boost::vertex_index_t >::type IndexMap;
+    //typedef boost::property_map<DirectedGraph, boost::vertex_name_t >::type NameMap;
+ 
+    typedef boost::iterator_property_map< Vert*, IndexMap, Vert, Vert& > PredecessorMap;
+    typedef boost::iterator_property_map< Weight*, IndexMap, Weight, Weight& > DistanceMap;
+
+    // Create things for Dijkstra
+    std::vector<Vert> predecessors(boost::num_vertices(g)); // To store parents
+    std::vector<Weight> distances(boost::num_vertices(g)); // To store distances
+ 
+    IndexMap indexMap = boost::get(boost::vertex_index, g);
+    PredecessorMap predecessorMap(&predecessors[0], indexMap);
+    DistanceMap distanceMap(&distances[0], indexMap);
+
+    for(auto vp = boost::vertices(g); vp.first != vp.second; ++vp.first)
+        for(auto vp2 = boost::vertices(g); vp2.first != vp2.second; ++vp2.first){
+            auto u = *vp.first;
+            auto v = *vp2.first;
+
+            auto edgeQuery = boost::edge(u,v,g);
+            if(edgeQuery.second == true){
+                auto e = edgeQuery.first;
+                double w = edgeW[e];
+                wedges.push_back(std::make_pair(std::make_pair(name[u]-OFFSET,name[v]-OFFSET),w));
+            } else {
+                if(u != v){
+                boost::dijkstra_shortest_paths(g, u, boost::distance_map(distanceMap).predecessor_map(predecessorMap));
+                double w = distanceMap[v];
+                wedges.push_back(std::make_pair(std::make_pair(name[u]-OFFSET,name[v]-OFFSET),w));                
+                }
+            }
+        }
+
+    return wedges;
+}
+
+
+
 std::vector<VertexId> Graph::getNeighbors(const Vertex& v) const
 {
     std::vector<VertexId> vec;

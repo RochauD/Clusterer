@@ -28,6 +28,10 @@ MainWindow::MainWindow(QWidget* parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    window_vis = new QWidget();
+    add_vis_layout = new QHBoxLayout();
+    window_vis->setLayout(add_vis_layout);
+    window_vis->show();
 }
 
 MainWindow::~MainWindow()
@@ -46,7 +50,65 @@ void MainWindow::on_pushButton_clicked()
     //Start button
 
     clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight("../test_files/out.ucidata-zachary");
-    clb::GlobalBackendController::instance()->runAlgorithm();
+    //clb::GlobalBackendController::instance()->runAlgorithm();
+
+    clb::Graph graph;
+
+    graph.addVertex(backend::Vertex(0));
+    graph.addVertex(backend::Vertex(1));
+    graph.addVertex(backend::Vertex(2));
+    graph.addVertex(backend::Vertex(3));
+    graph.addVertex(backend::Vertex(4));
+    graph.addVertex(backend::Vertex(5));
+
+    // from NYC
+    graph.addEdge(backend::Vertex(0), backend::Vertex(1), 329);
+    graph.addEdge(backend::Vertex(0), backend::Vertex(2), 1759.93);
+    graph.addEdge(backend::Vertex(0), backend::Vertex(3), 1145.58);
+    graph.addEdge(backend::Vertex(0), backend::Vertex(4), 4133.71);
+    graph.addEdge(backend::Vertex(0), backend::Vertex(5), 7990.70);
+
+    graph.addEdge(backend::Vertex(1), backend::Vertex(0), 329);
+    graph.addEdge(backend::Vertex(2), backend::Vertex(0), 1759.93);
+    graph.addEdge(backend::Vertex(3), backend::Vertex(0), 1145.58);
+    graph.addEdge(backend::Vertex(4), backend::Vertex(0), 4133.71);
+    graph.addEdge(backend::Vertex(5), backend::Vertex(0), 7990.70);  
+
+    // from Washingon DC
+    graph.addEdge(backend::Vertex(1), backend::Vertex(2), 1492.85);
+    graph.addEdge(backend::Vertex(1), backend::Vertex(3), 956.26);
+    graph.addEdge(backend::Vertex(1), backend::Vertex(4), 3922.93);
+    graph.addEdge(backend::Vertex(1), backend::Vertex(5), 7779.88);
+
+    graph.addEdge(backend::Vertex(2), backend::Vertex(1), 1492.85);
+    graph.addEdge(backend::Vertex(3), backend::Vertex(1), 956.26);
+    graph.addEdge(backend::Vertex(4), backend::Vertex(1), 3922.93);
+    graph.addEdge(backend::Vertex(5), backend::Vertex(1), 7779.88);
+
+    // from Miami
+    graph.addEdge(backend::Vertex(2), backend::Vertex(3), 1919.46);
+    graph.addEdge(backend::Vertex(2), backend::Vertex(4), 4174.43);
+    graph.addEdge(backend::Vertex(2), backend::Vertex(5), 7825.37);
+
+    graph.addEdge(backend::Vertex(3), backend::Vertex(2), 1919.46);
+    graph.addEdge(backend::Vertex(4), backend::Vertex(2), 4174.43);
+    graph.addEdge(backend::Vertex(5), backend::Vertex(2), 7825.37);
+
+    // from Chicago
+    graph.addEdge(backend::Vertex(3), backend::Vertex(4), 2988.24);
+    graph.addEdge(backend::Vertex(3), backend::Vertex(5), 6845.75);
+
+    graph.addEdge(backend::Vertex(4), backend::Vertex(3), 2988.24);
+    graph.addEdge(backend::Vertex(5), backend::Vertex(3), 6845.75);
+
+    // from San Francisco 
+    graph.addEdge(backend::Vertex(4), backend::Vertex(5), 3858.23);
+    graph.addEdge(backend::Vertex(5), backend::Vertex(4), 3858.23);
+    
+    gnp = new GUINodePlotter(this,graph,
+      clb::GlobalBackendController::instance());
+    
+    add_vis_layout->addWidget(gnp);
     this->showAlert("Alert", "Start");
 }
 

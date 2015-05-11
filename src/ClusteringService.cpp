@@ -72,6 +72,10 @@ ClusteringParams ClusteringService::getConfigurationParameters()
     return this->configurationManager.getClusteringParams();
 }
 
+Graph ClusteringService::getGraph(){
+    return this->graph;
+}
+
 bool ClusteringService::loadGraphTypeVertexPairWeight(std::string fullPathName)
 {
     std::unique_lock<std::mutex> lock(this->serviceMutex);

@@ -4,7 +4,8 @@
 */
 
 //external headers
-// uncomment if the prints are needed #include <iostream>
+// uncomment if the prints are needed 
+#include <iostream>
 //local headers
 #include "../include/GraphCoordinateTransformer.hpp"
 #include <utility>
@@ -35,7 +36,7 @@ GraphCoordinateTransformer::GraphCoordinateTransformer(const backend::AbstractGr
         Eigen::MatrixXd D = Eigen::MatrixXd::Zero(no_vertices,no_vertices);
 
         // populate the matrix D
-        for (auto& e : graph.getEdgesAndWeights())
+        for (auto& e : graph.getFullyConnected())
         {
             D(e.first.first,e.first.second) = e.second;
         }
@@ -113,9 +114,9 @@ GraphCoordinateTransformer::GraphCoordinateTransformer(const backend::AbstractGr
                 D(i,j) = 5;
         
         // populate the matrix D
-        for(auto& e : graph.getEdgesAndWeights()){
-            //std::cout<<"("<<e.first.first<<","<<e.first.second<<")";
-            //std::cout<<"weight: "<<e.second<<"\n";
+        for(auto& e : graph.getFullyConnected()){
+            std::cout<<"("<<e.first.first<<","<<e.first.second<<")";
+            std::cout<<"weight: "<<e.second<<"\n";
             D(e.first.first,e.first.second) = e.second;
         }
 

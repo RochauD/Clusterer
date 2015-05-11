@@ -8,6 +8,10 @@
 // External headers
 #include <QMainWindow>
 
+// Internal headers
+#include "GUINodePlotter.hpp"
+#include "Vertex.hpp"
+
 /**
  * @namespace Ui
  * @brief Auto-generated code from Qt goes in this namespace
@@ -58,6 +62,11 @@ public:
      * @param text The text of the message
      */
     void showAlert(const QString& title, const QString& text);
+
+private:
+    GUINodePlotter *gnp;
+    QWidget *window_vis;
+    QHBoxLayout *add_vis_layout;
 
 private slots:
     /**

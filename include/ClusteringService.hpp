@@ -69,6 +69,12 @@ class ClusteringService
         ClusteringParams getConfigurationParameters();
 
         /**
+        * @brief this method returns a graph object
+        * @return the graph
+        */
+        Graph getGraph();
+
+        /**
         * @brief This method loads a graph of type vertex pair weight.
         * @param fullPathName The full path name to the graph file.
         * @return True if loading was succesful and False if it failed.
