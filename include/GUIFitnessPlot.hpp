@@ -25,10 +25,11 @@
 #include <qwt/qwt_legend.h>
 
 // internal headers
+#ifndef Q_MOC_RUN
 #include "ClusteringService.hpp"
 #include "GlobalBackendController.hpp"
 #include "ConcurrentLockingQueue.hpp"
-
+#endif
 
 /**
 * @namespace clusterer

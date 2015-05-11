@@ -4,7 +4,6 @@
 *  coordinates for a graph's nodes using the edge's weights
 */
 
-#include <QtGui>
 #include <iostream>
 #include "../include/GUINodePlotter.hpp"
 
@@ -121,10 +120,13 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
 }
 
 void GUINodePlotter::setSymbols(uint64_t no_vertices){
-    symbols = new std::vector<QwtSymbol*>;
-    colors = new std::vector<QColor>;
+
+    symbols = new QVector<QwtSymbol*>;
+    colors = new QVector<QColor>;
+
     int r,g,b;
-    for(unsigned int i = 0; i < no_vertices; i++){
+    for(unsigned int i = 0; i < no_vertices; i++)
+    {
         r = dist(*gen);
         g = dist(*gen);
         b = dist(*gen);       
@@ -140,9 +142,9 @@ void GUINodePlotter::setSymbols(uint64_t no_vertices){
         colors->push_back(color);
     }
 
-    for(unsigned int i = 0; i < no_vertices; i++){
-        QwtSymbol *sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(colors->at(i)),QPen(colors->at(i)),QSize(4,4));
-        symbols->push_back(sym);
+    for(unsigned int i = 0; i < no_vertices; i++)
+    {
+        symbols->push_back(new QwtSymbol(QwtSymbol::Ellipse, QBrush(colors->at(i)), QPen(colors->at(i)), QSize(4,4)));
     }
 }
 

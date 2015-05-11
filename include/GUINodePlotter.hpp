@@ -30,6 +30,7 @@
 #include <qwt/qwt_legend.h>
 
 // internal headers
+#ifndef Q_MOC_RUN
 #include "ClusterEncoding.hpp"
 #include "IntegerVectorEncoding.hpp"
 #include "AbstractGraph.hpp"
@@ -38,7 +39,8 @@
 #include "GlobalBackendController.hpp"
 #include "GraphCoordinateTransformer.hpp"
 #include "ConcurrentLockingQueue.hpp"
-
+#endif
+ 
 class QWindow;
 class QLabel;
 class QDialog;
@@ -118,8 +120,9 @@ class GUINodePlotter: public QWidget
         QVector<QwtPlotMarker*> markers;
         QwtPlotZoomer *zoom;
         QwtPointSeriesData *mydata;
-        std::vector<QwtSymbol*> *symbols;
-        std::vector<QColor> *colors;
+
+        QVector<QwtSymbol*> *symbols;
+        QVector<QColor> *colors;
         QVector<QPointF> *samples;
         
         QTimer *timer;

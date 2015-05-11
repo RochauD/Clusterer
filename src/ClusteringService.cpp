@@ -72,8 +72,14 @@ ClusteringParams ClusteringService::getConfigurationParameters()
     return this->configurationManager.getClusteringParams();
 }
 
-Graph ClusteringService::getGraph(){
+Graph ClusteringService::getGraph()
+{
     return this->graph;
+}
+
+void ClusteringService::setConfigurationParameters(const ClusteringParams& clusteringParams)
+{
+    this->configurationManager.setClusteringParams(clusteringParams);
 }
 
 bool ClusteringService::loadGraphTypeVertexPairWeight(std::string fullPathName)

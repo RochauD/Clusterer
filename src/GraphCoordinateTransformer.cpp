@@ -10,7 +10,7 @@
 #include "../include/GraphCoordinateTransformer.hpp"
 #include <utility>
 
-#ifdef __unix
+#if defined(__unix ) || defined(__APPLE__)
 #define ARMA_64BIT_WORD
 #endif
 

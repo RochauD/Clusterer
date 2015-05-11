@@ -19,8 +19,8 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::on_buttonBox_accepted()
 {
+    // Backend option
     clusterer::backend::ClusteringParams params;
-
     params.iterationUntilMissingImprovementCausesInterruption = ui->stopNoImpr->value();
     params.maxFitness = ui->maxFitness->value();
     params.minFitness = ui->minFitness->value();
@@ -38,12 +38,12 @@ void SettingsDialog::on_buttonBox_accepted()
     params.logFrequency = ui->logFrequency->value();
     params.enqueueFrequency = ui->enqueueFrequency->value();
     params.threadCount = ui->threadCount->value();
+    params.autoSavePopulationFrequency = ui->autoSavePopulation->value();
+    params.predictedClusterCount = ui->predictedClusterCount->value();
+    // DO NOT MOVE AROUND THE OPTIONS FOR COMBOBOXES!!
+    params.fitnessFunction = ui->fitnessFunction->currentIndex();
+    params.clusterGenerationFunction = ui->clusterInitFunc->currentIndex();
 
-    QString test;
-    test.setNum(ui->stopNoImpr->value());
-
-    QMessageBox::information(this, "Values", test);
-    // Send params to the backend controller
-
+    // Frontend options
     FrontendConfig::setVisualizeGraph(ui->visualizeGraph->isChecked());
 }
