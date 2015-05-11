@@ -19,6 +19,10 @@
 #include <eigen3/Eigen/Eigenvalues>
 #endif
 
+#ifdef __unix
+#include <armadillo>
+#endif
+
 // internal headers
 #include "ClusterEncoding.hpp"
 #include "IntegerVectorEncoding.hpp"
