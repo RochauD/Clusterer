@@ -89,10 +89,16 @@ void MainWindow::on_pushButton_clicked()
 {
     //Start button
     // @todo put check condition function into controller and call it here and check
-
-    clb::GlobalBackendController::instance()->runAlgorithm(true);
-    timer.start(16);
-    this->showAlert("Info", "Started the algorithm");
+    if (clb::GlobalBackendController::instance()->checkAlgorithmConditions())
+    {
+        clb::GlobalBackendController::instance()->runAlgorithm(true);
+        timer.start(16);
+        this->showAlert("Info", "Started the algorithm");
+    }
+    else
+    {
+        QMessageBox::critical(this, "Error", "Could not start the algorithm as you need to load a Graph first.");
+    }
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -130,12 +136,8 @@ void MainWindow::on_actionSave_Settings_2_triggered()
         }
         else
         {
-            showAlert("Save Settings failed", "Failed saving settings.");
+            QMessageBox::critical(this, "Save Settings failed", "Failed saving settings.");
         }
-    }
-    else
-    {
-        showAlert("Save Settings failed", "You didn't select a valid path");
     }
 }
 
@@ -154,12 +156,8 @@ void MainWindow::on_actionLoad_Settings_2_triggered()
         }
         else
         {
-            showAlert("Load Settings failed", "The file you selected is not a valid configuration file");
+            QMessageBox::critical(this, "Load Settings failed", "The file you selected is not a valid configuration file");
         }
-    }
-    else
-    {
-        showAlert("Load Settings failed", "You didn't select a valid file");
     }
 }
 
@@ -178,12 +176,8 @@ void MainWindow::on_actionSave_Graph_triggered()
         }
         else
         {
-            showAlert("Save Graph failed", "Unable to save graph");
+            QMessageBox::critical(this, "Save Graph failed", "Unable to save graph");
         }
-    }
-    else
-    {
-        showAlert("Save Graph failed", "You didn't select a valid file");
     }
 }
 
@@ -204,12 +198,8 @@ void MainWindow::on_actionZachary_format_triggered()
         }
         else
         {
-            showAlert("Load Graph failed", "Unable to load a vertex-pair-weight graph");
+            QMessageBox::critical(this, "Load Graph failed", "Unable to load a vertex-pair-weight graph");
         }
-    }
-    else
-    {
-        showAlert("Load Graph failed", "You didn't select a valid file");
     }
 }
 
@@ -230,12 +220,8 @@ void MainWindow::on_actionMovielens_format_triggered()
         }
         else
         {
-            showAlert("Load Graph failed", "Unable to load a Movielens graph");
+            QMessageBox::critical(this, "Load Graph failed", "Unable to load a Movielens graph");
         }
-    }
-    else
-    {
-        showAlert("Load Graph failed", "You didn't select a valid file");
     }
 }
 
@@ -255,12 +241,8 @@ void MainWindow::on_actionSave_Population_triggered()
         }
         else
         {
-            showAlert("Save Population failed", "Unable to save population");
+            QMessageBox::critical(this, "Save Population failed", "Unable to save population");
         }
-    }
-    else
-    {
-        showAlert("Save Population failed", "You didn't select a valid file");
     }
 }
 
@@ -280,12 +262,8 @@ void MainWindow::on_actionLoad_Population_triggered()
         }
         else
         {
-            showAlert("Load Population failed", "Unable to load a population out of this file.");
+            QMessageBox::critical(this, "Load Population failed", "Unable to load a population out of this file.");
         }
-    }
-    else
-    {
-        showAlert("Load Population failed", "You didn't select a valid file");
     }
 }
 

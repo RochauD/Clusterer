@@ -170,6 +170,11 @@ bool ClusteringService::savePopulation(std::string fullPathName)
     }
 }
 
+bool ClusteringService::checkAlgorithmConditions()
+{
+    return this->algorithmService.checkInitalizationCondition();
+}
+
 void ClusteringService::runAlgorithm(bool restart)
 {
     std::unique_lock<std::mutex> lock(this->serviceMutex);

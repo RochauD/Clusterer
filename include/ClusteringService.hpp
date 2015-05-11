@@ -117,6 +117,12 @@ class ClusteringService
         bool savePopulation(std::string fullPathName);
 
         /**
+        * @brief This method checks if we can currently run the algorithm.
+        * @return True if it is possible, false if not.
+        */
+        bool checkAlgorithmConditions();
+
+        /**
         * @brief This method runs the algorithm.
         * @param restart Boolean restart flag. If set to true we are restarting.
         * @return void
