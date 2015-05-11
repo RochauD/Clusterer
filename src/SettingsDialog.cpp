@@ -6,10 +6,10 @@
 // Own headers
 #include "../include/SettingsDialog.h"
 #include "../include/ClusteringParams.hpp"
+#include "../include/GlobalBackendController.hpp"
 #include "../include/FrontendConfig.h"
 
 // External headers
-#include <QMessageBox>
 
 // Generated headers
 #include "ui_SettingsDialog.h"
@@ -64,6 +64,8 @@ void SettingsDialog::on_buttonBox_accepted()
 
     // Frontend options
     FrontendConfig::setVisualizeGraph(ui->visualizeGraph->isChecked());
+
+    clb::GlobalBackendController::instance()->setConfigurationParameters(params);
 }
 
 }

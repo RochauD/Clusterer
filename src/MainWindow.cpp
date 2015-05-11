@@ -39,8 +39,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::showAlert(const QString& title, const QString& text)
 {
-    QMessageBox messageBox;
-    messageBox.information(0, title, text);
+    QMessageBox::information(this, title, text);
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -80,7 +79,11 @@ void MainWindow::on_actionSave_Settings_2_triggered()
     if (!path.isNull() && !path.isEmpty())
     {
         bool result = clb::GlobalBackendController::instance()->saveConfiguration(path.toLocal8Bit().constData());
-        if (result == false)
+        if (result == true)
+        {
+            showAlert("Save Settings Success", "Successfully saved settings");
+        }
+        else
         {
             showAlert("Save Settings failed", "Failed saving settings.");
         }
@@ -100,7 +103,11 @@ void MainWindow::on_actionLoad_Settings_2_triggered()
     if (!path.isNull() && !path.isEmpty())
     {
         bool result = clb::GlobalBackendController::instance()->loadConfiguration(path.toLocal8Bit().constData());
-        if (result == false)
+        if (result == true)
+        {
+            showAlert("Load Settings Success", "Successfully loaded settings");   
+        }
+        else
         {
             showAlert("Load Settings failed", "The file you selected is not a valid configuration file");
         }
@@ -119,7 +126,19 @@ void MainWindow::on_actionSave_Graph_triggered()
                    tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->saveGraphToFile(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Save Graph Success", "Successfully saved graph to file.");   
+        }
+        else
+        {
+            showAlert("Save Graph failed", "Unable to save graph");
+        }
+    }
+    else
+    {
+        showAlert("Save Graph failed", "You didn't select a valid file");
     }
 }
 
@@ -132,7 +151,19 @@ void MainWindow::on_actionZachary_format_triggered()
                    tr("All Files (*)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Load Graph Success", "Successfully loaded a vertex-pair-weight type graph.");   
+        }
+        else
+        {
+            showAlert("Load Graph failed", "Unable to load a vertex-pair-weight graph");
+        }
+    }
+    else
+    {
+        showAlert("Load Graph failed", "You didn't select a valid file");
     }
 }
 
@@ -143,9 +174,22 @@ void MainWindow::on_actionMovielens_format_triggered()
                    tr("Open Movielens Graph"),
                    ".",
                    tr("All Files (*)"));
+
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->loadGraphTypeMovieLens(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Load Graph Success", "Successfully loaded a Movielens type graph.");   
+        }
+        else
+        {
+            showAlert("Load Graph failed", "Unable to load a Movielens graph");
+        }
+    }
+    else
+    {
+        showAlert("Load Graph failed", "You didn't select a valid file");
     }
 }
 
@@ -158,7 +202,19 @@ void MainWindow::on_actionSave_Population_triggered()
                    tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->savePopulation(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Save Population Success", "Successfully saved population to file.");   
+        }
+        else
+        {
+            showAlert("Save Population failed", "Unable to save population");
+        }
+    }
+    else
+    {
+        showAlert("Save Population failed", "You didn't select a valid file");
     }
 }
 
@@ -171,7 +227,19 @@ void MainWindow::on_actionLoad_Population_triggered()
                    tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->loadPopulation(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Load Population Success", "Successfully loaded a population.");   
+        }
+        else
+        {
+            showAlert("Load Population failed", "Unable to load a population out of this file.");
+        }
+    }
+    else
+    {
+        showAlert("Load Population failed", "You didn't select a valid file");
     }
 }
 
