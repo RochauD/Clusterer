@@ -60,6 +60,8 @@ elseif( APPLE )
     # Set C++11
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -larmadillo")
+
     # Enable all warnings
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
@@ -163,6 +165,7 @@ endif()
 FIND_PATH(QWT_INCLUDE_DIR NAMES qwt.h PATHS
   /usr/include
   /usr/local/include
+  /usr/local/lib/qwt.framework/Versions/Current
   "$ENV{LIB_DIR}/include" 
   "$ENV{INCLUDE}" 
   PATH_SUFFIXES qwt-qt4 qwt
@@ -171,6 +174,7 @@ FIND_PATH(QWT_INCLUDE_DIR NAMES qwt.h PATHS
 FIND_LIBRARY(QWT_LIBRARY NAMES qwt qwt5 qwt-qt4 qwt5-qt4 PATHS 
   /usr/lib
   /usr/local/lib
+  /usr/local/lib/qwt.framework/Versions/Current
   "$ENV{LIB_DIR}/lib" 
   "$ENV{LIB}/lib" 
   )

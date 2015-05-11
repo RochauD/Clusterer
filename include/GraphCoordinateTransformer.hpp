@@ -19,7 +19,7 @@
 #include <eigen3/Eigen/Eigenvalues>
 #endif
 
-#ifdef __unix
+#if defined(__unix ) || defined(__APPLE__)
 #include <armadillo>
 #endif
 

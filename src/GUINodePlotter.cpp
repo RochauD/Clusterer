@@ -4,7 +4,6 @@
 *  coordinates for a graph's nodes using the edge's weights
 */
 
-#include <QtGui>
 #include <iostream>
 #include "../include/GUINodePlotter.hpp"
 
@@ -121,10 +120,11 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
 }
 
 void GUINodePlotter::setSymbols(uint64_t no_vertices){
-    symbols = new QVector<QwtSymbol>;
+    symbols = new QVector<QwtSymbol*>;
     colors = new QVector<QColor>;
     int r,g,b;
-    for(unsigned int i = 0; i < no_vertices; i++){
+    for(unsigned int i = 0; i < no_vertices; i++)
+    {
         r = dist(*gen);
         g = dist(*gen);
         b = dist(*gen);       
@@ -140,9 +140,9 @@ void GUINodePlotter::setSymbols(uint64_t no_vertices){
         colors->push_back(color);
     }
 
-    for(unsigned int i = 0; i < no_vertices; i++){
-        QwtSymbol sym(QwtSymbol::Ellipse,QBrush(colors->at(i)),QPen(colors->at(i)),QSize(4,4));
-        symbols->push_back(sym);
+    for(unsigned int i = 0; i < no_vertices; i++)
+    {
+        symbols->push_back(new QwtSymbol(QwtSymbol::Ellipse, QBrush(colors->at(i)), QPen(colors->at(i)), QSize(4,4)));
     }
 }
 
@@ -187,9 +187,9 @@ void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol){
     printEncoding(clusterSol);
     for(unsigned int i = 0; i < no_vertices; i++){
         uint64_t cluster_id = clusterSol.getClusterOfVertex(i);
-        if(!(symbols->at(cluster_id).brush() == (markers.at(i)->symbol())->brush())) {
+        if(!(symbols->at(cluster_id)->brush() == (markers.at(i)->symbol())->brush())) {
             QwtPlotMarker *mark = new QwtPlotMarker();
-            mark->setSymbol(&(symbols->at(cluster_id)));
+            mark->setSymbol(symbols->at(cluster_id));
             mark->setValue(markers.at(i)->value());
             markers.replace(i,mark);
         }

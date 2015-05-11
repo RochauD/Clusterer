@@ -14,6 +14,8 @@
 // Generated headers
 #include "ui_MainWindow.h"
 #include "../include/GlobalBackendController.hpp"
+#include "../include/GlobalFileLogger.hpp"
+
 
 
 namespace clusterer
@@ -41,8 +43,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::showAlert(const QString& title, const QString& text)
 {
-    QMessageBox messageBox;
-    messageBox.information(0, title, text);
+    QMessageBox::information(this, title, text);
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -88,7 +89,19 @@ void MainWindow::on_actionSave_Settings_2_triggered()
                    tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->saveConfiguration(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Save Settings Success", "Successfully saved settings");
+        }
+        else
+        {
+            showAlert("Save Settings failed", "Failed saving settings.");
+        }
+    }
+    else
+    {
+        showAlert("Save Settings failed", "You didn't select a valid path");
     }
 }
 
@@ -100,7 +113,19 @@ void MainWindow::on_actionLoad_Settings_2_triggered()
                    tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->loadConfiguration(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Load Settings Success", "Successfully loaded settings");   
+        }
+        else
+        {
+            showAlert("Load Settings failed", "The file you selected is not a valid configuration file");
+        }
+    }
+    else
+    {
+        showAlert("Load Settings failed", "You didn't select a valid file");
     }
 }
 
@@ -112,7 +137,19 @@ void MainWindow::on_actionSave_Graph_triggered()
                    tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->saveGraphToFile(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Save Graph Success", "Successfully saved graph to file.");   
+        }
+        else
+        {
+            showAlert("Save Graph failed", "Unable to save graph");
+        }
+    }
+    else
+    {
+        showAlert("Save Graph failed", "You didn't select a valid file");
     }
 }
 
@@ -125,7 +162,19 @@ void MainWindow::on_actionZachary_format_triggered()
                    tr("All Files (*)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Load Graph Success", "Successfully loaded a vertex-pair-weight type graph.");   
+        }
+        else
+        {
+            showAlert("Load Graph failed", "Unable to load a vertex-pair-weight graph");
+        }
+    }
+    else
+    {
+        showAlert("Load Graph failed", "You didn't select a valid file");
     }
 }
 
@@ -136,9 +185,22 @@ void MainWindow::on_actionMovielens_format_triggered()
                    tr("Open Movielens Graph"),
                    ".",
                    tr("All Files (*)"));
+
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->loadGraphTypeMovieLens(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Load Graph Success", "Successfully loaded a Movielens type graph.");   
+        }
+        else
+        {
+            showAlert("Load Graph failed", "Unable to load a Movielens graph");
+        }
+    }
+    else
+    {
+        showAlert("Load Graph failed", "You didn't select a valid file");
     }
 }
 
@@ -151,7 +213,19 @@ void MainWindow::on_actionSave_Population_triggered()
                    tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->savePopulation(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Save Population Success", "Successfully saved population to file.");   
+        }
+        else
+        {
+            showAlert("Save Population failed", "Unable to save population");
+        }
+    }
+    else
+    {
+        showAlert("Save Population failed", "You didn't select a valid file");
     }
 }
 
@@ -164,18 +238,26 @@ void MainWindow::on_actionLoad_Population_triggered()
                    tr("Text Files (*.txt)"));
     if (!path.isNull() && !path.isEmpty())
     {
-        this->showAlert("Alert", "Path is " + path);
+        bool result = clb::GlobalBackendController::instance()->loadPopulation(path.toLocal8Bit().constData());
+        if (result == true)
+        {
+            showAlert("Load Population Success", "Successfully loaded a population.");   
+        }
+        else
+        {
+            showAlert("Load Population failed", "Unable to load a population out of this file.");
+        }
+    }
+    else
+    {
+        showAlert("Load Population failed", "You didn't select a valid file");
     }
 }
 
 
 void MainWindow::on_actionAbout_2_triggered()
 {
-    QString info = "Clustring of Social Network Graphs using Genetic Algotithms\n\n\
-This project was developped for the 2015 Software Engineering Lab course in Jacobs University Bremen.\
-\n\nAuthors: Denis Rochau, Dinesh Kannan, Annu Thapa,\
- Valentin Vasiliu, Radu Homorozan, Kiril Kafadarov";
-
+    QString info = "Clustering Social Networks by using Genetic Algorithms\n\nSoftware Project for the Course Software Engineering Lab 2015 at Jacobs University Bremen.\n\nAuthors: Denis Rochau, Dinesh Kannan, Annu Thapa, Valentin Vasiliu, Radu Homorozan, Kiril Kafadarov";
     QMessageBox::about(this, "About this project", info);
 }
 
