@@ -47,25 +47,26 @@ void MainWindow::on_pushButton_clicked()
     //Start button
 
     clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight("../test_files/out.ucidata-zachary");
-    clb::GlobalBackendController::instance()->runAlgorithm();
-    this->showAlert("Alert", "Start");
+    clb::GlobalBackendController::instance()->runAlgorithm(true);
+    this->showAlert("Info", "Started the algorithm");
 }
 
 void MainWindow::on_pushButton_4_clicked()
 {
     //Stop button
+    clb::GlobalBackendController::instance()->stopAlgorithm();
     this->showAlert("Alert", "Stop");
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    //Pause button
+    clb::GlobalBackendController::instance()->stopAlgorithm();
     this->showAlert("Alert", "Pause");
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    //Resume button
+    clb::GlobalBackendController::instance()->runAlgorithm(false);
     this->showAlert("Alert", "Resume");
 }
 
@@ -105,7 +106,7 @@ void MainWindow::on_actionLoad_Settings_2_triggered()
         bool result = clb::GlobalBackendController::instance()->loadConfiguration(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Load Settings Success", "Successfully loaded settings");   
+            showAlert("Load Settings Success", "Successfully loaded settings");
         }
         else
         {
@@ -129,7 +130,7 @@ void MainWindow::on_actionSave_Graph_triggered()
         bool result = clb::GlobalBackendController::instance()->saveGraphToFile(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Save Graph Success", "Successfully saved graph to file.");   
+            showAlert("Save Graph Success", "Successfully saved graph to file.");
         }
         else
         {
@@ -154,7 +155,7 @@ void MainWindow::on_actionZachary_format_triggered()
         bool result = clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Load Graph Success", "Successfully loaded a vertex-pair-weight type graph.");   
+            showAlert("Load Graph Success", "Successfully loaded a vertex-pair-weight type graph.");
         }
         else
         {
@@ -180,7 +181,7 @@ void MainWindow::on_actionMovielens_format_triggered()
         bool result = clb::GlobalBackendController::instance()->loadGraphTypeMovieLens(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Load Graph Success", "Successfully loaded a Movielens type graph.");   
+            showAlert("Load Graph Success", "Successfully loaded a Movielens type graph.");
         }
         else
         {
@@ -205,7 +206,7 @@ void MainWindow::on_actionSave_Population_triggered()
         bool result = clb::GlobalBackendController::instance()->savePopulation(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Save Population Success", "Successfully saved population to file.");   
+            showAlert("Save Population Success", "Successfully saved population to file.");
         }
         else
         {
@@ -230,7 +231,7 @@ void MainWindow::on_actionLoad_Population_triggered()
         bool result = clb::GlobalBackendController::instance()->loadPopulation(path.toLocal8Bit().constData());
         if (result == true)
         {
-            showAlert("Load Population Success", "Successfully loaded a population.");   
+            showAlert("Load Population Success", "Successfully loaded a population.");
         }
         else
         {
