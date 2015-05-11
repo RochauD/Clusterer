@@ -55,7 +55,7 @@ GUIFitnessPlot::GUIFitnessPlot(QWidget* parent, uint64_t width, uint64_t height)
 
     /*add connects*/
     //connect(closeFit,SIGNAL(clicked()),this,SLOT(close()));
-    connect(this, SIGNAL(sendFitnessValue(double)), this, SLOT(replotFitness(double)));
+    //connect(this, SIGNAL(sendFitnessValue(double)), this, SLOT(replotFitness(double)));
     //connect(run_random,SIGNAL(clicked()),this,SLOT(runRandom()));
 
     /*setting central widget*/
