@@ -52,6 +52,7 @@ void MainWindow::on_pushButton_clicked()
     clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight("../test_files/out.ucidata-zachary");
     //clb::GlobalBackendController::instance()->runAlgorithm();
     
+
     gnp = new GUINodePlotter(this);
     this->layout()->addWidget(gnp);
     

@@ -108,7 +108,7 @@ class GUINodePlotter: public QWidget
         QPushButton *closeViz;
 
         /* central widget to rule them all */
-        //QWidget *central_vis_window;
+        // QWidget *central_vis_window;
         int counter;
         /* myPlot is put inside plotWindow*/
         QWidget *plotWindow;
@@ -118,8 +118,8 @@ class GUINodePlotter: public QWidget
         QVector<QwtPlotMarker*> markers;
         QwtPlotZoomer *zoom;
         QwtPointSeriesData *mydata;
-        QVector<QwtSymbol> *symbols;
-        QVector<QColor> *colors;
+        std::vector<QwtSymbol*> *symbols;
+        std::vector<QColor> *colors;
         QVector<QPointF> *samples;
         
         QTimer *timer;
