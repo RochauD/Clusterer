@@ -92,10 +92,10 @@ void MainWindow::on_pushButton_clicked()
     if (clb::GlobalBackendController::instance()->runAlgorithm(true))
     {
         timer.start(16);
-        this->showAlert("Info", "Started the algorithm");
     }
     else
     {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Could not start the algorithm as you need to load a Graph first.");
         QMessageBox::critical(this, "Error", "Could not start the algorithm as you need to load a Graph first.");
     }
 }
@@ -135,6 +135,7 @@ void MainWindow::on_actionSave_Settings_2_triggered()
         }
         else
         {
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Save Settings failed. Failed saving settings.");
             QMessageBox::critical(this, "Save Settings failed", "Failed saving settings.");
         }
     }
@@ -155,6 +156,7 @@ void MainWindow::on_actionLoad_Settings_2_triggered()
         }
         else
         {
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Load Settings failed. The file you selected is not a valid configuration file");
             QMessageBox::critical(this, "Load Settings failed", "The file you selected is not a valid configuration file");
         }
     }
@@ -175,6 +177,7 @@ void MainWindow::on_actionSave_Graph_triggered()
         }
         else
         {
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Save Graph failed. Unable to save graph");
             QMessageBox::critical(this, "Save Graph failed", "Unable to save graph");
         }
     }
@@ -197,6 +200,7 @@ void MainWindow::on_actionZachary_format_triggered()
         }
         else
         {
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Load Graph failed. Unable to load a vertex-pair-weight graph");
             QMessageBox::critical(this, "Load Graph failed", "Unable to load a vertex-pair-weight graph");
         }
     }
@@ -219,6 +223,7 @@ void MainWindow::on_actionMovielens_format_triggered()
         }
         else
         {
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Load Graph failed. Unable to load a Movielens graph");
             QMessageBox::critical(this, "Load Graph failed", "Unable to load a Movielens graph");
         }
     }
@@ -240,6 +245,7 @@ void MainWindow::on_actionSave_Population_triggered()
         }
         else
         {
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Save Population failed. Unable to save population");
             QMessageBox::critical(this, "Save Population failed", "Unable to save population");
         }
     }
@@ -261,6 +267,7 @@ void MainWindow::on_actionLoad_Population_triggered()
         }
         else
         {
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::ERROR, "Load Population failed. Unable to load a population out of this file.");
             QMessageBox::critical(this, "Load Population failed", "Unable to load a population out of this file.");
         }
     }
