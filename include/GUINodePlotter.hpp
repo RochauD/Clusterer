@@ -13,7 +13,7 @@
 #include <atomic>
 #include <mutex>
 #include <map>
-#include <vector>
+//#include <vector>
 #include <chrono>
 #include <random>
 #include <QMainWindow>
@@ -31,11 +31,11 @@
 
 // internal headers
 #include "ClusterEncoding.hpp"
-#include "GlobalBackendController.hpp"
-#include "ClusteringService.hpp"
 #include "IntegerVectorEncoding.hpp"
 #include "AbstractGraph.hpp"
 #include "Graph.hpp"
+#include "ClusteringService.hpp"
+#include "GlobalBackendController.hpp"
 #include "GraphCoordinateTransformer.hpp"
 #include "ConcurrentLockingQueue.hpp"
 
@@ -70,8 +70,7 @@ class GUINodePlotter: public QMainWindow
         * implemented by GraphCoordinateTransformer class.
         * @param takes a graph reference to which the MDS algorithm is applied
         */
-        GUINodePlotter(QWidget *parent, const backend::AbstractGraph& graph,
-            backend::ClusteringService* service, uint64_t width = 500, uint64_t height = 500);
+        GUINodePlotter(QWidget *parent, uint64_t width = 500, uint64_t height = 500);
         
         /**
         * @brief empty destructor

@@ -10,7 +10,6 @@
 
 // Internal headers
 #include "GUINodePlotter.hpp"
-#include "Vertex.hpp"
 
 /**
  * @namespace Ui

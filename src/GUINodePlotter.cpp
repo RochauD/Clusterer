@@ -37,14 +37,13 @@ void GUINodePlotter::printMap(const std::map<backend::VertexId,std::pair<double,
     }
 }
 
-GUINodePlotter::GUINodePlotter(QWidget *parent, const backend::AbstractGraph& graph,
-    backend::ClusteringService *service, uint64_t width, uint64_t height)
-    : QMainWindow(parent),_service(service)
+GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t width, uint64_t height)
+    : QMainWindow(parent)
 {  
 
     /* testing input information */
-    std::cout<<"graph edges GUINodePlotter: "<<graph.getNoEdges()<<"\n";
-    GraphCoordinateTransformer gt(graph);
+    std::cout<<"graph edges GUINodePlotter: "<<clb::GlobalBackendController::instance()->getGraph().getNoEdges()<<"\n";
+    GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
     mapy = gt.getNormalizedMap(width,height);
     printMap(mapy);
 
@@ -99,20 +98,20 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, const backend::AbstractGraph& gr
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     gen = new std::mt19937(seed);
     dist = std::uniform_int_distribution<int>(0,255);
-    setSymbols(graph.getNoVertices());
+    setSymbols(clb::GlobalBackendController::instance()->getGraph().getNoVertices());
 
     connect(this,SIGNAL(sendSol(backend::ClusterEncoding&)),
         this,SLOT(replotSolution(backend::ClusterEncoding&)),Qt::DirectConnection);
     connect(this,SIGNAL(drawEdges()),this,SLOT(draw_edges()));
 
-
+    /*
     solution = backend::IntegerVectorEncoding(&graph);
     solution.addToCluster(0,0);
     solution.addToCluster(1,1);
     solution.addToCluster(2,2);
     solution.addToCluster(3,3);
     solution.addToCluster(4,4);
-    solution.addToCluster(5,5);
+    solution.addToCluster(5,5);*/
     
     //counter = 0;
     //timer = new QTimer(this);
@@ -164,7 +163,8 @@ void GUINodePlotter::draw_edges(){
         std::cout<<"edge "<<i<<": ( "<<mapy[e.first.first].first<<", "<<mapy[e.first.first].second<<" )";
         std::cout<<" --> "<<"( "<<mapy[e.first.second].first<<", "<<mapy[e.first.second].second<<")\n";
 
-      /*if(*(markers.at(e.first.first)->symbol()) == *(markers.at(e.first.second)->symbol()))
+        // maybe take a look later for changing line color using symbols
+        /*if(*(markers.at(e.first.first)->symbol()) == *(markers.at(e.first.second)->symbol()))
         {
             std::cout<<"checking symbol\n";
             new_curve->setSymbol(markers.at(e.first.first)->symbol());  
