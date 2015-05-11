@@ -7,6 +7,7 @@
 
 // External headers
 #include <QMainWindow>
+#include <QTimer>
 
 // Internal headers
 #include "GUINodePlotter.hpp"
@@ -64,6 +65,11 @@ public:
     void showAlert(const QString& title, const QString& text);
 
 private slots:
+    /**
+     * @brief Updates the UI if the backend has provided new data
+     */
+    void updateFrontend();
+
     /**
      * @brief Executed when the "Start" button is clicked
      */
@@ -131,6 +137,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QTimer timer;
 
 };
 

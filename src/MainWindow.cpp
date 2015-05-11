@@ -30,11 +30,17 @@ MainWindow::MainWindow(QWidget* parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateFrontend()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::updateFrontend()
+{
+    // Do magic.   
 }
 
 void MainWindow::showAlert(const QString& title, const QString& text)
@@ -47,7 +53,7 @@ void MainWindow::on_pushButton_clicked()
     //Start button
     clb::GlobalBackendController::instance()->loadGraphTypeVertexPairWeight("../test_files/out.ucidata-zachary");
     clb::GlobalBackendController::instance()->runAlgorithm(true);
-    this->showAlert("Info", "Started the algorithm");
+    timer.start(16);
 
 }
 
