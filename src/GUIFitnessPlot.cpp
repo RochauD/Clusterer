@@ -99,23 +99,16 @@ void GUIFitnessPlot::genRandomValues()
     emit sendFitnessValue(dist(*gen));
 }
 
-void GUIFitnessPlot::replotFitness(double new_value)
+void GUIFitnessPlot::replotFitness(std::vector<std::pair<uint64_t, double>> vector)
 {
-
-    if (counter > 10)
+    for (auto& e : vector)
     {
-        timer->stop();
+        samples->push_back(QPointF(e.first, e.second));
     }
-
-    //std::cout<<"Fitness: "<<new_value<<", x: "<<this->counter<<"\n";
-    samples->push_back(QPointF(counter,new_value));
     fitness_data->setSamples(*samples);
     curve->setData(fitness_data);
-
     myPlot->replot();
     myPlot->show();
-
-    this->counter++;
 }
 
 void GUIFitnessPlot::setPlotBackground()
