@@ -8,7 +8,7 @@
 #ifndef CLUSTERER_FRONTEND_GUINODEPLOTTER_HPP_INCLUDED
 #define CLUSTERER_FRONTEND_GUINODEPLOTTER_HPP_INCLUDED
 
- // standard headers
+// standard headers
 #include <stdint.h>
 #include <atomic>
 #include <mutex>
@@ -27,7 +27,11 @@
 #include <qwt_math.h>
 #include <qwt_symbol.h>
 #include <qwt_series_data.h>
+#ifdef _WIN32
+#include <qwt_legend.h>
+#else
 #include <qwt/qwt_legend.h>
+#endif
 
 // internal headers
 #ifndef Q_MOC_RUN
@@ -40,7 +44,7 @@
 #include "GraphCoordinateTransformer.hpp"
 #include "ConcurrentLockingQueue.hpp"
 #endif
- 
+
 class QWindow;
 class QLabel;
 class QDialog;
@@ -64,7 +68,7 @@ namespace frontend
 
 class GUINodePlotter: public QWidget
 {
-    Q_OBJECT
+        Q_OBJECT
 
     public:
         /**
@@ -74,10 +78,10 @@ class GUINodePlotter: public QWidget
         * @param width value
         * @param height value
         */
-        GUINodePlotter(QWidget *parent, uint64_t width = 500, uint64_t height = 500);
+        GUINodePlotter(QWidget* parent, uint64_t width = 500, uint64_t height = 500);
 
         void initGraph();
-        
+
         /**
         * @brief empty destructor
         */
@@ -87,7 +91,7 @@ class GUINodePlotter: public QWidget
         /**
         * @brief redraw solution based on supplied solution
         * @param a ClusterEncoding object
-        */  
+        */
         void replotSolution(backend::ClusterEncoding& clusterSol);
 
         /**
@@ -118,24 +122,24 @@ class GUINodePlotter: public QWidget
         // QWidget *central_vis_window;
         int counter;
         /* myPlot is put inside plotWindow*/
-        QWidget *plotWindow;
-        QwtPlot *myPlot;
+        QWidget* plotWindow;
+        QwtPlot* myPlot;
 
-        QwtPlotCurve *curve;
+        QwtPlotCurve* curve;
         QVector<QwtPlotMarker*> markers;
-        QwtPlotZoomer *zoom;
-        QwtPointSeriesData *mydata;
+        QwtPlotZoomer* zoom;
+        QwtPointSeriesData* mydata;
 
-        QVector<QwtSymbol*> *symbols;
-        QVector<QColor> *colors;
-        QVector<QPointF> *samples;
-        
-        QTimer *timer;
+        QVector<QwtSymbol*>* symbols;
+        QVector<QColor>* colors;
+        QVector<QPointF>* samples;
+
+        QTimer* timer;
         std::mutex lock;
 
         /* random generator to generate random symbols for the clusters
         when GUINodePlotter object is created */
-        std::mt19937 *gen;
+        std::mt19937* gen;
         std::uniform_int_distribution<int> dist;
 
         /**
@@ -159,12 +163,12 @@ class GUINodePlotter: public QWidget
         /**
         * @brief private slot for drawing the content of the supplied coordinates
         * if a "plot" button is pushed
-        */   
+        */
         void plotContent();
 
         backend::IntegerVectorEncoding solution;
-        backend::ClusteringService *_service;
-        
+        backend::ClusteringService* _service;
+
 };
 
 }

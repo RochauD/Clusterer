@@ -7,7 +7,7 @@
 #ifndef CLUSTERER_FRONTEND_GUIPLOTFITNESS_HPP_INCLUDED
 #define CLUSTERER_FRONTEND_GUIPLOTFITNESS_HPP_INCLUDED
 
- // standard headers
+// standard headers
 #include <stdint.h>
 #include <atomic>
 #include <mutex>
@@ -22,7 +22,11 @@
 #include <qwt_text.h>
 #include <qwt_symbol.h>
 #include <qwt_series_data.h>
+#ifdef _WIN32
+#include <qwt_legend.h>
+#else
 #include <qwt/qwt_legend.h>
+#endif
 
 // internal headers
 #ifndef Q_MOC_RUN
@@ -48,7 +52,7 @@ namespace frontend
 
 class GUIFitnessPlot: public QWidget
 {
-    Q_OBJECT
+        Q_OBJECT
 
     public:
         /**
@@ -56,8 +60,8 @@ class GUIFitnessPlot: public QWidget
         * implemented by GraphCoordinateTransformer class.
         * @param parent widget if applicable
         */
-        GUIFitnessPlot(QWidget *parent, uint64_t width = 400, uint64_t height = 400);
-        
+        GUIFitnessPlot(QWidget* parent, uint64_t width = 400, uint64_t height = 400);
+
         /**
         * @brief empty destructor
         */
@@ -82,20 +86,20 @@ class GUIFitnessPlot: public QWidget
         //QWidget *central_vis_window;
         int counter;
         /* myPlot is put inside plotWindow*/
-        QWidget *plotWindow;
-        QwtPlot *myPlot;
+        QWidget* plotWindow;
+        QwtPlot* myPlot;
 
-        QwtPlotCurve *curve;
-        QwtPlotZoomer *zoom;
-        QwtPointSeriesData *fitness_data;
-        QVector<QPointF> *samples;
-        
-        QTimer *timer;
+        QwtPlotCurve* curve;
+        QwtPlotZoomer* zoom;
+        QwtPointSeriesData* fitness_data;
+        QVector<QPointF>* samples;
+
+        QTimer* timer;
         std::mutex lockFit;
 
         /* random generator to generate random symbols for the clusters
         when GUIFitnessPlot object is created */
-        std::mt19937 *gen;
+        std::mt19937* gen;
         std::uniform_real_distribution<double> dist;
 
         /**
@@ -106,7 +110,7 @@ class GUIFitnessPlot: public QWidget
         /**
         * @brief private slot for drawing the content of the supplied coordinates
         * if a "plot" button is pushed
-        */   
+        */
         void plotContent();
 };
 

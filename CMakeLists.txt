@@ -168,6 +168,8 @@ FIND_PATH(QWT_INCLUDE_DIR NAMES qwt.h PATHS
   /usr/local/lib/qwt.framework/Versions/Current
   "$ENV{LIB_DIR}/include" 
   "$ENV{INCLUDE}" 
+  "$ENV{QWT_ROOT}/src" 
+  "$ENV{QWT_ROOT}" 
   PATH_SUFFIXES qwt-qt4 qwt
   )
 
@@ -177,6 +179,8 @@ FIND_LIBRARY(QWT_LIBRARY NAMES qwt qwt5 qwt-qt4 qwt5-qt4 PATHS
   /usr/local/lib/qwt.framework/Versions/Current
   "$ENV{LIB_DIR}/lib" 
   "$ENV{LIB}/lib" 
+  "$ENV{QWT_ROOT}/lib" 
+  "$ENV{QWT_ROOT}" 
   )
 
 IF (QWT_INCLUDE_DIR AND QWT_LIBRARY)
