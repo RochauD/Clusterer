@@ -64,13 +64,14 @@ GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
 
 void GUINodePlotter::initGraph()
 {
+    //clearGraph();
 
     GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
     mapy = gt.getNormalizedMap(this->width,this->height);
     plotContent();
 
     myPlot->replot();
-    myPlot->show();
+    //myPlot->show();
     setSymbols(clb::GlobalBackendController::instance()->getGraph().getNoVertices());
 }
 
@@ -185,6 +186,7 @@ void GUINodePlotter::plotContent()
 
     QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(4, 4));
     std::map<backend::VertexId,std::pair<double,double>>::iterator it;
+
     for (it = mapy.begin(); it != mapy.end(); it++)
     {
         samples->push_back(QPointF((*it).second.first,(*it).second.second));
@@ -205,19 +207,31 @@ void GUINodePlotter::plotContent()
 void GUINodePlotter::clearGraph(){
     //@todo
     //samples->clear();
-    if(!mapy.empty()){
-        symbols->clear();
-        colors->clear();
+        if(symbols != NULL){
+            symbols->clear();
+            symbols = NULL;
+        }
+        if(colors != NULL){
+            colors->clear();
+            colors = NULL;
+        }
+
+        std::cout<<"after symbols and colors\n";
         for(auto& e: markers)
             e->detach();
-
-        mapy.clear();
-        samples->clear();
-        mydata->setSamples(*samples);
-        curve->setData(mydata);
+        std::cout<<"detaching\n";
+        
+        if(!mapy.empty()){
+            mapy.clear();
+            samples->clear();
+            mydata->setSamples(*samples);
+            curve->setData(mydata);
+            curve->detach();
+        }
         
         myPlot->replot();
-    }
+        std::cout<<"fin\n";
+    
 }
 
 

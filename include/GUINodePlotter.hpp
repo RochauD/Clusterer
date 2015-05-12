@@ -132,16 +132,16 @@ class GUINodePlotter: public QWidget
         // QWidget *central_vis_window;
         int counter;
         /* myPlot is put inside plotWindow*/
-        QWidget* plotWindow;
-        QwtPlot* myPlot;
+        QWidget *plotWindow;
+        QwtPlot *myPlot;
 
         QwtPlotCurve* curve;
         QVector<QwtPlotMarker*> markers;
         QwtPlotZoomer* zoom;
         QwtPointSeriesData* mydata;
 
-        QVector<QwtSymbol*>* symbols;
-        QVector<QColor>* colors;
+        QVector<QwtSymbol*>* symbols = NULL;
+        QVector<QColor>* colors = NULL;
         QVector<QPointF>* samples;
 
         QTimer* timer;

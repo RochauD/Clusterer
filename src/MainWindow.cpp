@@ -158,9 +158,9 @@ void MainWindow::on_pushButton_4_clicked()
     this->showAlert("Alert", "Stopped the algorithm");
     setStateAlgoOff();
     setAlgorithmRunning(true);
-    timer.stop();
-    ui->nodePlotter->clearGraph();
     ui->fitnessPlotter->clearFitness();
+    timer.stop();
+    //ui->nodePlotter->clearGraph();
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -263,6 +263,8 @@ void MainWindow::on_actionZachary_format_triggered()
             ui->pushButton->setEnabled(true);
             if (FrontendConfig::getVisualizeGraph())
             {
+                //ui->nodePlotter->clearGraph();
+                ui->fitnessPlotter->clearFitness();
                 ui->nodePlotter->initGraph();     
             }
         }
@@ -290,6 +292,8 @@ void MainWindow::on_actionMovielens_format_triggered()
             ui->pushButton->setEnabled(true);
             if (FrontendConfig::getVisualizeGraph())
             {
+                //ui->nodePlotter->clearGraph();
+                ui->fitnessPlotter->clearFitness();
                 ui->nodePlotter->initGraph();     
             }
         }
