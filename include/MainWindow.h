@@ -64,6 +64,28 @@ public:
      */
     void showAlert(const QString& title, const QString& text);
 
+    /**
+     * @brief Indicate a change in the state of the algorithm
+     * @param val Whether or not the algorithm is working
+     */
+    void setAlgorithmRunning(bool val);
+
+    /**
+     * @brief Whether or not the algorithm is working
+     * @return The status of the algorithm
+     */
+    bool isAlgorithmRunning();
+
+    /**
+     * @brief Sets the state of all buttons and menus to correct when the algorithm is not running
+     */
+    void setStateAlgoOff();
+
+    /**
+     * @brief Sets the state of all buttons and menus to correct when the algorithm is running
+     */
+    void setStateAlgoOn();
+
 private slots:
     /**
      * @brief Updates the UI if the backend has provided new data
@@ -138,6 +160,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QTimer timer;
+    bool algorithmRunning;
 
 };
 

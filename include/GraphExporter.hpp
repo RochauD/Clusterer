@@ -18,6 +18,7 @@
 #include "Graph.hpp"
 #include "AbstractGraph.hpp"
 #include "Vertex.hpp"
+
 /**
 * @namespace clusterer
 * @brief The namespace clusterer is the main namespace of the clusterer project.

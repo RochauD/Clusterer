@@ -1,7 +1,7 @@
 /**
- * @file IntegerVectorEncoding.hpp
- * @brief encoder interface implementation
- */
+* @file IntegerVectorEncoding.hpp
+* @brief encoder interface implementation
+*/
 #ifndef CLUSTERER_BACKEND_INTEGER_VECTOR_ENCODING_HPP
 #define CLUSTERER_BACKEND_INTEGER_VECTOR_ENCODING_HPP
 
@@ -30,6 +30,10 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class IntegerVectorEncoding
+* @brief The class IntegerVectorEncoding encodes a solution.
+*/
 class IntegerVectorEncoding : public ClusterEncoding
 {
     public:

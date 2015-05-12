@@ -21,6 +21,7 @@
 #include "../include/GlobalBackendController.hpp"
 #include "../include/GlobalFileLogger.hpp"
 
+#define MSEC_60_HZ 16
 
 
 namespace clusterer
@@ -36,11 +37,40 @@ MainWindow::MainWindow(QWidget* parent) :
 {
     ui->setupUi(this);
     connect(&timer, SIGNAL(timeout()), this, SLOT(updateFrontend()));
+
+    setStateAlgoOff();
+    // No graph loaded - cannot start
+    ui->pushButton->setEnabled(false);
+    ui->pushButton_3->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setStateAlgoOn()
+{
+    ui->pushButton->setEnabled(false);
+    ui->pushButton_4->setEnabled(true);
+    ui->pushButton_2->setEnabled(true);
+    ui->pushButton_3->setEnabled(false);
+    ui->actionZachary_format->setEnabled(false);
+    ui->actionMovielens_format->setEnabled(false);
+    ui->actionLoad_Population->setEnabled(false);
+    ui->actionSave_Population->setEnabled(false);
+}
+
+void MainWindow::setStateAlgoOff()
+{
+    ui->pushButton->setEnabled(true);
+    ui->pushButton_4->setEnabled(false);
+    ui->pushButton_2->setEnabled(false);
+    ui->pushButton_3->setEnabled(false);
+    ui->actionZachary_format->setEnabled(true);
+    ui->actionMovielens_format->setEnabled(true);
+    ui->actionLoad_Population->setEnabled(true);
+    ui->actionSave_Population->setEnabled(true);
 }
 
 void MainWindow::updateFrontend()
@@ -62,6 +92,9 @@ void MainWindow::updateFrontend()
             if (std::numeric_limits<uint64_t>::max() - std::numeric_limits<uint64_t>::epsilon() <= e.second)
             {
                 // algo stopped
+                setAlgorithmRunning(false);
+                setStateAlgoOff();
+                timer.stop();
                 exitFlag = true;
                 continue;
             }
@@ -80,6 +113,16 @@ void MainWindow::updateFrontend()
     }
 }
 
+void MainWindow::setAlgorithmRunning(bool val)
+{
+    algorithmRunning = val;
+}
+
+bool MainWindow::isAlgorithmRunning()
+{
+    return algorithmRunning;
+}
+
 void MainWindow::showAlert(const QString& title, const QString& text)
 {
     QMessageBox::information(this, title, text);
@@ -91,7 +134,11 @@ void MainWindow::on_pushButton_clicked()
     // @todo put check condition function into controller and call it here and check
     if (clb::GlobalBackendController::instance()->runAlgorithm(true))
     {
-        timer.start(16);
+        clb::GlobalBackendController::instance()->runAlgorithm(true);
+        timer.start(MSEC_60_HZ);
+        this->showAlert("Info", "Started the algorithm");
+        setStateAlgoOn();
+        setAlgorithmRunning(true);
     }
     else
     {
@@ -104,19 +151,30 @@ void MainWindow::on_pushButton_4_clicked()
 {
     //Stop button
     clb::GlobalBackendController::instance()->stopAlgorithm();
-    this->showAlert("Alert", "Stop");
+    this->showAlert("Alert", "Stopped the algorithm");
+    setStateAlgoOff();
+    setAlgorithmRunning(true);
+    timer.stop();
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
     clb::GlobalBackendController::instance()->stopAlgorithm();
-    this->showAlert("Alert", "Pause");
+    setStateAlgoOff();
+    setAlgorithmRunning(false);
+    this->showAlert("Alert", "Paused algorithm");
+    timer.stop();
+    ui->pushButton_3->setEnabled(true);
+    ui->pushButton->setEnabled(true);
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
     clb::GlobalBackendController::instance()->runAlgorithm(false);
-    this->showAlert("Alert", "Resume");
+    this->showAlert("Alert", "Resumed execution of the algorithm");
+    timer.start(MSEC_60_HZ);
+    setStateAlgoOn();
+    setAlgorithmRunning(true);
 }
 
 void MainWindow::on_actionSave_Settings_2_triggered()
@@ -197,6 +255,7 @@ void MainWindow::on_actionZachary_format_triggered()
         {
             showAlert("Load Graph Success", "Successfully loaded a vertex-pair-weight type graph.");
             ui->nodePlotter->initGraph();
+            ui->pushButton->setEnabled(true);
         }
         else
         {
@@ -220,6 +279,7 @@ void MainWindow::on_actionMovielens_format_triggered()
         {
             showAlert("Load Graph Success", "Successfully loaded a Movielens type graph.");
             ui->nodePlotter->initGraph();
+            ui->pushButton->setEnabled(true);
         }
         else
         {
