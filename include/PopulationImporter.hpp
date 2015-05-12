@@ -34,7 +34,7 @@ namespace clusterer
 namespace backend
 {
 
-/*
+/**
 * @class PopulationImporter
 * @brief Imports a population from a file
 */

@@ -67,7 +67,7 @@ namespace frontend
 {
 
 /**
- * @class GUINodePlotter.hpp
+ * @class GUINodePlotter
  * @brief class to visually plot the result of implementation of a transformer to obtain
  *  coordinates for a graph's nodes using the edge's weights
  */

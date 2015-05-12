@@ -34,7 +34,7 @@ namespace clusterer
 namespace backend
 {
 
-/*
+/**
 * @class PopulationExporter
 * @brief Exports population to file
 */

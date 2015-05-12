@@ -21,7 +21,7 @@ namespace frontend
 {
 
 /**
- * @class FrontendConfig.h
+ * @class FrontendConfig
  * @brief Static class containing the configuration for the frontend
  */
 class FrontendConfig

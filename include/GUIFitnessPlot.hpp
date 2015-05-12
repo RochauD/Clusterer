@@ -52,7 +52,7 @@ namespace frontend
 {
 
 /**
- * @class GUIFitnessPlot.hpp
+ * @class GUIFitnessPlot
  * @brief A widget to plot the change in fitness over time
  */
 class GUIFitnessPlot: public QWidget
