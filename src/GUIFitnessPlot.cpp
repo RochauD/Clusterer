@@ -104,12 +104,7 @@ void GUIFitnessPlot::setPlotBackground()
 
 GUIFitnessPlot::~GUIFitnessPlot()
 {
-    delete samples;
-    delete fitness_data;
-    delete zoom;
-    delete curve;
-    delete myPlot;
-    delete plotWindow;
+
 }
 
 }

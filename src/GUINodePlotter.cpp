@@ -14,14 +14,17 @@ namespace clusterer
 namespace frontend
 {
 
-void GUINodePlotter::printEncoding(const backend::ClusterEncoding& clusterSol){
+void GUINodePlotter::printEncoding(const backend::ClusterEncoding& clusterSol)
+{
     uint64_t no_vertices = clusterSol.size();
     std::cout<<"Encoding: \n";
-    for(unsigned int i = 0; i < no_vertices; i++){
+    for (unsigned int i = 0; i < no_vertices; i++)
+    {
         std::cout<<i<<" ";
     }
     std::cout<<"\n";
-    for(unsigned int i = 0; i < no_vertices; i++){
+    for (unsigned int i = 0; i < no_vertices; i++)
+    {
         std::cout<<clusterSol.getClusterOfVertex(i)<<" ";
     }
     std::cout<<"\n";
@@ -30,15 +33,16 @@ void GUINodePlotter::printEncoding(const backend::ClusterEncoding& clusterSol){
 void GUINodePlotter::printMap(const std::map<backend::VertexId,std::pair<double,double>>& mapy)
 {
     std::cout<<"\n";
-    for(auto& billy : mapy){
+    for (auto& billy : mapy)
+    {
         std::cout<<"Vertex "<<billy.first;
         std::cout<<": ("<<billy.second.first<<" , "<<billy.second.second<<")\n";
     }
 }
 
-GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
+GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
     : QWidget(parent),width(Width),height(Height)
-{  
+{
 
     /* resizing window */
     this->resize(Width,Height);
@@ -47,12 +51,12 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
     // show_edges = new QPushButton(tr("&Show edges"));
     // closeViz = new QPushButton(tr("&Close"));
     plotWindow = new QWidget();
-    
+
     /* setting the default background for the plot */
     setPlotBackground(Width,Height);
 
     /* add myPlot to plotWindow */
-    QVBoxLayout *layout_t = new QVBoxLayout();
+    QVBoxLayout* layout_t = new QVBoxLayout();
     layout_t->addWidget(myPlot);
 
     // myPlot->replot();
@@ -61,17 +65,17 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
     plotWindow->setLayout(layout_t);
     plotWindow->setWindowModality(Qt::ApplicationModal);
     plotWindow->show();
-    
+
     /* add zooming option */
     zoom = new QwtPlotZoomer(myPlot->canvas());
     zoom->setRubberBandPen(QPen(Qt::black, 2, Qt::DotLine));
     zoom->setTrackerPen(QPen(Qt::black));
 
     /*setting the layout of the main window*/
-    QHBoxLayout *layout1 = new QHBoxLayout;
+    QHBoxLayout* layout1 = new QHBoxLayout;
     //layout1->addWidget(show_edges);
     // layout1->addWidget(closeViz);
-    QHBoxLayout *layout2 = new QHBoxLayout;
+    QHBoxLayout* layout2 = new QHBoxLayout;
     layout2->addLayout(layout1);
     layout2->addWidget(plotWindow);
 
@@ -93,7 +97,7 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
     dist = std::uniform_int_distribution<int>(0,255);
 
     connect(this,SIGNAL(sendSol(backend::ClusterEncoding&)),
-        this,SLOT(replotSolution(backend::ClusterEncoding&)),Qt::DirectConnection);
+            this,SLOT(replotSolution(backend::ClusterEncoding&)),Qt::DirectConnection);
     connect(this,SIGNAL(drawEdges()),this,SLOT(draw_edges()));
 
     /*
@@ -104,14 +108,15 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
     solution.addToCluster(3,3);
     solution.addToCluster(4,4);
     solution.addToCluster(5,5);*/
-    
+
     //counter = 0;
     //timer = new QTimer(this);
     //timer->start(1000);
     //connect(timer,SIGNAL(timeout()),this,SLOT(genSol2()));
 }
 
-void GUINodePlotter::initGraph(){
+void GUINodePlotter::initGraph()
+{
     /* testing input information */
     //std::cout<<"graph edges GUINodePlotter: "<<clb::GlobalBackendController::instance()->getGraph().getNoEdges()<<"\n";
     GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
@@ -126,20 +131,23 @@ void GUINodePlotter::initGraph(){
     setSymbols(clb::GlobalBackendController::instance()->getGraph().getNoVertices());
 }
 
-void GUINodePlotter::setSymbols(uint64_t no_vertices){
+void GUINodePlotter::setSymbols(uint64_t no_vertices)
+{
 
     symbols = new QVector<QwtSymbol*>;
     colors = new QVector<QColor>;
 
     int r,g,b;
-    for(unsigned int i = 0; i < no_vertices; i++)
+    for (unsigned int i = 0; i < no_vertices; i++)
     {
         r = dist(*gen);
         g = dist(*gen);
-        b = dist(*gen);       
+        b = dist(*gen);
         QColor color(r,g,b);
-        for(unsigned int j = 0; j < i; j++){
-            while(color == colors->at(j)){
+        for (unsigned int j = 0; j < i; j++)
+        {
+            while (color == colors->at(j))
+            {
                 r = dist(*gen);
                 g = dist(*gen);
                 b = dist(*gen);
@@ -149,27 +157,29 @@ void GUINodePlotter::setSymbols(uint64_t no_vertices){
         colors->push_back(color);
     }
 
-    for(unsigned int i = 0; i < no_vertices; i++)
+    for (unsigned int i = 0; i < no_vertices; i++)
     {
         symbols->push_back(new QwtSymbol(QwtSymbol::Ellipse, QBrush(colors->at(i)), QPen(colors->at(i)), QSize(4,4)));
     }
 }
 
-void GUINodePlotter::draw_edges(){
+void GUINodePlotter::draw_edges()
+{
 
-    std::unique_lock<std::mutex> lck (this->lock);
-    QwtPlotCurve *new_curve;
-    QwtPointSeriesData *new_data;
-    QVector<QPointF> *new_samples;
+    std::unique_lock<std::mutex> lck(this->lock);
+    QwtPlotCurve* new_curve;
+    QwtPointSeriesData* new_data;
+    QVector<QPointF>* new_samples;
     int i = 0;
-    for(auto& e: clb::GlobalBackendController::instance()->getGraph().getEdgesAndWeights()){
+    for (auto& e: clb::GlobalBackendController::instance()->getGraph().getEdgesAndWeights())
+    {
         new_curve = new QwtPlotCurve();
         new_data = new QwtPointSeriesData();
         new_samples = new QVector<QPointF>;
         new_curve->setStyle(QwtPlotCurve::Lines);
         new_samples->push_back(QPointF(mapy[e.first.first].first,mapy[e.first.first].second));
         new_samples->push_back(QPointF(mapy[e.first.second].first,mapy[e.first.second].second));
-        
+
         // std::cout<<"edge "<<i<<": ( "<<mapy[e.first.first].first<<", "<<mapy[e.first.first].second<<" )";
         // std::cout<<" --> "<<"( "<<mapy[e.first.second].first<<", "<<mapy[e.first.second].second<<")\n";
 
@@ -177,11 +187,11 @@ void GUINodePlotter::draw_edges(){
         /*if(*(markers.at(e.first.first)->symbol()) == *(markers.at(e.first.second)->symbol()))
         {
             std::cout<<"checking symbol\n";
-            new_curve->setSymbol(markers.at(e.first.first)->symbol());  
+            new_curve->setSymbol(markers.at(e.first.first)->symbol());
         } else {
             new_curve->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(2,2)));
         }*/
-       
+
         new_data->setSamples(*new_samples);
         new_curve->setData(new_data);
         new_curve->attach(myPlot);
@@ -190,14 +200,17 @@ void GUINodePlotter::draw_edges(){
     }
 }
 
-void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol){
-    std::unique_lock<std::mutex> lck (this->lock);
+void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol)
+{
+    std::unique_lock<std::mutex> lck(this->lock);
     uint64_t no_vertices = clusterSol.size();
     printEncoding(clusterSol);
-    for(unsigned int i = 0; i < no_vertices; i++){
+    for (unsigned int i = 0; i < no_vertices; i++)
+    {
         uint64_t cluster_id = clusterSol.getClusterOfVertex(i);
-        if(!(symbols->at(cluster_id)->brush() == (markers.at(i)->symbol())->brush())) {
-            QwtPlotMarker *mark = new QwtPlotMarker();
+        if (!(symbols->at(cluster_id)->brush() == (markers.at(i)->symbol())->brush()))
+        {
+            QwtPlotMarker* mark = new QwtPlotMarker();
             mark->setSymbol(symbols->at(cluster_id));
             mark->setValue(markers.at(i)->value());
             markers.replace(i,mark);
@@ -210,7 +223,8 @@ void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol){
 }
 
 
-void GUINodePlotter::setPlotBackground(const uint64_t& width, const uint64_t& height){
+void GUINodePlotter::setPlotBackground(const uint64_t& width, const uint64_t& height)
+{
 
     myPlot = new QwtPlot(plotWindow);
     // myPlot->setTitle(QwtText("Graph Visualization"));
@@ -238,7 +252,8 @@ void GUINodePlotter::setPlotBackground(const uint64_t& width, const uint64_t& he
     myPlot->setAxisTitle(QwtPlot::yLeft, titleY);
 }
 
-void GUINodePlotter::plotContent(){
+void GUINodePlotter::plotContent()
+{
 
     /* include the data into the graph */
     curve = new QwtPlotCurve("Cluster Visualization");
@@ -247,13 +262,14 @@ void GUINodePlotter::plotContent(){
     mydata = new QwtPointSeriesData;
     samples = new QVector<QPointF>;
 
-    QwtSymbol *sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(4,4));
+    QwtSymbol* sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(4,4));
     curve->setSymbol(sym);
 
     std::map<backend::VertexId,std::pair<double,double>>::iterator it;
-    for(it = mapy.begin(); it != mapy.end(); it++){
+    for (it = mapy.begin(); it != mapy.end(); it++)
+    {
         samples->push_back(QPointF((*it).second.first,(*it).second.second));
-        QwtPlotMarker *mark = new QwtPlotMarker();
+        QwtPlotMarker* mark = new QwtPlotMarker();
         mark->setSymbol(sym);
         mark->setValue(QPointF((*it).second.first,(*it).second.second));
         markers.append(mark);
@@ -267,18 +283,9 @@ void GUINodePlotter::plotContent(){
 
 }
 
-GUINodePlotter::~GUINodePlotter(){
-    //empty dtor
-    delete timer;
-    delete samples;
-    delete colors;
-    delete symbols;
-    delete mydata;
-    delete zoom;
-    delete curve;
-    delete myPlot;
-    delete plotWindow;
-    delete gen;
+GUINodePlotter::~GUINodePlotter()
+{
+
 }
 
 
