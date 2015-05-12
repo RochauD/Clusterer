@@ -12,7 +12,7 @@ namespace frontend
 {
 
 
-bool FrontendConfig::visualizeGraph;
+bool FrontendConfig::visualizeGraph = true;
 
 void FrontendConfig::setVisualizeGraph(bool val)
 {
