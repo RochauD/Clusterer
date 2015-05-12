@@ -163,6 +163,7 @@ class MainWindow : public QMainWindow
         QTimer timer;
         bool algorithmRunning;
         bool canBeCleared;
+        bool stoppedViaStop;
 
 };
 

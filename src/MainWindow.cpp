@@ -43,6 +43,7 @@ MainWindow::MainWindow(QWidget* parent) :
     // No graph loaded - cannot start
     ui->pushButton->setEnabled(false);
     ui->pushButton_3->setEnabled(false);
+    stoppedViaStop = false;
 }
 
 MainWindow::~MainWindow()
@@ -112,8 +113,9 @@ void MainWindow::updateFrontend()
             }
         }
 
-        if (exitFlag)
+        if (exitFlag && (stoppedViaStop == false))
         {
+            stoppedViaStop = false;
             setAlgorithmRunning(true);
             setStateAlgoOff();
             timer.stop();
@@ -142,10 +144,9 @@ void MainWindow::on_pushButton_clicked()
     //Start button
     if (clb::GlobalBackendController::instance()->runAlgorithm(true))
     {
+        stoppedViaStop = false;
         clb::GlobalBackendController::instance()->runAlgorithm(true);
         timer.start(MSEC_60_HZ);
-        ui->fitnessPlotter->clearFitness();
-        ui->nodePlotter->clearGraph();
         if (FrontendConfig::getVisualizeGraph())
         {
             ui->fitnessPlotter->clearFitness();
@@ -166,10 +167,10 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
     //Stop button
+    stoppedViaStop = true;
     clb::GlobalBackendController::instance()->stopAlgorithm();
     setStateAlgoOff();
     setAlgorithmRunning(true);
-    timer.stop();
     this->showAlert("Alert", "Stopped the algorithm");
 }
 
