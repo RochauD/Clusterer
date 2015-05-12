@@ -144,6 +144,14 @@ void MainWindow::on_pushButton_clicked()
     {
         clb::GlobalBackendController::instance()->runAlgorithm(true);
         timer.start(MSEC_60_HZ);
+        ui->fitnessPlotter->clearFitness();
+        ui->nodePlotter->clearGraph();
+        if (FrontendConfig::getVisualizeGraph())
+        {
+            ui->fitnessPlotter->clearFitness();
+            ui->nodePlotter->clearGraph();
+            ui->nodePlotter->initGraph();
+        }
         setStateAlgoOn();
         setAlgorithmRunning(true);
         this->showAlert("Info", "Started the algorithm");
@@ -173,6 +181,8 @@ void MainWindow::on_pushButton_2_clicked()
     timer.stop();
     ui->pushButton_3->setEnabled(true);
     ui->pushButton->setEnabled(true);
+    ui->nodePlotter->clearGraph();
+    ui->nodePlotter->initGraph();
     this->showAlert("Alert", "Paused algorithm");
 }
 
@@ -265,6 +275,8 @@ void MainWindow::on_actionZachary_format_triggered()
             ui->pushButton->setEnabled(true);
             if (FrontendConfig::getVisualizeGraph())
             {
+                ui->fitnessPlotter->clearFitness();
+                ui->nodePlotter->clearGraph();
                 ui->nodePlotter->initGraph();
             }
         }
@@ -292,6 +304,8 @@ void MainWindow::on_actionMovielens_format_triggered()
             ui->pushButton->setEnabled(true);
             if (FrontendConfig::getVisualizeGraph())
             {
+                ui->fitnessPlotter->clearFitness();
+                ui->nodePlotter->clearGraph();
                 ui->nodePlotter->initGraph();
             }
         }

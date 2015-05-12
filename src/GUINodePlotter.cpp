@@ -19,6 +19,7 @@ GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
     this->resize(Width,Height);
     this->adjustSize();
     /*creating the necessary widgets*/
+
     plotWindow = new QWidget();
 
     /* setting the default background for the plot */
@@ -27,6 +28,7 @@ GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
     /* add myPlot to plotWindow */
     QVBoxLayout* layout_t = new QVBoxLayout();
     layout_t->addWidget(myPlot);
+
     plotWindow->setLayout(layout_t);
     plotWindow->setWindowModality(Qt::ApplicationModal);
     plotWindow->show();
@@ -52,16 +54,20 @@ GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
     connect(this,SIGNAL(sendSol(backend::ClusterEncoding&)),
             this,SLOT(replotSolution(backend::ClusterEncoding&)),Qt::DirectConnection);
     connect(this,SIGNAL(drawEdges()),this,SLOT(draw_edges()));
+
 }
+
 
 void GUINodePlotter::initGraph()
 {
+    //clearGraph();
+
     GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
     mapy = gt.getNormalizedMap(this->width,this->height);
     plotContent();
 
     myPlot->replot();
-    myPlot->show();
+    //myPlot->show();
     setSymbols(clb::GlobalBackendController::instance()->getGraph().getNoVertices());
 }
 
@@ -134,6 +140,7 @@ void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol)
             QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, symbols->at(cluster_id)->brush(), symbols->at(cluster_id)->pen(), symbols->at(cluster_id)->size());
             mark->setSymbol(symbol);
             mark->setValue(markers.at(i)->value());
+            markers.at(i)->detach();
             markers.replace(i,mark);
         }
         markers.at(i)->attach(myPlot);
@@ -176,24 +183,43 @@ void GUINodePlotter::plotContent()
     curve->setSymbol(sym);
 
 
+
     std::map<backend::VertexId,std::pair<double,double>>::iterator it;
+
     for (it = mapy.begin(); it != mapy.end(); it++)
     {
+
         samples->push_back(QPointF((*it).second.first,(*it).second.second));
         QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(4, 4));
         QwtPlotMarker* mark = new QwtPlotMarker();
-        mark->setSymbol(symbol);
+        mark->setSymbol(new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(4, 4)));
         mark->setValue(QPointF((*it).second.first,(*it).second.second));
         markers.append(mark);
+        markers.back()->attach(myPlot);
     }
-
-    mydata->setSamples(*samples);
-    curve->setData(mydata);
-    curve->attach(myPlot);
 
     myPlot->replot();
 
 }
+
+void GUINodePlotter::clearGraph()
+{
+    if (!mapy.empty())
+    {
+        symbols->clear();
+        colors->clear();
+
+        for (auto& e: markers)
+        { e->detach(); }
+
+        markers.clear();
+
+        mapy.clear();
+        myPlot->replot();
+    }
+
+}
+
 
 GUINodePlotter::~GUINodePlotter()
 {

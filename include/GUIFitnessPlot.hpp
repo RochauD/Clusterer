@@ -77,6 +77,10 @@ class GUIFitnessPlot: public QWidget
          * @param vector A vector of <x, y> data points
          */
         void replotFitness(std::vector<std::pair<uint64_t, double>> vector);
+
+
+        void clearFitness();
+
     private:
         /* myPlot is put inside plotWindow*/
         QWidget* plotWindow;

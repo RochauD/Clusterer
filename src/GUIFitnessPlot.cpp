@@ -73,6 +73,16 @@ void GUIFitnessPlot::replotFitness(std::vector<std::pair<uint64_t, double>> vect
     myPlot->show();
 }
 
+void GUIFitnessPlot::clearFitness(){
+    //@todo
+        samples->clear();
+        fitness_data->setSamples(*samples);
+        curve->setData(fitness_data);
+        myPlot->replot();
+        //myPlot->show();
+
+}
+
 void GUIFitnessPlot::setPlotBackground()
 {
 
@@ -102,7 +112,7 @@ void GUIFitnessPlot::setPlotBackground()
 
 GUIFitnessPlot::~GUIFitnessPlot()
 {
-
+    //empty dtor
 }
 
 }

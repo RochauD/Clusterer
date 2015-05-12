@@ -91,6 +91,8 @@ class GUINodePlotter: public QWidget
          */
         void initGraph();
 
+
+
         /**
         * @brief empty destructor
         */
@@ -102,6 +104,8 @@ class GUINodePlotter: public QWidget
         * @param a ClusterEncoding object
         */
         void replotSolution(backend::ClusterEncoding& clusterSol);
+
+        void clearGraph();
 
         /**
         * @bried draw edges for the graph
@@ -116,9 +120,6 @@ class GUINodePlotter: public QWidget
         void drawEdges();
 
     private:
-        /* general purpose buttons */
-        // QPushButton *show_edges;
-        // QPushButton *closeViz;
 
         int width = 500;
         int height = 500;
@@ -130,13 +131,16 @@ class GUINodePlotter: public QWidget
         QWidget* plotWindow;
         QwtPlot* myPlot;
 
-        QwtPlotCurve* curve;
         QVector<QwtPlotMarker*> markers;
         QwtPlotZoomer* zoom;
-        QwtPointSeriesData* mydata;
 
         QVector<QwtSymbol*>* symbols;
         QVector<QColor>* colors;
+        QwtPlotCurve* curve;
+
+        QwtPointSeriesData* mydata;
+
+
         QVector<QPointF>* samples;
 
         QTimer* timer;
