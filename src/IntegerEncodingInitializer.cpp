@@ -6,37 +6,76 @@ namespace backend
 {
 
 IntegerEncodingInitializer::IntegerEncodingInitializer(
-    const AbstractGraph* g, unsigned maxClusters)
+    const AbstractGraph* g, unsigned maxClusters, uint32_t functionFlag)
 {
     this->graph = g;
-    if (maxClusters == 0 || maxClusters >= graph->getNoVertices())
+    this->functionFlag = functionFlag;
+    this->maxClusters = maxClusters;
+    if (this->maxClusters == 0 || this->maxClusters >= graph->getNoVertices())
     {
-        maxClusters = graph->getNoVertices() - 1;
+        this->maxClusters = graph->getNoVertices() - 1;
     }
 
     std::random_device rd;
     rng.seed(rd());
-    uni_dist = new std::uniform_int_distribution<unsigned>(0, maxClusters - 1);
+    uni_dist = new std::uniform_int_distribution<unsigned>(0, this->maxClusters);
 }
 
 IntegerVectorEncoding IntegerEncodingInitializer::getRandomSolution()
 {
     IntegerVectorEncoding result(graph);
-    for (int vert = 0; vert < graph->getNoVertices(); vert++)
-    {
-        result.addToCluster(vert, (*uni_dist)(rng));
-    }
-    result.normalize();
-    return result;
-}
+    ClusterEncoding::Encoding encoding;
+    encoding.resize(graph->getNoVertices());
 
-std::vector<IntegerVectorEncoding> IntegerEncodingInitializer::getInitialPopulation(int count)
-{
-    std::vector<IntegerVectorEncoding> result;
-    for (int i = 0; i < count; i++)
+    switch (this->functionFlag)
     {
-        result.push_back(getRandomSolution());
+        case 0:
+            {
+                for (uint64_t vert = 0; vert < graph->getNoVertices(); vert++)
+                {
+                    result.addToCluster(vert, (*uni_dist)(rng));
+                }
+            }
+            break;
+        case 1:
+            {
+                uint64_t numberOfElementsPerCluster = this->graph->getNoVertices() / this->maxClusters;
+                uint64_t leftOverElements = this->graph->getNoVertices() % this->maxClusters;
+                uint64_t curNumberOfElementsCount;
+                size_t lastIndex = 0;
+
+                for (uint64_t j = 0; j < this->maxClusters; ++j)
+                {
+                    if (leftOverElements > 0)
+                    {
+                        curNumberOfElementsCount = numberOfElementsPerCluster + 1;
+                        leftOverElements--;
+                    }
+                    else
+                    {
+                        curNumberOfElementsCount = numberOfElementsPerCluster;
+                    }
+                    for (size_t i = lastIndex; i < lastIndex+curNumberOfElementsCount; ++i)
+                    {
+                        encoding[i] = j;
+                    }
+                    lastIndex = lastIndex+curNumberOfElementsCount;
+                }
+                std::shuffle(encoding.begin(), encoding.end(), rng);
+                result.setEncoding(encoding);
+            }
+            break;
+        default:
+            {
+                for (uint64_t vert = 0; vert < graph->getNoVertices(); vert++)
+                {
+                    result.addToCluster(vert, (*uni_dist)(rng));
+                }
+            }
+            break;
     }
+
+    result.normalize();
     return result;
 }
 

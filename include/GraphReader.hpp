@@ -1,7 +1,7 @@
 /**
- * @file GraphReader.hpp
- * @brief class to read a graph from a file
- */
+* @file GraphReader.hpp
+* @brief class to read a graph from a file
+*/
 #ifndef CLUSTERER_BACKEND_GRAPH_READER_HPP
 #define CLUSTERER_BACKEND_GRAPH_READER_HPP
 

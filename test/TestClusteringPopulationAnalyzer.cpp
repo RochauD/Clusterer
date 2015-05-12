@@ -38,18 +38,22 @@ void TestClusteringPopulationAnalyzer::testEvaluatePopulationOneThread(void)
     graph.addEdge(Vertex(6), Vertex(7), 0.1);
 
     IntegerEncodingInitializer initVec(&graph);
-    std::vector<std::pair<IntegerVectorEncoding, double>> vecPop;
+    std::vector<PopulationMember<IntegerVectorEncoding, double>> vecPop;
     for (size_t i = 0; i < populationSize; i++)
     {
-        vecPop.push_back(std::make_pair(initVec.getRandomSolution(), 1.0));
+        PopulationMember<IntegerVectorEncoding, double> member;
+        member.fitnessValue = 0.0;
+        member.modified = true;
+        member.populationEncoding = initVec.getRandomSolution();
+        vecPop.push_back(member);
     }
 
-    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<IntegerVectorEncoding, double>>> analyzer(&graph, &vecPop, 1);
+    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<PopulationMember<IntegerVectorEncoding, double>>> analyzer(&graph, &vecPop, 1);
     analyzer.evaluatePopulation();
     FitnessAnalyzer singleAnalyzer;
     for (auto& e : vecPop)
     {
-        CPPUNIT_ASSERT(singleAnalyzer.analyze(&e.first, &graph) == e.second);
+        CPPUNIT_ASSERT(singleAnalyzer.analyze(&e.populationEncoding, &graph) == e.fitnessValue);
     }
 }
 
@@ -77,18 +81,22 @@ void TestClusteringPopulationAnalyzer::testEvaluatePopulationTwoThreads(void)
     graph.addEdge(Vertex(6), Vertex(7), 0.1);
 
     IntegerEncodingInitializer initVec(&graph);
-    std::vector<std::pair<IntegerVectorEncoding, double>> vecPop;
+    std::vector<PopulationMember<IntegerVectorEncoding, double>> vecPop;
     for (size_t i = 0; i < populationSize; i++)
     {
-        vecPop.push_back(std::make_pair(initVec.getRandomSolution(), 1.0));
+        PopulationMember<IntegerVectorEncoding, double> member;
+        member.fitnessValue = 0.0;
+        member.modified = true;
+        member.populationEncoding = initVec.getRandomSolution();
+        vecPop.push_back(member);
     }
 
-    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<IntegerVectorEncoding, double>>> analyzer(&graph, &vecPop, 2);
+    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<PopulationMember<IntegerVectorEncoding, double>>> analyzer(&graph, &vecPop, 2);
     analyzer.evaluatePopulation();
     FitnessAnalyzer singleAnalyzer;
     for (auto& e : vecPop)
     {
-        CPPUNIT_ASSERT(singleAnalyzer.analyze(&e.first, &graph) == e.second);
+        CPPUNIT_ASSERT(singleAnalyzer.analyze(&e.populationEncoding, &graph) == e.fitnessValue);
     }
 }
 
@@ -116,18 +124,22 @@ void TestClusteringPopulationAnalyzer::testEvaluatePopulationThreeThreads(void)
     graph.addEdge(Vertex(6), Vertex(7), 0.1);
 
     IntegerEncodingInitializer initVec(&graph);
-    std::vector<std::pair<IntegerVectorEncoding, double>> vecPop;
+    std::vector<PopulationMember<IntegerVectorEncoding, double>> vecPop;
     for (size_t i = 0; i < populationSize; i++)
     {
-        vecPop.push_back(std::make_pair(initVec.getRandomSolution(), 1.0));
+        PopulationMember<IntegerVectorEncoding, double> member;
+        member.fitnessValue = 0.0;
+        member.modified = true;
+        member.populationEncoding = initVec.getRandomSolution();
+        vecPop.push_back(member);
     }
 
-    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<IntegerVectorEncoding, double>>> analyzer(&graph, &vecPop, 3);
+    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<PopulationMember<IntegerVectorEncoding, double>>> analyzer(&graph, &vecPop, 3);
     analyzer.evaluatePopulation();
     FitnessAnalyzer singleAnalyzer;
     for (auto& e : vecPop)
     {
-        CPPUNIT_ASSERT(singleAnalyzer.analyze(&e.first, &graph) == e.second);
+        CPPUNIT_ASSERT(singleAnalyzer.analyze(&e.populationEncoding, &graph) == e.fitnessValue);
     }
 }
 
@@ -155,17 +167,21 @@ void TestClusteringPopulationAnalyzer::testEvaluatePopulationFourThreads(void)
     graph.addEdge(Vertex(6), Vertex(7), 0.1);
 
     IntegerEncodingInitializer initVec(&graph);
-    std::vector<std::pair<IntegerVectorEncoding, double>> vecPop;
+    std::vector<PopulationMember<IntegerVectorEncoding, double>> vecPop;
     for (size_t i = 0; i < populationSize; i++)
     {
-        vecPop.push_back(std::make_pair(initVec.getRandomSolution(), 1.0));
+        PopulationMember<IntegerVectorEncoding, double> member;
+        member.fitnessValue = 0.0;
+        member.modified = true;
+        member.populationEncoding = initVec.getRandomSolution();
+        vecPop.push_back(member);
     }
 
-    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<IntegerVectorEncoding, double>>> analyzer(&graph, &vecPop, 4);
+    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<PopulationMember<IntegerVectorEncoding, double>>> analyzer(&graph, &vecPop, 4);
     analyzer.evaluatePopulation();
     FitnessAnalyzer singleAnalyzer;
     for (auto& e : vecPop)
     {
-        CPPUNIT_ASSERT(singleAnalyzer.analyze(&e.first, &graph) == e.second);
+        CPPUNIT_ASSERT(singleAnalyzer.analyze(&e.populationEncoding, &graph) == e.fitnessValue);
     }
 }

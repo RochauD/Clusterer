@@ -1,14 +1,14 @@
 /**
- * @file CombinedMutation.hpp
- * @brief mutation interface implementation
- */
+* @file CombinedMutation.hpp
+* @brief A file which implements a combined mutation.
+*/
 #ifndef CLUSTERER_BACKEND_COMBINED_MUTATION_HPP
 #define CLUSTERER_BACKEND_COMBINED_MUTATION_HPP
 
 // standard headers
 #include <stdint.h>
 #include <random>
-
+// external headers
 
 // internal headers
 #include "ClusterEncoding.hpp"
@@ -32,19 +32,23 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class CombinedMutation
+* @brief CombinedMutator is a class that uses a several mutation functions to mutate a solution.
+*/
 class CombinedMutation: public MutationEngine
 {
     public:
         /**
-        * @brief empty constructor
+        * @brief Constructor which creates a combined mutation object.
+        * @param rand_gen A pointer to a random number generator.
         */
-        CombinedMutation(std::mt19937 *rand_gen);
+        CombinedMutation(std::mt19937* rand_gen);
 
         /**
-         * @brief mutate a clustering solution
-         * @param cluster the clustering solution to mutate
+         * @brief Mutate a clustering solution by picking one of the 3 mutate functions to execute.
+         * @param clusterSol The clustering solution to mutate.
          */
-        // picks one of the 3 mutate functions to execute
         void mutate(ClusterEncoding& clusterSol);
 
         /**
@@ -53,11 +57,29 @@ class CombinedMutation: public MutationEngine
         ~CombinedMutation();
 
     private:
-        std::mt19937 *gen;
-        ExplorationJoin join;
-        ExplorationMutation mut;
-        ExplorationSplit split;
+        /**
+        * @var gen
+        * @brief A pointer to random number engine.
+        */
+        std::mt19937* gen;
 
+        /**
+        * @var join
+        * @brief The ExplorationJoin function.
+        */
+        ExplorationJoin join;
+
+        /**
+        * @var mut
+        * @brief The ExplorationMutation function.
+        */
+        ExplorationMutation mut;
+
+        /**
+        * @var split
+        * @brief The ExplorationSplit function.
+        */
+        ExplorationSplit split;
 };
 
 }

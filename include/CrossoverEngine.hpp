@@ -34,6 +34,9 @@ namespace backend
 class CrossoverEngine
 {
     public:
+        /**
+        * @brief standard constructor
+        */
         CrossoverEngine() {}
 
         /**

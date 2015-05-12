@@ -1,7 +1,7 @@
 /**
- * @file IntegerVectorEncoding.hpp
- * @brief encoder interface implementation
- */
+* @file IntegerVectorEncoding.hpp
+* @brief encoder interface implementation
+*/
 #ifndef CLUSTERER_BACKEND_INTEGER_VECTOR_ENCODING_HPP
 #define CLUSTERER_BACKEND_INTEGER_VECTOR_ENCODING_HPP
 
@@ -30,6 +30,10 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class IntegerVectorEncoding
+* @brief The class IntegerVectorEncoding encodes a solution.
+*/
 class IntegerVectorEncoding : public ClusterEncoding
 {
     public:
@@ -91,8 +95,15 @@ class IntegerVectorEncoding : public ClusterEncoding
          * @brief get the current encoding
          * @return the current encoding of a solution
          */
-        ClusterEncoding::Encoding getEncoding();
-        
+        ClusterEncoding::Encoding getEncoding() const;
+
+        /**
+        * @brief set the current encoding
+        * @param encoding The current encoding of a solution
+        * @return void
+        */
+        void setEncoding(const ClusterEncoding::Encoding& encoding);
+
         /**
          * @brief get the size of the current encoding
          * @return the number of vertices

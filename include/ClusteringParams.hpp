@@ -6,7 +6,7 @@
 #define CLUSTERER_BACKEND_CLUSTERING_PARAMS_HPP
 
 // standard headers
-#include <cstdint>
+#include <stdint.h>
 // external headers
 
 // internal headers
@@ -35,10 +35,30 @@ namespace backend
 */
 struct ClusteringParams
 {
-
+    /**
+    * @var uniquePopulationSelection
+    * @brief A boolean flag that determines whether or not we keep a completly unqiue population or if we allow duplicate entries.
+    * If set to true we keep a unique population and if set to false we allow non unique entires.
+    */
     bool uniquePopulationSelection;
+
+    /**
+    * @var maxMinDensityClusterProbability
+    * @brief The max min density probabilioty used in the refinement phase.
+    */
     double maxMinDensityClusterProbability;
+
+    /**
+    * @var iterationUntilMissingImprovementCausesInterruption
+    * @brief The iteration count after which a missing improvement causes an Interruption in the algorithm.
+    */
     uint64_t iterationUntilMissingImprovementCausesInterruption;
+
+    /**
+    * @var enqueueFrequency
+    * @brief The enqueue frequency used during the algorithm. This determines after how many iterations we enqueue
+    * the current best solution in our output queue.
+    */
     uint64_t enqueueFrequency;
 
     /**
@@ -133,6 +153,21 @@ struct ClusteringParams
     uint64_t phaseSwitchIterationValue;
 
     /**
+    * @var threadCount
+    * @brief Number of threads used in the algorithm computation.
+    * @details The member variable threadCount specifies the number of
+    * threads used in the computation of the clustering solution.
+    */
+    uint32_t threadCount;
+
+    /**
+    * @var fitnessFunction
+    * @brief Selects the paramater for optimization.
+    * @details If it's 0 it's fitness, 1 it's MQ, 2 Performance.
+    */
+    uint32_t fitnessFunction;
+
+    /**
     * @var predictedClusterCount
     * @brief Predicted number of clusters in the solution.
     * @details The member variable predictedClusterCount defines the number
@@ -141,12 +176,19 @@ struct ClusteringParams
     uint64_t predictedClusterCount;
 
     /**
-    * @var threadCount
-    * @brief Number of threads used in the algorithm computation.
-    * @details The member variable threadCount specifies the number of
-    * threads used in the computation of the clustering solution.
+    * @var autoSavePopulationFrequency
+    * @brief The frequency after which we auto save our population to a file.
     */
-    uint32_t threadCount;
+    uint64_t autoSavePopulationFrequency;
+
+    /**
+    * @var clusterGenerationFunction
+    * @brief The function used to generate a cluster.
+    * @details If it's 0 it is assign a new cluster id from 0 to predictedClusterCount with equal probability
+    * for each cluster. If it is set to 1 it is generating a cluster by creating predictedClusterCount number of 
+    * clusters where each cluster has nearly the same amount of members.
+    */
+    uint32_t clusterGenerationFunction;
 
 };
 

@@ -29,29 +29,36 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class ExplorationJoin
+* @brief The ExplorationJoin is a class that implements a joining mutation.
+*/
 class ExplorationJoin: public MutationEngine
 {
     public:
         /**
-        * @brief empty constructor
+        * @brief Constructor
+        * @param rand_gen The random engine.
         */
         ExplorationJoin(std::mt19937* rand_gen);
 
         /**
-         * @brief mutate a clustering solution
-         * @param cluster the clustering solution to mutate
-         */
-        // joins 2 clusters into 1 cluster
+        * @brief Mutates a clustering solution by joining two clusters into one cluster.
+        * @param clusterSol The clustering solution to mutate.
+        */
         void mutate(ClusterEncoding& clusterSol);
 
         /**
          * @brief standard destructor
          */
-        virtual ~ExplorationJoin();
+        ~ExplorationJoin();
 
     private:
+        /**
+        * @var gen
+        * @brief A pointer to random number engine.
+        */
         std::mt19937* gen;
-
 };
 
 }

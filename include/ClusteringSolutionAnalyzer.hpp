@@ -1,6 +1,6 @@
 /**
 * @file ClusteringSolutionAnalyzer.hpp
-* @brief fitness function interface
+* @brief This files containes the class ClusteringSolutionAnalyzer which is an interface for fitness functions.
 */
 #ifndef CLUSTERER_BACKEND_CLUSTERING_SOLUTION_ANALYZER_HPP
 #define CLUSTERER_BACKEND_CLUSTERING_SOLUTION_ANALYZER_HPP
@@ -30,8 +30,8 @@ namespace backend
 
 /**
 * @class ClusteringSolutionAnalyzer
-* @brief interface for objects which can assess the quality of a particular
-* clustering scheme
+* @brief Interface for objects which can assess the quality of a particular
+* clustering scheme.
 */
 class ClusteringSolutionAnalyzer
 {

@@ -13,6 +13,8 @@
 // external headers
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_traits.hpp>
+#include <boost/graph/dijkstra_shortest_paths.hpp>
+#include <boost/property_map/property_map.hpp>
 // internal headers
 #include "AbstractGraph.hpp"
 
@@ -149,6 +151,15 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         std::vector<std::pair<std::pair<VertexId, VertexId>, double>> getEdgesAndWeights() const;
 
         /**
+        * @brief getter for the edges in the graph and their respective weights
+        * @return vector of pairs <pair<VertexId,VertexId>, double>
+        * pair of node indeces and their respective weight
+        * the difference being that we created a fully connected graph using
+        * Dijkstra's shortest paths from boost
+        */
+        std::vector<std::pair<std::pair<VertexId, VertexId>, double>> getFullyConnected() const;
+
+        /**
         * @brief getter for the neighbor Vertexes of a given Vertex object
         * @return a vector of VertexId
         */
@@ -161,7 +172,6 @@ class Graph : public virtual clusterer::backend::AbstractGraph
         * @return true if it does, false if it doesn't figures...
         */
         bool existsEdge(const Vertex&, const Vertex&) const;
-
 
     protected:
         /**
