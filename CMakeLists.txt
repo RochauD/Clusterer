@@ -427,6 +427,8 @@ set(CLUSTER_TEST_FILENAMES
         Selector
         ClusterRefiner
         GraphCoordinateTransformer
+        PopulationExporter
+        PopulationImporter
     )
 
 #############
