@@ -173,7 +173,7 @@ FIND_PATH(QWT_INCLUDE_DIR NAMES qwt.h PATHS
   PATH_SUFFIXES qwt-qt4 qwt
   )
 
-FIND_LIBRARY(QWT_LIBRARY NAMES qwt qwt5 qwt-qt4 qwt5-qt4 PATHS 
+FIND_LIBRARY(QWT_LIBRARY NAMES qwt qwtd qwt5 qwt-qt4 qwt5-qt4 PATHS 
   /usr/lib
   /usr/local/lib
   /usr/local/lib/qwt.framework/Versions/Current
@@ -514,18 +514,19 @@ set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEA
 ##############
 
 add_executable(Clusterer ${CLUSTER_SOURCES_FRONTEND})
-
 target_link_libraries(Clusterer ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
-
-target_link_libraries(Clusterer ${QWT_LIBRARIES})
 
 # link clusterer library
 if( WIN32 )
     target_link_libraries(Clusterer debug clusterer-static)
     target_link_libraries(Clusterer optimized clusterer-static)
+    string(REGEX REPLACE "\\.lib" "" QWT_LIBRARIES_DEBUG ${QWT_LIBRARIES})
+    target_link_libraries(Clusterer debug ${QWT_LIBRARIES_DEBUG}d.lib)
+    target_link_libraries(Clusterer optimized ${QWT_LIBRARIES}) 
 else()
     target_link_libraries(Clusterer clusterer-static)
     target_link_libraries(Clusterer pthread)
+    target_link_libraries(Clusterer ${QWT_LIBRARIES})
 endif()
 # link boost library
 target_link_libraries(Clusterer ${Boost_LIBRARIES})
