@@ -36,6 +36,7 @@ Boost:
 		brew install boost
 QT:
 	Linux:
+		sudo apt-get install qt4-default libqt4-dev
 	Windows:
 	- VS2012+:
 		Download QT 4.8.6 source version if you want to use Visual Studio with a version newer than VS2010
@@ -48,6 +49,7 @@ QT:
 	Mac:
 QWT:
 	Linux:
+		sudo apt-get install libqwt-dev
 	Windows:
 	Mac:
 Eigen:
@@ -56,6 +58,7 @@ Eigen:
 		Create a new enviroment variable called EIGEN_ROOT and set its value to that path
 Armadillo:
 	Linux:
+		sudo apt-get install libarmadillo-dev
 	Mac:
 
 Enviroment Variables:
@@ -79,3 +82,7 @@ cmake ..
 cmake --build .
 ctest -C <config> -VV 
 <config> = Debug or Release etc.
+
+Build doxygen
+Run from root:
+doxygen Doxyfile
