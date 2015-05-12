@@ -35,6 +35,10 @@ namespace backend
 * @class PopulationCrossoverEngine
 * @brief PopulationCrossoverEngine is a class that mutates each member of a population
 * with a certain probability.
+* @tparam EncodingFitnessDataStructure The data structure used for storing encoding and fitness of apopulation.
+* @tparam Encoding The data structure used as an encoding
+* @param CrossoverFunction The class responsible for crossover
+* @param SelectorFunction The class responsible for selecting members to crossover
 */
 template<class EncodingFitnessDataStructure, class Encoding, class CrossoverFunction, class SelectorFunction>
 class PopulationCrossoverEngine
@@ -42,6 +46,10 @@ class PopulationCrossoverEngine
     public:
         /**
         * @brief standard constructor
+        * @param graph The graph the algorithm is working on
+        * @param populationPtr A pointer to a population
+        * @param iterationCount The number of crossovers to perform
+        * @param threadCount The number of threads to use for crossover
         */
         PopulationCrossoverEngine(const AbstractGraph* graph, EncodingFitnessDataStructure* populationPtr, size_t iterationCount, size_t threadCount = 1);
 

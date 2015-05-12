@@ -66,6 +66,11 @@ namespace clusterer
 namespace frontend
 {
 
+/**
+ * @class GUINodePlotter.hpp
+ * @brief class to visually plot the result of implementation of a transformer to obtain
+ *  coordinates for a graph's nodes using the edge's weights
+ */
 class GUINodePlotter: public QWidget
 {
         Q_OBJECT
@@ -74,12 +79,16 @@ class GUINodePlotter: public QWidget
         /**
         * @brief constructor which takes the graph and gets the normalized coordinates from the MDS
         * implemented by GraphCoordinateTransformer class.
-        * @param parent widget if applicable
-        * @param width value
-        * @param height value
+        * @param parent A parent widget if applicable
+        * @param width The width value
+        * @param height The height value
         */
         GUINodePlotter(QWidget* parent, uint64_t width = 500, uint64_t height = 500);
 
+        /**
+         * @brief Itializes the plot with a graph
+         * @detail Call when the backend has already loaded a graph
+         */
         void initGraph();
 
         /**

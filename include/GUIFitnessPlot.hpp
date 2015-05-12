@@ -51,6 +51,10 @@ namespace clusterer
 namespace frontend
 {
 
+/**
+ * @class GUIFitnessPlot.hpp
+ * @brief A widget to plot the change in fitness over time
+ */
 class GUIFitnessPlot: public QWidget
 {
         Q_OBJECT
@@ -68,6 +72,10 @@ class GUIFitnessPlot: public QWidget
         */
         ~GUIFitnessPlot();
 
+        /**
+         * @brief Update the plot with new fitness values
+         * @param vector A vector of <x, y> data points
+         */
         void replotFitness(std::vector<std::pair<uint64_t, double>> vector);
     private:
         /* myPlot is put inside plotWindow*/

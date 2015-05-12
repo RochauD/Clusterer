@@ -41,6 +41,9 @@ class RefinementMutationEngine: public MutationEngine
         virtual ClusterEncoding::Encoding mutate(const ClusterEncoding::Encoding& cluster,
                 double probability);
 
+        /**
+         * @brief Standart destructor
+         */
         virtual ~RefinementMutationEngine();
 };
 

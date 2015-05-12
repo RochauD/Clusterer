@@ -35,7 +35,8 @@ namespace backend
 {
 
 /*
-* @class GraphExporter
+* @class PopulationExporter
+* @brief Exports population to file
 */
 class PopulationExporter
 {
@@ -52,7 +53,7 @@ class PopulationExporter
 
         /**
         * @brief default constructor
-        * @return bool value. true is writing was successful
+        * @return Whether or not the write was successful
         * @param population pointer to the population
         * @param fullPathName the full filename
         */
