@@ -112,6 +112,10 @@ void GUIFitnessPlot::replotFitness(std::vector<std::pair<uint64_t, double>> vect
     myPlot->show();
 }
 
+void GUIFitnessPlot::clearFitness(){
+    //@todo
+}
+
 void GUIFitnessPlot::setPlotBackground()
 {
 
@@ -145,7 +149,7 @@ GUIFitnessPlot::~GUIFitnessPlot()
 {
     //empty dtor
     delete timer;
-    delete samples;
+    delete [] samples;
     delete fitness_data;
     delete zoom;
     delete curve;

@@ -82,6 +82,8 @@ class GUINodePlotter: public QWidget
 
         void initGraph();
 
+        void clearGraph();
+
         /**
         * @brief empty destructor
         */

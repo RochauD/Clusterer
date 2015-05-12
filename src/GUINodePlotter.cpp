@@ -55,9 +55,6 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
     QVBoxLayout *layout_t = new QVBoxLayout();
     layout_t->addWidget(myPlot);
 
-    // myPlot->replot();
-    // myPlot->show();
-
     plotWindow->setLayout(layout_t);
     plotWindow->setWindowModality(Qt::ApplicationModal);
     plotWindow->show();
@@ -267,12 +264,16 @@ void GUINodePlotter::plotContent(){
 
 }
 
+void GUINodePlotter::clearGraph(){
+    //@todo
+}
+
 GUINodePlotter::~GUINodePlotter(){
     //empty dtor
     delete timer;
-    delete samples;
-    delete colors;
-    delete symbols;
+    delete [] samples;
+    delete [] colors;
+    delete [] symbols;
     delete mydata;
     delete zoom;
     delete curve;

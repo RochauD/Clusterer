@@ -70,6 +70,8 @@ class GUIFitnessPlot: public QWidget
 
         void replotFitness(std::vector<std::pair<uint64_t, double>> vector);
 
+        void clearFitness();
+
     public slots:
 
         void genRandomValues();
