@@ -198,6 +198,17 @@ std::map<backend::VertexId,std::pair<double,double>>
             (elem.second.second - min_y)*(height-2*offset)/(max_y - min_y) + offset;
     }
 
+    std::mt19937 gen;
+    std::uniform_int_distribution<int> dist(-25,25);
+    for (auto& elem:map_coord) {
+        for(auto& elem2:map_coord){
+            if(elem.second.first == elem2.second.first && elem.second.second == elem2.second.second){
+                elem.second.first = elem.second.first + dist(gen);
+                elem.second.second = elem.second.second + dist(gen);
+            }
+        }
+    }
+
     return map_coord;
 }
 
