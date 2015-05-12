@@ -98,7 +98,7 @@ void GUINodePlotter::setSymbols(uint64_t no_vertices)
 
     for (unsigned int i = 0; i < no_vertices; i++)
     {
-        symbols->push_back(new QwtSymbol(QwtSymbol::Ellipse, QBrush(colors->at(i)), QPen(colors->at(i)), QSize(4,4)));
+        symbols->push_back(new QwtSymbol(QwtSymbol::Ellipse, QBrush(colors->at(i)), QPen(colors->at(i)), QSize(8,8)));
     }
 }
 
@@ -177,7 +177,7 @@ void GUINodePlotter::plotContent()
     mydata = new QwtPointSeriesData;
     samples = new QVector<QPointF>;
 
-    QwtSymbol* sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(6,6));
+    QwtSymbol* sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(8,8));
     curve->setSymbol(sym);
 
 
@@ -188,7 +188,7 @@ void GUINodePlotter::plotContent()
     {
 
         samples->push_back(QPointF((*it).second.first,(*it).second.second));
-        QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(6, 6));
+        QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(8, 8));
         QwtPlotMarker* mark = new QwtPlotMarker();
         mark->setSymbol(symbol);
         mark->setValue(QPointF((*it).second.first,(*it).second.second));
