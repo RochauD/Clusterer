@@ -7,49 +7,18 @@
 #include <iostream>
 #include "../include/GUINodePlotter.hpp"
 
-#define my_delete(x) {delete x, x = NULL;}
-
 namespace clusterer
 {
 namespace frontend
 {
 
-void GUINodePlotter::printEncoding(const backend::ClusterEncoding& clusterSol)
-{
-    uint64_t no_vertices = clusterSol.size();
-    std::cout<<"Encoding: \n";
-    for (unsigned int i = 0; i < no_vertices; i++)
-    {
-        std::cout<<i<<" ";
-    }
-    std::cout<<"\n";
-    for (unsigned int i = 0; i < no_vertices; i++)
-    {
-        std::cout<<clusterSol.getClusterOfVertex(i)<<" ";
-    }
-    std::cout<<"\n";
-}
-
-void GUINodePlotter::printMap(const std::map<backend::VertexId,std::pair<double,double>>& mapy)
-{
-    std::cout<<"\n";
-    for (auto& billy : mapy)
-    {
-        std::cout<<"Vertex "<<billy.first;
-        std::cout<<": ("<<billy.second.first<<" , "<<billy.second.second<<")\n";
-    }
-}
-
 GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
     : QWidget(parent),width(Width),height(Height)
 {
-
     /* resizing window */
     this->resize(Width,Height);
     this->adjustSize();
     /*creating the necessary widgets*/
-    // show_edges = new QPushButton(tr("&Show edges"));
-    // closeViz = new QPushButton(tr("&Close"));
     plotWindow = new QWidget();
 
     /* setting the default background for the plot */
@@ -58,10 +27,6 @@ GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
     /* add myPlot to plotWindow */
     QVBoxLayout* layout_t = new QVBoxLayout();
     layout_t->addWidget(myPlot);
-
-    // myPlot->replot();
-    // myPlot->show();
-
     plotWindow->setLayout(layout_t);
     plotWindow->setWindowModality(Qt::ApplicationModal);
     plotWindow->show();
@@ -73,21 +38,9 @@ GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
 
     /*setting the layout of the main window*/
     QHBoxLayout* layout1 = new QHBoxLayout;
-    //layout1->addWidget(show_edges);
-    // layout1->addWidget(closeViz);
     QHBoxLayout* layout2 = new QHBoxLayout;
     layout2->addLayout(layout1);
     layout2->addWidget(plotWindow);
-
-    /*add connects*/
-    // connect(closeViz,SIGNAL(clicked()),this,SLOT(close()));
-    // connect(show_edges,SIGNAL(clicked()),this,SLOT(draw_edges()));
-
-    /*setting central widget*/
-    //central_vis_window = new QWidget();
-    //central_vis_window->setLayout(layout2);
-    //this->setCentralWidget(central_vis_window);
-    //this->addWidget(central_vis_window);
     this->setLayout(layout2);
 
     /* generate symbols for the clusters */
@@ -99,41 +52,21 @@ GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
     connect(this,SIGNAL(sendSol(backend::ClusterEncoding&)),
             this,SLOT(replotSolution(backend::ClusterEncoding&)),Qt::DirectConnection);
     connect(this,SIGNAL(drawEdges()),this,SLOT(draw_edges()));
-
-    /*
-    solution = backend::IntegerVectorEncoding(&graph);
-    solution.addToCluster(0,0);
-    solution.addToCluster(1,1);
-    solution.addToCluster(2,2);
-    solution.addToCluster(3,3);
-    solution.addToCluster(4,4);
-    solution.addToCluster(5,5);*/
-
-    //counter = 0;
-    //timer = new QTimer(this);
-    //timer->start(1000);
-    //connect(timer,SIGNAL(timeout()),this,SLOT(genSol2()));
 }
 
 void GUINodePlotter::initGraph()
 {
-    /* testing input information */
-    //std::cout<<"graph edges GUINodePlotter: "<<clb::GlobalBackendController::instance()->getGraph().getNoEdges()<<"\n";
     GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
     mapy = gt.getNormalizedMap(this->width,this->height);
-    //printMap(mapy);
-
     plotContent();
 
     myPlot->replot();
     myPlot->show();
-
     setSymbols(clb::GlobalBackendController::instance()->getGraph().getNoVertices());
 }
 
 void GUINodePlotter::setSymbols(uint64_t no_vertices)
 {
-
     symbols = new QVector<QwtSymbol*>;
     colors = new QVector<QColor>;
 
@@ -180,18 +113,6 @@ void GUINodePlotter::draw_edges()
         new_samples->push_back(QPointF(mapy[e.first.first].first,mapy[e.first.first].second));
         new_samples->push_back(QPointF(mapy[e.first.second].first,mapy[e.first.second].second));
 
-        // std::cout<<"edge "<<i<<": ( "<<mapy[e.first.first].first<<", "<<mapy[e.first.first].second<<" )";
-        // std::cout<<" --> "<<"( "<<mapy[e.first.second].first<<", "<<mapy[e.first.second].second<<")\n";
-
-        // maybe take a look later for changing line color using symbols
-        /*if(*(markers.at(e.first.first)->symbol()) == *(markers.at(e.first.second)->symbol()))
-        {
-            std::cout<<"checking symbol\n";
-            new_curve->setSymbol(markers.at(e.first.first)->symbol());
-        } else {
-            new_curve->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(2,2)));
-        }*/
-
         new_data->setSamples(*new_samples);
         new_curve->setData(new_data);
         new_curve->attach(myPlot);
@@ -204,7 +125,6 @@ void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol)
 {
     std::unique_lock<std::mutex> lck(this->lock);
     uint64_t no_vertices = clusterSol.size();
-    printEncoding(clusterSol);
     for (unsigned int i = 0; i < no_vertices; i++)
     {
         uint64_t cluster_id = clusterSol.getClusterOfVertex(i);
@@ -219,30 +139,20 @@ void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol)
     }
     myPlot->replot();
     myPlot->show();
-    std::cout<<"---> replotSolution end <---\n";
 }
 
 
 void GUINodePlotter::setPlotBackground(const uint64_t& width, const uint64_t& height)
 {
-
     myPlot = new QwtPlot(plotWindow);
-    // myPlot->setTitle(QwtText("Graph Visualization"));
 
     QFont serifFont("Times", 12, QFont::Bold);
-
-    /* legend */
-    //QwtLegend *legend = new QwtLegend;
-    //legend->setFrameStyle(QFrame::Box|QFrame::Sunken);
-    //myPlot->insertLegend(legend, QwtPlot::BottomLegend);
 
     /* axes manipulation*/
     myPlot->enableAxis(QwtPlot::xBottom);
     myPlot->enableAxis(QwtPlot::yLeft);
     myPlot->setAxisAutoScale(QwtPlot::xBottom,true);
     myPlot->setAxisAutoScale(QwtPlot::yLeft,true);
-    //myPlot->setAxisScale(QwtPlot::xBottom,0,width);
-    //myPlot->setAxisScale(QwtPlot::yLeft,0,height);
 
     QwtText titleX("X axis");
     titleX.setFont(serifFont);
@@ -258,19 +168,19 @@ void GUINodePlotter::plotContent()
     /* include the data into the graph */
     curve = new QwtPlotCurve("Cluster Visualization");
     curve->setStyle(QwtPlotCurve::Dots);
-    //curve->setRenderHint(QwtPlotItem::RenderAntialiased, true);
     mydata = new QwtPointSeriesData;
     samples = new QVector<QPointF>;
 
     QwtSymbol* sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(4,4));
     curve->setSymbol(sym);
 
+    QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(4, 4));
     std::map<backend::VertexId,std::pair<double,double>>::iterator it;
     for (it = mapy.begin(); it != mapy.end(); it++)
     {
         samples->push_back(QPointF((*it).second.first,(*it).second.second));
         QwtPlotMarker* mark = new QwtPlotMarker();
-        mark->setSymbol(sym);
+        mark->setSymbol(symbol);
         mark->setValue(QPointF((*it).second.first,(*it).second.second));
         markers.append(mark);
     }
@@ -285,36 +195,12 @@ void GUINodePlotter::plotContent()
 
 GUINodePlotter::~GUINodePlotter()
 {
-
+    if (gen != nullptr)
+    {
+        delete gen;
+    }
+    this->markers.clear();
 }
-
-
-/*void GUINodePlotter::genSol2(){
-    if(counter > 5) timer->stop();
-    counter++;
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::mt19937 gen(seed);
-    std::uniform_int_distribution<int> dist(0,solution.size()-1);
-    solution.addToCluster(dist(gen),dist(gen));
-    solution.addToCluster(dist(gen),dist(gen));
-    solution.addToCluster(dist(gen),dist(gen));
-    solution.addToCluster(dist(gen),dist(gen));
-    emit sendSol(solution);
-    emit drawEdges();
-}*/
-/*
-void GUINodePlotter::genSolution(backend::ClusterEncoding& clusterSol){
-    if(counter > 5) timer->stop();
-    counter++;
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::mt19937 gen(seed);
-    std::uniform_int_distribution<int> dist(0,clusterSol.size()-1);
-    clusterSol.addToCluster(dist(gen),dist(gen));
-    clusterSol.addToCluster(dist(gen),dist(gen));
-    clusterSol.addToCluster(dist(gen),dist(gen));
-    clusterSol.addToCluster(dist(gen),dist(gen));
-    emit sendSol(clusterSol);
-}*/
 
 }
 }

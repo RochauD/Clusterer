@@ -109,10 +109,6 @@ class GUINodePlotter: public QWidget
         */
         void draw_edges();
 
-        /* uncomment next 2 for auto generating solutions */
-        //void genSolution(backend::ClusterEncoding& clusterSol);
-        //void genSol2();
-
     private slots:
 
     signals:
@@ -155,15 +151,12 @@ class GUINodePlotter: public QWidget
         * @brief storing the supplied map for local use
         */
         std::map<backend::VertexId,std::pair<double,double>> mapy;
-        /**
-        * @brief just for testing
-        */
-        void printMap(const std::map<backend::VertexId,std::pair<double,double>>&);
-        void printEncoding(const backend::ClusterEncoding& clusterSol);
+
         /**
         * @brief setting the background of the plot
         */
         void setPlotBackground(const uint64_t& width, const uint64_t& height);
+
         /**
         * @brief set symbols for plotting the solution's clusters
         */
@@ -175,12 +168,9 @@ class GUINodePlotter: public QWidget
         */
         void plotContent();
 
-        // backend::IntegerVectorEncoding solution;
-        // backend::ClusteringService* _service;
-
 };
 
 }
 }
 
-#endif // GUINODEPLOTTER_HPP_INCLUDED
+#endif

@@ -7,8 +7,6 @@
 // uncomment if needed #include <iostream>
 #include "../include/GUIFitnessPlot.hpp"
 
-#define my_delete(x) {delete x, x = NULL;}
-
 namespace clusterer
 {
 namespace frontend
