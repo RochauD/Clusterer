@@ -34,8 +34,9 @@ namespace clusterer
 namespace backend
 {
 
-/*
-* @class GraphExporter
+/**
+* @class PopulationImporter
+* @brief Imports a population from a file
 */
 class PopulationImporter
 {
@@ -54,7 +55,7 @@ class PopulationImporter
         * @brief Loads a population from the given file
         * @return bool value. true if loading was successful
         * @param fullPathName the full filename
-        * @param the underlying graph
+        * @param graph the underlying graph
         * @param population pointer to a population
         */
         bool loadPopulationFromFile(std::string fullPathName, AbstractGraph* graph, std::vector<PopulationMember<IntegerVectorEncoding, double>>* population);

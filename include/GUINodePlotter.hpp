@@ -66,6 +66,11 @@ namespace clusterer
 namespace frontend
 {
 
+/**
+ * @class GUINodePlotter
+ * @brief class to visually plot the result of implementation of a transformer to obtain
+ *  coordinates for a graph's nodes using the edge's weights
+ */
 class GUINodePlotter: public QWidget
 {
         Q_OBJECT
@@ -74,12 +79,16 @@ class GUINodePlotter: public QWidget
         /**
         * @brief constructor which takes the graph and gets the normalized coordinates from the MDS
         * implemented by GraphCoordinateTransformer class.
-        * @param parent widget if applicable
-        * @param width value
-        * @param height value
+        * @param parent A parent widget if applicable
+        * @param width The width value
+        * @param height The height value
         */
         GUINodePlotter(QWidget* parent, uint64_t width = 500, uint64_t height = 500);
 
+        /**
+         * @brief Itializes the plot with a graph
+         * @detail Call when the backend has already loaded a graph
+         */
         void initGraph();
 
 
@@ -103,10 +112,6 @@ class GUINodePlotter: public QWidget
         * @param graph object
         */
         void draw_edges();
-
-        /* uncomment next 2 for auto generating solutions */
-        //void genSolution(backend::ClusterEncoding& clusterSol);
-        //void genSol2();
 
     private slots:
 
@@ -151,15 +156,12 @@ class GUINodePlotter: public QWidget
         * @brief storing the supplied map for local use
         */
         std::map<backend::VertexId,std::pair<double,double>> mapy;
-        /**
-        * @brief just for testing
-        */
-        void printMap(const std::map<backend::VertexId,std::pair<double,double>>&);
-        void printEncoding(const backend::ClusterEncoding& clusterSol);
+
         /**
         * @brief setting the background of the plot
         */
         void setPlotBackground(const uint64_t& width, const uint64_t& height);
+
         /**
         * @brief set symbols for plotting the solution's clusters
         */
@@ -171,12 +173,9 @@ class GUINodePlotter: public QWidget
         */
         void plotContent();
 
-        // backend::IntegerVectorEncoding solution;
-        // backend::ClusteringService* _service;
-
 };
 
 }
 }
 
-#endif // GUINODEPLOTTER_HPP_INCLUDED
+#endif

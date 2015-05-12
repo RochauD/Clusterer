@@ -116,7 +116,7 @@ GraphCoordinateTransformer::GraphCoordinateTransformer(const backend::AbstractGr
         // D.print("D = ");
         // std::cout<<"no vertices: "<<no_vertices<<"\n";
         // populate the matrix D
-        for(auto& e : graph.getEdgesAndWeights()){
+        for(auto& e : graph.getFullyConnected()){
             D(e.first.first,e.first.second) = e.second;
             //std::cout<<"("<<e.first.first<<","<<e.first.second<<")";
             //std::cout<<"weight: "<<e.second<<"\n";

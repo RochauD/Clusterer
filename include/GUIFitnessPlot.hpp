@@ -51,6 +51,10 @@ namespace clusterer
 namespace frontend
 {
 
+/**
+ * @class GUIFitnessPlot
+ * @brief A widget to plot the change in fitness over time
+ */
 class GUIFitnessPlot: public QWidget
 {
         Q_OBJECT
@@ -68,29 +72,16 @@ class GUIFitnessPlot: public QWidget
         */
         ~GUIFitnessPlot();
 
+        /**
+         * @brief Update the plot with new fitness values
+         * @param vector A vector of <x, y> data points
+         */
         void replotFitness(std::vector<std::pair<uint64_t, double>> vector);
+
 
         void clearFitness();
 
-    public slots:
-
-        void genRandomValues();
-        void runRandom();
-
-
-    private slots:
-
-    signals:
-        void sendFitnessValue(double);
-
     private:
-        /* general purpose buttons */
-        // QPushButton *closeFit;
-        // QPushButton *run_random;
-
-        /* central widget to rule them all */
-        //QWidget *central_vis_window;
-        int counter;
         /* myPlot is put inside plotWindow*/
         QWidget* plotWindow;
         QwtPlot* myPlot;
@@ -99,14 +90,6 @@ class GUIFitnessPlot: public QWidget
         QwtPlotZoomer* zoom;
         QwtPointSeriesData* fitness_data;
         QVector<QPointF>* samples;
-
-        QTimer* timer;
-        std::mutex lockFit;
-
-        /* random generator to generate random symbols for the clusters
-        when GUIFitnessPlot object is created */
-        std::mt19937* gen;
-        std::uniform_real_distribution<double> dist;
 
         /**
         * @brief setting the background of the plot
@@ -123,4 +106,4 @@ class GUIFitnessPlot: public QWidget
 }
 }
 
-#endif // GUIFITNESSPLOT_HPP_INCLUDED
+#endif

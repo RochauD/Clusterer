@@ -11,6 +11,9 @@
 #include "../include/SettingsDialog.h"
 #include "../include/PopulationMember.hpp"
 #include "../include/IntegerVectorEncoding.hpp"
+#include "../include/FrontendConfig.h"
+#include "../include/GlobalBackendController.hpp"
+#include "../include/GlobalFileLogger.hpp"
 
 // External headers
 #include <QMessageBox>
@@ -18,8 +21,6 @@
 
 // Generated headers
 #include "ui_MainWindow.h"
-#include "../include/GlobalBackendController.hpp"
-#include "../include/GlobalFileLogger.hpp"
 
 #define MSEC_60_HZ 16
 
@@ -102,13 +103,16 @@ void MainWindow::updateFrontend()
         }
         ui->fitnessPlotter->replotFitness(fitnessVec);
 
-        if (exitFlag == true && vector.size() > 1)
+        if (FrontendConfig::getVisualizeGraph())
         {
-            ui->nodePlotter->replotSolution(vector[vector.size() - 2].first.populationEncoding);
-        }
-        else
-        {
-            ui->nodePlotter->replotSolution(vector[vector.size() - 1].first.populationEncoding);
+            if (exitFlag == true && vector.size() > 1)
+            {
+                ui->nodePlotter->replotSolution(vector[vector.size() - 2].first.populationEncoding);
+            }
+            else
+            {
+                ui->nodePlotter->replotSolution(vector[vector.size() - 1].first.populationEncoding);
+            }
         }
     }
 }
@@ -256,8 +260,11 @@ void MainWindow::on_actionZachary_format_triggered()
         if (result == true)
         {
             showAlert("Load Graph Success", "Successfully loaded a vertex-pair-weight type graph.");
-            ui->nodePlotter->initGraph();
             ui->pushButton->setEnabled(true);
+            if (FrontendConfig::getVisualizeGraph())
+            {
+                ui->nodePlotter->initGraph();     
+            }
         }
         else
         {
@@ -280,8 +287,11 @@ void MainWindow::on_actionMovielens_format_triggered()
         if (result == true)
         {
             showAlert("Load Graph Success", "Successfully loaded a Movielens type graph.");
-            ui->nodePlotter->initGraph();
             ui->pushButton->setEnabled(true);
+            if (FrontendConfig::getVisualizeGraph())
+            {
+                ui->nodePlotter->initGraph();     
+            }
         }
         else
         {

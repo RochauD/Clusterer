@@ -33,6 +33,11 @@ namespace clusterer
 */
 namespace backend
 {
+
+/**
+ * @class GraphExporter
+ * @brief Export graph to files.
+ */
 class GraphExporter
 {
     public:

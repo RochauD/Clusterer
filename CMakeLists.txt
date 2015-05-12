@@ -173,7 +173,7 @@ FIND_PATH(QWT_INCLUDE_DIR NAMES qwt.h PATHS
   PATH_SUFFIXES qwt-qt4 qwt
   )
 
-FIND_LIBRARY(QWT_LIBRARY NAMES qwt qwt5 qwt-qt4 qwt5-qt4 PATHS 
+FIND_LIBRARY(QWT_LIBRARY NAMES qwt qwtd qwt5 qwt-qt4 qwt5-qt4 PATHS 
   /usr/lib
   /usr/local/lib
   /usr/local/lib/qwt.framework/Versions/Current
@@ -341,8 +341,6 @@ source_group("Backend\\Source Files" FILES ${CLUSTER_SOURCES_BACKEND_CPP})
 # frontend files
 # frontend source files
 set(CLUSTER_SOURCES_FRONTEND_CPP
-        ${CLUSTER_SOURCE_DIR}/GeneticGui.cpp
-        ${CLUSTER_SOURCE_DIR}/ClustererMenuBar.cpp
         ${CLUSTER_SOURCE_DIR}/MainWindow.cpp
         ${CLUSTER_SOURCE_DIR}/main.cpp
         ${CLUSTER_SOURCE_DIR}/SettingsDialog.cpp
@@ -352,9 +350,6 @@ set(CLUSTER_SOURCES_FRONTEND_CPP
     )
 # frontend header files
 set(CLUSTER_SOURCES_FRONTEND_H 
-        ${CLUSTER_INCLUDE_DIR}/GeneticGui.hpp
-        ${CLUSTER_INCLUDE_DIR}/ClustererMenuBar.hpp
-        ${CLUSTER_INCLUDE_DIR}/ClustererWindow.hpp
         ${CLUSTER_INCLUDE_DIR}/GUINodePlotter.hpp
         ${CLUSTER_INCLUDE_DIR}/GUIFitnessPlot.hpp
         ${CLUSTER_INCLUDE_DIR}/MainWindow.h
@@ -514,18 +509,19 @@ set_target_properties(clusterer-static PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_RELEA
 ##############
 
 add_executable(Clusterer ${CLUSTER_SOURCES_FRONTEND})
-
 target_link_libraries(Clusterer ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
-
-target_link_libraries(Clusterer ${QWT_LIBRARIES})
 
 # link clusterer library
 if( WIN32 )
     target_link_libraries(Clusterer debug clusterer-static)
     target_link_libraries(Clusterer optimized clusterer-static)
+    string(REGEX REPLACE "\\.lib" "" QWT_LIBRARIES_DEBUG ${QWT_LIBRARIES})
+    target_link_libraries(Clusterer debug ${QWT_LIBRARIES_DEBUG}d.lib)
+    target_link_libraries(Clusterer optimized ${QWT_LIBRARIES}) 
 else()
     target_link_libraries(Clusterer clusterer-static)
     target_link_libraries(Clusterer pthread)
+    target_link_libraries(Clusterer ${QWT_LIBRARIES})
 endif()
 # link boost library
 target_link_libraries(Clusterer ${Boost_LIBRARIES})

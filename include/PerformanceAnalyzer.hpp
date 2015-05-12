@@ -28,6 +28,10 @@ namespace clusterer
 namespace backend
 {
 
+/**
+ * @class PerformanceAnalyzer
+ * @brief Implementation of the Performance fitness function
+ */
 class PerformanceAnalyzer : public ClusteringSolutionAnalyzer
 {
     public:
@@ -41,6 +45,9 @@ class PerformanceAnalyzer : public ClusteringSolutionAnalyzer
          */
         double analyze(const ClusterEncoding* clusteringSolution, const AbstractGraph* graph);
 
+        /**
+         * @brief Standart destructor
+         */
         ~PerformanceAnalyzer();
     protected:
     private:
