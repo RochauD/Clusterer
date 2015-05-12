@@ -164,6 +164,7 @@ class MainWindow : public QMainWindow
         bool algorithmRunning;
         bool canBeCleared;
         bool stoppedViaStop;
+        bool paused;
 
 };
 

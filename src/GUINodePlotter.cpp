@@ -104,24 +104,22 @@ void GUINodePlotter::setSymbols(uint64_t no_vertices)
 
 void GUINodePlotter::draw_edges()
 {
-
     std::unique_lock<std::mutex> lck(this->lock);
-    QwtPlotCurve* new_curve;
     QwtPointSeriesData* new_data;
     QVector<QPointF>* new_samples;
     int i = 0;
     for (auto& e: clb::GlobalBackendController::instance()->getGraph().getEdgesAndWeights())
     {
-        new_curve = new QwtPlotCurve();
+        curves.append(new QwtPlotCurve());
         new_data = new QwtPointSeriesData();
         new_samples = new QVector<QPointF>;
-        new_curve->setStyle(QwtPlotCurve::Lines);
+        curves.back()->setStyle(QwtPlotCurve::Lines);
         new_samples->push_back(QPointF(mapy[e.first.first].first,mapy[e.first.first].second));
         new_samples->push_back(QPointF(mapy[e.first.second].first,mapy[e.first.second].second));
 
         new_data->setSamples(*new_samples);
-        new_curve->setData(new_data);
-        new_curve->attach(myPlot);
+        curves.back()->setData(new_data);
+        curves.back()->attach(myPlot);
         myPlot->replot();
         i++;
     }
@@ -179,7 +177,7 @@ void GUINodePlotter::plotContent()
     mydata = new QwtPointSeriesData;
     samples = new QVector<QPointF>;
 
-    QwtSymbol* sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(4,4));
+    QwtSymbol* sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(6,6));
     curve->setSymbol(sym);
 
 
@@ -190,9 +188,9 @@ void GUINodePlotter::plotContent()
     {
 
         samples->push_back(QPointF((*it).second.first,(*it).second.second));
-        QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(4, 4));
+        QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(6, 6));
         QwtPlotMarker* mark = new QwtPlotMarker();
-        mark->setSymbol(new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(4, 4)));
+        mark->setSymbol(symbol);
         mark->setValue(QPointF((*it).second.first,(*it).second.second));
         markers.append(mark);
         markers.back()->attach(myPlot);
@@ -216,6 +214,12 @@ void GUINodePlotter::clearGraph()
 
         mapy.clear();
         myPlot->replot();
+
+        for(auto& e : curves)
+        {
+            e->detach();
+        }
+        curves.clear();
     }
 
 }

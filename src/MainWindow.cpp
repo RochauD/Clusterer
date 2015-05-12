@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget* parent) :
     ui->pushButton->setEnabled(false);
     ui->pushButton_3->setEnabled(false);
     stoppedViaStop = false;
+    paused = false;
 }
 
 MainWindow::~MainWindow()
@@ -113,7 +114,7 @@ void MainWindow::updateFrontend()
             }
         }
 
-        if (exitFlag && (stoppedViaStop == false))
+        if (exitFlag && (stoppedViaStop == false) && (paused != false))
         {
             stoppedViaStop = false;
             setAlgorithmRunning(true);
@@ -145,6 +146,7 @@ void MainWindow::on_pushButton_clicked()
     if (clb::GlobalBackendController::instance()->runAlgorithm(true))
     {
         stoppedViaStop = false;
+        paused = false;
         clb::GlobalBackendController::instance()->runAlgorithm(true);
         timer.start(MSEC_60_HZ);
         if (FrontendConfig::getVisualizeGraph())
@@ -152,6 +154,7 @@ void MainWindow::on_pushButton_clicked()
             ui->fitnessPlotter->clearFitness();
             ui->nodePlotter->clearGraph();
             ui->nodePlotter->initGraph();
+            ui->nodePlotter->draw_edges();
         }
         setStateAlgoOn();
         setAlgorithmRunning(true);
@@ -168,6 +171,7 @@ void MainWindow::on_pushButton_4_clicked()
 {
     //Stop button
     stoppedViaStop = true;
+    paused = false;
     clb::GlobalBackendController::instance()->stopAlgorithm();
     setStateAlgoOff();
     setAlgorithmRunning(true);
@@ -176,19 +180,19 @@ void MainWindow::on_pushButton_4_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
+    paused = true;
     clb::GlobalBackendController::instance()->stopAlgorithm();
     setStateAlgoOff();
     setAlgorithmRunning(false);
     timer.stop();
     ui->pushButton_3->setEnabled(true);
     ui->pushButton->setEnabled(true);
-    ui->nodePlotter->clearGraph();
-    ui->nodePlotter->initGraph();
     this->showAlert("Alert", "Paused algorithm");
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
+    paused = false;
     clb::GlobalBackendController::instance()->runAlgorithm(false);
     timer.start(MSEC_60_HZ);
     setStateAlgoOn();
@@ -279,6 +283,7 @@ void MainWindow::on_actionZachary_format_triggered()
                 ui->fitnessPlotter->clearFitness();
                 ui->nodePlotter->clearGraph();
                 ui->nodePlotter->initGraph();
+                ui->nodePlotter->draw_edges();
             }
         }
         else
@@ -308,6 +313,7 @@ void MainWindow::on_actionMovielens_format_triggered()
                 ui->fitnessPlotter->clearFitness();
                 ui->nodePlotter->clearGraph();
                 ui->nodePlotter->initGraph();
+                ui->nodePlotter->draw_edges();
             }
         }
         else

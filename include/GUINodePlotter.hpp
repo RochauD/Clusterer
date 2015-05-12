@@ -137,6 +137,7 @@ class GUINodePlotter: public QWidget
         QVector<QwtSymbol*>* symbols;
         QVector<QColor>* colors;
         QwtPlotCurve* curve;
+        QVector<QwtPlotCurve*> curves;
 
         QwtPointSeriesData* mydata;
 
