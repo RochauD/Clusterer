@@ -28,6 +28,29 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 {
     setWindowTitle(tr("Clusterer Settings"));
     ui->setupUi(this);
+    backend::ClusteringParams params = clb::GlobalBackendController::instance()->getConfigurationParameters();
+    ui->stopNoImpr->setValue(params.iterationUntilMissingImprovementCausesInterruption);
+    ui->maxFitness->setValue(params.maxFitness);
+    ui->minFitness->setValue(params.minFitness);
+    ui->maxIter->setValue(params.maxIterations);
+    ui->minIter->setValue(params.minIterations);
+    ui->uniquePopulation->setChecked(params.uniquePopulationSelection);
+    ui->minPopulation->setValue(params.minPopulationSize);
+    ui->maxPopulation->setValue(params.maxPopulationSize);
+    ui->explorationMutChance->setValue(params.explorationMutationChance);
+    ui->refinementMutChance->setValue(params.refinementMutationChance);
+    ui->crossoverIter->setValue(params.crossoverIterationCount);
+    ui->phaseSwitchFitness->setValue(params.phaseSwitchFitnessValue);
+    ui->phaseSwitchIteration->setValue(params.phaseSwitchIterationValue);
+    ui->valiParam->setValue(params.maxMinDensityClusterProbability);
+    ui->logFrequency->setValue(params.logFrequency);
+    ui->enqueueFrequency->setValue(params.enqueueFrequency);
+    ui->threadCount->setValue(params.threadCount);
+    ui->autoSavePopulation->setValue(params.autoSavePopulationFrequency);
+    ui->predictedClusterCount->setValue(params.predictedClusterCount);
+    // DO NOT MOVE AROUND THE OPTIONS FOR COMBOBOXES!!
+    ui->fitnessFunction->setCurrentIndex(params.fitnessFunction);
+    ui->clusterInitFunc->setCurrentIndex(params.clusterGenerationFunction);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -38,7 +61,7 @@ SettingsDialog::~SettingsDialog()
 void SettingsDialog::on_buttonBox_accepted()
 {
     // Backend options
-    clusterer::backend::ClusteringParams params;
+    backend::ClusteringParams params;
     params.iterationUntilMissingImprovementCausesInterruption = ui->stopNoImpr->value();
     params.maxFitness = ui->maxFitness->value();
     params.minFitness = ui->minFitness->value();
