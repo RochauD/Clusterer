@@ -69,25 +69,7 @@ class GUIFitnessPlot: public QWidget
         ~GUIFitnessPlot();
 
         void replotFitness(std::vector<std::pair<uint64_t, double>> vector);
-
-    public slots:
-
-        void genRandomValues();
-        void runRandom();
-
-    private slots:
-
-    signals:
-        void sendFitnessValue(double);
-
     private:
-        /* general purpose buttons */
-        // QPushButton *closeFit;
-        // QPushButton *run_random;
-
-        /* central widget to rule them all */
-        //QWidget *central_vis_window;
-        int counter;
         /* myPlot is put inside plotWindow*/
         QWidget* plotWindow;
         QwtPlot* myPlot;
@@ -96,14 +78,6 @@ class GUIFitnessPlot: public QWidget
         QwtPlotZoomer* zoom;
         QwtPointSeriesData* fitness_data;
         QVector<QPointF>* samples;
-
-        QTimer* timer;
-        std::mutex lockFit;
-
-        /* random generator to generate random symbols for the clusters
-        when GUIFitnessPlot object is created */
-        std::mt19937* gen;
-        std::uniform_real_distribution<double> dist;
 
         /**
         * @brief setting the background of the plot
@@ -120,4 +94,4 @@ class GUIFitnessPlot: public QWidget
 }
 }
 
-#endif // GUIFITNESSPLOT_HPP_INCLUDED
+#endif

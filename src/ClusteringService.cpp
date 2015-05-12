@@ -23,8 +23,8 @@ namespace backend
 ClusteringService::ClusteringService()
 {
     this->workerFlag = true;
-    this->workerThread = std::unique_ptr<std::thread>(new std::thread(&ClusteringService::executeAlgoService, this));
     this->runningFlag = 0;
+    this->workerThread = std::unique_ptr<std::thread>(new std::thread(&ClusteringService::executeAlgoService, this));
 }
 
 ClusteringService::~ClusteringService()
