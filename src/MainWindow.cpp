@@ -94,6 +94,7 @@ void MainWindow::updateFrontend()
                 // algo stopped
                 setAlgorithmRunning(false);
                 setStateAlgoOff();
+                timer.stop();
                 exitFlag = true;
                 continue;
             }
@@ -150,9 +151,10 @@ void MainWindow::on_pushButton_4_clicked()
 {
     //Stop button
     clb::GlobalBackendController::instance()->stopAlgorithm();
+    this->showAlert("Alert", "Stopped the algorithm");
     setStateAlgoOff();
     setAlgorithmRunning(true);
-    this->showAlert("Alert", "Stopped the algorithm");
+    timer.stop();
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -161,6 +163,7 @@ void MainWindow::on_pushButton_2_clicked()
     setStateAlgoOff();
     setAlgorithmRunning(false);
     this->showAlert("Alert", "Paused algorithm");
+    timer.stop();
     ui->pushButton_3->setEnabled(true);
     ui->pushButton->setEnabled(true);
 }
@@ -169,6 +172,7 @@ void MainWindow::on_pushButton_3_clicked()
 {
     clb::GlobalBackendController::instance()->runAlgorithm(false);
     this->showAlert("Alert", "Resumed execution of the algorithm");
+    timer.start(MSEC_60_HZ);
     setStateAlgoOn();
     setAlgorithmRunning(true);
 }
