@@ -135,7 +135,6 @@ void MainWindow::showAlert(const QString& title, const QString& text)
 void MainWindow::on_pushButton_clicked()
 {
     //Start button
-    // @todo put check condition function into controller and call it here and check
     if (clb::GlobalBackendController::instance()->runAlgorithm(true))
     {
         clb::GlobalBackendController::instance()->runAlgorithm(true);

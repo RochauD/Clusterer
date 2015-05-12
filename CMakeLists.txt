@@ -165,7 +165,7 @@ endif()
 FIND_PATH(QWT_INCLUDE_DIR NAMES qwt.h PATHS
   /usr/include
   /usr/local/include
-  /usr/local/lib/qwt.framework/Versions/Current
+  /usr/local/lib/qwt.framework/Versions/Current/Headers
   "$ENV{LIB_DIR}/include" 
   "$ENV{INCLUDE}" 
   "$ENV{QWT_ROOT}/src" 
@@ -173,10 +173,10 @@ FIND_PATH(QWT_INCLUDE_DIR NAMES qwt.h PATHS
   PATH_SUFFIXES qwt-qt4 qwt
   )
 
-FIND_LIBRARY(QWT_LIBRARY NAMES qwt qwtd qwt5 qwt-qt4 qwt5-qt4 PATHS 
+FIND_LIBRARY(QWT_LIBRARY NAMES qwt qwt5 qwt-qt4 qwt5-qt4 PATHS 
   /usr/lib
   /usr/local/lib
-  /usr/local/lib/qwt.framework/Versions/Current
+  /usr/local/lib/qwt.framework/Versions/Current/
   "$ENV{LIB_DIR}/lib" 
   "$ENV{LIB}/lib" 
   "$ENV{QWT_ROOT}/lib" 
