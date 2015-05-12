@@ -4,11 +4,12 @@
 */
 
 //external headers
-// uncomment if the prints are needed 
+// uncomment if the prints are needed
 #include <iostream>
 //local headers
 #include "../include/GraphCoordinateTransformer.hpp"
 #include <utility>
+#include <random>
 
 #if defined(__unix ) || defined(__APPLE__)
 #define ARMA_64BIT_WORD
@@ -30,146 +31,148 @@ GraphCoordinateTransformer::GraphCoordinateTransformer(const backend::AbstractGr
 {
 
     uint64_t no_vertices = graph.getNoVertices();
-    
-    #ifdef _WIN32
-        //initialize D to 0 matrix
-        Eigen::MatrixXd D = Eigen::MatrixXd::Zero(no_vertices,no_vertices);
 
-        // populate the matrix D
-        for (auto& e : graph.getFullyConnected())
-        {
-            D(e.first.first,e.first.second) = e.second;
-        }
+#ifdef _WIN32
+    //initialize D to 0 matrix
+    Eigen::MatrixXd D = Eigen::MatrixXd::Zero(no_vertices,no_vertices);
 
-        //centering matrix J
-        Eigen::MatrixXd J(no_vertices,no_vertices);
-        J = Eigen::MatrixXd::Identity(no_vertices,no_vertices)
-            - (1.0/no_vertices)*Eigen::MatrixXd::Ones(no_vertices,no_vertices);
+    // populate the matrix D
+    for (auto& e : graph.getFullyConnected())
+    {
+        D(e.first.first,e.first.second) = e.second;
+    }
 
-        // squared-distance matrix
-        Eigen::MatrixXd S(no_vertices,no_vertices);
-        // D.array()*D.array coefficient-wise multiplication and after the operation
-        // converted back to matrix object
-        S = (D.array()*D.array()).matrix();
+    //centering matrix J
+    Eigen::MatrixXd J(no_vertices,no_vertices);
+    J = Eigen::MatrixXd::Identity(no_vertices,no_vertices)
+        - (1.0/no_vertices)*Eigen::MatrixXd::Ones(no_vertices,no_vertices);
 
-        Eigen::MatrixXd Z(no_vertices,no_vertices);
-        Z = -0.5*J*S*J;
+    // squared-distance matrix
+    Eigen::MatrixXd S(no_vertices,no_vertices);
+    // D.array()*D.array coefficient-wise multiplication and after the operation
+    // converted back to matrix object
+    S = (D.array()*D.array()).matrix();
 
-        uint64_t dimensions = 2; // for a 2D representation
+    Eigen::MatrixXd Z(no_vertices,no_vertices);
+    Z = -0.5*J*S*J;
 
-        // compute eigenvalues/eigenvectors
-        Eigen::EigenSolver<Eigen::MatrixXd> es(Z);
+    uint64_t dimensions = 2; // for a 2D representation
 
-        // no specific order for the eigenvalues
-        // need to find the eigenvalues with the highest magnitude
-        uint64_t no_eigenvals = es.eigenvalues().size();
-        std::vector<std::pair<double,uint64_t>> ordered_evals;
-        ordered_evals.reserve(no_eigenvals);
+    // compute eigenvalues/eigenvectors
+    Eigen::EigenSolver<Eigen::MatrixXd> es(Z);
 
-        for (uint64_t i = 0; i < no_eigenvals; i++)
-        {
-            std::complex<double> C;
-            C = es.eigenvalues().col(0)[i];
-            ordered_evals.emplace_back(std::norm(C),i);
-        }
+    // no specific order for the eigenvalues
+    // need to find the eigenvalues with the highest magnitude
+    uint64_t no_eigenvals = es.eigenvalues().size();
+    std::vector<std::pair<double,uint64_t>> ordered_evals;
+    ordered_evals.reserve(no_eigenvals);
 
-        /* // --testing purposes --
-        for(auto& el: ordered_evals){
-            std::cout<<"norm: "<<el.first<<"; index: "<<el.second<<"\n";
-        }*/
+    for (uint64_t i = 0; i < no_eigenvals; i++)
+    {
+        std::complex<double> C;
+        C = es.eigenvalues().col(0)[i];
+        ordered_evals.emplace_back(std::norm(C),i);
+    }
 
-        // order eigenvalues in descending order
-        std::sort(ordered_evals.begin(),ordered_evals.end(),pairCompare);
+    /* // --testing purposes --
+    for(auto& el: ordered_evals){
+        std::cout<<"norm: "<<el.first<<"; index: "<<el.second<<"\n";
+    }*/
 
-        Eigen::MatrixXcd V(no_vertices,dimensions);
-        Eigen::MatrixXcd Diag = Eigen::MatrixXcd::Zero(dimensions,dimensions);
-        for (unsigned int i = 0; i < dimensions; i++)
-        {
-            uint64_t index = ordered_evals[i].second;
-            Diag(i,i) = es.eigenvalues().col(0)[index];
-            V.col(i) = es.eigenvectors().col(index);
-        }
+    // order eigenvalues in descending order
+    std::sort(ordered_evals.begin(),ordered_evals.end(),pairCompare);
 
-        /* // -- testing purposes --
-        std::cout<<"Diag -- chosen eigenvalues: \n"<<Diag<<"\n";
-        std::cout<<"Respective eigenvector matrix: \n"<<V<<"\n";
-        */
+    Eigen::MatrixXcd V(no_vertices,dimensions);
+    Eigen::MatrixXcd Diag = Eigen::MatrixXcd::Zero(dimensions,dimensions);
+    for (unsigned int i = 0; i < dimensions; i++)
+    {
+        uint64_t index = ordered_evals[i].second;
+        Diag(i,i) = es.eigenvalues().col(0)[index];
+        V.col(i) = es.eigenvectors().col(index);
+    }
 
-        Eigen::MatrixXcd Y(no_vertices,dimensions);
-        Y = V*((Diag.array().sqrt()).matrix());
+    /* // -- testing purposes --
+    std::cout<<"Diag -- chosen eigenvalues: \n"<<Diag<<"\n";
+    std::cout<<"Respective eigenvector matrix: \n"<<V<<"\n";
+    */
 
-        // next transform Y ---> map_coord
-        for (unsigned int i = 0; i < no_vertices; i++)
-        {
-            double coord_x = std::real(Y.row(i)[0]);
-            double coord_y = std::real(Y.row(i)[1]);
-            map_coord[i] = std::make_pair(coord_x,coord_y);
-        }
-    #else
-        // initialize D to 0 matrix
-        // less connectivity
-        arma::mat D = arma::zeros<arma::mat>(no_vertices,no_vertices);
-        //for(unsigned int i = 0; i < no_vertices; i++)
-        //    for(unsigned int j = 0; j < no_vertices; j++)
-        //        D(i,j) = 0;
-        
-        // D.print("D = ");
-        // std::cout<<"no vertices: "<<no_vertices<<"\n";
-        // populate the matrix D
-        for(auto& e : graph.getFullyConnected()){
-            D(e.first.first,e.first.second) = e.second;
-            //std::cout<<"("<<e.first.first<<","<<e.first.second<<")";
-            //std::cout<<"weight: "<<e.second<<"\n";
-        }
+    Eigen::MatrixXcd Y(no_vertices,dimensions);
+    Y = V*((Diag.array().sqrt()).matrix());
 
-        //centering matrix J
-        arma::mat J = arma::mat(no_vertices,no_vertices);
-        J = arma::eye<arma::mat>(no_vertices,no_vertices)
-              - (1.0/no_vertices)*arma::ones<arma::mat>(no_vertices,no_vertices);
+    // next transform Y ---> map_coord
+    for (unsigned int i = 0; i < no_vertices; i++)
+    {
+        double coord_x = std::real(Y.row(i)[0]);
+        double coord_y = std::real(Y.row(i)[1]);
+        map_coord[i] = std::make_pair(coord_x,coord_y);
+    }
+#else
+    // initialize D to 0 matrix
+    // less connectivity
+    arma::mat D = arma::zeros<arma::mat>(no_vertices,no_vertices);
+    //for(unsigned int i = 0; i < no_vertices; i++)
+    //    for(unsigned int j = 0; j < no_vertices; j++)
+    //        D(i,j) = 0;
 
-        // squared-distance matrix
-        arma::mat S = arma::mat(no_vertices,no_vertices);
-        // coefficient-wise multiplication and after the operation
-        // converted back to matrix object
-        S = D % D;
+    // D.print("D = ");
+    // std::cout<<"no vertices: "<<no_vertices<<"\n";
+    // populate the matrix D
+    for (auto& e : graph.getFullyConnected())
+    {
+        D(e.first.first,e.first.second) = e.second;
+        //std::cout<<"("<<e.first.first<<","<<e.first.second<<")";
+        //std::cout<<"weight: "<<e.second<<"\n";
+    }
 
-        //S.print("S = ");
+    //centering matrix J
+    arma::mat J = arma::mat(no_vertices,no_vertices);
+    J = arma::eye<arma::mat>(no_vertices,no_vertices)
+        - (1.0/no_vertices)*arma::ones<arma::mat>(no_vertices,no_vertices);
 
-        arma::sp_mat Z = arma::sp_mat(no_vertices,no_vertices);
-        Z = -0.5 * J *S * J;
-        uint64_t dimensions = 2; // for a 2D representation
+    // squared-distance matrix
+    arma::mat S = arma::mat(no_vertices,no_vertices);
+    // coefficient-wise multiplication and after the operation
+    // converted back to matrix object
+    S = D % D;
 
-        //Z.print("Z = ");
+    //S.print("S = ");
 
-        arma::cx_vec eigval;
-        arma::cx_mat eigvec;
-        
-        // getting the eigenvalues and eigenvectors by largest of magnitude
-        arma::eigs_gen(eigval,eigvec,Z,dimensions,"lm");
+    arma::sp_mat Z = arma::sp_mat(no_vertices,no_vertices);
+    Z = -0.5 * J *S * J;
+    uint64_t dimensions = 2; // for a 2D representation
 
-        /* // --testing purposes --
-        eigval.print("The eigenvalues are: ");
-        eigvec.print("The eigenvectors are: ");
-        */
+    //Z.print("Z = ");
 
-        arma::cx_mat Diag = arma::zeros<arma::cx_mat>(dimensions,dimensions);
-        for(unsigned int i = 0; i < dimensions; i++)
-            Diag(i,i) = eigval(i);
-        
-        //Diag.print("The diagonal eigenvalue matrix is: ");
+    arma::cx_vec eigval;
+    arma::cx_mat eigvec;
 
-        arma::cx_mat Y = arma::cx_mat(no_vertices,dimensions);
-        Y = eigvec*arma::sqrt(Diag);
+    // getting the eigenvalues and eigenvectors by largest of magnitude
+    arma::eigs_gen(eigval,eigvec,Z,dimensions,"lm");
 
-        //Y.print("Y is: ");
+    /* // --testing purposes --
+    eigval.print("The eigenvalues are: ");
+    eigvec.print("The eigenvectors are: ");
+    */
 
-        // next transform Y ---> map_coord
-        for(unsigned int i = 0; i < no_vertices; i++){
-            double coord_x = std::real(Y(i,0));
-            double coord_y = std::real(Y(i,1));
-            map_coord[i] = std::make_pair(coord_x,coord_y);
-        }
-    #endif    
+    arma::cx_mat Diag = arma::zeros<arma::cx_mat>(dimensions,dimensions);
+    for (unsigned int i = 0; i < dimensions; i++)
+    { Diag(i,i) = eigval(i); }
+
+    //Diag.print("The diagonal eigenvalue matrix is: ");
+
+    arma::cx_mat Y = arma::cx_mat(no_vertices,dimensions);
+    Y = eigvec*arma::sqrt(Diag);
+
+    //Y.print("Y is: ");
+
+    // next transform Y ---> map_coord
+    for (unsigned int i = 0; i < no_vertices; i++)
+    {
+        double coord_x = std::real(Y(i,0));
+        double coord_y = std::real(Y(i,1));
+        map_coord[i] = std::make_pair(coord_x,coord_y);
+    }
+#endif
 }
 
 std::map<backend::VertexId,std::pair<double,double>>
@@ -200,9 +203,12 @@ std::map<backend::VertexId,std::pair<double,double>>
 
     std::mt19937 gen;
     std::uniform_int_distribution<int> dist(-25,25);
-    for (auto& elem:map_coord) {
-        for(auto& elem2:map_coord){
-            if(elem.second.first == elem2.second.first && elem.second.second == elem2.second.second){
+    for (auto& elem:map_coord)
+    {
+        for (auto& elem2:map_coord)
+        {
+            if (elem.second.first == elem2.second.first && elem.second.second == elem2.second.second)
+            {
                 elem.second.first = elem.second.first + dist(gen);
                 elem.second.second = elem.second.second + dist(gen);
             }

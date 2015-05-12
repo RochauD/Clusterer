@@ -114,13 +114,18 @@ void MainWindow::updateFrontend()
             }
         }
 
-        if (exitFlag && (stoppedViaStop == false) && (paused != false))
+        if (exitFlag && stoppedViaStop == false && paused == false)
         {
+            paused = false;
             stoppedViaStop = false;
             setAlgorithmRunning(true);
             setStateAlgoOff();
             timer.stop();
             this->showAlert("Done", "Algorithm finished.");
+        }
+        if (exitFlag && paused == true)
+        {
+            paused = false;
         }
     }
 }
@@ -186,13 +191,13 @@ void MainWindow::on_pushButton_2_clicked()
     setAlgorithmRunning(false);
     timer.stop();
     ui->pushButton_3->setEnabled(true);
-    ui->pushButton->setEnabled(true);
+    ui->pushButton->setEnabled(false);
     this->showAlert("Alert", "Paused algorithm");
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    paused = false;
+    paused = true;
     clb::GlobalBackendController::instance()->runAlgorithm(false);
     timer.start(MSEC_60_HZ);
     setStateAlgoOn();
