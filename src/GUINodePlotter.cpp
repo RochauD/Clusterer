@@ -141,8 +141,11 @@ void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol)
         if (!(symbols->at(cluster_id)->brush() == (markers.at(i)->symbol())->brush()))
         {
             QwtPlotMarker* mark = new QwtPlotMarker();
-            mark->setSymbol(symbols->at(cluster_id));
+            //mark->setSymbol(symbols->at(cluster_id));
+            mark->setSymbol(new QwtSymbol(symbols->at(cluster_id)->style(),
+                QBrush(colors->at(cluster_id)),QPen(colors->at(cluster_id)), QSize(4,4)));
             mark->setValue(markers.at(i)->value());
+            markers.at(i)->detach();
             markers.replace(i,mark);
         }
         markers.at(i)->attach(myPlot);
@@ -207,30 +210,25 @@ void GUINodePlotter::plotContent()
 void GUINodePlotter::clearGraph(){
     //@todo
     //samples->clear();
-        if(symbols != NULL){
-            symbols->clear();
-            symbols = NULL;
-        }
-        if(colors != NULL){
-            colors->clear();
-            colors = NULL;
-        }
+    if(!mapy.empty()){
+        symbols->clear();
+        colors->clear();
 
         std::cout<<"after symbols and colors\n";
         for(auto& e: markers)
             e->detach();
         std::cout<<"detaching\n";
         
-        if(!mapy.empty()){
-            mapy.clear();
-            samples->clear();
-            mydata->setSamples(*samples);
-            curve->setData(mydata);
-            curve->detach();
-        }
+        mapy.clear();
+        samples->clear();
+        mydata->setSamples(*samples);
+        curve->setData(mydata);
+        curve->detach();
+        //}
         
         myPlot->replot();
         std::cout<<"fin\n";
+    }
     
 }
 

@@ -140,8 +140,8 @@ class GUINodePlotter: public QWidget
         QwtPlotZoomer* zoom;
         QwtPointSeriesData* mydata;
 
-        QVector<QwtSymbol*>* symbols = NULL;
-        QVector<QColor>* colors = NULL;
+        QVector<QwtSymbol*>* symbols;
+        QVector<QColor>* colors;
         QVector<QPointF>* samples;
 
         QTimer* timer;
