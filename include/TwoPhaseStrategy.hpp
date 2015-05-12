@@ -213,7 +213,7 @@ template<class Encoding, class EncodingInitalizer>
 void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
 {
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm run started");
-
+    this->stopFlag = false;
     // set up
     ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<PopulationMember<Encoding, double>>> populationFitnessAnalyzer(
         this->graph,
@@ -257,6 +257,7 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
         clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Resetting Population");
         this->initalizePopulation();
         this->iterationCount = 0;
+        this->lastIterationWithChangedFitness = 0;
     }
 
     // evaluate fitness metric
