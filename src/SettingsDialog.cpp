@@ -22,7 +22,7 @@ namespace frontend
 {
 
 
-SettingsDialog::SettingsDialog(QWidget *parent) :
+SettingsDialog::SettingsDialog(QWidget* parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
 {
@@ -50,7 +50,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->predictedClusterCount->setValue(params.predictedClusterCount);
     // DO NOT MOVE AROUND THE OPTIONS FOR COMBOBOXES!!
     ui->fitnessFunction->setCurrentIndex(params.fitnessFunction);
-    ui->clusterInitFunc->setCurrentIndex(params.clusterGenerationFunction);\
+    ui->clusterInitFunc->setCurrentIndex(params.clusterGenerationFunction);
 
     ui->visualizeGraph->setChecked(FrontendConfig::getVisualizeGraph());
 }

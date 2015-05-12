@@ -93,9 +93,6 @@ void MainWindow::updateFrontend()
             if (std::numeric_limits<uint64_t>::max() - std::numeric_limits<uint64_t>::epsilon() <= e.second)
             {
                 // algo stopped
-                setAlgorithmRunning(false);
-                setStateAlgoOff();
-                timer.stop();
                 exitFlag = true;
                 continue;
             }
@@ -113,6 +110,14 @@ void MainWindow::updateFrontend()
             {
                 ui->nodePlotter->replotSolution(vector[vector.size() - 1].first.populationEncoding);
             }
+        }
+
+        if (exitFlag)
+        {
+            setAlgorithmRunning(true);
+            setStateAlgoOff();
+            timer.stop();
+            this->showAlert("Done", "Algorithm finished.");
         }
     }
 }
@@ -139,9 +144,9 @@ void MainWindow::on_pushButton_clicked()
     {
         clb::GlobalBackendController::instance()->runAlgorithm(true);
         timer.start(MSEC_60_HZ);
-        this->showAlert("Info", "Started the algorithm");
         setStateAlgoOn();
         setAlgorithmRunning(true);
+        this->showAlert("Info", "Started the algorithm");
     }
     else
     {
@@ -154,10 +159,10 @@ void MainWindow::on_pushButton_4_clicked()
 {
     //Stop button
     clb::GlobalBackendController::instance()->stopAlgorithm();
-    this->showAlert("Alert", "Stopped the algorithm");
     setStateAlgoOff();
     setAlgorithmRunning(true);
     timer.stop();
+    this->showAlert("Alert", "Stopped the algorithm");
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -165,19 +170,19 @@ void MainWindow::on_pushButton_2_clicked()
     clb::GlobalBackendController::instance()->stopAlgorithm();
     setStateAlgoOff();
     setAlgorithmRunning(false);
-    this->showAlert("Alert", "Paused algorithm");
     timer.stop();
     ui->pushButton_3->setEnabled(true);
     ui->pushButton->setEnabled(true);
+    this->showAlert("Alert", "Paused algorithm");
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
     clb::GlobalBackendController::instance()->runAlgorithm(false);
-    this->showAlert("Alert", "Resumed execution of the algorithm");
     timer.start(MSEC_60_HZ);
     setStateAlgoOn();
     setAlgorithmRunning(true);
+    this->showAlert("Alert", "Resumed execution of the algorithm");
 }
 
 void MainWindow::on_actionSave_Settings_2_triggered()
