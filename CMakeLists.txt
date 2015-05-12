@@ -407,7 +407,6 @@ set(CLUSTER_TEST_FILENAMES
         ConfigurationManager
         ConfigurationReaderWriter
         GraphReader
-        SocialClusteringService
         Vertex
         Graph
         IntegerVectorEncoding
