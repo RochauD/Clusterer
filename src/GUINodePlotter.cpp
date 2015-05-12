@@ -46,6 +46,7 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
     /*creating the necessary widgets*/
     // show_edges = new QPushButton(tr("&Show edges"));
     // closeViz = new QPushButton(tr("&Close"));
+    clear = new QPushButton(tr("&Clear"));
     plotWindow = new QWidget();
     
     /* setting the default background for the plot */
@@ -66,7 +67,7 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
 
     /*setting the layout of the main window*/
     QHBoxLayout *layout1 = new QHBoxLayout;
-    //layout1->addWidget(show_edges);
+    layout1->addWidget(clear);
     // layout1->addWidget(closeViz);
     QHBoxLayout *layout2 = new QHBoxLayout;
     layout2->addLayout(layout1);
@@ -92,6 +93,7 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
     connect(this,SIGNAL(sendSol(backend::ClusterEncoding&)),
         this,SLOT(replotSolution(backend::ClusterEncoding&)),Qt::DirectConnection);
     connect(this,SIGNAL(drawEdges()),this,SLOT(draw_edges()));
+    connect(clear,SIGNAL(clicked()),this,SLOT(clearGraph()));
 
     /*
     solution = backend::IntegerVectorEncoding(&graph);
@@ -111,16 +113,19 @@ GUINodePlotter::GUINodePlotter(QWidget *parent, uint64_t Width, uint64_t Height)
 void GUINodePlotter::initGraph(){
     /* testing input information */
     //std::cout<<"graph edges GUINodePlotter: "<<clb::GlobalBackendController::instance()->getGraph().getNoEdges()<<"\n";
-    GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
-    mapy = gt.getNormalizedMap(this->width,this->height);
-    //printMap(mapy);
+    
+    if(mapy.empty()){
+        GraphCoordinateTransformer gt(clb::GlobalBackendController::instance()->getGraph());
+        mapy = gt.getNormalizedMap(this->width,this->height);
+        //printMap(mapy);
 
-    plotContent();
+        plotContent();
 
-    myPlot->replot();
-    myPlot->show();
+        myPlot->replot();
+        myPlot->show();
 
-    setSymbols(clb::GlobalBackendController::instance()->getGraph().getNoVertices());
+        setSymbols(clb::GlobalBackendController::instance()->getGraph().getNoVertices());
+    }
 }
 
 void GUINodePlotter::setSymbols(uint64_t no_vertices){
@@ -266,14 +271,28 @@ void GUINodePlotter::plotContent(){
 
 void GUINodePlotter::clearGraph(){
     //@todo
+    //samples->clear();
+    if(!mapy.empty()){
+        delete symbols;
+        delete colors;
+        for(auto& e: markers)
+            e->detach();
+        mapy.clear();
+
+        samples->clear();
+        mydata->setSamples(*samples);
+        curve->setData(mydata);
+        curve->attach(myPlot);
+        myPlot->replot();
+    }
 }
 
 GUINodePlotter::~GUINodePlotter(){
     //empty dtor
     delete timer;
-    delete [] samples;
-    delete [] colors;
-    delete [] symbols;
+    delete samples;
+    delete colors;
+    delete symbols;
     delete mydata;
     delete zoom;
     delete curve;

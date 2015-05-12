@@ -77,6 +77,7 @@ class GUIFitnessPlot: public QWidget
         void genRandomValues();
         void runRandom();
 
+
     private slots:
 
     signals:

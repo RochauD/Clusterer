@@ -155,6 +155,8 @@ void MainWindow::on_pushButton_4_clicked()
     setStateAlgoOff();
     setAlgorithmRunning(true);
     timer.stop();
+    ui->nodePlotter->clearGraph();
+    ui->fitnessPlotter->clearFitness();
 }
 
 void MainWindow::on_pushButton_2_clicked()

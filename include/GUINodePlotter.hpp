@@ -82,7 +82,7 @@ class GUINodePlotter: public QWidget
 
         void initGraph();
 
-        void clearGraph();
+
 
         /**
         * @brief empty destructor
@@ -95,6 +95,8 @@ class GUINodePlotter: public QWidget
         * @param a ClusterEncoding object
         */
         void replotSolution(backend::ClusterEncoding& clusterSol);
+
+        void clearGraph();
 
         /**
         * @bried draw edges for the graph
@@ -116,6 +118,7 @@ class GUINodePlotter: public QWidget
         /* general purpose buttons */
         // QPushButton *show_edges;
         // QPushButton *closeViz;
+        QPushButton *clear;
 
         int width = 500;
         int height = 500;
