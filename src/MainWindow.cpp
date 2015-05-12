@@ -292,7 +292,7 @@ void MainWindow::on_actionMovielens_format_triggered()
             if (FrontendConfig::getVisualizeGraph())
             {
                 ui->fitnessPlotter->clearFitness();
-                //ui->nodePlotter->clearGraph();
+                ui->nodePlotter->clearGraph();
                 ui->nodePlotter->initGraph();     
             }
         }

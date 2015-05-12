@@ -20,8 +20,6 @@ GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
     this->adjustSize();
     /*creating the necessary widgets*/
 
-    clear = new QPushButton(tr("&Clear"));
-
     plotWindow = new QWidget();
 
     /* setting the default background for the plot */
@@ -42,7 +40,6 @@ GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
 
     /*setting the layout of the main window*/
     QHBoxLayout* layout1 = new QHBoxLayout;
-    layout1->addWidget(clear);
     QHBoxLayout* layout2 = new QHBoxLayout;
     layout2->addLayout(layout1);
     layout2->addWidget(plotWindow);
@@ -58,7 +55,6 @@ GUINodePlotter::GUINodePlotter(QWidget* parent, uint64_t Width, uint64_t Height)
             this,SLOT(replotSolution(backend::ClusterEncoding&)),Qt::DirectConnection);
     connect(this,SIGNAL(drawEdges()),this,SLOT(draw_edges()));
 
-    connect(clear,SIGNAL(clicked()),this,SLOT(clearGraph()));
 }
 
 
@@ -179,55 +175,33 @@ void GUINodePlotter::plotContent()
 {
 
     /* include the data into the graph */
-    curve = new QwtPlotCurve("Cluster Visualization");
-    curve->setStyle(QwtPlotCurve::Dots);
-    mydata = new QwtPointSeriesData;
-    samples = new QVector<QPointF>;
-
-    QwtSymbol* sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(4,4));
-    curve->setSymbol(sym);
-
-    QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(4, 4));
     std::map<backend::VertexId,std::pair<double,double>>::iterator it;
 
     for (it = mapy.begin(); it != mapy.end(); it++)
     {
-        samples->push_back(QPointF((*it).second.first,(*it).second.second));
         QwtPlotMarker* mark = new QwtPlotMarker();
-        mark->setSymbol(symbol);
+        mark->setSymbol(new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(4, 4)));
         mark->setValue(QPointF((*it).second.first,(*it).second.second));
         markers.append(mark);
+        markers.back()->attach(myPlot);
     }
-
-    mydata->setSamples(*samples);
-    curve->setData(mydata);
-    curve->attach(myPlot);
 
     myPlot->replot();
 
 }
 
 void GUINodePlotter::clearGraph(){
-    //@todo
-    //samples->clear();
     if(!mapy.empty()){
         symbols->clear();
         colors->clear();
 
-        std::cout<<"after symbols and colors\n";
         for(auto& e: markers)
             e->detach();
-        std::cout<<"detaching\n";
+
+        markers.clear();
         
         mapy.clear();
-        samples->clear();
-        mydata->setSamples(*samples);
-        curve->setData(mydata);
-        curve->detach();
-        //}
-        
         myPlot->replot();
-        std::cout<<"fin\n";
     }
     
 }
