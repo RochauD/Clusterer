@@ -131,7 +131,8 @@ void GUINodePlotter::replotSolution(backend::ClusterEncoding& clusterSol)
         if (!(symbols->at(cluster_id)->brush() == (markers.at(i)->symbol())->brush()))
         {
             QwtPlotMarker* mark = new QwtPlotMarker();
-            mark->setSymbol(symbols->at(cluster_id));
+            QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, symbols->at(cluster_id)->brush(), symbols->at(cluster_id)->pen(), symbols->at(cluster_id)->size());
+            mark->setSymbol(symbol);
             mark->setValue(markers.at(i)->value());
             markers.replace(i,mark);
         }
@@ -174,11 +175,12 @@ void GUINodePlotter::plotContent()
     QwtSymbol* sym = new QwtSymbol(QwtSymbol::Ellipse,QBrush(Qt::black),QPen(Qt::black),QSize(4,4));
     curve->setSymbol(sym);
 
-    QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(4, 4));
+
     std::map<backend::VertexId,std::pair<double,double>>::iterator it;
     for (it = mapy.begin(); it != mapy.end(); it++)
     {
         samples->push_back(QPointF((*it).second.first,(*it).second.second));
+        QwtSymbol* symbol = new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(4, 4));
         QwtPlotMarker* mark = new QwtPlotMarker();
         mark->setSymbol(symbol);
         mark->setValue(QPointF((*it).second.first,(*it).second.second));
