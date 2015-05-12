@@ -30,9 +30,8 @@ namespace backend
 
 /**
  * @class AbstractGraph
- * @brief Wrapper for Boost Graph Lib
+ * @brief An abstract graph interface which allows many different formats to be used internally in its child classes.
  */
-
 class AbstractGraph
 {
     public:
@@ -119,7 +118,16 @@ class AbstractGraph
         * pair of node indeces and their respective weight
         */
         virtual std::vector<std::pair<std::pair<VertexId, VertexId>, double>> getEdgesAndWeights() const = 0;
-
+        
+        /**
+        * @brief getter for the edges in the graph and their respective weights
+        * @return vector of pairs <pair<VertexId,VertexId>, double>
+        * pair of node indeces and their respective weight
+        * the difference being that we created a fully connected graph using
+        * Dijkstra's shortest paths from boost
+        */
+        virtual std::vector<std::pair<std::pair<VertexId, VertexId>, double>> getFullyConnected() const = 0;
+        
         /**
         * @brief getter for the neighbor Vertexes of a given Vertex object
         * @return a vector of VertexId

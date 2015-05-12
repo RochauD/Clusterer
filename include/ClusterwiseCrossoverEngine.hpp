@@ -1,6 +1,6 @@
 /**
  * @file ClusterwiseCrossoverEngine.hpp
- * @brief Interface of Clusterwise crossover
+ * @brief Interface of Clusterwise crossover.
  */
 #ifndef CLUSTERER_BACKEND_CLUSTERWISE_CROSSOVER_ENGINE_HPP
 #define CLUSTERER_BACKEND_CLUSTERWISE_CROSSOVER_ENGINE_HPP
@@ -30,9 +30,9 @@ namespace backend
 {
 
 /**
- * @class ClusterwiseCrossoverEngine
- * @brief Interface for the Clusterwise crossover method
- */
+* @class ClusterwiseCrossoverEngine
+* @brief Interface for the Clusterwise crossover method.
+*/
 class ClusterwiseCrossoverEngine : public CrossoverEngine
 {
     public:
@@ -59,8 +59,9 @@ class ClusterwiseCrossoverEngine : public CrossoverEngine
 
     private:
         /**
-         * @brief Standard configuration of a random number generator
-         */
+        * @var rng
+        * @brief Pointer to a random number generator.
+        */
         std::mt19937* rng;
 };
 

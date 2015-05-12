@@ -27,6 +27,10 @@ namespace clusterer
 namespace backend
 {
 
+/**
+ * @class MQAnalyzer
+ * @brief Implementation of the MQ fitness function
+ */
 class MQAnalyzer : public ClusteringSolutionAnalyzer
 {
     public:

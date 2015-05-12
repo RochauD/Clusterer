@@ -31,7 +31,7 @@ namespace backend
 
 /**
  * @class FitnessAnalyzer
- * @brief class to determine the fitness of a solution
+ * @brief Class which determine the fitness of a solution.
  */
 class FitnessAnalyzer : public ClusteringSolutionAnalyzer
 {
@@ -52,7 +52,16 @@ class FitnessAnalyzer : public ClusteringSolutionAnalyzer
         ~FitnessAnalyzer();
     protected:
     private:
+        /**
+        * @var performanceAnalyzer
+        * @brief A performance analyzer.
+        */
         PerformanceAnalyzer performanceAnalyzer;
+
+        /**
+        * @var mqAnalyzer
+        * @brief A MQ analyzer.
+        */
         MQAnalyzer mqAnalyzer;
 };
 

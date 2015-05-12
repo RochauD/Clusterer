@@ -1,3 +1,5 @@
+Clusterer
+
 Clustering Social Networks by using Genetic Algorithms, Software Project for the Course Software Engineering Lab 2015
 
 Folder structure:
@@ -32,12 +34,39 @@ Boost:
 		compile the libraries
 	Mac (with homebrew):
 		brew install boost
+QT:
+	Linux:
+		sudo apt-get install qt4-default libqt4-dev
+	Windows:
+	- VS2012+:
+		Download QT 4.8.6 source version if you want to use Visual Studio with a version newer than VS2010
+		Adapt make files to reflect change
+		Compile it
+		Set QTDIR to the root of the qt folder
+	- VS2010:
+		Download the old installer and just install it normally.
+		Maybe set QTDIR to the root of the qt folder
+	Mac:
+QWT:
+	Linux:
+		sudo apt-get install libqwt-dev
+	Windows:
+	Mac:
+Eigen:
+	Windows:
+		Just download Eigen 3 from their website and place it into a folder.
+		Create a new enviroment variable called EIGEN_ROOT and set its value to that path
+Armadillo:
+	Linux:
+		sudo apt-get install libarmadillo-dev
+	Mac:
 
 Enviroment Variables:
 The following enviroment variables should be defined to ease compilation.
 
 BOOST_ROOT - boost root directory
 CPPUNIT_ROOT - cpp unit root directory
+EIGEN_ROOT - eigen root directory (only need for windows)
 
 Naming for test files:
 As CMAKE automates the test compilation adhere to the following rules:
@@ -48,8 +77,12 @@ If you use an IDE than you should also get a project as TestFoo
 
 
 Building and testing commands:
-Go into the build directory(cd build) then:
+Go into the/a build directory(mkdir build & cd build) then:
 cmake ..
 cmake --build .
 ctest -C <config> -VV 
 <config> = Debug or Release etc.
+
+Build doxygen
+Run from root:
+doxygen Doxyfile

@@ -8,12 +8,12 @@
 // standard headers
 #include <stdint.h>
 #include <atomic>
+#include <limits>
 // external headers
 
 // internal headers
 #include "ClusterEncoding.hpp"
 #include "AbstractGraph.hpp"
-#include "GeneticStrategy.hpp"
 #include "ClusteringParams.hpp"
 #include "ConcurrentLockingQueue.hpp"
 #include "FitnessAnalyzer.hpp"
@@ -22,10 +22,13 @@
 #include "PopulationCrossoverEngine.hpp"
 #include "CombinedCrossoverEngine.hpp"
 #include "CombinedMutation.hpp"
+#include "ClusteringPopulationRefiner.hpp"
+#include "ClusteringPopulationSelector.hpp"
+#include "ClusterRefiner.hpp"
 #include "Selector.hpp"
 #include "GlobalFileLogger.hpp"
-
-#include <fstream>
+#include "PopulationMember.hpp"
+#include "PopulationExporter.hpp"
 
 /**
 * @namespace clusterer
@@ -42,13 +45,19 @@ namespace clusterer
 namespace backend
 {
 
+/**
+* @class TwoPhaseStrategy
+* @brief The class that runs the algorithm itself.
+* @tparam Encoding The encoding used.
+* @tparam EncodingInitalizer The encoding initalizer class.
+*/
 template<class Encoding, class EncodingInitalizer>
 class TwoPhaseStrategy
 {
     public:
 
         /**
-        * @brief Standard Construtcutr for a TwoPhaseStrategy which can cluster a graph.
+        * @brief Standard Constructor for a TwoPhaseStrategy which can cluster a graph.
         */
         TwoPhaseStrategy();
 
@@ -61,42 +70,82 @@ class TwoPhaseStrategy
          */
         TwoPhaseStrategy(const AbstractGraph* graph,
                          ClusteringParams clusteringParameters,
-                         std::vector<std::pair<Encoding, double>>* population,
-                         clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue);
+                         std::vector<PopulationMember<Encoding, double>>* population,
+                         clc::ConcurrentLockingQueue<std::pair<PopulationMember<Encoding, double>, uint64_t>>* outQueue);
 
-
+        /**
+        * @brief Sets the graph on which the algorithm operates on.
+        * @param graph A pointer to a graph.
+        * @return void
+        */
         void setGraph(const AbstractGraph* graph);
-        void setClusteringParameters(ClusteringParams clusteringParameters);
-        void setPopulation(std::vector<std::pair<Encoding, double>>* population);
-        void setOutQueue(clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue);
 
+        /**
+        * @brief Sets the clustering parameters of the algorithm.
+        * @param clusteringParameters The clusteringParameters.
+        * @return void
+        */
+        void setClusteringParameters(ClusteringParams clusteringParameters);
+
+        /**
+        * @brief Sets the population.
+        * @param population A pointer to a population.
+        * @return void
+        */
+        void setPopulation(std::vector<PopulationMember<Encoding, double>>* population);
+
+        /**
+        * @brief Sets the output queue.
+        * @param outQueue A pointer to a output queue.
+        * @return void
+        */
+        void setOutQueue(clc::ConcurrentLockingQueue<std::pair<PopulationMember<Encoding, double>, uint64_t>>* outQueue);
 
         /**
          * @brief obtain the next generation of the clustering solution
+         * @pre Required objects are set and loaded and valid
          * @return void
          */
-        bool runAlgorithm(bool restart = true);
+        void runAlgorithm(bool restart = true);
 
+        /**
+        * @brief Checks the inital algorithm conditions.
+        * @return True if valid, false if invalid.
+        */
+        bool checkInitalizationCondition();
+
+        /**
+        * @brief Stops the current algorithm run.
+        * @return void
+        */
         void stopAlgorithm();
+
+        /**
+        * @brief Resumes the current algorithm run.
+        * @return void
+        */
         void resumeAlgorithm();
 
+        /**
+        * @brief Standard Destructor.
+        */
         ~TwoPhaseStrategy();
 
     protected:
         const AbstractGraph* graph;
         ClusteringParams clusteringParameters;
         std::atomic<bool> stopFlag;
-        std::vector<std::pair<Encoding, double>>* population;
-        clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue;
+        std::vector<PopulationMember<Encoding, double>>* population;
+        clc::ConcurrentLockingQueue<std::pair<PopulationMember<Encoding, double>, uint64_t>>* outQueue;
         uint64_t iterationCount;
-        std::pair<Encoding, double> currentBest;
+        uint64_t lastIterationWithChangedFitness;
+        PopulationMember<Encoding, double> currentBest;
         bool currentPhase;
 
     private:
         void initalizePopulation();
         bool checkRunningConditions();
         bool checkForPhaseSwitch();
-        bool checkInitalizationCondition();
         void sortPopulation();
 
 };
@@ -111,13 +160,14 @@ TwoPhaseStrategy<Encoding, EncodingInitalizer>::TwoPhaseStrategy()
     this->stopFlag = false;
     this->iterationCount = 0;
     this->currentPhase = false;
+    this->lastIterationWithChangedFitness = 0;
 }
 
 template<class Encoding, class EncodingInitalizer>
 TwoPhaseStrategy<Encoding, EncodingInitalizer>::TwoPhaseStrategy(const AbstractGraph* graph,
         ClusteringParams clusteringParameters,
-        std::vector<std::pair<Encoding, double>>* population,
-        clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue)
+        std::vector<PopulationMember<Encoding, double>>* population,
+        clc::ConcurrentLockingQueue<std::pair<PopulationMember<Encoding, double>, uint64_t>>* outQueue)
 {
     this->graph = graph;
     this->clusteringParameters = clusteringParameters;
@@ -126,6 +176,7 @@ TwoPhaseStrategy<Encoding, EncodingInitalizer>::TwoPhaseStrategy(const AbstractG
     this->stopFlag = false;
     this->iterationCount = 0;
     this->currentPhase = false;
+    this->lastIterationWithChangedFitness = 0;
 }
 
 template<class Encoding, class EncodingInitalizer>
@@ -147,126 +198,197 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::setClusteringParameters(Clu
 }
 
 template<class Encoding, class EncodingInitalizer>
-void TwoPhaseStrategy<Encoding, EncodingInitalizer>::setPopulation(std::vector<std::pair<Encoding, double>>* population)
+void TwoPhaseStrategy<Encoding, EncodingInitalizer>::setPopulation(std::vector<PopulationMember<Encoding, double>>* population)
 {
     this->population = population;
 }
 
 template<class Encoding, class EncodingInitalizer>
-void TwoPhaseStrategy<Encoding, EncodingInitalizer>::setOutQueue(clc::ConcurrentLockingQueue<std::pair<Encoding, double>>* outQueue)
+void TwoPhaseStrategy<Encoding, EncodingInitalizer>::setOutQueue(clc::ConcurrentLockingQueue<std::pair<PopulationMember<Encoding, double>, uint64_t>>* outQueue)
 {
     this->outQueue = outQueue;
 }
 
 template<class Encoding, class EncodingInitalizer>
-bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
+void TwoPhaseStrategy<Encoding, EncodingInitalizer>::runAlgorithm(bool restart)
 {
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm run started");
-
-    // check conditions
-    if (this->checkInitalizationCondition() == false)
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm run stopped. Parameters are invalid");
-        return false;
-    }
-    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm parameters are valid");
-
+    this->stopFlag = false;
     // set up
-    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<std::pair<Encoding, double>>> populationFitnessAnalyzer(
+    ClusteringPopulationAnalyzer<FitnessAnalyzer, std::vector<PopulationMember<Encoding, double>>> populationFitnessAnalyzer(
         this->graph,
         this->population,
         this->clusteringParameters.threadCount);
-    PopulationMutatorEngine<std::vector<std::pair<Encoding, double>>, CombinedMutation> populationExplorationMutatorEngine(
+    ClusteringPopulationAnalyzer<MQAnalyzer, std::vector<PopulationMember<Encoding, double>>> populationMQAnalyzer(
+        this->graph,
+        this->population,
+        this->clusteringParameters.threadCount);
+    ClusteringPopulationAnalyzer<PerformanceAnalyzer, std::vector<PopulationMember<Encoding, double>>> populationPerformanceAnalyzer(
+        this->graph,
+        this->population,
+        this->clusteringParameters.threadCount);
+    ClusteringPopulationRefiner<ClusterRefiner, std::vector<PopulationMember<Encoding, double>>> populationRefiner(
+        this->graph,
+        this->population,
+        this->clusteringParameters.refinementMutationChance,
+        this->clusteringParameters.maxMinDensityClusterProbability,
+        this->clusteringParameters.threadCount);
+    ClusteringPopulationSelector<std::vector<PopulationMember<Encoding, double>>> populationSelector(
+        this->graph,
+        this->population,
+        this->clusteringParameters.predictedClusterCount,
+        this->clusteringParameters.clusterGenerationFunction,
+        this->clusteringParameters.threadCount);
+    PopulationMutatorEngine<std::vector<PopulationMember<Encoding, double>>, CombinedMutation> populationExplorationMutatorEngine(
                 this->graph,
                 this->population,
                 this->clusteringParameters.explorationMutationChance,
                 this->clusteringParameters.threadCount);
-    PopulationCrossoverEngine<std::vector<std::pair<Encoding, double>>, Encoding, CombinedCrossoverEngine, Selector<std::vector<std::pair<Encoding, double>>>> populationCrossoverEngine(
+    PopulationCrossoverEngine<std::vector<PopulationMember<Encoding, double>>, Encoding, CombinedCrossoverEngine, Selector<std::vector<PopulationMember<Encoding, double>>>> populationCrossoverEngine(
                 this->graph,
                 this->population,
                 this->clusteringParameters.crossoverIterationCount,
                 this->clusteringParameters.threadCount);
 
-    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initalized helper classes");
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initialized helper classes");
     // reset if needed
     if (restart || this->population->size() < 2)
     {
         clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Resetting Population");
         this->initalizePopulation();
         this->iterationCount = 0;
+        this->lastIterationWithChangedFitness = 0;
     }
 
-    populationFitnessAnalyzer.evaluatePopulation();
+    // evaluate fitness metric
+    switch (this->clusteringParameters.fitnessFunction)
+    {
+        case 0:
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Using fitness function: Fitness");
+            populationFitnessAnalyzer.evaluatePopulation();
+            break;
+        case 1:
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Using fitness function: MQ");
+            populationMQAnalyzer.evaluatePopulation();
+            break;
+        case 2:
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Using fitness function: Performance");
+            populationPerformanceAnalyzer.evaluatePopulation();
+            break;
+        default:
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Using default fitness function.");
+            populationFitnessAnalyzer.evaluatePopulation();
+            break;
+    }
     this->sortPopulation();
     this->currentBest = (*this->population)[0];
-    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initial Evaluation completed. Current Maximum Fitness: ", this->currentBest.second);
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Initial Evaluation completed. Current Maximum Fitness: ", this->currentBest.fitnessValue);
 
     clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Starting in exploration phase");
     // main algorithmic loop
     while (this->checkRunningConditions())
     {
-        if (false)//this->currentPhase)
+        if (this->currentPhase)
         {
             // refinement phase
-            populationExplorationMutatorEngine.mutatePopulation();
+            populationRefiner.refinePopulation();
+            populationCrossoverEngine.crossoverPopulation();
         }
         else
         {
             // exploration phase
             populationCrossoverEngine.crossoverPopulation();
             populationExplorationMutatorEngine.mutatePopulation();
-            if (false)//this->checkForPhaseSwitch())
+            if (this->checkForPhaseSwitch())
             {
                 clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Switched to refinement phase.");
                 this->currentPhase = true;
             }
         }
-        populationFitnessAnalyzer.evaluatePopulation();
+
+        // evaluate fitness metric
+        switch (this->clusteringParameters.fitnessFunction)
+        {
+            case 0:
+                populationFitnessAnalyzer.evaluatePopulation();
+                break;
+            case 1:
+                populationMQAnalyzer.evaluatePopulation();
+                break;
+            case 2:
+                populationPerformanceAnalyzer.evaluatePopulation();
+                break;
+            default:
+                populationFitnessAnalyzer.evaluatePopulation();
+                break;
+        }
         this->sortPopulation();
+        // reduce the population to a relativley unique one if flag is set
+        if (this->clusteringParameters.uniquePopulationSelection)
+        {
+            populationSelector.selectPopulation();
+            // evaluate fitness metric once more as we changed things
+            switch (this->clusteringParameters.fitnessFunction)
+            {
+                case 0:
+                    populationFitnessAnalyzer.evaluatePopulation();
+                    break;
+                case 1:
+                    populationMQAnalyzer.evaluatePopulation();
+                    break;
+                case 2:
+                    populationPerformanceAnalyzer.evaluatePopulation();
+                    break;
+                default:
+                    populationFitnessAnalyzer.evaluatePopulation();
+                    break;
+            }
+            this->sortPopulation();
+        }
+
+        // set new best
+        if (this->currentBest.fitnessValue != (*this->population)[0].fitnessValue)
+        {
+            this->lastIterationWithChangedFitness = this->iterationCount;
+        }
         this->currentBest = (*this->population)[0];
+        // remove worst members
         if (this->population->size() > this->clusteringParameters.maxPopulationSize)
         {
             this->population->resize(this->clusteringParameters.maxPopulationSize);
         }
 
         // send our progress into queue
-        if (iterationCount % this->clusteringParameters.enqueueFrequency == 0)
+        if (this->clusteringParameters.enqueueFrequency != 0 && iterationCount % this->clusteringParameters.enqueueFrequency == 0)
         {
-            this->outQueue->push((*this->population)[0]);
+            this->outQueue->push(std::make_pair((*this->population)[0],this->iterationCount));
         }
         // log our progress
-        if (iterationCount % this->clusteringParameters.logFrequency == 0)
+        if (this->clusteringParameters.logFrequency != 0 && iterationCount % this->clusteringParameters.logFrequency == 0)
         {
             clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Iteration: ",
                                                    this->iterationCount,
                                                    " Current maximal fitness: ",
-                                                   this->currentBest.second);
+                                                   this->currentBest.fitnessValue);
+        }
+
+        // autosave our progress
+        if (this->clusteringParameters.autoSavePopulationFrequency != 0 && iterationCount % this->clusteringParameters.autoSavePopulationFrequency == 0)
+        {
+            PopulationExporter populationExporter;
+            populationExporter.writePopulationToFile(this->population, "autosave.data");
+            clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Auto save population to file.");
         }
         this->iterationCount++;
     }
-    // log end of algorithm
-    if (this->stopFlag)
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm was stopped.");
-    }
-    else
-    {
-        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished. The maximal fitness is: ", this->currentBest.second);
-    }
-
-    // print output
-    std::ofstream file("file.txt");
-    for (auto& e : (*this->population))
-    {
-        for (auto& p : e.first.getEncoding())
-        {
-            file << p << " ";
-        }
-        file << "\n";
-    }
-    file.close();
-
-    return true;
+    // finished now clean up and send stuff out
+    PopulationExporter populationExporter;
+    populationExporter.writePopulationToFile(this->population, "autosave.data");
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Auto save population to file.");
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished.");
+    this->outQueue->push(std::make_pair((*this->population)[0], this->iterationCount));
+    // send end flag
+    this->outQueue->push(std::make_pair((*this->population)[0], std::numeric_limits<uint64_t>::max()));
 }
 
 template<class Encoding, class EncodingInitalizer>
@@ -281,7 +403,6 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::resumeAlgorithm()
     this->stopFlag = false;
 }
 
-
 template<class Encoding, class EncodingInitalizer>
 void TwoPhaseStrategy<Encoding, EncodingInitalizer>::initalizePopulation()
 {
@@ -292,28 +413,47 @@ void TwoPhaseStrategy<Encoding, EncodingInitalizer>::initalizePopulation()
         this->population->reserve(this->clusteringParameters.maxPopulationSize);
         this->population->resize(this->clusteringParameters.minPopulationSize);
     }
-    EncodingInitalizer encodingInitalizer(this->graph);
+    EncodingInitalizer encodingInitalizer(this->graph, this->clusteringParameters.predictedClusterCount ,this->clusteringParameters.clusterGenerationFunction);
     for (auto& e : *this->population)
     {
-        e = std::make_pair(encodingInitalizer.getRandomSolution(), 0.0);
+        PopulationMember<Encoding,double> member;
+        member.fitnessValue = 0.0;
+        member.modified = true;
+        member.populationEncoding = encodingInitalizer.getRandomSolution();
+        e = member;
     }
 }
 
 template<class Encoding, class EncodingInitalizer>
 bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::checkRunningConditions()
 {
-    return (!this->stopFlag &&
-            this->iterationCount <= this->clusteringParameters.maxIterations &&
-            this->currentBest.second <= this->clusteringParameters.maxFitness &&
-            (this->iterationCount <= this->clusteringParameters.minIterations ||
-             this->currentBest.second <= this->clusteringParameters.minFitness));
+    // log end of algorithm
+    if (this->stopFlag)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm was stopped.");
+        return false;
+    }
+    else if (this->iterationCount > this->clusteringParameters.maxIterations ||
+             this->currentBest.fitnessValue > this->clusteringParameters.maxFitness ||
+             (this->iterationCount > this->clusteringParameters.minIterations &&
+              this->currentBest.fitnessValue > this->clusteringParameters.minFitness))
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished. The maximal fitness is: ", this->currentBest.fitnessValue);
+        return false;
+    }
+    else if ((this->iterationCount - this->lastIterationWithChangedFitness) > this->clusteringParameters.iterationUntilMissingImprovementCausesInterruption)
+    {
+        clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm finished as the solution is not getting better. The maximal fitness is: ", this->currentBest.fitnessValue);
+        return false;
+    }
+    return true;
 }
 
 template<class Encoding, class EncodingInitalizer>
 bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::checkForPhaseSwitch()
 {
     return (this->iterationCount >= this->clusteringParameters.phaseSwitchIterationValue ||
-            this->currentBest.second >= this->clusteringParameters.phaseSwitchFitnessValue);
+            this->currentBest.fitnessValue >= this->clusteringParameters.phaseSwitchFitnessValue);
 }
 
 template<class Encoding, class EncodingInitalizer>
@@ -340,6 +480,7 @@ bool TwoPhaseStrategy<Encoding, EncodingInitalizer>::checkInitalizationCondition
         return false;
     }
 
+    clc::GlobalFileLogger::instance()->log(clc::SeverityType::INFO, "[ALG] Algorithm parameters are valid");
     return true;
 }
 
@@ -347,9 +488,13 @@ template<class Encoding, class EncodingInitalizer>
 void TwoPhaseStrategy<Encoding, EncodingInitalizer>::sortPopulation()
 {
     std::sort(this->population->begin(), this->population->end(),
-              [=](const std::pair<Encoding, double>& v1, const std::pair<Encoding, double>& v2)->bool
+              [=](const PopulationMember<Encoding, double>& v1, const PopulationMember<Encoding, double>& v2)->bool
     {
-        return v1.second > v2.second;
+        if (v1.fitnessValue == v2.fitnessValue)
+        {
+            return v1.populationEncoding.getEncoding() > v2.populationEncoding.getEncoding();
+        }
+        return v1.fitnessValue > v2.fitnessValue;
     });
 }
 

@@ -5,6 +5,7 @@
 
 // standard headers
 #include <unordered_map>
+#include <algorithm>
 #include <map>
 // external headers
 
@@ -88,9 +89,14 @@ uint32_t IntegerVectorEncoding::getClusterCount() const
     return map.size();
 }
 
-ClusterEncoding::Encoding IntegerVectorEncoding::getEncoding()
+ClusterEncoding::Encoding IntegerVectorEncoding::getEncoding() const
 {
-    return  this->encoding;
+    return this->encoding;
+}
+
+void IntegerVectorEncoding::setEncoding(const ClusterEncoding::Encoding& encoding)
+{
+    this->encoding = encoding;
 }
 
 unsigned IntegerVectorEncoding::size() const
@@ -102,7 +108,9 @@ int IntegerVectorEncoding::normalize()
 {
     // Don't run the algorithm if not necessary
     if (isNormalized)
-    { return 0; }
+    {
+     return 0;
+    }
 
     std::map<ClusterId, VertexId> minVertex;
     VertexId i;
@@ -122,42 +130,29 @@ int IntegerVectorEncoding::normalize()
         }
     }
 
+    // Sort the map by values
+    std::vector<std::pair<ClusterId, VertexId>> pairs;
+    for (auto it = minVertex.begin(); it != minVertex.end(); it++)
+    {
+        pairs.push_back(*it);
+    }
+    std::sort(pairs.begin(), pairs.end(),
+              [=](const std::pair<ClusterId, VertexId>& a,const std::pair<ClusterId, VertexId>& b)->bool
+    {
+        return a.second < b.second;
+    });
+    // Change the labels to be in [0, clusterCount)
+    for (size_t j = 0; j < pairs.size(); j++)
+    {
+        minVertex[pairs[j].first] = j;
+    }
+
     // Rename all clusters
     for (i = 0; i < this->encoding.size(); i++)
     {
         this->encoding[i] = minVertex[this->encoding[i]];
     }
 
-    // Change the labels to be in [0, clusterCount)
-    bool changed = true;
-    int newId = 1, min, last = 0;
-    int invalidClusterId = this->encoding.size() + 1;
-    while (changed)
-    {
-        changed = false;
-        min = invalidClusterId;
-        for (i = 0; i < this->encoding.size(); i++)
-        {
-            if (this->encoding[i] > last && this->encoding[i] < min)
-            {
-                min = this->encoding[i];
-            }
-        }
-
-        if (min != invalidClusterId)
-        {
-            changed = true;
-            for (i = 0; i < this->encoding.size(); i++)
-            {
-                if (this->encoding[i] == min)
-                {
-                    this->encoding[i] = newId;
-                }
-            }
-            last = min;
-            newId++;
-        }
-    }
     // Keep internal track of normalization state
     isNormalized = true;
     return 0;

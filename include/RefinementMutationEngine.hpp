@@ -1,5 +1,5 @@
 /**
- * @file MutationEngine.hpp
+ * @file RefinementMutationEngine.hpp
  * @brief mutation interface implementation
  */
 #ifndef CLUSTERER_BACKEND_REFINEMENT_MUTATION_ENGINE_HPP
@@ -28,6 +28,10 @@ namespace clusterer
 namespace backend
 {
 
+/**
+ * @class RefinementMutationEngine
+ * @brief Implementation of the refinement mutations
+ */
 class RefinementMutationEngine: public MutationEngine
 {
     public:
@@ -41,6 +45,9 @@ class RefinementMutationEngine: public MutationEngine
         virtual ClusterEncoding::Encoding mutate(const ClusterEncoding::Encoding& cluster,
                 double probability);
 
+        /**
+         * @brief Standart destructor
+         */
         virtual ~RefinementMutationEngine();
 };
 

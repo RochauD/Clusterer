@@ -28,40 +28,62 @@ namespace clusterer
 namespace backend
 {
 
-/**
-* @struct info
-*/
-typedef struct info
-{
-    std::string name;
-    int value;
-    std::string social_net;
-} info;
-
 typedef uint64_t VertexId;
 typedef uint64_t ClusterId;
 
 /**
-* @class Vertex
-*/
+ * @class Vertex
+ * @brief A wrapper class around a boost vertex, representing a node in our graph 
+ */
 class Vertex
 {
     public:
+        /**
+         * @brief Standart constructor
+         */
         Vertex();
+        /**
+         * @brief Constructor with a custom vertex id
+         * @param The custom vertex id
+         */
         Vertex(VertexId);
+        /**
+         * @brief Copy constructor
+         * @param The vertex to copy from 
+         */
         Vertex(const Vertex&);
+        /**
+         * @brief Standart destructor
+         */
         ~Vertex();
+        /**
+         * @brief Gets the number of the vertex
+         * @return The vertex number
+         */
         VertexId getVNumber() const;
-        info getVInfo();
+        /**
+         * @brief Sets the id of the vertex
+         * @param The number representing the new vertex id
+         */
         void setVNumber(VertexId);
-        void setVInfo(const info&);
+        /**
+         * @brief Adds a neighbour to the vertex
+         * @param The vertex to which this one is connected
+         */
         void addNeighbor(const Vertex&);
+        /**
+         * @brief Checks if this vertex is connected to another one
+         * @return Whether or not the vertices have an edge between them
+         */
         bool hasNeighbor(Vertex&);
+        /**
+         * @brief Check if two vertices are identical
+         * @brief param The vertex to compare to
+         */
         bool operator==(Vertex&);
     protected:
     private:
         VertexId number;
-        info v_info;
         std::vector<Vertex> neighbors;
 };
 

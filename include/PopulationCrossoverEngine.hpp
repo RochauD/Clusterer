@@ -14,6 +14,7 @@
 
 // internal headers
 #include "AbstractGraph.hpp"
+#include "PopulationMember.hpp"
 
 /**
 * @namespace clusterer
@@ -34,6 +35,10 @@ namespace backend
 * @class PopulationCrossoverEngine
 * @brief PopulationCrossoverEngine is a class that mutates each member of a population
 * with a certain probability.
+* @tparam EncodingFitnessDataStructure The data structure used for storing encoding and fitness of apopulation.
+* @tparam Encoding The data structure used as an encoding
+* @param CrossoverFunction The class responsible for crossover
+* @param SelectorFunction The class responsible for selecting members to crossover
 */
 template<class EncodingFitnessDataStructure, class Encoding, class CrossoverFunction, class SelectorFunction>
 class PopulationCrossoverEngine
@@ -41,6 +46,10 @@ class PopulationCrossoverEngine
     public:
         /**
         * @brief standard constructor
+        * @param graph The graph the algorithm is working on
+        * @param populationPtr A pointer to a population
+        * @param iterationCount The number of crossovers to perform
+        * @param threadCount The number of threads to use for crossover
         */
         PopulationCrossoverEngine(const AbstractGraph* graph, EncodingFitnessDataStructure* populationPtr, size_t iterationCount, size_t threadCount = 1);
 
@@ -93,7 +102,7 @@ void PopulationCrossoverEngine<EncodingFitnessDataStructure, Encoding, Crossover
 crossoverPopulation()
 {
     std::vector<std::future<EncodingFitnessDataStructure>> futurePool;
-    futurePool.reserve(threadCount);
+    futurePool.reserve(this->threadCount);
 
     // compute slice size
     size_t normalIterationSliceSize = this->iterationCount / this->threadCount;
@@ -143,9 +152,18 @@ crossoverSubPopulation(size_t iterationCount, size_t threadID)
     for (size_t i = 0; i < iterationCount; i++)
     {
         auto indices = selector.selectTwoClusters();
-        crossover.crossover((*this->populationPtr)[indices.first].first, (*this->populationPtr)[indices.second].first, firstChild, secondChild);
-        result.push_back(std::make_pair(firstChild, 0.0));
-        result.push_back(std::make_pair(secondChild, 0.0));
+        crossover.crossover((*this->populationPtr)[indices.first].populationEncoding, (*this->populationPtr)[indices.second].populationEncoding, firstChild, secondChild);
+        PopulationMember<Encoding, double> member1;
+        member1.fitnessValue = 0.0;
+        member1.modified = true;
+        member1.populationEncoding = firstChild;
+        PopulationMember<Encoding, double> member2;
+        member2.fitnessValue = 0.0;
+        member2.modified = true;
+        member2.populationEncoding = secondChild;
+
+        result.push_back(member1);
+        result.push_back(member2);
     }
 
     return result;

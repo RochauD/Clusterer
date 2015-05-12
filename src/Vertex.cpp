@@ -16,17 +16,11 @@ Vertex::Vertex()
 Vertex::Vertex(VertexId n)
 {
     this->number = n;
-    this->v_info.name = "";
-    this->v_info.value = -1;
-    this->v_info.social_net = "";
 }
 
 Vertex::Vertex(const Vertex& v)
 {
     number = v.number;
-    v_info.name = v.v_info.name;
-    v_info.value = v.v_info.value;
-    v_info.social_net = v.v_info.social_net;
     for (auto it = v.neighbors.begin(); it != v.neighbors.end(); ++it)
     {
         neighbors.push_back(*it);
@@ -43,18 +37,6 @@ VertexId Vertex::getVNumber() const
 void Vertex::setVNumber(VertexId x)
 {
     number = x;
-}
-
-info Vertex::getVInfo()
-{
-    return v_info;
-}
-
-void Vertex::setVInfo(const info& inf)
-{
-    v_info.name = inf.name;
-    v_info.value = inf.value;
-    v_info.social_net = inf.social_net;
 }
 
 void Vertex::addNeighbor(const Vertex& v)

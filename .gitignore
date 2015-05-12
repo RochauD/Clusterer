@@ -1,9 +1,10 @@
-todo.txt~
 *.log
 .DS_Store
 build/*
+doc/*
 lib/*
 testing/*
 bin/*
-include/GUINodePlotter.hpp
-src/ClustererMenuBar.cpp
+Qt_project/build*
+*graph.pro.user*
+

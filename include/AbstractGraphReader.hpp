@@ -1,6 +1,6 @@
 /**
 * @file AbstractGraphReader.hpp
-* @brief Interface of graph reader
+* @brief Abstract class representing an interface for graph reader classes.
 */
 #ifndef CLUSTERER_BACKEND_ABSTRACT_GRAPH_READER_HPP
 #define CLUSTERER_BACKEND_ABSTRACT_GRAPH_READER_HPP
