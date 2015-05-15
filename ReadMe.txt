@@ -36,7 +36,7 @@ Boost:
 		brew install boost
 QT:
 	Linux:
-		sudo apt-get install qt4-default libqt4-dev
+		sudo apt-get install qt4-default libqt4-dev libqt4-core libqt4-gui
 	Windows:
 	- VS2012+:
 		Download QT 4.8.6 source version if you want to use Visual Studio with a version newer than VS2010
@@ -49,7 +49,7 @@ QT:
 	Mac:
 QWT:
 	Linux:
-		sudo apt-get install libqwt-dev
+		Goto http://qwt.sourceforge.net/ and download the version 6.1 and then follow their instructions
 	Windows:
 	Mac:
 Eigen:
