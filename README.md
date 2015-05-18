@@ -82,13 +82,16 @@ If you use an IDE than you should also get a project as TestFoo
 
 ## Build
 
-Building and testing commands:
+#### Building and testing commands:
+```
 Go into the/a build directory(mkdir build & cd build) then:
 cmake ..
 cmake --build .
 ctest -C <config> -VV 
 <config> = Debug or Release etc.
-
-Build doxygen
+```
+#### Build doxygen
+```
 Run from root:
 doxygen Doxyfile
+```
