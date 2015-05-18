@@ -6,7 +6,7 @@ This project was created in a short period of time and was based on an incomplet
 
 ## Folder structure:
 
-'''
+```
 ├───bin // created by cmake
 ├───build
 ├───cmake
@@ -17,7 +17,7 @@ This project was created in a short period of time and was based on an incomplet
 ├───src
 ├───test
 └───testing // created by cmake
-'''
+```
 ## External Dependencies:
 
 #### CppUnit:
