@@ -20,27 +20,27 @@ This project was created in a short period of time and was based on an incomplet
 ## External Dependencies:
 
 #### CppUnit:
-	###### Linux: 
+	Linux: 
 		sudo apt-get install libcppunit-doc libcppunit-dev
-	###### Windows:
+	Windows:
 		Check libreoffice branch of cppunit and compile yourself
-	###### Mac (with homebrew):
+	Mac (with homebrew):
 		brew install cppunit
 #### Boost:
 	Download newest version 
-	###### Linux:
+	Linux:
 		move it to /usr/local/boost_1_57_0
 		sudo ./bootstrap.sh --prefix=/usr/local
 		sudo ./b2 install 
-	###### Windows:
+	Windows:
 		move it somewhere and set BOOST_ROOT to the root
 		compile the libraries
-	###### Mac (with homebrew):
+	Mac (with homebrew):
 		brew install boost
 #### QT:
-	###### Linux:
+	Linux:
 		sudo apt-get install qt4-default libqt4-dev libqt4-core libqt4-gui
-	###### Windows:
+	Windows:
 	- VS2012+:
 		Download QT 4.8.6 source version if you want to use Visual Studio with a version newer than VS2010
 		Adapt make files to reflect change
@@ -51,18 +51,18 @@ This project was created in a short period of time and was based on an incomplet
 		Maybe set QTDIR to the root of the qt folder
 	###### Mac:
 #### QWT:
-	###### Linux:
+	Linux:
 		Goto http://qwt.sourceforge.net/ and download the version 6.1 and then follow their instructions
-	###### Windows:
-	###### Mac:
+	Windows:
+	Mac:
 #### Eigen:
-	###### Windows:
+	Windows:
 		Just download Eigen 3 from their website and place it into a folder.
 		Create a new enviroment variable called EIGEN_ROOT and set its value to that path
 #### Armadillo:
-	###### Linux:
+	Linux:
 		sudo apt-get install libarmadillo-dev
-	###### Mac:
+	Mac:
 
 #### Enviroment Variables:
 The following enviroment variables should be defined to ease compilation.
@@ -79,6 +79,7 @@ Now assuming the base name of your test class is Foo.
 Then you need to create the files: TestFoo.cpp TestFoo.hpp TestMainFoo.cpp and put them into the test directory
 If you use an IDE than you should also get a project as TestFoo
 
+## Build
 
 Building and testing commands:
 Go into the/a build directory(mkdir build & cd build) then:
