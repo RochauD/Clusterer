@@ -70,11 +70,11 @@ This project was created in a short period of time and was based on an incomplet
 
 #### Enviroment Variables:
 The following enviroment variables should be defined to ease compilation.
-
+```
 BOOST_ROOT - boost root directory
 CPPUNIT_ROOT - cpp unit root directory
 EIGEN_ROOT - eigen root directory (only need for windows)
-
+```
 #### Naming Conventions
 ###### Naming for test files:
 As CMAKE automates the test compilation adhere to the following rules:
