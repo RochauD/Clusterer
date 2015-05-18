@@ -51,11 +51,13 @@ This project was created in a short period of time and was based on an incomplet
 		Download the old installer and just install it normally.
 		Maybe set QTDIR to the root of the qt folder
 	Mac:
+		brew install qt
 #### QWT:
 	Linux:
 		Goto http://qwt.sourceforge.net/ and download the version 6.1 and then follow their instructions
 	Windows:
 	Mac:
+		brew install qwt
 #### Eigen:
 	Windows:
 		Just download Eigen 3 from their website and place it into a folder.
@@ -64,6 +66,7 @@ This project was created in a short period of time and was based on an incomplet
 	Linux:
 		sudo apt-get install libarmadillo-dev
 	Mac:
+		brew install armadillo
 
 #### Enviroment Variables:
 The following enviroment variables should be defined to ease compilation.
