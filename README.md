@@ -6,6 +6,7 @@ This project was created in a short period of time and was based on an incomplet
 
 ## Folder structure:
 
+'''
 ├───bin // created by cmake
 ├───build
 ├───cmake
@@ -16,7 +17,7 @@ This project was created in a short period of time and was based on an incomplet
 ├───src
 ├───test
 └───testing // created by cmake
-
+'''
 ## External Dependencies:
 
 #### CppUnit:
@@ -49,7 +50,7 @@ This project was created in a short period of time and was based on an incomplet
 	- VS2010:
 		Download the old installer and just install it normally.
 		Maybe set QTDIR to the root of the qt folder
-	###### Mac:
+	Mac:
 #### QWT:
 	Linux:
 		Goto http://qwt.sourceforge.net/ and download the version 6.1 and then follow their instructions
