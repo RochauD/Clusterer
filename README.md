@@ -2,7 +2,7 @@
 
 ### Clustering Social Networks by using Genetic Algorithms, Software Project for the Course Software Engineering Lab 2015
 
-This project was created in a short period of time and was based on an incomplete and erroneous design. Therefore it would need some refactoring but other than that it works perfectly fine.
+This project was created in a short period of time and was based on a given incomplete and erroneous design. Therefore it would need some refactoring but other than that it works perfectly fine.
 
 ## Folder structure:
 
